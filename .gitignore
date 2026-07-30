@@ -216,3 +216,31 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# AWS
+.aws/
+*.pem
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+cdk.out/
+samconfig.toml
+
+# Node.js (Phase-II frontend)
+node_modules/
+dist/
+.next/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project-specific
+reports/*.pdf
+presentation/*.pptx
+*.docx
+temp/
