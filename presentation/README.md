@@ -1,22 +1,26 @@
 # Presentation
 
-## Purpose
+This folder contains presentation materials for project review.
 
-Presentation materials for the **AORT (Autonomous Operational Recovery Twin)** Phase-I academic project.
+## Expected Files
 
-## Scope (Phase-I)
+| File | Description |
+|------|-------------|
+| `Phase1_Presentation.pptx` | Phase-I review slides (literature, gap, architecture, objectives, novelty) |
+| `Demo.pptx` or recording | Live demo of implementation (Phase-II) |
+| `Review_Slides.pptx` | Final review presentation with results and individual contributions |
 
-This directory contains **planning and documentation only**. No implementation code is included in Phase-I.
+## Phase-I Review Requirements
 
-## Future Files
+During project review, the team must present:
 
-- `phase1-slides.pptx`
+- Soft copy of the complete project report
+- Architecture diagrams
+- Literature survey and research gap analysis
+- Dataset details
+- GitHub repository with commit history
+- Individual contribution explanation per student
 
-## Owner
+## Phase-I Status
 
-See root [README.md](../README.md) for team allocation.
-
-## Related Documents
-
-- [Project README](../README.md)
-- [Implementation Plan](docs/implementation-plan/roadmap.md)
+Add Phase-I presentation file before the review date (30 July 2026).

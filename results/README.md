@@ -1,23 +1,16 @@
 # Results
 
-## Purpose
+This folder will contain project evaluation outputs after Phase-II implementation.
 
-Evaluation results (Phase-II) for the **AORT (Autonomous Operational Recovery Twin)** Phase-I academic project.
+## Expected Contents
 
-## Scope (Phase-I)
+| Subfolder / File | Description |
+|------------------|-------------|
+| `graphs/` | RTO/RPO comparison charts, optimizer ranking accuracy, anomaly detection performance |
+| `screenshots/` | Dashboard views, AWS console captures, recovery workflow execution |
+| `performance/` | Latency, twin sync time, recovery execution metrics |
+| `evaluation/` | Model evaluation reports, simulation test results |
 
-This directory contains **planning and documentation only**. No implementation code is included in Phase-I.
+## Phase-I Status
 
-## Future Files
-
-- `metrics/`
-- `graphs/`
-
-## Owner
-
-See root [README.md](../README.md) for team allocation.
-
-## Related Documents
-
-- [Project README](../README.md)
-- [Implementation Plan](docs/implementation-plan/roadmap.md)
+Empty — implementation has not started. Results will be added during Phase-II after AWS deployment and testing.

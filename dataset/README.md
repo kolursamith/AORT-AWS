@@ -1,22 +1,36 @@
 # Dataset
 
-## Purpose
+Phase-I defines dataset planning only. No real banking customer data is used.
 
-Dataset documentation root for the **AORT (Autonomous Operational Recovery Twin)** Phase-I academic project.
+## Folder Structure
 
-## Scope (Phase-I)
+```
+dataset/
+├── raw/                  # Unprocessed telemetry and log exports
+├── processed/            # Cleaned, feature-ready datasets (Phase-II)
+└── dataset_description.pdf   # Full dataset specification document
+```
 
-This directory contains **planning and documentation only**. No implementation code is included in Phase-I.
+## Planned Datasets
 
-## Future Files
+| Dataset | Source | Purpose |
+|---------|--------|---------|
+| Synthetic Banking ERP Dataset | Generated | ERP transactions and service dependencies |
+| CloudWatch Metrics | AWS (simulated) | Infrastructure health and custom ERP metrics |
+| CloudTrail Logs | AWS (simulated) | API audit and security events |
+| AWS Config Snapshots | AWS (simulated) | Configuration compliance and drift |
+| ERP Transaction Logs | ERP simulator | Business-process observability |
+| Backup Metadata | AWS Backup (simulated) | RPO and recovery point availability |
+| Disaster Scenario Profiles | Scenario generator | Multi-hazard simulation inputs |
 
-- `dataset-description.md`
+## Dataset Details Document
 
-## Owner
+Complete specifications (name, source, URL, size, records, features, data type, license, preprocessing) are documented in:
 
-See root [README.md](../README.md) for team allocation.
+- `dataset_description.pdf`
+- `docs/Dataset_Details.docx`
 
-## Related Documents
+## Phase-I Status
 
-- [Project README](../README.md)
-- [Implementation Plan](docs/implementation-plan/roadmap.md)
+- `raw/` and `processed/` are empty placeholders for Phase-II
+- Replace `dataset_description.pdf` with the final PDF before submission
