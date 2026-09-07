@@ -1,0 +1,115 @@
+# AORT Phase 2 - Banking Foundation
+#
+# Representative core-banking workload: Apache Fineract backed by PostgreSQL.
+# This is a controlled academic prototype, not a production banking platform.
+#
+# Deliberate choices (see README.md for full rationale):
+#   * Images are pinned to exact versions so runs are reproducible.
+#   * TLS is disabled and Fineract is served over plain HTTP on the host. This is a
+#     local-only prototype; upstream's self-signed cert otherwise blocks both the
+#     workload generator and the Phase 3 telemetry scrapers.
+#   * No restart policy is set. A container that silently restarts itself would
+#     invalidate the controlled failure-injection experiments planned for Phase 5.
+#   * No Prometheus/Grafana services here - that is Phase 3 scope. Fineract's own
+#     Prometheus actuator endpoint is enabled so Phase 3 has something to scrape.
+
+name: aort-banking
+
+services:
+  postgres:
+    image: postgres:16.1
+    container_name: aort-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_SUPERUSER}
+      POSTGRES_PASSWORD: ${POSTGRES_SUPERUSER_PASSWORD}
+      POSTGRES_DB: postgres
+      # Consumed by the initdb script to provision Fineract's two databases.
+      FINERACT_DB_USER: ${FINERACT_DB_USER}
+      FINERACT_DB_PASSWORD: ${FINERACT_DB_PASSWORD}
+      FINERACT_TENANTS_DB: ${FINERACT_TENANTS_DB}
+      FINERACT_TENANT_DEFAULT_DB: ${FINERACT_TENANT_DEFAULT_DB}
+    volumes:
+      - ./docker/postgres/initdb:/docker-entrypoint-initdb.d:ro
+      - aort_pgdata:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_HOST_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -q -U $${POSTGRES_USER} -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  fineract:
+    image: apache/fineract:1.12.1
+    container_name: aort-fineract
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # --- Tenant-registry datasource (Hikari) ---
+      FINERACT_HIKARI_DRIVER_SOURCE_CLASS_NAME: org.postgresql.Driver
+      FINERACT_HIKARI_JDBC_URL: jdbc:postgresql://postgres:5432/${FINERACT_TENANTS_DB}
+      FINERACT_HIKARI_USERNAME: ${FINERACT_DB_USER}
+      FINERACT_HIKARI_PASSWORD: ${FINERACT_DB_PASSWORD}
+      FINERACT_HIKARI_MINIMUM_IDLE: "3"
+      FINERACT_HIKARI_MAXIMUM_POOL_SIZE: "10"
+      FINERACT_HIKARI_IDLE_TIMEOUT: "60000"
+      FINERACT_HIKARI_CONNECTION_TIMEOUT: "20000"
+      FINERACT_HIKARI_TEST_QUERY: SELECT 1
+      FINERACT_HIKARI_AUTO_COMMIT: "true"
+
+      # --- Default tenant database ---
+      FINERACT_DEFAULT_TENANTDB_HOSTNAME: postgres
+      FINERACT_DEFAULT_TENANTDB_PORT: "5432"
+      FINERACT_DEFAULT_TENANTDB_NAME: ${FINERACT_TENANT_DEFAULT_DB}
+      FINERACT_DEFAULT_TENANTDB_UID: ${FINERACT_DB_USER}
+      FINERACT_DEFAULT_TENANTDB_PWD: ${FINERACT_DB_PASSWORD}
+      FINERACT_DEFAULT_TENANTDB_IDENTIFIER: default
+      FINERACT_DEFAULT_TENANTDB_DESCRIPTION: AORT default tenant
+      FINERACT_DEFAULT_TENANTDB_TIMEZONE: ${FINERACT_TENANT_TIMEZONE:-Asia/Kolkata}
+      FINERACT_DEFAULT_TENANTDB_CONN_PARAMS: ""
+      FINERACT_DEFAULT_MASTER_PASSWORD: ${FINERACT_MASTER_PASSWORD}
+
+      # --- HTTP exposure (TLS off: local prototype only) ---
+      FINERACT_SERVER_SSL_ENABLED: "false"
+      FINERACT_SERVER_PORT: "8080"
+      FINERACT_INSECURE_HTTP_CLIENT: "true"
+
+      # --- Observability surface for Phase 3 (telemetry) ---
+      FINERACT_MANAGEMENT_ENDPOINT_WEB_EXPOSURE_INCLUDE: health,info,prometheus,metrics
+      FINERACT_MANAGEMENT_PROMETHEUS_ENABLED: "true"
+      FINERACT_MANAGEMENT_METRICS_TAGS_APPLICATION: fineract
+      FINERACT_MANAGEMENT_METRICS_DISTRIBUTION_HTTP_SERVER_REQUESTS: "true"
+      OTEL_SERVICE_NAME: fineract
+
+      # 'diagnostics' only. Upstream's compose also sets 'test', which merely adds
+      # internal test-only API resources; omitting it keeps the workload surface
+      # to the real banking APIs without changing core banking behaviour.
+      SPRING_PROFILES_ACTIVE: diagnostics
+      FINERACT_REMOTE_JOB_MESSAGE_HANDLER_SPRING_EVENTS_ENABLED: "true"
+      JAVA_TOOL_OPTIONS: >-
+        -Xmx1G -XX:MinRAMPercentage=25 -XX:MaxRAMPercentage=80
+        -XX:+UseContainerSupport -XX:+UseStringDeduplication
+        --add-exports=java.naming/com.sun.jndi.ldap=ALL-UNNAMED
+        --add-opens=java.base/java.lang=ALL-UNNAMED
+        --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+        --add-opens=java.base/java.io=ALL-UNNAMED
+        --add-opens=java.base/java.security=ALL-UNNAMED
+        --add-opens=java.base/java.util=ALL-UNNAMED
+        --add-opens=java.management/javax.management=ALL-UNNAMED
+        --add-opens=java.naming/javax.naming=ALL-UNNAMED
+    ports:
+      - "${FINERACT_HOST_PORT:-8080}:8080"
+    healthcheck:
+      # Spring Boot binds the port only after Liquibase migration and context
+      # startup finish, so an open socket is a sound readiness proxy here.
+      test: ["CMD-SHELL", "nc -z localhost 8080 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 60
+      start_period: 60s
+
+volumes:
+  aort_pgdata:
+    name: aort_pgdata
