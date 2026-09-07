@@ -2,7 +2,17 @@
 .env
 .env.*
 *.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+*.keystore
 .aws/
+credentials
+credentials/**
+**/credentials/**
+**/secrets/**
 
 # Python
 __pycache__/
@@ -14,6 +24,10 @@ venv/
 node_modules/
 dist/
 
+# Logs and runtime artifacts
+*.log
+logs/
+
 # IDE and OS
 .idea/
 .vscode/
@@ -24,6 +38,14 @@ Thumbs.db
 .terraform/
 cdk.out/
 *.tfstate*
+
+# Local generated data (keep repository metadata tracked)
+datasets/raw/*
+!datasets/raw/.gitkeep
+datasets/processed/*
+!datasets/processed/.gitkeep
+!datasets/README.md
+!datasets/dataset_description.pdf
 
 # Temporary files
 *.tmp
