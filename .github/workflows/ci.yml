@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [develop, feature/**, fix/**]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repository-validation:
+    name: repository-validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate repository structure
+        run: |
+          set -euo pipefail
+          echo "Checking required top-level directories..."
+          for dir in banking telemetry infrastructure digital-twin scenarios ai optimizer contracts datasets docs tests .github; do
+            test -d "$dir" || { echo "Missing directory: $dir"; exit 1; }
+          done
+          echo "Structure check passed."
+
+      - name: Validate contract JSON schemas
+        run: |
+          set -euo pipefail
+          python3 << 'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          contracts = Path("contracts")
+          schemas = list(contracts.glob("*-schema.json"))
+          if not schemas:
+              print("No contract schemas found", file=sys.stderr)
+              sys.exit(1)
+          for path in schemas:
+              with open(path) as f:
+                  json.load(f)
+              print(f"Valid JSON: {path.name}")
+          PY
+
+      - name: Secret pattern scan (basic)
+        run: |
+          set -euo pipefail
+          if git grep -nE 'AKIA[0-9A-Z]{16}|aws_secret_access_key|BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY' -- ':!*.md' ':!.github/workflows/*' 2>/dev/null; then
+            echo "Potential secret pattern detected in tracked files."
+            exit 1
+          fi
+          echo "No obvious secret patterns found."
+
+      - name: Check for committed env files
+        run: |
+          set -euo pipefail
+          if git ls-files | grep -E '^\.env(\.|$)|credentials(\.|$)' ; then
+            echo "Environment or credential files must not be committed."
+            exit 1
+          fi
+          echo "No .env or credentials files tracked."
+
+      - name: Python syntax check (when present)
+        run: |
+          set -euo pipefail
+          shopt -s globstar nullglob
+          files=(**/*.py)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No Python files yet — skipping syntax check."
+            exit 0
+          fi
+          python3 -m py_compile "${files[@]}"
+          echo "Python syntax check passed."
+
+      - name: Run tests (when present)
+        run: |
+          set -euo pipefail
+          if [ -f requirements.txt ]; then
+            python3 -m pip install --quiet -r requirements.txt
+          fi
+          if [ -f pyproject.toml ] && python3 -c "import tomllib; tomllib.load(open('pyproject.toml','rb'))" 2>/dev/null; then
+            python3 -m pip install --quiet pytest 2>/dev/null || true
+          fi
+          if [ -d tests ] && find tests -name 'test_*.py' -print -quit | grep -q .; then
+            python3 -m pytest tests/ -q
+          else
+            echo "No pytest test files yet — skipping test execution."
+          fi

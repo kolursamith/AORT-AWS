@@ -1,0 +1,31 @@
+# CODEOWNERS — AORT Banking Digital Twin
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# OWNER A: kolursamith — digital twin, scenarios, AI, optimizer
+# OWNER B: girinandanv9845-ship-it — banking, telemetry, AWS, infrastructure
+#
+# Cross-boundary changes require review from the affected owner(s).
+# Shared paths require review from both owners.
+
+# OWNER A modules
+/digital-twin/    @kolursamith
+/scenarios/       @kolursamith
+/ai/              @kolursamith
+/optimizer/       @kolursamith
+
+# OWNER B modules
+/banking/         @girinandanv9845-ship-it
+/telemetry/       @girinandanv9845-ship-it
+/aws/             @girinandanv9845-ship-it
+/infrastructure/  @girinandanv9845-ship-it
+
+# Shared — both owners must review contract and integration changes
+/contracts/       @kolursamith @girinandanv9845-ship-it
+/tests/           @kolursamith @girinandanv9845-ship-it
+/docs/            @kolursamith @girinandanv9845-ship-it
+
+# Governance files
+/.github/         @kolursamith @girinandanv9845-ship-it
+/AGENTS.md        @kolursamith @girinandanv9845-ship-it
+/CONTRIBUTING.md  @kolursamith @girinandanv9845-ship-it
+/SECURITY.md      @kolursamith @girinandanv9845-ship-it
