@@ -28,3 +28,13 @@ cdk.out/
 # Temporary files
 *.tmp
 ~$*.docx
+
+# --- Banking module (Phase 2) ---
+# The .env.* rule above also matches committed templates such as
+# banking/.env.example, so templates are explicitly re-included.
+!.env.example
+!*.env.example
+
+# Workload generator run records: produced by running the stack, not source.
+banking/workload/runs/
+banking/verify/runs/
