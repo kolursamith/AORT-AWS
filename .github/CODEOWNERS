@@ -1,0 +1,57 @@
+# AORT — Code Owners
+#
+# Routes review to the owner responsible for each module, per the work
+# division in the project blueprint. Shared interfaces require both owners.
+#
+# Owner A — @kolursamith             digital twin, scenario semantics, AI,
+#                                    recovery optimizer, decision logic
+# Owner B — @girinandanv9845-ship-it banking, telemetry, AWS, infrastructure,
+#                                    failure-injection infrastructure
+#
+# GitHub applies the LAST matching pattern, so the shared default comes first
+# and the more specific module rules below override it.
+#
+# NOTE: this file only takes effect once branch protection enables
+# "Require review from Code Owners" on main and develop. See
+# docs/branch-protection.md — a repo admin must apply those settings.
+
+# ---------------------------------------------------------------------------
+# Default: anything not claimed below needs both owners.
+# ---------------------------------------------------------------------------
+*                           @kolursamith @girinandanv9845-ship-it
+
+# ---------------------------------------------------------------------------
+# Owner A — twin, scenario semantics, AI, optimizer
+# ---------------------------------------------------------------------------
+/digital-twin/              @kolursamith
+/ai/                        @kolursamith
+/optimizer/                 @kolursamith
+
+# ---------------------------------------------------------------------------
+# Owner B — banking workload, telemetry, cloud and infrastructure
+# ---------------------------------------------------------------------------
+/banking/                   @girinandanv9845-ship-it
+/telemetry/                 @girinandanv9845-ship-it
+/aws/                       @girinandanv9845-ship-it
+/infrastructure/            @girinandanv9845-ship-it
+
+# ---------------------------------------------------------------------------
+# Scenarios are split: Owner A owns scenario semantics and impact
+# propagation; Owner B owns the failure-injection infrastructure that
+# actually perturbs the running system.
+# ---------------------------------------------------------------------------
+/scenarios/                 @kolursamith
+/scenarios/injection/       @girinandanv9845-ship-it
+
+# ---------------------------------------------------------------------------
+# Joint ownership — shared interfaces and anything both owners depend on.
+# Contracts in particular must never be changed by one owner alone.
+# ---------------------------------------------------------------------------
+/contracts/                 @kolursamith @girinandanv9845-ship-it
+/tests/                     @kolursamith @girinandanv9845-ship-it
+/docs/                      @kolursamith @girinandanv9845-ship-it
+/dashboard/                 @kolursamith @girinandanv9845-ship-it
+
+# Repository governance itself is joint.
+/.github/                   @kolursamith @girinandanv9845-ship-it
+/AGENTS.md                  @kolursamith @girinandanv9845-ship-it
