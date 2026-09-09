@@ -1,0 +1,262 @@
+{
+  "captured_at": "2026-09-09T23:06:32.066410+05:30",
+  "prometheus_url": "http://localhost:9090",
+  "targets": {
+    "cadvisor": "up",
+    "fineract": "up",
+    "node": "up",
+    "postgres": "up",
+    "prometheus": "up",
+    "workload-otel": "up"
+  },
+  "categories": {
+    "1. Infrastructure": [
+      {
+        "metric": "container_cpu_usage_seconds_total",
+        "query": "sum(container_cpu_usage_seconds_total{name=~\"aort-.+\"})",
+        "present": true,
+        "before": 136.930841,
+        "after": 164.43763199999998,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": true
+      },
+      {
+        "metric": "container_memory_usage_bytes",
+        "query": "sum(container_memory_usage_bytes{name=~\"aort-.+\"})",
+        "present": true,
+        "before": 1804582912.0,
+        "after": 2018488320.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": false
+      },
+      {
+        "metric": "container_network_receive_bytes_total",
+        "query": "sum(container_network_receive_bytes_total{name=~\"aort-.+\"})",
+        "present": true,
+        "before": 65556280.0,
+        "after": 90642460.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": true
+      },
+      {
+        "metric": "container_fs_usage_bytes (machine-level)",
+        "query": "sum(container_fs_usage_bytes{id=\"/\"})",
+        "present": true,
+        "before": 91088530432.0,
+        "after": 91388603392.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": false
+      },
+      {
+        "metric": "node_filesystem_avail_bytes",
+        "query": "sum(node_filesystem_avail_bytes)",
+        "present": true,
+        "before": 8354822868992.0,
+        "after": 8354367537152.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": false
+      },
+      {
+        "metric": "node_cpu_seconds_total",
+        "query": "sum(node_cpu_seconds_total)",
+        "present": true,
+        "before": 90061.93000000001,
+        "after": 90460.32,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": true
+      },
+      {
+        "metric": "node_memory_MemAvailable_bytes",
+        "query": "node_memory_MemAvailable_bytes",
+        "present": true,
+        "before": 5301321728.0,
+        "after": 5052858368.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": false
+      },
+      {
+        "metric": "node_load1",
+        "query": "node_load1",
+        "present": true,
+        "before": 2.07,
+        "after": 1.56,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": false
+      }
+    ],
+    "2. Application": [
+      {
+        "metric": "http_server_requests_seconds_count",
+        "query": "sum(http_server_requests_seconds_count)",
+        "present": true,
+        "before": null,
+        "after": 134.0,
+        "changed": true,
+        "appeared_during_run": true,
+        "change_expected": true
+      },
+      {
+        "metric": "http_server_requests_seconds_sum",
+        "query": "sum(http_server_requests_seconds_sum)",
+        "present": true,
+        "before": null,
+        "after": 11.249075496000001,
+        "changed": true,
+        "appeared_during_run": true,
+        "change_expected": true
+      },
+      {
+        "metric": "jvm_memory_used_bytes",
+        "query": "sum(jvm_memory_used_bytes)",
+        "present": true,
+        "before": 694305896.0,
+        "after": 692329552.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": false
+      },
+      {
+        "metric": "jvm_threads_live_threads",
+        "query": "jvm_threads_live_threads",
+        "present": true,
+        "before": 61.0,
+        "after": 60.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": false
+      },
+      {
+        "metric": "hikaricp_connections_active",
+        "query": "sum(hikaricp_connections_active)",
+        "present": true,
+        "before": 1.0,
+        "after": 1.0,
+        "changed": false,
+        "appeared_during_run": false,
+        "change_expected": false
+      },
+      {
+        "metric": "process_cpu_usage",
+        "query": "process_cpu_usage",
+        "present": true,
+        "before": 0.0,
+        "after": 0.0013810420590081608,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": false
+      }
+    ],
+    "3. Banking workload": [
+      {
+        "metric": "aort_workload_operations_total",
+        "query": "sum(aort_workload_operations_total)",
+        "present": true,
+        "before": null,
+        "after": 127.0,
+        "changed": true,
+        "appeared_during_run": true,
+        "change_expected": true
+      },
+      {
+        "metric": "aort_workload_operation_duration_seconds_count",
+        "query": "sum(aort_workload_operation_duration_seconds_count)",
+        "present": true,
+        "before": null,
+        "after": 127.0,
+        "changed": true,
+        "appeared_during_run": true,
+        "change_expected": true
+      },
+      {
+        "metric": "aort_workload_operation_duration_seconds_sum",
+        "query": "sum(aort_workload_operation_duration_seconds_sum)",
+        "present": true,
+        "before": null,
+        "after": 11.67444,
+        "changed": true,
+        "appeared_during_run": true,
+        "change_expected": true
+      },
+      {
+        "metric": "aort_workload_http_responses_total",
+        "query": "sum(aort_workload_http_responses_total)",
+        "present": true,
+        "before": null,
+        "after": 127.0,
+        "changed": true,
+        "appeared_during_run": true,
+        "change_expected": true
+      }
+    ],
+    "4. Database": [
+      {
+        "metric": "pg_up",
+        "query": "pg_up",
+        "present": true,
+        "before": 1.0,
+        "after": 1.0,
+        "changed": false,
+        "appeared_during_run": false,
+        "change_expected": false
+      },
+      {
+        "metric": "pg_stat_database_numbackends",
+        "query": "sum(pg_stat_database_numbackends{datname=\"fineract_default\"})",
+        "present": true,
+        "before": 7.0,
+        "after": 7.0,
+        "changed": false,
+        "appeared_during_run": false,
+        "change_expected": false
+      },
+      {
+        "metric": "pg_stat_database_xact_commit",
+        "query": "sum(pg_stat_database_xact_commit{datname=\"fineract_default\"})",
+        "present": true,
+        "before": 4617.0,
+        "after": 7201.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": true
+      },
+      {
+        "metric": "pg_stat_database_blks_hit",
+        "query": "sum(pg_stat_database_blks_hit{datname=\"fineract_default\"})",
+        "present": true,
+        "before": 462117.0,
+        "after": 674859.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": true
+      },
+      {
+        "metric": "pg_stat_database_tup_fetched",
+        "query": "sum(pg_stat_database_tup_fetched{datname=\"fineract_default\"})",
+        "present": true,
+        "before": 405063.0,
+        "after": 514364.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": true
+      },
+      {
+        "metric": "pg_database_size_bytes",
+        "query": "pg_database_size_bytes{datname=\"fineract_default\"}",
+        "present": true,
+        "before": 23417315.0,
+        "after": 25113059.0,
+        "changed": true,
+        "appeared_during_run": false,
+        "change_expected": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,551 @@
+{
+  "uid": "aort-telemetry-overview",
+  "title": "AORT Telemetry Overview (Phase 3)",
+  "description": "Human visual verification of the four blueprint telemetry categories. This is NOT the digital twin - the twin is a separate custom model built in digital-twin/.",
+  "tags": [
+    "aort",
+    "phase-3",
+    "telemetry"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "DS",
+        "type": "datasource",
+        "query": "prometheus",
+        "current": {
+          "text": "Prometheus",
+          "value": "Prometheus"
+        },
+        "hide": 0
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "row",
+      "title": "1. Infrastructure - cAdvisor / node-exporter",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "title": "Container CPU (cores)",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (name) (rate(container_cpu_usage_seconds_total{name=~\"aort-.+\"}[1m]))",
+          "legendFormat": "{{name}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Container memory",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (name) (container_memory_usage_bytes{name=~\"aort-.+\"})",
+          "legendFormat": "{{name}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "title": "2. Application - Fineract actuator",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "title": "Fineract request rate (req/s)",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 10
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(http_server_requests_seconds_count[1m]))",
+          "legendFormat": "requests",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Fineract mean latency",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 10
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(http_server_requests_seconds_sum[1m])) / clamp_min(sum(rate(http_server_requests_seconds_count[1m])), 0.001)",
+          "legendFormat": "mean",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "JVM heap used / DB pool",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 10
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum(jvm_memory_used_bytes)",
+          "legendFormat": "jvm heap",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        },
+        {
+          "expr": "sum(hikaricp_connections_active) * 1e8",
+          "legendFormat": "hikari active (scaled)",
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "title": "3. Banking workload - OpenTelemetry from the generator",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "title": "Operations by type (ops/s)",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 19
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (aort_operation) (rate(aort_workload_operations_total[1m]))",
+          "legendFormat": "{{aort_operation}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Operation latency (mean, by category)",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 19
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (aort_category) (rate(aort_workload_operation_duration_seconds_sum[1m])) / clamp_min(sum by (aort_category) (rate(aort_workload_operation_duration_seconds_count[1m])), 0.001)",
+          "legendFormat": "{{aort_category}}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "title": "4. Database - postgres_exporter",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "title": "Transaction commit rate",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 29
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(pg_stat_database_xact_commit{datname=\"fineract_default\"}[1m])",
+          "legendFormat": "commits/s",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Active backends",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 29
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "expr": "pg_stat_database_numbackends{datname=\"fineract_default\"}",
+          "legendFormat": "backends",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Database size",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 29
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "expr": "pg_database_size_bytes{datname=\"fineract_default\"}",
+          "legendFormat": "fineract_default",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS}"
+          }
+        }
+      ]
+    }
+  ]
+}

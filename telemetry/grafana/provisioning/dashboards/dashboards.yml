@@ -1,0 +1,14 @@
+# Loads dashboards from disk so the stack comes up ready to look at.
+apiVersion: 1
+
+providers:
+  - name: AORT
+    orgId: 1
+    folder: AORT
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    allowUiUpdates: true
+    options:
+      path: /var/lib/grafana/dashboards
+      foldersFromFilesStructure: false
