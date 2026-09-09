@@ -17,6 +17,14 @@ from requests.auth import HTTPBasicAuth
 from .config import FineractConfig
 from .report import OperationResult, RunReport
 
+# Phase 3 instrumentation. Optional by design: the package lives in
+# telemetry/ and is inert unless OTEL_EXPORTER_OTLP_ENDPOINT is set, so the
+# banking module runs unchanged without it.
+try:
+    import aort_telemetry as _telemetry
+except ImportError:  # pragma: no cover - telemetry is optional
+    _telemetry = None
+
 
 class FineractError(RuntimeError):
     """Raised when a call the caller treated as mandatory did not succeed."""
@@ -102,6 +110,7 @@ class FineractClient:
         """
         url = f"{self.config.base_url}{path}"
         started = time.perf_counter()
+        started_ns = time.time_ns()
         status: int | None = None
         payload: Any = None
         error: str | None = None
@@ -145,6 +154,9 @@ class FineractClient:
                 context=context or {},
             )
         )
+
+        if _telemetry is not None:
+            _telemetry.record_call(result, started_ns)
 
         if required and not ok:
             raise FineractError(f"{operation} failed: {error}", result)
