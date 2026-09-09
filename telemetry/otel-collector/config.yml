@@ -1,0 +1,73 @@
+# AORT Phase 3 - OpenTelemetry Collector
+#
+# Receives OTLP traces and metrics from the Phase 2 workload generator, which
+# runs on the host, and re-exposes them in Prometheus exposition format.
+#
+# The spanmetrics connector derives request rate, latency and error counts
+# from the spans themselves, which is what the blueprint's "Application"
+# category asks for. Those series are computed from real emitted spans - no
+# values are synthesised here.
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+    timeout: 5s
+    send_batch_size: 512
+
+connectors:
+  # Spans in -> RED metrics out (rate, errors, duration).
+  span_metrics:
+    histogram:
+      explicit:
+        buckets: [10ms, 25ms, 50ms, 100ms, 250ms, 500ms, 1s, 2s, 5s, 10s]
+    # Promote the workload generator's own attributes to metric labels so
+    # per-operation and per-category breakdowns are possible.
+    dimensions:
+      - name: aort.operation
+      - name: aort.category
+      - name: http.request.method
+      - name: http.response.status_code
+    exemplars:
+      enabled: false
+    metrics_flush_interval: 10s
+
+exporters:
+  # Scraped by Prometheus at otel-collector:8889.
+  prometheus:
+    endpoint: 0.0.0.0:8889
+    send_timestamps: true
+    metric_expiration: 10m
+    # resource_to_telemetry_conversion is deliberately left at its default
+    # (off). Enabling it is deprecated in 0.160 and promoted every resource
+    # attribute to a label, bloating each series with telemetry_sdk_* and
+    # otel_scope_* noise. The aort.* attributes this phase cares about are
+    # metric attributes, so they survive regardless; the scrape job and
+    # instance labels identify the source.
+
+  # Makes received traces visible in the collector log, which is how trace
+  # delivery is verified without running a full tracing backend. Tempo or
+  # Jaeger are deliberately not part of this phase.
+  debug:
+    verbosity: basic
+
+service:
+  telemetry:
+    logs:
+      level: info
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [span_metrics, debug]
+
+    metrics:
+      receivers: [otlp, span_metrics]
+      processors: [batch]
+      exporters: [prometheus]
