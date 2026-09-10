@@ -1,0 +1,89 @@
+############ CLEAN SLATE EVIDENCE RUN (corrected) ############
+### 1. TEARDOWN (both stacks, volumes removed) ###
+ Volume aort_prometheus_data Removed 
+ Volume aort_grafana_data Removed 
+ Volume aort_pgdata Removed 
+ Network aort-banking_default Removed 
+
+### 2. START BANKING ###
+ Container aort-fineract Starting 
+ Container aort-fineract Started 
+### 3. START TELEMETRY ###
+ Container aort-prometheus Started 
+ Container aort-grafana Starting 
+ Container aort-grafana Started 
+
+### 4. VALIDATE ###
+AORT Phase 3 - telemetry validation
+  prometheus : http://localhost:9090
+  otlp       : http://localhost:4318
+
+Scrape targets
+  [PASS] Prometheus reachable - 6 active targets
+  [PASS] Target up: cadvisor - health=up
+  [PASS] Target up: fineract - health=up
+  [PASS] Target up: node - health=up
+  [PASS] Target up: postgres - health=up
+  [PASS] Target up: prometheus - health=up
+  [PASS] Target up: workload-otel - health=up
+
+Baseline sample
+  1. Infrastructure: 8/8 metrics present
+  2. Application: 4/6 metrics present
+  3. Banking workload: 0/4 metrics present
+  4. Database: 6/6 metrics present
+
+Generating real banking activity (Phase 2 workload generator)
+  [PASS] Workload generated real activity - 127/127 Fineract calls succeeded
+
+Waiting 45s for scrape and export intervals
+
+Per-category results
+
+1. Infrastructure
+    container_cpu_usage_seconds_total                present  136.930841 -> 164.43763199999998  (changed)
+    container_memory_usage_bytes                     present  1804582912.0 -> 2018488320.0  (changed)
+    container_network_receive_bytes_total            present  65556280.0 -> 90642460.0  (changed)
+    container_fs_usage_bytes (machine-level)         present  91088530432.0 -> 91388603392.0  (changed)
+    node_filesystem_avail_bytes                      present  8354822868992.0 -> 8354367537152.0  (changed)
+    node_cpu_seconds_total                           present  90061.93000000001 -> 90460.32  (changed)
+    node_memory_MemAvailable_bytes                   present  5301321728.0 -> 5052858368.0  (changed)
+    node_load1                                       present  2.07 -> 1.56  (changed)
+  [PASS] 1. Infrastructure: metrics present - 8/8
+  [PASS] 1. Infrastructure: values changing - 8 metric(s) appeared or moved during the run
+
+2. Application
+    http_server_requests_seconds_count               present  None -> 134.0  (appeared)
+    http_server_requests_seconds_sum                 present  None -> 11.249075496000001  (appeared)
+    jvm_memory_used_bytes                            present  694305896.0 -> 692329552.0  (changed)
+    jvm_threads_live_threads                         present  61.0 -> 60.0  (changed)
+    hikaricp_connections_active                      present  1.0 -> 1.0
+    process_cpu_usage                                present  0.0 -> 0.0013810420590081608  (changed)
+  [PASS] 2. Application: metrics present - 6/6
+  [PASS] 2. Application: values changing - 5 metric(s) appeared or moved during the run
+
+3. Banking workload
+    aort_workload_operations_total                   present  None -> 127.0  (appeared)
+    aort_workload_operation_duration_seconds_count   present  None -> 127.0  (appeared)
+    aort_workload_operation_duration_seconds_sum     present  None -> 11.67444  (appeared)
+    aort_workload_http_responses_total               present  None -> 127.0  (appeared)
+  [PASS] 3. Banking workload: metrics present - 4/4
+  [PASS] 3. Banking workload: values changing - 4 metric(s) appeared or moved during the run
+
+4. Database
+    pg_up                                            present  1.0 -> 1.0
+    pg_stat_database_numbackends                     present  7.0 -> 7.0
+    pg_stat_database_xact_commit                     present  4617.0 -> 7201.0  (changed)
+    pg_stat_database_blks_hit                        present  462117.0 -> 674859.0  (changed)
+    pg_stat_database_tup_fetched                     present  405063.0 -> 514364.0  (changed)
+    pg_database_size_bytes                           present  23417315.0 -> 25113059.0  (changed)
+  [PASS] 4. Database: metrics present - 6/6
+  [PASS] 4. Database: values changing - 4 metric(s) appeared or moved during the run
+
+========================================================================
+TELEMETRY VALIDATION PASSED - all 16 checks passed
+========================================================================
+Evidence: C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-project\d10d6512-f6a3-49a5-ba9d-9e72093ece94\scratchpad\AORT-AWS\telemetry\validate\runs\telemetry-validation-20260909T230632.json
+CLEAN_SLATE_EXIT=0
+
+[exited with code 0]
