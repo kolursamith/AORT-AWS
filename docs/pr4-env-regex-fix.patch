@@ -1,0 +1,30 @@
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -123,11 +123,24 @@
+         shell: bash
+         run: |
+           set -euo pipefail
+-          if git ls-files | grep -E '(^|/)(\.env|\.env\.|credentials|.*credentials.*|.*\.pem$|.*\.key$|.*\.p12$|.*\.pfx$|.*\.crt$|.*\.jks$)' >/dev/null; then
+-            echo 'Environment or credential files must not be committed.'
++          # Committed *templates* are deliberate and must be allowed. banking/
++          # and telemetry/ each ship a .env.example that is the only
++          # documentation of the configuration those stacks need, and both
++          # READMEs instruct `cp .env.example .env`. The repository .gitignore
++          # explicitly re-includes them while ignoring the real .env files.
++          # File *contents* remain covered by the secret-pattern scan above and
++          # by gitleaks in secret-scan.yml, so this exemption does not weaken
++          # secret detection - it only stops filename matching from rejecting
++          # legitimate templates.
++          matches="$(git ls-files \
++            | grep -E '(^|/)(\.env|\.env\.|credentials|.*credentials.*|.*\.pem$|.*\.key$|.*\.p12$|.*\.pfx$|.*\.crt$|.*\.jks$)' \
++            | grep -vE '\.(example|sample|template)$' || true)"
++          if [ -n "$matches" ]; then
++            echo 'Environment or credential files must not be committed:'
++            printf '  %s\n' $matches
+             exit 1
+           fi
+-          echo 'No .env or credential files tracked.'
++          echo 'No .env or credential files tracked (templates such as *.env.example are allowed).'
+ 
+       - name: Python syntax check (when present)
+         shell: bash
