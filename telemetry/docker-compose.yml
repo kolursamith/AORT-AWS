@@ -1,0 +1,164 @@
+# AORT Phase 3 - Telemetry Validation
+#
+# Composes ALONGSIDE the Phase 2 banking stack rather than replacing it. It
+# joins the network banking/docker-compose.yml already creates, so Prometheus
+# can scrape Fineract and postgres_exporter can reach PostgreSQL by service
+# name.
+#
+# The banking stack MUST be running first:
+#     cd banking    && docker compose up -d
+#     cd telemetry  && docker compose up -d
+#
+# This is the observation layer only. Normalization (layer 5) and the digital
+# twin (layer 6) are later phases and are NOT built here. Grafana is included
+# for human visual verification and is explicitly NOT the digital twin.
+
+name: aort-telemetry
+
+services:
+  # -------------------------------------------------------------------
+  # Metrics store. Scrapes every source; see prometheus/prometheus.yml.
+  # -------------------------------------------------------------------
+  prometheus:
+    image: prom/prometheus:v3.14.0
+    container_name: aort-prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      # Short retention: this is a validation stack, not long-term storage.
+      - --storage.tsdb.retention.time=7d
+      - --web.enable-lifecycle
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - aort_prometheus_data:/prometheus
+    ports:
+      - "${PROMETHEUS_HOST_PORT:-9090}:9090"
+    networks: [banking]
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:9090/-/healthy"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  # -------------------------------------------------------------------
+  # Category 4 - Database. Exposes PostgreSQL connection, transaction,
+  # cache and size statistics from pg_stat_*.
+  # -------------------------------------------------------------------
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:v0.20.1
+    container_name: aort-postgres-exporter
+    environment:
+      # Connects as the superuser so the full pg_stat_* surface is visible.
+      # Local-prototype credentials only - see .env.example.
+      DATA_SOURCE_NAME: "postgresql://${POSTGRES_SUPERUSER:-postgres}:${POSTGRES_SUPERUSER_PASSWORD}@postgres:5432/${FINERACT_TENANT_DEFAULT_DB:-fineract_default}?sslmode=disable"
+      PG_EXPORTER_AUTO_DISCOVER_DATABASES: "true"
+    ports:
+      - "${POSTGRES_EXPORTER_HOST_PORT:-9187}:9187"
+    networks: [banking]
+
+  # -------------------------------------------------------------------
+  # Category 1 - Infrastructure (per container). CPU, memory, network
+  # and filesystem for every running container, including Fineract and
+  # PostgreSQL.
+  # -------------------------------------------------------------------
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.55.1
+    container_name: aort-cadvisor
+    command:
+      # Trim the collected set: without this cAdvisor emits a very large
+      # number of series that are not relevant to this prototype.
+      - --housekeeping_interval=10s
+      - --docker_only=true
+      - --store_container_labels=false
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    privileged: true
+    ports:
+      - "${CADVISOR_HOST_PORT:-8081}:8080"
+    networks: [banking]
+
+  # -------------------------------------------------------------------
+  # Category 1 - Infrastructure (host). On Docker Desktop this reports
+  # the Linux VM hosting the containers, not the Windows host - see
+  # README "Known gaps".
+  # -------------------------------------------------------------------
+  node-exporter:
+    image: prom/node-exporter:v1.12.1
+    container_name: aort-node-exporter
+    command:
+      - --path.rootfs=/host
+      - --collector.disable-defaults
+      - --collector.cpu
+      - --collector.meminfo
+      - --collector.filesystem
+      - --collector.netdev
+      - --collector.loadavg
+      - --collector.diskstats
+    volumes:
+      # rslave propagation is not supported on Docker Desktop / WSL2, which
+      # rejects the container with "path / is mounted on / but it is not a
+      # shared or slave mount". A plain read-only bind works on both.
+      - /:/host:ro
+    pid: host
+    ports:
+      - "${NODE_EXPORTER_HOST_PORT:-9100}:9100"
+    networks: [banking]
+
+  # -------------------------------------------------------------------
+  # Categories 2 and 3 - Application and Banking workload. Receives OTLP
+  # traces and metrics from the Phase 2 workload generator running on the
+  # host, and re-exposes them for Prometheus to scrape.
+  # -------------------------------------------------------------------
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.160.0
+    container_name: aort-otel-collector
+    command: ["--config=/etc/otel/config.yml"]
+    volumes:
+      - ./otel-collector/config.yml:/etc/otel/config.yml:ro
+    ports:
+      - "${OTLP_GRPC_HOST_PORT:-4317}:4317"    # OTLP gRPC
+      - "${OTLP_HTTP_HOST_PORT:-4318}:4318"    # OTLP HTTP
+      - "${OTEL_PROM_HOST_PORT:-8889}:8889"    # Prometheus exposition
+    networks: [banking]
+
+  # -------------------------------------------------------------------
+  # Human visual verification only. This is NOT the digital twin - the
+  # twin is Owner A's custom model in digital-twin/, built later.
+  # -------------------------------------------------------------------
+  grafana:
+    image: grafana/grafana:13.2.1
+    container_name: aort-grafana
+    depends_on: [prometheus]
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - aort_grafana_data:/var/lib/grafana
+    ports:
+      - "${GRAFANA_HOST_PORT:-3000}:3000"
+    networks: [banking]
+
+networks:
+  # Created by banking/docker-compose.yml (project name: aort-banking).
+  # Declared external so this stack attaches to the running banking stack
+  # instead of creating an isolated network of its own.
+  banking:
+    external: true
+    name: aort-banking_default
+
+volumes:
+  aort_prometheus_data:
+    name: aort_prometheus_data
+  aort_grafana_data:
+    name: aort_grafana_data

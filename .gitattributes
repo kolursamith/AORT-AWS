@@ -1,0 +1,6 @@
+# Scripts executed inside Linux containers must keep LF endings even when the
+# repository is checked out on Windows. banking/docker/postgres/initdb/*.sh is
+# run by the postgres entrypoint and fails with CRLF.
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf

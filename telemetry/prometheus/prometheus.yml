@@ -1,0 +1,60 @@
+# AORT Phase 3 - scrape configuration
+#
+# Every target below is a real endpoint on the running stack. Job names map
+# onto the blueprint's four candidate data categories; see telemetry/README.md
+# for the metric names actually observed from each.
+
+global:
+  # Short interval so a validation run produces several data points quickly.
+  scrape_interval: 10s
+  evaluation_interval: 15s
+  external_labels:
+    project: aort
+    phase: "3"
+
+scrape_configs:
+  # Prometheus scraping itself - confirms the scrape loop is alive.
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Category 2 - Application. Fineract's Spring Boot actuator, enabled by
+  # the Phase 2 stack. Note the context path.
+  - job_name: fineract
+    metrics_path: /fineract-provider/actuator/prometheus
+    static_configs:
+      - targets: ["fineract:8080"]
+        labels:
+          component: fineract
+          category: application
+
+  # Category 4 - Database.
+  - job_name: postgres
+    static_configs:
+      - targets: ["postgres-exporter:9187"]
+        labels:
+          component: postgres
+          category: database
+
+  # Category 1 - Infrastructure, per container.
+  - job_name: cadvisor
+    static_configs:
+      - targets: ["cadvisor:8080"]
+        labels:
+          category: infrastructure
+
+  # Category 1 - Infrastructure, host level.
+  - job_name: node
+    static_configs:
+      - targets: ["node-exporter:9100"]
+        labels:
+          category: infrastructure
+
+  # Categories 2 and 3 - Application and Banking workload, from the workload
+  # generator via the OpenTelemetry collector.
+  - job_name: workload-otel
+    static_configs:
+      - targets: ["otel-collector:8889"]
+        labels:
+          component: workload-generator
+          category: banking-workload

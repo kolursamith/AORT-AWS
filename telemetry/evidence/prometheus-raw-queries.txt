@@ -1,0 +1,104 @@
+AORT Phase 3 - raw Prometheus query output
+Captured: 2026-09-09T23:07:24.088417+05:30
+Source   : http://localhost:9090
+==============================================================================
+
+These are unedited responses from the running Prometheus, captured after
+the clean-slate validation run. They are independent of the validation
+script's own reporting.
+
+------------------------------------------------------------------------------
+Scrape target health
+  query: up
+    component=workload-generator                               = 1
+    component=postgres                                         = 1
+    (aggregate)                                                = 1
+    (aggregate)                                                = 1
+    (aggregate)                                                = 1
+    component=fineract                                         = 1
+------------------------------------------------------------------------------
+[1] Container CPU rate by container (cores)
+  query: sum by (name) (rate(container_cpu_usage_seconds_total{name=~"aort-.+"}[5m]))
+    name=aort-grafana                                          = 0.03276554990353185
+    name=aort-fineract                                         = 0.5297707519030944
+    name=aort-node-exporter                                    = 0.0006368293548187047
+    name=aort-postgres-exporter                                = 0.002436903333333334
+    name=aort-otel-collector                                   = 0.00043408192965986375
+    name=aort-postgres                                         = 0.038799958846512474
+    name=aort-cadvisor                                         = 0.005369703703703704
+    name=aort-prometheus                                       = 0.005186472666150776
+------------------------------------------------------------------------------
+[1] Container memory by container (bytes)
+  query: sum by (name) (container_memory_usage_bytes{name=~"aort-.+"})
+    name=aort-grafana                                          = 475566080
+    name=aort-fineract                                         = 1124237312
+    name=aort-node-exporter                                    = 7880704
+    name=aort-postgres-exporter                                = 14512128
+    name=aort-otel-collector                                   = 43335680
+    name=aort-postgres                                         = 296005632
+    name=aort-cadvisor                                         = 48054272
+    name=aort-prometheus                                       = 84942848
+------------------------------------------------------------------------------
+[1] Host load average
+  query: node_load1
+    (aggregate)                                                = 0.91
+------------------------------------------------------------------------------
+[2] Fineract requests by URI (top)
+  query: topk(8, sum by (uri) (http_server_requests_seconds_count))
+    uri=UNKNOWN                                                = 196
+    uri=/actuator/prometheus                                   = 11
+    uri=/actuator/health                                       = 3
+------------------------------------------------------------------------------
+[2] Fineract mean latency by URI (s)
+  query: topk(5, sum by (uri) (http_server_requests_seconds_sum) / sum by (uri) (http_server_requests_seconds_count))
+    uri=UNKNOWN                                                = 0.08389678703061225
+    uri=/actuator/prometheus                                   = 0.01898625018181818
+    uri=/actuator/health                                       = 0.016628037333333335
+------------------------------------------------------------------------------
+[2] Hikari DB pool (Fineract's view of PostgreSQL)
+  query: hikaricp_connections_active or hikaricp_connections_idle
+    application=fineract, component=fineract, pool=HikariPool-1 = 1
+------------------------------------------------------------------------------
+[3] Workload operations by business category
+  query: sum by (aort_category) (aort_workload_operations_total)
+    aort_category=accounting                                   = 7
+    aort_category=bootstrap                                    = 27
+    aort_category=client                                       = 14
+    aort_category=loan                                         = 18
+    aort_category=savings                                      = 23
+    aort_category=transaction                                  = 38
+------------------------------------------------------------------------------
+[3] Workload operations by operation (top)
+  query: topk(10, sum by (aort_operation) (aort_workload_operations_total))
+    aort_operation=savings.deposit                             = 23
+    aort_operation=bootstrap.glaccount.create                  = 14
+    aort_operation=savings.read                                = 11
+    aort_operation=loan.repayment                              = 9
+    aort_operation=client.list                                 = 7
+    aort_operation=savings.withdrawal                          = 6
+    aort_operation=loan.approve                                = 6
+    aort_operation=loan.disburse                               = 6
+    aort_operation=loan.apply                                  = 6
+    aort_operation=savings.activate                            = 4
+------------------------------------------------------------------------------
+[3] Workload outcome split (ok vs error)
+  query: sum by (aort_outcome) (aort_workload_operations_total)
+    aort_outcome=ok                                            = 127
+------------------------------------------------------------------------------
+[3] Span-derived RED metrics
+  query: topk(5, sum by (span_name) (traces_span_metrics_calls_total))
+    span_name=savings.deposit                                  = 23
+    span_name=bootstrap.glaccount.create                       = 14
+    span_name=savings.read                                     = 11
+    span_name=loan.repayment                                   = 9
+    span_name=client.list                                      = 7
+------------------------------------------------------------------------------
+[4] PostgreSQL transactions committed
+  query: pg_stat_database_xact_commit{datname="fineract_default"}
+    component=postgres, datid=16386, datname=fineract_default  = 8593
+------------------------------------------------------------------------------
+[4] PostgreSQL backends / size
+  query: pg_stat_database_numbackends{datname="fineract_default"} or pg_database_size_bytes{datname="fineract_default"}
+    component=postgres, datid=16386, datname=fineract_default  = 8
+    component=postgres, datname=fineract_default               = 25293283
+------------------------------------------------------------------------------
