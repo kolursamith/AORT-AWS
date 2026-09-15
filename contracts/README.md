@@ -72,6 +72,33 @@ provisional record until both owners agree otherwise.
       reconciliation across the four sources?
 - [ ] Only then: promote an agreed subset to a versioned contract here.
 
-### 3. Twin state and scenario descriptors — ⏳ not started
+### 3. I1 — normalized telemetry observation — 🆕 proposed by Layer 1a
+
+**Status: PROVISIONAL (`i1-provisional-0.1`) — not agreed, not frozen.**
+
+Schema: **[i1-observation.provisional-0.1.schema.json](i1-observation.provisional-0.1.schema.json)**
+(JSON Schema draft 2020-12). Producer: `telemetry/normalizer` (Owner B).
+Intended consumer: the operational digital twin, Layer 2 (Owner A).
+
+One record per signal per snapshot: `component_id`, `signal`, `category`,
+`value`, `unit`, a `quality` field, `dimensions`, and a `snapshot_id` shared by
+every record taken at the same Prometheus evaluation instant.
+
+The `quality` field is the part most worth reviewing. `missing`, `non_finite`
+and `ambiguous` observations carry `value: null`, and the schema *rejects* a
+number in those cases, so an absent signal can never be passed off as a zero.
+
+**What Owner A needs to decide:**
+
+- [ ] Is the proposed `component_id` vocabulary (`fineract`, `postgres`,
+      `banking-operations`, `host`) the stable component identity the twin
+      will use?
+- [ ] Is snapshot-per-poll (pull) the right shape, or does the twin want a
+      stream of individual observations?
+- [ ] Does the twin need signals not yet in the catalog? (Backup/replication
+      state is deliberately absent until real backups exist — Layer 1b.)
+- [ ] Only then: freeze as `i1-1.0`.
+
+### 4. Twin state and scenario descriptors — ⏳ not started
 
 Owner A's Phase 4/5 work. Listed so the dependency is visible.

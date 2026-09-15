@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kolursamith/AORT-AWS/contracts/i1-observation.provisional-0.1.schema.json",
+  "title": "AORT I1 - normalized telemetry observation (PROVISIONAL, NOT FROZEN)",
+  "description": "One normalized observation of one signal of one banking-system component, produced by telemetry/normalizer from real Prometheus data. Proposed by Owner B for joint review with Owner A as the Layer 1 -> Layer 2 (digital twin) interface. Must not be treated as frozen until both owners agree.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "observed_at",
+    "component_id",
+    "signal",
+    "category",
+    "value",
+    "unit",
+    "quality",
+    "source",
+    "dimensions"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "i1-provisional-0.1"
+    },
+    "snapshot_id": {
+      "description": "UUID4 shared by every observation taken at the same evaluation instant.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "observed_at": {
+      "description": "Prometheus evaluation time, UTC, millisecond precision.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z$"
+    },
+    "component_id": {
+      "description": "Stable identifier of the banking-system component. Proposed vocabulary; the stable component identity is an open joint decision.",
+      "enum": ["fineract", "postgres", "banking-operations", "host"]
+    },
+    "signal": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "maxLength": 64
+    },
+    "category": {
+      "description": "The blueprint's four candidate telemetry data categories.",
+      "enum": ["infrastructure", "application", "banking_workload", "database"]
+    },
+    "value": {
+      "type": ["number", "null"]
+    },
+    "unit": {
+      "enum": [
+        "boolean",
+        "requests_per_second",
+        "operations_per_second",
+        "transactions_per_second",
+        "ratio",
+        "seconds",
+        "bytes",
+        "cores",
+        "count",
+        "load_average"
+      ]
+    },
+    "quality": {
+      "description": "ok: finite and plausible. out_of_bounds: finite but outside the signal's plausible range (value kept). missing: no series. non_finite: NaN/Inf/unparseable. ambiguous: more series than the signal definition allows. Values are never invented for missing, non_finite or ambiguous observations.",
+      "enum": ["ok", "out_of_bounds", "missing", "non_finite", "ambiguous"]
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dimensions": {
+      "description": "Label breakdown for grouped signals, e.g. {\"aort_category\": \"savings\"}. Empty object for ungrouped signals.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "quality": { "enum": ["ok", "out_of_bounds"] } }
+      },
+      "then": {
+        "properties": { "value": { "type": "number" } }
+      }
+    },
+    {
+      "if": {
+        "properties": { "quality": { "enum": ["missing", "non_finite", "ambiguous"] } }
+      },
+      "then": {
+        "properties": { "value": { "type": "null" } }
+      }
+    }
+  ]
+}
