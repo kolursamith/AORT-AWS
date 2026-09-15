@@ -42,7 +42,13 @@ exporters:
   # Scraped by Prometheus at otel-collector:8889.
   prometheus:
     endpoint: 0.0.0.0:8889
-    send_timestamps: true
+    # false: Prometheus stamps every scrape itself. With true, a workload
+    # counter keeps its last OTel export time once the generator stops,
+    # Prometheus deduplicates each later scrape, and every series ends up with
+    # a single sample - rate() over it is then impossible. Observed live
+    # 2026-09-15 (32/32 series had one sample); guarded by
+    # telemetry/normalizer/tests/test_pipeline_contract.py.
+    send_timestamps: false
     metric_expiration: 10m
     # resource_to_telemetry_conversion is deliberately left at its default
     # (off). Enabling it is deprecated in 0.160 and promoted every resource
