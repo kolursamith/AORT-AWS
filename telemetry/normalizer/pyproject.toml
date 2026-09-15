@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aort-normalizer"
+version = "0.1.0"
+description = "Normalizes AORT Prometheus telemetry into the I1 observation contract"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest==8.3.4",
+    "jsonschema==4.23.0",
+    "pyyaml>=6.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["aort_normalizer*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "live: requires the running banking and telemetry stacks (run with --live)",
+]
