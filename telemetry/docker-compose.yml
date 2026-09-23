@@ -100,11 +100,16 @@ services:
       - --collector.netdev
       - --collector.loadavg
       - --collector.diskstats
+      # Exposes the ledger backup-state metrics the banking stack's db-backup
+      # sidecar writes (backup age is the RPO input).
+      - --collector.textfile
+      - --collector.textfile.directory=/textfile
     volumes:
       # rslave propagation is not supported on Docker Desktop / WSL2, which
       # rejects the container with "path / is mounted on / but it is not a
       # shared or slave mount". A plain read-only bind works on both.
       - /:/host:ro
+      - aort_metrics_textfile:/textfile:ro
     pid: host
     ports:
       - "${NODE_EXPORTER_HOST_PORT:-9100}:9100"
@@ -162,3 +167,9 @@ volumes:
     name: aort_prometheus_data
   aort_grafana_data:
     name: aort_grafana_data
+  # Written by the banking stack's db-backup sidecar; read-only here. External
+  # for the same reason as the network: this stack attaches to what banking
+  # already created rather than making its own copy.
+  aort_metrics_textfile:
+    external: true
+    name: aort_metrics_textfile

@@ -118,6 +118,21 @@ CATALOG: tuple[SignalSpec, ...] = (
                "sum(rate(aort_workload_operation_duration_seconds_count[1m]))",
                "prometheus:job=workload-otel"),
 
+    # ---- postgres: ledger backup state (the RPO input) ---------------------------
+    # Written by the banking stack's db-backup sidecar and exposed through
+    # node-exporter's textfile collector. Before the first successful backup the
+    # last_* series do not exist, so these read as `missing` rather than 0 -
+    # "no backup yet" must never look like "a backup just now".
+    SignalSpec("postgres", "backup_age_seconds", "database", "seconds",
+               "time() - max(aort_backup_last_success_timestamp_seconds)",
+               "prometheus:job=node"),
+    SignalSpec("postgres", "backup_last_size_bytes", "database", "bytes",
+               "max(aort_backup_last_size_bytes)", "prometheus:job=node"),
+    SignalSpec("postgres", "backup_last_duration_seconds", "database", "seconds",
+               "max(aort_backup_last_duration_seconds)", "prometheus:job=node"),
+    SignalSpec("postgres", "backup_failures_total", "database", "count",
+               "max(aort_backup_failures_total)", "prometheus:job=node"),
+
     # ---- host: the machine running the containers --------------------------------
     SignalSpec("host", "load1", "infrastructure", "load_average",
                "max(node_load1)", "prometheus:job=node"),
