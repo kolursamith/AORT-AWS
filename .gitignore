@@ -72,3 +72,6 @@ telemetry/validate/runs/
 # --- Failure injection (Phase 5) ---
 # Injection event records: produced by running experiments, not source.
 infrastructure/injection/runs/
+
+# Recovery experiment records: produced by running experiments, not source.
+infrastructure/recovery/runs/
