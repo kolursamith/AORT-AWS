@@ -128,6 +128,34 @@ independently of the telemetry it perturbs.
       same open question as the stable component identifier above.
 - [ ] Should severity be an explicit field rather than implied by parameters?
 
-### 5. Twin state and scenario descriptors — ⏳ not started
+### 5. I6 — measured recovery outcome — 🆕 proposed by the recovery layer
+
+**Status: PROVISIONAL (`i6-recovery-provisional-0.1`) — not agreed, not frozen.**
+
+Schema: **[i6-recovery-outcome.provisional-0.1.schema.json](i6-recovery-outcome.provisional-0.1.schema.json)**.
+Producer: `infrastructure/recovery` (Owner B). Consumers: the recovery
+optimizer's evaluation (Phase 8) and the results chapter (Phase 11).
+
+What actually happened when a recovery strategy ran against a controlled
+failure, linked to its I4 injection by `injection_id`: measured RTO, RPO
+exposure, availability across the incident, whether the ledger still balanced,
+and banking row counts before and after.
+
+`predicted_rto_seconds` and `predicted_rpo_seconds` are deliberately left
+**null** — they are for the optimizer to fill, so predicted-versus-actual can
+be evaluated rather than assumed.
+
+The schema enforces the honest cases: an outcome with `recovered: false` may
+not carry an RTO, because "never came back" is not a duration.
+
+**What Owner A needs to decide:**
+
+- [ ] Are these the right outcome fields for scoring strategies, or does the
+      optimizer need cost and business-impact fields here too?
+- [ ] Should the optimizer write its predictions into this record, or into a
+      separate prediction record that references `experiment_id`?
+- [ ] Is "two consecutive healthy probes" the right definition of recovered?
+
+### 6. Twin state and scenario descriptors — ⏳ not started
 
 Owner A's Phase 4/5 work. Listed so the dependency is visible.

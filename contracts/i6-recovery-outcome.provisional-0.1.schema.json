@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kolursamith/AORT-AWS/contracts/i6-recovery-outcome.provisional-0.1.schema.json",
+  "title": "AORT I6 - measured recovery outcome (PROVISIONAL, NOT FROZEN)",
+  "description": "What actually happened when a recovery strategy was executed against a controlled failure: measured RTO, the RPO exposure, availability during the incident, and whether the ledger still balanced afterwards. Linked to the I4 injection by injection_id. predicted_* fields are left null here and are for the recovery optimizer (Owner A) to fill, so predicted-versus-actual can be evaluated. Produced by infrastructure/recovery (Owner B).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "experiment_id",
+    "injection_id",
+    "scenario",
+    "component_id",
+    "strategy",
+    "failure_started_at",
+    "recovery_started_at",
+    "recovered_at",
+    "recovered",
+    "rto_seconds",
+    "rpo_seconds",
+    "availability_ratio",
+    "probes_total",
+    "probes_ok",
+    "transaction_integrity",
+    "ledger_rows_before",
+    "ledger_rows_after",
+    "predicted_rto_seconds",
+    "predicted_rpo_seconds",
+    "notes"
+  ],
+  "properties": {
+    "schema_version": { "const": "i6-recovery-provisional-0.1" },
+    "experiment_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "injection_id": {
+      "description": "The I4 injection this recovery responded to.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "scenario": { "enum": ["service_stop", "service_pause", "cpu_throttle", "backup_stop"] },
+    "component_id": { "enum": ["fineract", "postgres", "backup"] },
+    "strategy": {
+      "description": "restart_service: start a stopped container. unpause_service: release a frozen one. restore_from_backup: rebuild the ledger from the newest dump.",
+      "enum": ["restart_service", "unpause_service", "restore_from_backup"]
+    },
+    "failure_started_at": { "$ref": "#/$defs/timestamp" },
+    "recovery_started_at": { "$ref": "#/$defs/timestamp" },
+    "recovered_at": {
+      "description": "Null when the service never came back within the observation window.",
+      "oneOf": [{ "$ref": "#/$defs/timestamp" }, { "type": "null" }]
+    },
+    "recovered": { "type": "boolean" },
+    "rto_seconds": {
+      "description": "Measured: failure start until the service was observed healthy again. Null when it never recovered - never 0, which would claim instant recovery.",
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "rpo_seconds": {
+      "description": "Data-loss exposure: how much banking activity sat between the newest usable backup and the failure. Null when not applicable or unknown.",
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "availability_ratio": {
+      "description": "Share of probes that succeeded across the incident window.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "probes_total": { "type": "integer", "minimum": 1 },
+    "probes_ok": { "type": "integer", "minimum": 0 },
+    "transaction_integrity": {
+      "description": "balanced: debits equal credits after recovery. unbalanced: they do not, which is a correctness failure. unknown: could not be checked.",
+      "enum": ["balanced", "unbalanced", "unknown"]
+    },
+    "ledger_rows_before": { "$ref": "#/$defs/rowCounts" },
+    "ledger_rows_after": { "$ref": "#/$defs/rowCounts" },
+    "predicted_rto_seconds": { "type": ["number", "null"], "minimum": 0 },
+    "predicted_rpo_seconds": { "type": ["number", "null"], "minimum": 0 },
+    "notes": { "type": ["string", "null"] }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "recovered": { "const": false } } },
+      "then": {
+        "properties": {
+          "rto_seconds": { "type": "null" },
+          "recovered_at": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "recovered": { "const": true } } },
+      "then": {
+        "properties": {
+          "rto_seconds": { "type": "number" },
+          "recovered_at": { "$ref": "#/$defs/timestamp" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z$"
+    },
+    "rowCounts": {
+      "description": "Banking table row counts, e.g. {\"m_client\": 12}.",
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    }
+  }
+}
