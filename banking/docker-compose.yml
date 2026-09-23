@@ -110,6 +110,46 @@ services:
       retries: 60
       start_period: 60s
 
+  # -------------------------------------------------------------------
+  # Ledger backups. A real pg_dump of the Fineract tenant database on a
+  # loop, plus backup-state metrics for node-exporter's textfile
+  # collector. Backup age is the input for RPO, and these dumps are what
+  # a restore-based recovery strategy actually restores from.
+  #
+  # No restart policy, like the rest of this stack: a sidecar that
+  # silently restarted itself would mask an injected failure in Phase 5.
+  # -------------------------------------------------------------------
+  db-backup:
+    image: postgres:16.1
+    container_name: aort-db-backup
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGHOST: postgres
+      PGUSER: ${POSTGRES_SUPERUSER}
+      PGPASSWORD: ${POSTGRES_SUPERUSER_PASSWORD}
+      AORT_BACKUP_DATABASE: ${FINERACT_TENANT_DEFAULT_DB}
+      AORT_BACKUP_INTERVAL_SECONDS: ${AORT_BACKUP_INTERVAL_SECONDS:-60}
+      AORT_BACKUP_KEEP: ${AORT_BACKUP_KEEP:-5}
+    entrypoint: ["/bin/sh", "/opt/aort/backup-loop.sh"]
+    volumes:
+      - ./backup/backup-loop.sh:/opt/aort/backup-loop.sh:ro
+      - aort_backups:/backups
+      - aort_metrics_textfile:/textfile
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /textfile/aort_backup.prom"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
 volumes:
   aort_pgdata:
     name: aort_pgdata
+  aort_backups:
+    name: aort_backups
+  # Shared with node-exporter in the telemetry stack, which mounts it as an
+  # external volume to expose the backup-state metrics.
+  aort_metrics_textfile:
+    name: aort_metrics_textfile
