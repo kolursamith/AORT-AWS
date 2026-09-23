@@ -99,9 +99,84 @@ Rough `ap-south-1` on-demand estimate, **not** a measured bill:
 | CloudWatch Logs (7-day retention) | well under US$1/month |
 | **Total, running continuously** | **~US$35/month** |
 
-Stopping the instance between sessions removes almost all of it. None of this
-is free-tier guaranteed; a t3.micro is free-tier eligible but **too small** for
-Fineract plus PostgreSQL plus the telemetry stack.
+Stopping the instance between sessions removes almost all of it.
+
+## Can the Free Tier cover this?
+
+**Yes, for a project of this size — but on credits, not on free hours, and the
+instance must be one of the larger Free Tier eligible types.**
+
+### What the stack actually needs
+
+Measured with `docker stats` against the full running stack, not estimated:
+
+| Container | Resident memory |
+|---|---|
+| fineract | 1.17 GiB |
+| grafana | 601 MiB |
+| postgres | 261 MiB |
+| cadvisor | 149 MiB |
+| prometheus | 104 MiB |
+| otel-collector | 44 MiB |
+| postgres-exporter | 17 MiB |
+| node-exporter | 9 MiB |
+| db-backup | 1 MiB |
+| **Total** | **3.19 GiB** |
+
+Add the host OS and Docker itself and the floor is roughly 4 GiB. Fineract
+alone exceeds a 1 GiB instance, so **t3.micro cannot run this**, and t3.small
+(2 GiB) cannot either.
+
+### What the Free Tier offers
+
+AWS replaced the Free Tier on **2025-07-15**, and the two schemes are not alike:
+
+| | Account created before 2025-07-15 | Account created on or after 2025-07-15 |
+|---|---|---|
+| Eligible EC2 types | `t2.micro`, `t3.micro` | `t3.micro`, `t3.small`, `t4g.micro`, `t4g.small`, `c7i-flex.large`, `m7i-flex.large` |
+| Model | 750 instance-hours/month | USD $100 sign-up credit, up to $100 more earned |
+| Duration | 12 months | 6 months, or until credits run out |
+
+The newer scheme is the useful one here: **`m7i-flex.large` (2 vCPU, 8 GiB) and
+`c7i-flex.large` (2 vCPU, 4 GiB) are Free Tier eligible** and both clear the
+3.19 GiB measurement. The older 750-hour scheme is useless to us — every type
+it covers is too small.
+
+### Does the credit stretch far enough?
+
+At `us-east-1` list price for `m7i-flex.large` (~US$0.0958/hour — a published
+list rate, not a bill we have paid, and Mumbai is somewhat higher):
+
+| Budget | Continuous hours | In practice |
+|---|---|---|
+| $100 sign-up credit | ~1,040 h (~43 days) | ~260 four-hour experiment sessions |
+| $200 with earned credits | ~2,080 h | capped by the 6-month expiry first |
+
+A disaster-recovery experiment runs for minutes, not weeks. Even the sign-up
+credit alone is far more than this project can consume, **provided the instance
+is stopped between sessions.** Left running 24×7 it burns the whole $100 in
+about six weeks.
+
+### The catch worth knowing before you sign up
+
+On the **free plan**, when credits run out *the account closes* and AWS keeps
+your data for 90 days. This stack's whole point is producing evidence, and the
+S3 bucket is `Retain` precisely so evidence survives stack deletion — account
+closure defeats that. Two ways to avoid it:
+
+- Pull the backups and measurement outputs off S3 before the 6 months expire, or
+- Choose the **paid plan** and set an AWS Budgets alarm at a few dollars, so
+  credits still apply but the account does not close underneath the evidence.
+
+### Recommendation
+
+Local-first still stands: the stack demonstrates the full chain on a laptop and
+every result in this repository was produced that way. Use AWS for a deliberate
+demonstration window — `m7i-flex.large`, started for the session, stopped after
+— rather than as the permanent home of the experiment.
+
+Free Tier terms change; re-read [aws.amazon.com/free](https://aws.amazon.com/free/)
+before relying on any of the above.
 
 ## Files
 

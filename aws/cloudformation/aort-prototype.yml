@@ -26,11 +26,13 @@ Parameters:
   InstanceType:
     Type: String
     Default: t3.medium
-    AllowedValues: [t3.small, t3.medium, t3.large]
+    AllowedValues: [t3.small, t3.medium, t3.large, c7i-flex.large, m7i-flex.large]
     Description: >-
-      Fineract, PostgreSQL, Prometheus and the exporters need roughly 4 GB of
-      memory together, so t3.medium is the realistic minimum. Constrained so
-      the bill cannot grow by a typo.
+      The whole stack was measured at 3.19 GiB resident, so t3.medium (4 GiB)
+      is the realistic minimum and t3.small (2 GiB) will not hold it.
+      c7i-flex.large (4 GiB) and m7i-flex.large (8 GiB) are the Free Tier
+      eligible types for accounts created on or after 2025-07-15 - see
+      aws/README.md. Constrained so the bill cannot grow by a typo.
 
   VpcId:
     Type: AWS::EC2::VPC::Id
