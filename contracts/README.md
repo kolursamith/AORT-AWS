@@ -95,10 +95,39 @@ number in those cases, so an absent signal can never be passed off as a zero.
       will use?
 - [ ] Is snapshot-per-poll (pull) the right shape, or does the twin want a
       stream of individual observations?
-- [ ] Does the twin need signals not yet in the catalog? (Backup/replication
-      state is deliberately absent until real backups exist — Layer 1b.)
 - [ ] Only then: freeze as `i1-1.0`.
 
-### 4. Twin state and scenario descriptors — ⏳ not started
+Backup/replication state has since been added (Layer 1b) as four signals on the
+existing `postgres` component — `backup_age_seconds` (the RPO input),
+`backup_last_size_bytes`, `backup_last_duration_seconds`,
+`backup_failures_total`. That needed **no change to this schema**: no new
+component, no version bump.
+
+### 4. I4 — controlled failure injection event — 🆕 proposed by Phase 5
+
+**Status: PROVISIONAL (`i4-injection-provisional-0.1`) — not agreed, not frozen.**
+
+Schema: **[i4-injection-event.provisional-0.1.schema.json](i4-injection-event.provisional-0.1.schema.json)**.
+Producer: `infrastructure/injection` (Owner B). Consumers: the experiment
+dataset (Phase 6) and supervised learning (Phase 7).
+
+One record per phase of an injection (`start`, `end`, or `failed`), sharing an
+`injection_id`: which `scenario`, which `component_id`, which container, the
+parameters, and the exact UTC time. These are the **labels** — a metric moving
+is evidence only once the moment a failure began and ended is recorded
+independently of the telemetry it perturbs.
+
+**What Owner A needs to decide** (scenario semantics are yours):
+
+- [ ] Are `service_stop`, `service_pause`, `cpu_throttle` and `backup_stop` the
+      right scenario vocabulary, and what should compound scenarios look like?
+- [ ] Does the twin need a separate *scenario descriptor* (I3) that this event
+      references, or is the event itself enough?
+- [ ] `component_id` here is `fineract | postgres | backup`, while I1 reports
+      backup state as signals on `postgres`. Which identity wins? This is the
+      same open question as the stable component identifier above.
+- [ ] Should severity be an explicit field rather than implied by parameters?
+
+### 5. Twin state and scenario descriptors — ⏳ not started
 
 Owner A's Phase 4/5 work. Listed so the dependency is visible.
