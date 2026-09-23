@@ -1,0 +1,9 @@
+experiment: service_pause on fineract, failure 20s
+--- measured ---
+  recovered          : True
+  RTO (actual)       : 50.4 s
+  RPO exposure       : 31.9 s
+  availability       : 16.67% (2/12 probes)
+  ledger integrity   : balanced
+  rows before/after  : {'m_client': 9, 'm_savings_account': 9, 'm_loan': 14, 'acc_gl_journal_entry': 210} / {'m_client': 9, 'm_savings_account': 9, 'm_loan': 14, 'acc_gl_journal_entry': 210}
+  outcome written to : infrastructure\recovery\evidence\outcomes.jsonl

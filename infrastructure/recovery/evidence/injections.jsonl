@@ -1,0 +1,2 @@
+{"schema_version": "i4-injection-provisional-0.1", "injection_id": "962846f2-4124-4df8-8a40-2e0ae75d2776", "phase": "start", "scenario": "service_pause", "component_id": "fineract", "container": "aort-fineract", "parameters": {}, "at": "2026-09-23T16:15:23.964Z", "error": null}
+{"schema_version": "i4-injection-provisional-0.1", "injection_id": "962846f2-4124-4df8-8a40-2e0ae75d2776", "phase": "end", "scenario": "service_pause", "component_id": "fineract", "container": "aort-fineract", "parameters": {}, "at": "2026-09-23T16:16:14.260Z", "error": null}
