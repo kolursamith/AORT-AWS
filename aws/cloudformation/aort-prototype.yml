@@ -1,0 +1,251 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: >-
+  AORT banking disaster-recovery prototype - minimal AWS footprint.
+  Runs the existing Docker banking and telemetry stacks on one EC2 instance,
+  stores ledger backups in S3, and publishes logs and metrics to CloudWatch.
+  Only the services classified CORE are provisioned: EC2, S3, IAM, CloudWatch.
+  RDS, Lambda, Step Functions, DynamoDB, SageMaker, Cognito and Elastic
+  Disaster Recovery are deliberately absent - see aws/README.md.
+
+Parameters:
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Existing EC2 key pair used for SSH access to the instance.
+
+  AllowedSshCidr:
+    Type: String
+    Default: 127.0.0.1/32
+    AllowedPattern: ^(\d{1,3}\.){3}\d{1,3}/\d{1,2}$
+    ConstraintDescription: Must be a CIDR range, for example 203.0.113.4/32.
+    Description: >-
+      Your own address range, as narrow as possible. The default cannot reach
+      the instance on purpose: a world-reachable SSH port on a host holding
+      banking backups is not an acceptable default.
+
+  InstanceType:
+    Type: String
+    Default: t3.medium
+    AllowedValues: [t3.small, t3.medium, t3.large]
+    Description: >-
+      Fineract, PostgreSQL, Prometheus and the exporters need roughly 4 GB of
+      memory together, so t3.medium is the realistic minimum. Constrained so
+      the bill cannot grow by a typo.
+
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC for the security group, typically the account's default VPC.
+
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+    Description: Public subnet in that VPC; the instance needs outbound internet to pull images.
+
+  LatestAmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id
+    Description: Resolved from the SSM public parameter, so no AMI id is hard-coded per region.
+
+  RepositoryUrl:
+    Type: String
+    Default: https://github.com/kolursamith/AORT-AWS.git
+    Description: Public repository cloned on boot to obtain the compose stacks.
+
+  RepositoryBranch:
+    Type: String
+    Default: develop
+    Description: Branch to deploy.
+
+Resources:
+  # ---------------------------------------------------------------------------
+  # Ledger backups. Retained on stack deletion: deleting the experiment must
+  # not delete the evidence it produced.
+  # ---------------------------------------------------------------------------
+  BackupBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: ExpireSupersededVersions
+            Status: Enabled
+            NoncurrentVersionExpirationInDays: 14
+          - Id: ExpireOldBackups
+            Status: Enabled
+            Prefix: backups/
+            ExpirationInDays: 30
+
+  BackupBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref BackupBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: DenyUnencryptedTransport
+            Effect: Deny
+            Principal: "*"
+            Action: s3:*
+            Resource:
+              - !GetAtt BackupBucket.Arn
+              - !Sub "${BackupBucket.Arn}/*"
+            Condition:
+              Bool:
+                aws:SecureTransport: false
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aort/${AWS::StackName}"
+      RetentionInDays: 7
+
+  # ---------------------------------------------------------------------------
+  # Least privilege: the instance may write its own backups and its own logs,
+  # and publish metrics only under this project's namespace. Nothing else.
+  # ---------------------------------------------------------------------------
+  InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LedgerBackupAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                Resource: !Sub "${BackupBucket.Arn}/backups/*"
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                  - s3:GetBucketLocation
+                Resource: !GetAtt BackupBucket.Arn
+        - PolicyName: TelemetryPublishing
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - logs:DescribeLogStreams
+                Resource: !GetAtt LogGroup.Arn
+              - Effect: Allow
+                Action: [cloudwatch:PutMetricData]
+                Resource: "*"
+                Condition:
+                  StringEquals:
+                    cloudwatch:namespace: AORT/Banking
+
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref InstanceRole
+
+  # ---------------------------------------------------------------------------
+  # SSH only, from one declared range. The dashboards are NOT exposed; reach
+  # them through the SSH tunnel in the stack outputs.
+  # ---------------------------------------------------------------------------
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: AORT prototype - SSH from the operator range only
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref AllowedSshCidr
+          Description: SSH from the operator
+      Tags:
+        - Key: Project
+          Value: AORT
+
+  BankingInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      IamInstanceProfile: !Ref InstanceProfile
+      NetworkInterfaces:
+        - DeviceIndex: "0"
+          AssociatePublicIpAddress: true
+          SubnetId: !Ref SubnetId
+          GroupSet:
+            - !Ref InstanceSecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 30
+            VolumeType: gp3
+            Encrypted: true
+            DeleteOnTermination: true
+      Tags:
+        - Key: Name
+          Value: !Sub "${AWS::StackName}-banking"
+        - Key: Project
+          Value: AORT
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          set -euxo pipefail
+          # Thin shim: install git and docker, clone the repository, then run
+          # the maintained bootstrap script from aws/scripts/user-data.sh so
+          # the real logic lives in version control, not in this template.
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get update -y
+          apt-get install -y git ca-certificates curl
+          install -m 0755 -d /etc/apt/keyrings
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+          chmod a+r /etc/apt/keyrings/docker.asc
+          echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu jammy stable" \
+            > /etc/apt/sources.list.d/docker.list
+          apt-get update -y
+          apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+          git clone --branch ${RepositoryBranch} ${RepositoryUrl} /opt/aort
+          AORT_BACKUP_BUCKET=${BackupBucket} \
+          AORT_LOG_GROUP=${LogGroup} \
+          AORT_REGION=${AWS::Region} \
+            bash /opt/aort/aws/scripts/user-data.sh
+
+Outputs:
+  BackupBucketName:
+    Description: S3 bucket holding ledger backups (retained if the stack is deleted).
+    Value: !Ref BackupBucket
+
+  InstanceId:
+    Description: EC2 instance running the banking and telemetry stacks.
+    Value: !Ref BankingInstance
+
+  SshTunnelCommand:
+    Description: >-
+      Reach Fineract, Prometheus and Grafana locally. Nothing is published to
+      the internet, so a tunnel is the intended access path.
+    Value: !Sub >-
+      ssh -i <your-key>.pem -L 8080:localhost:8080 -L 9090:localhost:9090
+      -L 3000:localhost:3000 ubuntu@${BankingInstance.PublicDnsName}
+
+  LogGroupName:
+    Description: CloudWatch log group for the stack's logs.
+    Value: !Ref LogGroup
