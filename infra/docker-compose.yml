@@ -1,0 +1,67 @@
+name: aort-aws
+
+services:
+  postgres:
+    image: postgres:16.4-alpine
+    environment:
+      POSTGRES_DB: aort
+      POSTGRES_USER: aort
+      POSTGRES_PASSWORD: aort_local_only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aort -d aort"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - aort-postgres:/var/lib/postgresql/data
+
+  controller:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.controller
+    environment:
+      AORT_CONTROLLER_MODE: fixed
+      AORT_FIXED_BUDGET_RPS: 5
+    ports: ["8005:8005"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8005/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  switch:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.backend
+    environment:
+      APP_MODULE: backend.switch.api:app
+      AORT_DATABASE_URL: postgresql+psycopg://aort:aort_local_only@postgres:5432/aort
+      AORT_FIXED_BUDGET_RPS: 5
+    ports: ["8000:8000"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  remitter:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.backend
+    environment:
+      APP_MODULE: backend.remitter.api:app
+    ports: ["8001:8000"]
+
+  beneficiary:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.backend
+    environment:
+      APP_MODULE: backend.beneficiary.api:app
+    ports: ["8002:8000"]
+
+volumes:
+  aort-postgres:

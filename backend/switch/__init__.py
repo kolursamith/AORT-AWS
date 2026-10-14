@@ -1,0 +1,1 @@
+"""Mock payment switch."""

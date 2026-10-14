@@ -1,0 +1,1 @@
+"""Authoritative PostgreSQL ledger primitives."""

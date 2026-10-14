@@ -1,0 +1,76 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "budget_rps": {
+      "maximum": 1000000,
+      "minimum": 0,
+      "title": "Budget Rps",
+      "type": "number"
+    },
+    "decision_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "decision_reason": {
+      "maxLength": 512,
+      "minLength": 1,
+      "title": "Decision Reason",
+      "type": "string"
+    },
+    "experiment_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Experiment Id",
+      "type": "string"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "predicted_delay_ms": {
+      "maximum": 3600000,
+      "minimum": 0,
+      "title": "Predicted Delay Ms",
+      "type": "number"
+    },
+    "predicted_new_ambiguous": {
+      "minimum": 0,
+      "title": "Predicted New Ambiguous",
+      "type": "integer"
+    },
+    "route_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Route Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selected_transaction_ids": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+        "type": "string"
+      },
+      "maxItems": 10000,
+      "title": "Selected Transaction Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "experiment_id",
+    "route_id",
+    "decision_id",
+    "budget_rps",
+    "selected_transaction_ids",
+    "predicted_delay_ms",
+    "predicted_new_ambiguous",
+    "decision_reason",
+    "expires_at"
+  ],
+  "title": "RecoveryDecision",
+  "type": "object"
+}

@@ -1,0 +1,10 @@
+FROM python:3.12.8-slim
+WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+COPY pyproject.toml README.md ./
+COPY contracts ./contracts
+COPY intelligence ./intelligence
+COPY backend ./backend
+RUN python -m pip install --no-cache-dir .
+USER 65532:65532
+CMD ["uvicorn", "intelligence.controller.api:app", "--host", "0.0.0.0", "--port", "8005"]

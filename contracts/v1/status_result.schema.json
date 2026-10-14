@@ -1,0 +1,73 @@
+{
+  "$defs": {
+    "StatusOutcome": {
+      "enum": [
+        "unknown",
+        "credited",
+        "not_credited"
+      ],
+      "title": "StatusOutcome",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "authoritative": {
+      "title": "Authoritative",
+      "type": "boolean"
+    },
+    "check_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Check Id",
+      "type": "string"
+    },
+    "evidence_source_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evidence Source Id"
+    },
+    "latency_ms": {
+      "maximum": 3600000,
+      "minimum": 0,
+      "title": "Latency Ms",
+      "type": "number"
+    },
+    "outcome": {
+      "$ref": "#/$defs/StatusOutcome"
+    },
+    "response_version": {
+      "minimum": 1,
+      "title": "Response Version",
+      "type": "integer"
+    },
+    "route_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Route Id",
+      "type": "string"
+    },
+    "transaction_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Transaction Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "transaction_id",
+    "route_id",
+    "check_id",
+    "outcome",
+    "authoritative",
+    "response_version",
+    "latency_ms"
+  ],
+  "title": "StatusCheckResult",
+  "type": "object"
+}

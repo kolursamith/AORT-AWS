@@ -1,0 +1,115 @@
+{
+  "$defs": {
+    "EventType": {
+      "enum": [
+        "payment_initiated",
+        "payment_timeout",
+        "status_requested",
+        "status_resolved",
+        "escalated"
+      ],
+      "title": "EventType",
+      "type": "string"
+    },
+    "FinancialOutcome": {
+      "enum": [
+        "unknown",
+        "credited",
+        "not_credited"
+      ],
+      "title": "FinancialOutcome",
+      "type": "string"
+    },
+    "WorkflowState": {
+      "enum": [
+        "initiated",
+        "ambiguous",
+        "check_pending",
+        "resolved",
+        "escalated"
+      ],
+      "title": "WorkflowState",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "amount_minor": {
+      "maximum": 1000000000000,
+      "minimum": 1,
+      "title": "Amount Minor",
+      "type": "integer"
+    },
+    "bank_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Bank Id",
+      "type": "string"
+    },
+    "currency": {
+      "pattern": "^[A-Z]{3}$",
+      "title": "Currency",
+      "type": "string"
+    },
+    "event_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "event_type": {
+      "$ref": "#/$defs/EventType"
+    },
+    "experiment_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Experiment Id",
+      "type": "string"
+    },
+    "financial_outcome": {
+      "$ref": "#/$defs/FinancialOutcome"
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "title": "Occurred At",
+      "type": "string"
+    },
+    "route_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Route Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "transaction_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Transaction Id",
+      "type": "string"
+    },
+    "version": {
+      "minimum": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "workflow_state": {
+      "$ref": "#/$defs/WorkflowState"
+    }
+  },
+  "required": [
+    "event_id",
+    "experiment_id",
+    "transaction_id",
+    "bank_id",
+    "route_id",
+    "amount_minor",
+    "currency",
+    "event_type",
+    "financial_outcome",
+    "workflow_state",
+    "version",
+    "occurred_at"
+  ],
+  "title": "TransactionEvent",
+  "type": "object"
+}

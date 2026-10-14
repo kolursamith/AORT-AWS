@@ -1,0 +1,11 @@
+# Both developers are listed so the non-author can satisfy the one-approval rule.
+# The trusted ownership workflow enforces which author may change strict modules.
+* @kolursamith @girinandanv9845-ship-it
+
+/.github/ @kolursamith @girinandanv9845-ship-it
+/contracts/ @kolursamith @girinandanv9845-ship-it
+/tests/contracts/ @kolursamith @girinandanv9845-ship-it
+/docs/ @kolursamith @girinandanv9845-ship-it
+/README.md @kolursamith @girinandanv9845-ship-it
+/pyproject.toml @kolursamith @girinandanv9845-ship-it
+/requirements.txt @kolursamith @girinandanv9845-ship-it

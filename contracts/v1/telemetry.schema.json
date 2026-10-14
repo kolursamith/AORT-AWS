@@ -1,0 +1,87 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "check_rps": {
+      "maximum": 1000000,
+      "minimum": 0,
+      "title": "Check Rps",
+      "type": "number"
+    },
+    "experiment_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Experiment Id",
+      "type": "string"
+    },
+    "observed_throughput_rps": {
+      "maximum": 1000000,
+      "minimum": 0,
+      "title": "Observed Throughput Rps",
+      "type": "number"
+    },
+    "p95_latency_ms": {
+      "maximum": 3600000,
+      "minimum": 0,
+      "title": "P95 Latency Ms",
+      "type": "number"
+    },
+    "payment_rps": {
+      "maximum": 1000000,
+      "minimum": 0,
+      "title": "Payment Rps",
+      "type": "number"
+    },
+    "queue_depth": {
+      "maximum": 100000000,
+      "minimum": 0,
+      "title": "Queue Depth",
+      "type": "integer"
+    },
+    "route_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Route Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sequence": {
+      "minimum": 0,
+      "title": "Sequence",
+      "type": "integer"
+    },
+    "source_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "timeout_rate": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Timeout Rate",
+      "type": "number"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "title": "Timestamp",
+      "type": "string"
+    }
+  },
+  "required": [
+    "experiment_id",
+    "route_id",
+    "timestamp",
+    "payment_rps",
+    "check_rps",
+    "observed_throughput_rps",
+    "p95_latency_ms",
+    "timeout_rate",
+    "queue_depth",
+    "source_id",
+    "sequence"
+  ],
+  "title": "RouteTelemetry",
+  "type": "object"
+}
