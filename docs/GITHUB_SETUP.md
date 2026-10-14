@@ -13,7 +13,8 @@ gh repo view kolursamith/AORT-AWS --json nameWithOwner,visibility,defaultBranchR
 If the repository does not exist, create it only after authentication:
 
 ```bash
-gh repo create kolursamith/AORT-AWS --private --source=. --remote=origin
+gh repo create kolursamith/AORT-AWS --private
+git remote -v  # origin is already configured to the intended URL
 ```
 
 Do not recreate it if `gh repo view` succeeds. Push the initial setup branch, review it, then establish `main`, `developer`, `feature/intelligence`, and `feature/backend` without force pushes.
