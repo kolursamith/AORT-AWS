@@ -1,0 +1,13 @@
+{
+  "event_id": "evt-1004",
+  "schema_version": "1.0",
+  "timestamp": "2026-10-14T10:00:18Z",
+  "transaction_id": "TXN1001",
+  "route_id": "A1-B",
+  "bank_id": "A1",
+  "amount_paise": 100000,
+  "event_type": "STATUS_RESPONSE",
+  "transaction_version": 2,
+  "correlation_id": "exp-001",
+  "payload": {"status": "FAILED", "switch_reference": "SW-TXN1001", "note": "deliver twice to exercise replay protection"}
+}

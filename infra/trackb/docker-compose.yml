@@ -1,0 +1,139 @@
+# AORTS Track B - local orchestration. SYNTHETIC MOCK ENVIRONMENT, no real banks.
+# Run from the repository root:  docker compose --env-file .env -f infra/trackb/docker-compose.yml up -d --build
+# Ports are bound to 127.0.0.1 only. Secrets come from ./.env (python infra/trackb/scripts/generate_env.py).
+name: aorts
+
+x-aorts-env: &aorts-env
+  AORTS_DATABASE_URL: postgresql+psycopg://aorts:${POSTGRES_PASSWORD:?run infra/trackb/scripts/generate_env.py}@db:5432/aorts
+  AORTS_REMITTER_URL: http://remitter:8100
+  AORTS_SWITCH_URL: http://switch:8110
+  AORTS_BENEFICIARY_URLS: B=http://beneficiary-b:8121,C=http://beneficiary-c:8122
+  AORTS_CONTROL_URL: http://control:8130
+  AORTS_ENVIRONMENT: local
+  AORTS_SWITCH_CHECK_WORKERS: "8"   # status-check bulkhead (separate pool from payments)
+
+x-aorts-service: &aorts-service
+  image: aorts-trackb:local
+  env_file: ../../.env
+  restart: unless-stopped
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+  volumes:
+    - ../../results:/app/results
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: aorts-postgres
+    environment:
+      POSTGRES_USER: aorts
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run infra/trackb/scripts/generate_env.py}
+      POSTGRES_DB: aorts
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aorts -d aorts"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  migrate:
+    image: aorts-trackb:local
+    build:
+      context: ../..
+      dockerfile: infra/trackb/Dockerfile
+    env_file: ../../.env
+    environment: *aorts-env
+    command: ["sh", "-c", "alembic -c backend/aorts/alembic.ini upgrade head && python -m backend.aorts.app.seed"]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  switch:
+    <<: *aorts-service
+    environment:
+      <<: *aorts-env
+      AORTS_SERVICE_NAME: switch
+      PORT: "8110"
+    command: ["uvicorn", "--factory", "backend.aorts.banking.switch.main:build", "--host", "0.0.0.0", "--port", "8110"]
+    ports: ["127.0.0.1:8110:8110"]
+    healthcheck: &health
+      test: ["CMD", "python", "-c", "import os,urllib.request; urllib.request.urlopen(f'http://localhost:{os.environ[\"PORT\"]}/api/v1/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  beneficiary-b:
+    <<: *aorts-service
+    environment:
+      <<: *aorts-env
+      AORTS_SERVICE_NAME: beneficiary-B
+      AORTS_BANK_ID: B
+      PORT: "8121"
+    command: ["uvicorn", "--factory", "backend.aorts.banking.beneficiary.main:build", "--host", "0.0.0.0", "--port", "8121"]
+    ports: ["127.0.0.1:8121:8121"]
+    healthcheck: *health
+
+  beneficiary-c:
+    <<: *aorts-service
+    environment:
+      <<: *aorts-env
+      AORTS_SERVICE_NAME: beneficiary-C
+      AORTS_BANK_ID: C
+      PORT: "8122"
+    command: ["uvicorn", "--factory", "backend.aorts.banking.beneficiary.main:build", "--host", "0.0.0.0", "--port", "8122"]
+    ports: ["127.0.0.1:8122:8122"]
+    healthcheck: *health
+
+  remitter:
+    <<: *aorts-service
+    environment:
+      <<: *aorts-env
+      AORTS_SERVICE_NAME: remitter
+      PORT: "8100"
+    command: ["uvicorn", "--factory", "backend.aorts.banking.remitter.main:build", "--host", "0.0.0.0", "--port", "8100"]
+    ports: ["127.0.0.1:8100:8100"]
+    healthcheck: *health
+
+  dispatcher:
+    <<: *aorts-service
+    environment:
+      <<: *aorts-env
+      AORTS_SERVICE_NAME: dispatcher
+    command: ["python", "-m", "backend.aorts.banking.dispatcher.service"]
+
+  control:
+    <<: *aorts-service
+    environment:
+      <<: *aorts-env
+      AORTS_SERVICE_NAME: control
+      PORT: "8130"
+    command: ["uvicorn", "--factory", "backend.aorts.control.main:build", "--host", "0.0.0.0", "--port", "8130"]
+    ports: ["127.0.0.1:8130:8130"]
+    healthcheck: *health
+
+  dashboard:
+    image: aorts-trackb-dashboard:local
+    build:
+      context: ../..
+      dockerfile: infra/trackb/Dockerfile
+      args:
+        REQUIREMENTS: requirements-dashboard.txt
+    env_file: ../../.env
+    environment:
+      AORTS_CONTROL_URL: http://control:8130
+    command: ["streamlit", "run", "backend/aorts/dashboard/app.py", "--server.port", "8501", "--server.address", "0.0.0.0",
+              "--browser.gatherUsageStats", "false"]
+    ports: ["127.0.0.1:8501:8501"]
+    depends_on:
+      control:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:

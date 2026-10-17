@@ -1,0 +1,7 @@
+.venv
+.env
+.git
+__pycache__
+results
+cloud/cdk/cdk.out
+*.pyc

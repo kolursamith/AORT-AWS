@@ -1,0 +1,15 @@
+{
+  "event_id": "tel-2001",
+  "schema_version": "1.0",
+  "source_id": "twin-probe-1",
+  "route_id": "A1-B",
+  "sequence": 17,
+  "timestamp": "2026-10-14T10:00:15Z",
+  "latency_p50_ms": 42.0,
+  "latency_p95_ms": 120.0,
+  "throughput_tps": 35.0,
+  "timeout_rate": 0.01,
+  "backlog": 4,
+  "health_score": 0.93,
+  "correlation_id": "exp-001"
+}
