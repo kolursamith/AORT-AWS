@@ -19,6 +19,18 @@
   cannot attribute primary-payment protection to AORTS specifically.
 - **No ML.** The optional ML estimator was not implemented.
 
+- **Measured outcome of the comparison (see 03):** AORTS resolved ambiguous transactions
+  **slower** than the strongest baseline in all three scenarios. It reduced status checks by about
+  5 % in the held-out scenario only, and showed no primary-payment benefit. Its "smallest feasible
+  budget meeting a 10 s clearance target" objective is the main cause: the median budget was 1
+  check per tick.
+- **Capacity estimation lags at regime changes.** The switch's 30 s latency window outlasts a 10 s
+  fault, so many runs estimate from stale, pre-fault data, with errors of 5–17×. Its accuracy is
+  not validated.
+- **Candidate follow-ups (not done, so the held-out evaluation stays clean):** a shorter or
+  event-driven measurement window; a clearance target derived from deadlines and backlog instead
+  of a fixed 10 s; then a fresh held-out evaluation.
+
 ## Twins
 
 - Switch measurements are snapshots, not events, so twin reconstruction covers the
@@ -39,11 +51,16 @@
 - "Ground truth" capacity for the estimation-error metric is `workers / (fault latency + base
   service time)`. The base time is calibrated per run from 5 no-fault payments. It is an
   approximation, not an oracle.
-- During development the Docker engine hung once under load (host memory pressure) and had to be
-  restarted. The campaign runner health-checks the stack before every run and aborts after 3
-  consecutive failures. Failed runs are counted and reported, never silently dropped.
-- Experiments record a **source-tree SHA-256** instead of a Git commit, because the project
-  folder is not a Git repository.
+- The campaign runner health-checks the stack before every run and aborts after 3 consecutive
+  failures. Failed runs are counted and reported, never silently dropped.
+- Experiments record a **source-tree SHA-256** instead of a Git commit. Runs were made from the
+  local working folder, which is not a Git repository. The code was later committed to
+  `kolursamith/AORT-AWS` (`feature/backend`).
+- The raw and processed result files stay **local**: `results/` belongs to the other track in the
+  team repository, so they were not committed. Their hashes are listed in 04.
+- The dispatcher counter `stale_jobs_dropped` was cumulative across runs and is not reported.
+- The Docker engine hung twice under host memory pressure (under 2–3 GB free). Affected runs were
+  excluded, and the seeds were re-run whole.
 
 ## Security and engineering
 

@@ -243,10 +243,30 @@ Reading (honestly a **null result** for this workload):
   That is Track A's evaluation. Track B provides the harness (`--policies http` adds the AORTS
   controller).
 
+## Strategy comparison: AORTS vs baselines (30 seeds × 3 scenarios, Docker)
+
+Full detail and CIs: [docs/track-b-technical-evidence/03-experimental-evidence.md](docs/track-b-technical-evidence/03-experimental-evidence.md);
+data: `results/processed/strategy-summary.*`.
+
+- **Ambiguous-transaction delay:** AORTS was **slower than the strongest baseline (fixed budget)
+  in all three scenarios.** Mean resolution was 3.1 / 4.5 / 4.6 s against 1.2 / 3.0 / 2.6 s; every
+  95 % CI excludes 0.
+- **Status checks per ambiguous transaction:** about 5 % lower than AIMD in the held-out S3
+  (CI excludes 0); no clear difference in S1 or S2.
+- **Primary payments:** no clear difference in goodput, p95 latency or success ratio. The switch
+  reservation and bulkhead protect primary payments for every strategy.
+- **Deadline compliance:** 100 % for every strategy. Escalations: 0. **Financial invariant
+  violations: 0 in all 449 completed runs.**
+- **Capacity estimation:** not validated. It lags at regime changes, with per-run median errors
+  of 5–17× in roughly 40 % of S1 runs.
+
+The earlier "Recovery-policy comparison" section above was an in-process null result. This Docker
+campaign supersedes it as the main strategy comparison.
+
 ## Not measured / not done
 
 - **AWS:** the stack was synthesized but not deployed, so there are no cloud measurements.
-- The AORTS controller itself (Track A) has not been compared: only the baselines and the mock
-  stand-in were run (see above).
+- Track A's own controller (`intelligence/` in the team repository) has not been compared. Only
+  Track B's AORTS implementation, the baselines and the mock were run.
 - Database RTO/RPO were not measured. Nothing here claims an RPO improvement.
 - T+1 deadlines are simulated in real seconds (`AORTS_DEADLINE_SECONDS`), not calendar days.

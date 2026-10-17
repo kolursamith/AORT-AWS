@@ -13,6 +13,23 @@ and the experiments. Track A (twin, ML, look-ahead, optimizer) plugs in through 
 controller adapter described in [API_CONTRACTS.md §6](API_CONTRACTS.md#track-a-integration-proposed-confirm-with-track-a).
 Until then, a mock controller keeps Track B fully runnable on its own.
 
+## Running Track B from this team repository
+
+The local quick-start below was written for the stand-alone project folder. In this repository
+the Track B code is the package `backend/aorts/`, and the commands run **from the repository root**:
+
+```powershell
+python -m venv .venv; .\.venv\Scripts\pip install -r infra/trackb/requirements-dev.txt
+.\.venv\Scripts\python infra/trackb/scripts/generate_env.py         # .env with fresh random secrets
+docker compose --env-file .env -f infra/trackb/docker-compose.yml up -d --build
+$env:AORTS_REQUIRE_DB = "1"; .\.venv\Scripts\python -m pytest tests/trackb
+.\.venv\Scripts\streamlit run dashboard/trackb_app.py                # or the dashboard container on :8501
+```
+
+`infra/trackb/aorts.ps1` and `infra/trackb/Makefile` wrap these commands; run them from the
+repository root. Experiment results are written to the local `results/` folder and are not
+committed, because `results/` belongs to the other track.
+
 ## What it demonstrates
 
 1. **Ambiguity without false failure.** A lost or delayed response makes a payment

@@ -23,7 +23,7 @@ request.
 > 127.0.0.1 only, and `localhost` tries IPv6 `::1` first, which can stall each new
 > connection for minutes.
 
-**Last verified run (this machine, 2026-10-16):** `137 passed in 100 s` (the full suite).
+**Last verified run (this machine, 2026-10-17):** `175 passed` (full suite, with PostgreSQL). In the team repository layout (`kolursamith/AORT-AWS`, `feature/backend`, with that repository's pinned dependencies): `195 passed`, which includes the other track's tests.
 
 ## Coverage map
 

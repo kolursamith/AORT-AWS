@@ -36,7 +36,12 @@ METRICS = {
     "recovery_time_s": True,
     "invariant_violations": True,
 }
-AORTS_ONLY = ["capacity_rel_err_point", "capacity_low_overestimate_ratio"]
+AORTS_ONLY = [
+    "capacity_rel_err_point",
+    "capacity_rel_err_point_median",
+    "capacity_low_signed_err_median",
+    "capacity_low_overestimate_ratio",
+]
 SECURITY = [
     "flood_a3_sent",
     "flood_a3_admitted",
@@ -62,6 +67,31 @@ def load(paths: list[str]) -> tuple[list[dict], list[dict], list[dict]]:
             else:
                 rows.append(rec)
     return provs, rows, failed
+
+
+def add_derived(rows: list[dict]) -> None:
+    """Median capacity-estimation error per run, recomputed from the recorded samples (robust to the
+    transition lag that dominates the mean right after a fault starts)."""
+    for r in rows:
+        s = [
+            x
+            for x in r.get("samples") or []
+            if x.get("est_point_B") is not None
+            and str(x.get("phase", "")).startswith(("degraded", "relapse"))
+        ]
+        if not s:
+            continue
+        errs = sorted(
+            abs(x["est_point_B"] - x["truth_capacity_B_rps"]) / x["truth_capacity_B_rps"] for x in s
+        )
+        r["capacity_rel_err_point_median"] = round(statistics.median(errs), 4)
+        low = sorted(
+            (x["est_low_B"] - x["truth_capacity_B_rps"]) / x["truth_capacity_B_rps"]
+            for x in s
+            if x.get("est_low_B") is not None
+        )
+        if low:
+            r["capacity_low_signed_err_median"] = round(statistics.median(low), 4)
 
 
 def describe(values: list[float]) -> dict:
@@ -170,6 +200,7 @@ def to_markdown(result: dict, failed: list[dict]) -> str:
 def main() -> None:
     paths = sys.argv[1:] or sorted(str(p) for p in (RESULTS / "raw").glob("strategy-*.jsonl"))
     provs, rows, failed = load(paths)
+    add_derived(rows)
     result = analyze(rows)
     (RESULTS / "processed").mkdir(parents=True, exist_ok=True)
     stem = "strategy-summary"
