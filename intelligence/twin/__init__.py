@@ -11,8 +11,27 @@ from intelligence.twin.route_twin import (
     SourceStatus,
     UnknownRouteError,
 )
+from intelligence.twin.transaction_twin import (
+    ApplyStatus,
+    CheckEligibility,
+    ConflictRecord,
+    EligibilityStatus,
+    EligibleTransaction,
+    TransactionApplyResult,
+    TransactionTwinConfig,
+    TransactionTwinError,
+    TransactionTwinInvariantError,
+    TransactionTwinRegistry,
+    UnknownTransactionError,
+    evaluate_eligibility,
+)
 
 __all__ = [
+    "ApplyStatus",
+    "CheckEligibility",
+    "ConflictRecord",
+    "EligibilityStatus",
+    "EligibleTransaction",
     "IngestResult",
     "IngestStatus",
     "RouteRegistrationConflictError",
@@ -21,5 +40,12 @@ __all__ = [
     "RouteTwinInvariantError",
     "RouteTwinRegistry",
     "SourceStatus",
+    "TransactionApplyResult",
+    "TransactionTwinConfig",
+    "TransactionTwinError",
+    "TransactionTwinInvariantError",
+    "TransactionTwinRegistry",
     "UnknownRouteError",
+    "UnknownTransactionError",
+    "evaluate_eligibility",
 ]
