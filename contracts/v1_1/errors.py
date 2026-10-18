@@ -1,0 +1,155 @@
+"""Stable error-code vocabulary for AORTS contract v1.1.
+
+Codes are wire values: never rename or reuse one. Each code has an HTTP status for the
+local HTTP integration and a check-limit counting rule (accepted decision 3: a check that
+was dispatched but whose downstream receipt is uncertain is counted; a check definitely
+rejected before dispatch is not). The counting rule is a research default, not a verified
+NPCI rule.
+"""
+
+from enum import StrEnum
+
+
+class ErrorCode(StrEnum):
+    # Status-check dispatch and API errors.
+    CHECK_TIMEOUT = "CHECK_TIMEOUT"
+    UPSTREAM_UNAVAILABLE = "UPSTREAM_UNAVAILABLE"
+    RATE_LIMITED = "RATE_LIMITED"
+    CREDIT_EXHAUSTED = "CREDIT_EXHAUSTED"
+    LEASE_EXPIRED = "LEASE_EXPIRED"
+    AUTHENTICATION_FAILED = "AUTHENTICATION_FAILED"
+    AUTHORIZATION_DENIED = "AUTHORIZATION_DENIED"
+    SCHEMA_INVALID = "SCHEMA_INVALID"
+    UNSUPPORTED_SCHEMA_VERSION = "UNSUPPORTED_SCHEMA_VERSION"
+    UNKNOWN_TRANSACTION = "UNKNOWN_TRANSACTION"
+    ROUTE_IDENTITY_MISMATCH = "ROUTE_IDENTITY_MISMATCH"
+    EXPERIMENT_MISMATCH = "EXPERIMENT_MISMATCH"
+    NOT_YET_ELIGIBLE = "NOT_YET_ELIGIBLE"
+    CHECK_LIMIT_REACHED = "CHECK_LIMIT_REACHED"
+    DECISION_EXPIRED = "DECISION_EXPIRED"
+    STALE_VERSION = "STALE_VERSION"
+    DUPLICATE_CHECK_ID = "DUPLICATE_CHECK_ID"
+    EVIDENCE_SIGNATURE_INVALID = "EVIDENCE_SIGNATURE_INVALID"
+    INTERNAL_ERROR = "INTERNAL_ERROR"
+    NOT_IMPLEMENTED = "NOT_IMPLEMENTED"
+    # Telemetry and transaction-event intake outcomes.
+    OUT_OF_ORDER_SEQUENCE = "OUT_OF_ORDER_SEQUENCE"
+    DUPLICATE_SEQUENCE = "DUPLICATE_SEQUENCE"
+    CONFLICTING_SEQUENCE = "CONFLICTING_SEQUENCE"
+    STALE_OBSERVATION = "STALE_OBSERVATION"
+    FUTURE_TIMESTAMP = "FUTURE_TIMESTAMP"
+    UNKNOWN_SOURCE = "UNKNOWN_SOURCE"
+    UNTRUSTED_SOURCE = "UNTRUSTED_SOURCE"
+    DUPLICATE_EVENT = "DUPLICATE_EVENT"
+    STALE_EVENT_VERSION = "STALE_EVENT_VERSION"
+    CONFLICTING_EVENT = "CONFLICTING_EVENT"
+    EVIDENCE_REQUIRED = "EVIDENCE_REQUIRED"
+    EVIDENCE_CONFLICT = "EVIDENCE_CONFLICT"
+    TIMEOUT_CANNOT_IMPLY_OUTCOME = "TIMEOUT_CANNOT_IMPLY_OUTCOME"
+
+
+class CheckCounting(StrEnum):
+    """Whether a status check that ended with a given code consumes a counted attempt."""
+
+    COUNTED = "COUNTED"
+    NOT_COUNTED = "NOT_COUNTED"
+    DECLARED_BY_DISPATCHER = "DECLARED_BY_DISPATCHER"
+    NOT_APPLICABLE = "NOT_APPLICABLE"
+
+
+E = ErrorCode
+
+HTTP_STATUS: dict[ErrorCode, int] = {
+    E.CHECK_TIMEOUT: 504,
+    E.UPSTREAM_UNAVAILABLE: 503,
+    E.RATE_LIMITED: 429,
+    E.CREDIT_EXHAUSTED: 429,
+    E.LEASE_EXPIRED: 409,
+    E.AUTHENTICATION_FAILED: 401,
+    E.AUTHORIZATION_DENIED: 403,
+    E.SCHEMA_INVALID: 422,
+    E.UNSUPPORTED_SCHEMA_VERSION: 422,
+    E.UNKNOWN_TRANSACTION: 404,
+    E.ROUTE_IDENTITY_MISMATCH: 409,
+    E.EXPERIMENT_MISMATCH: 409,
+    E.NOT_YET_ELIGIBLE: 409,
+    E.CHECK_LIMIT_REACHED: 409,
+    E.DECISION_EXPIRED: 409,
+    E.STALE_VERSION: 409,
+    E.DUPLICATE_CHECK_ID: 409,
+    E.EVIDENCE_SIGNATURE_INVALID: 502,
+    E.INTERNAL_ERROR: 500,
+    E.NOT_IMPLEMENTED: 501,
+    # Intake outcomes returned by HTTP ingestion endpoints. The two duplicate codes are
+    # idempotent acknowledgements (200), not failures.
+    E.OUT_OF_ORDER_SEQUENCE: 409,
+    E.DUPLICATE_SEQUENCE: 200,
+    E.CONFLICTING_SEQUENCE: 409,
+    E.STALE_OBSERVATION: 409,
+    E.FUTURE_TIMESTAMP: 422,
+    E.UNKNOWN_SOURCE: 403,
+    E.UNTRUSTED_SOURCE: 403,
+    E.DUPLICATE_EVENT: 200,
+    E.STALE_EVENT_VERSION: 409,
+    E.CONFLICTING_EVENT: 409,
+    E.EVIDENCE_REQUIRED: 422,
+    E.EVIDENCE_CONFLICT: 409,
+    E.TIMEOUT_CANNOT_IMPLY_OUTCOME: 422,
+}
+
+CHECK_COUNTING: dict[ErrorCode, CheckCounting] = {
+    # Dispatched; downstream receipt uncertain or a response was received.
+    E.CHECK_TIMEOUT: CheckCounting.COUNTED,
+    E.EVIDENCE_SIGNATURE_INVALID: CheckCounting.COUNTED,
+    # Delivery may or may not have happened; the dispatcher must state which.
+    E.UPSTREAM_UNAVAILABLE: CheckCounting.DECLARED_BY_DISPATCHER,
+    E.INTERNAL_ERROR: CheckCounting.DECLARED_BY_DISPATCHER,
+    # Rejected before any downstream call.
+    E.RATE_LIMITED: CheckCounting.NOT_COUNTED,
+    E.CREDIT_EXHAUSTED: CheckCounting.NOT_COUNTED,
+    E.LEASE_EXPIRED: CheckCounting.NOT_COUNTED,
+    E.AUTHENTICATION_FAILED: CheckCounting.NOT_COUNTED,
+    E.AUTHORIZATION_DENIED: CheckCounting.NOT_COUNTED,
+    E.SCHEMA_INVALID: CheckCounting.NOT_COUNTED,
+    E.UNSUPPORTED_SCHEMA_VERSION: CheckCounting.NOT_COUNTED,
+    E.UNKNOWN_TRANSACTION: CheckCounting.NOT_COUNTED,
+    E.ROUTE_IDENTITY_MISMATCH: CheckCounting.NOT_COUNTED,
+    E.EXPERIMENT_MISMATCH: CheckCounting.NOT_COUNTED,
+    E.NOT_YET_ELIGIBLE: CheckCounting.NOT_COUNTED,
+    E.CHECK_LIMIT_REACHED: CheckCounting.NOT_COUNTED,
+    E.DECISION_EXPIRED: CheckCounting.NOT_COUNTED,
+    E.STALE_VERSION: CheckCounting.NOT_COUNTED,
+    E.DUPLICATE_CHECK_ID: CheckCounting.NOT_COUNTED,
+    E.NOT_IMPLEMENTED: CheckCounting.NOT_COUNTED,
+    # Intake outcomes do not concern status-check attempts.
+    E.OUT_OF_ORDER_SEQUENCE: CheckCounting.NOT_APPLICABLE,
+    E.DUPLICATE_SEQUENCE: CheckCounting.NOT_APPLICABLE,
+    E.CONFLICTING_SEQUENCE: CheckCounting.NOT_APPLICABLE,
+    E.STALE_OBSERVATION: CheckCounting.NOT_APPLICABLE,
+    E.FUTURE_TIMESTAMP: CheckCounting.NOT_APPLICABLE,
+    E.UNKNOWN_SOURCE: CheckCounting.NOT_APPLICABLE,
+    E.UNTRUSTED_SOURCE: CheckCounting.NOT_APPLICABLE,
+    E.DUPLICATE_EVENT: CheckCounting.NOT_APPLICABLE,
+    E.STALE_EVENT_VERSION: CheckCounting.NOT_APPLICABLE,
+    E.CONFLICTING_EVENT: CheckCounting.NOT_APPLICABLE,
+    E.EVIDENCE_REQUIRED: CheckCounting.NOT_APPLICABLE,
+    E.EVIDENCE_CONFLICT: CheckCounting.NOT_APPLICABLE,
+    E.TIMEOUT_CANNOT_IMPLY_OUTCOME: CheckCounting.NOT_APPLICABLE,
+}
+
+del E
+
+# Codes a STATUS_CHECK_TIMED_OUT transaction event may carry.
+CHECK_TIMEOUT_CODES: frozenset[ErrorCode] = frozenset(
+    {ErrorCode.CHECK_TIMEOUT, ErrorCode.UPSTREAM_UNAVAILABLE}
+)
+# Codes a STATUS_CHECK_REJECTED transaction event may carry.
+CHECK_REJECTION_CODES: frozenset[ErrorCode] = frozenset(
+    code
+    for code, rule in CHECK_COUNTING.items()
+    if rule in (CheckCounting.NOT_COUNTED, CheckCounting.DECLARED_BY_DISPATCHER)
+)
+# Codes a CreditConsumption may record when it is not accepted.
+CREDIT_REJECTION_CODES: frozenset[ErrorCode] = frozenset(
+    {ErrorCode.CREDIT_EXHAUSTED, ErrorCode.LEASE_EXPIRED}
+)
