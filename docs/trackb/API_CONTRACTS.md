@@ -145,7 +145,7 @@ Otherwise the answer is `PENDING`.
 | `GET /api/v1/admin/export?fmt=json\|csv` | admin | Export (JSON is also saved under `results/processed/`) |
 | `POST /api/v1/admin/reset` | admin + fault flag | Body `{"confirm":"RESET-SYNTHETIC-DATA"}`. Saves a snapshot first. Refused when `environment=aws`. |
 
-### Track A integration (PROPOSED: confirm with Track A)
+### External controller integration (shared contract `contracts/v1`)
 
 Controller modes: `mock` (the default stand-in), `aorts` (Track B's AORTS adaptive controller,
 `backend/aorts/recovery/`), `http` (Track A), and `baseline:<name>`, where
@@ -153,33 +153,29 @@ Controller modes: `mock` (the default stand-in), `aorts` (Track B's AORTS adapti
 baselines are reference policies for comparisons; see
 [baseline_policies.py](backend/aorts/adapters/baseline_policies.py).
 
-When `AORTS_CONTROLLER_MODE=http`, Track B calls Track A at `AORTS_CONTROLLER_BASE_URL`:
+When `AORTS_CONTROLLER_MODE=http`, Track B's outbound adapter
+([controller_client.py](backend/aorts/adapters/controller_client.py) `HttpController`) speaks the
+**shared team contract** (`docs/API_CONTRACTS.md`, `contracts/v1/models.py`) at
+`AORTS_CONTROLLER_BASE_URL`:
 
 | Track B calls | Body | Expected response |
 |---|---|---|
-| `GET /api/v1/controller/health` | — | any JSON, HTTP 200 |
-| `POST /api/v1/controller/decisions` | `RecoveryDecisionRequest` | `RecoveryDecision` |
-| `POST /api/v1/controller/observations` | `DispatchResultObservation` (JSON) | HTTP 2xx |
+| `GET /health` | none | any JSON, HTTP 200 |
+| `POST /v1/recovery/decisions` (one call per route with ambiguous work) | `{experiment_id, route_id, estimated_capacity_rps, confidence, pending_transaction_ids}` | `contracts.v1.RecoveryDecision` |
 
-`RecoveryDecisionRequest` (Track B → A):
-```json
-{"decision_request_id": "drq-…", "timestamp": "2026-10-14T10:00:15Z",
- "routes": [{"route_id": "A1-B", "backlog": 12,
-             "measured": {"latency_p50_ms": 40, "latency_p95_ms": 110, "throughput_tps": 30,
-                          "timeout_rate": 0.01, "backlog": 0, "in_flight": 2, "workers": 8, "samples": 120},
-             "twin": {"throughput_tps": 31, "latency_p95_ms": 105, "...": "trusted twin belief"},
-             "integrity": {"verdict": "TRUSTED", "confidence": 0.95}}],
- "candidates": [{"transaction_id": "TXN…", "route_id": "A1-B", "version": 2, "checks_used": 0,
-                 "amount_paise": 100000, "ambiguous_since": "…", "deadline_at": "…"}]}
-```
-
-`RecoveryDecision` (Track A → B; every field is a **recommendation**):
-```json
-{"decision_id": "dec-…", "schema_version": "1.0", "timestamp": "…",
- "route_budgets": {"A1-B": 6}, "transaction_ids": ["TXN…"], "policy": "aorts-lookahead",
- "fallback": false, "fallback_reason": null,
- "predicted": {"A1-B": {"capacity_tps": 30, "delay_ms": 120, "backlog": 8}}}
-```
+* `estimated_capacity_rps` is Track B's **own** measurement of the switch (workers / p50), not
+  the reported telemetry. `confidence` is the telemetry-integrity confidence when the verdict is
+  TRUSTED, and 0 otherwise.
+* `pending_transaction_ids` lists the route's ambiguous candidates, oldest first.
+* The response is validated strictly against the shared model. A decision for another route,
+  an already-expired decision (`expires_at`), or a selection containing IDs that Track B did not
+  offer is rejected, and the fallback is used.
+* `budget_rps` becomes checks per dispatcher tick: `min(len(selected), budget_rps × tick_s)`.
+  `selected_transaction_ids` sets the order. The contract's predictions are recorded under
+  `predicted[route]` in the decision log.
+* The shared contract has no observation endpoint, so dispatch observations stay inside Track B.
+* Tested against a stub that is built only from the shared contract
+  (`tests/trackb/integration/test_team_contract.py`). No other owner's code is imported or run.
 
 Track B always applies `min(recommended, hard cap, switch-measured headroom)`. When
 telemetry integrity is not TRUSTED, the budget is also limited to
@@ -227,3 +223,29 @@ QUARANTINED        -> AMBIGUOUS | HANDOFF_UDIR
 Each state maps to a `(workflow_state, financial_outcome)` pair; see `PROJECTION` in
 [invariants.py](backend/aorts/banking/ledger/invariants.py). QUARANTINED and HANDOFF_UDIR keep
 `financial_outcome = UNKNOWN`.
+
+## 9. Team-contract surface (`contracts/v1`) served by Track B
+
+Track B's services also serve the shared contract's HTTP surface
+([team_routes.py](backend/aorts/adapters/team_routes.py), mappings in
+[team_contract.py](backend/aorts/adapters/team_contract.py)). These routes are thin adapters over
+the real ledger, admission control and evidence rules, and they keep Track B's HMAC
+service-identity auth (section 2).
+
+| Service | Method & path | Auth | Contract message |
+|---|---|---|---|
+| remitter | `POST /v1/payments` | payment_channel | body `{bank_id, route_id, amount_minor, currency: "INR", idempotency_key, experiment_id?, sender_account_id?, beneficiary_account_id?}` → `TransactionEvent` (202) |
+| remitter | `GET /v1/payments/{id}` | channel / dispatcher / controller | `TransactionEvent` |
+| switch | `POST /v1/status-checks` | remitter_bank; header `x-bank-id` must equal the signer | `{transaction_id, route_id, check_id}` → `StatusCheckResult` (quota and credit gated; 429 when limited) |
+| beneficiary | `GET /v1/mock/status/{id}?route_id=` | switch | `StatusCheckResult` |
+| control | `GET /v1/events?after_id=&limit=` | none | `[TransactionEvent]` from the transactional outbox; header `X-Next-After-Id` |
+| control | `POST /v1/telemetry` | telemetry_source | `RouteTelemetry` → Track B validator verdict |
+
+Mapping rules (financial meaning is preserved, never invented):
+* `financial_outcome`: SUCCESS → `credited`; FAILURE or REVERSED → `not_credited`; anything else → `unknown`.
+* A timeout is `unknown` / `ambiguous`, **never** `not_credited`.
+* A `StatusCheckResult` is `authoritative` only for a SUCCESS or FAILED answer that has an
+  evidence source (`SWITCH` or `beneficiary-<bank>`). PENDING and NOT_FOUND give `unknown`,
+  `authoritative=false` and no evidence source.
+* Track B differs from the minimal shared contract in one place: `POST /v1/payments` **requires**
+  an `idempotency_key`, so a retried request can never debit twice.

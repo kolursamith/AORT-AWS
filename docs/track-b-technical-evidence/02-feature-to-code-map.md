@@ -27,3 +27,4 @@ Status legend: **I&T** Implemented and Tested · **I/NT** Implemented but Not Te
 | F20 | ML-based capacity or outcome estimation | (none) | (none) | **Not Impl.** (optional in the requirements; deliberately left out) |
 | F21 | Cross-replica shared nonce store and shared rate-limit state | (none) | (none) | **Proposed** |
 | F22 | External anchoring of the audit hash chain (e.g. S3 Object Lock) | (none) | (none) | **Proposed** |
+| F23 | Team-contract (`contracts/v1`) surface and shared-contract controller adapter: timeouts map to `unknown`, evidence-only `authoritative`, strict validation of controller decisions with fallback | `backend/aorts/adapters/team_routes.py`, `team_contract.py`, `controller_client.py` | `tests/trackb/integration/test_team_contract.py` | I&T (against a contract-only stub) |

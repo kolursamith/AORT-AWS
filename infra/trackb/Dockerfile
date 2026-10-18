@@ -15,6 +15,8 @@ RUN --mount=type=cache,target=/root/.cache/pip pip install -r ${REQUIREMENTS}
 
 COPY backend/__init__.py ./backend/__init__.py
 COPY backend/aorts ./backend/aorts
+# Shared team contract (contracts/v1): Track B's /v1 surface and controller adapter map to it.
+COPY contracts ./contracts
 COPY infra/trackb/scripts ./infra/trackb/scripts
 # Repository-root layout: modules are imported as backend.aorts.*
 ENV PYTHONPATH=/app

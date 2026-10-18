@@ -78,6 +78,9 @@ def create_app(
     app.state.traffic_status = traffic_status
     install_error_handlers(app)
     app.include_router(router)
+    from backend.aorts.adapters.team_routes import control_v1
+
+    app.include_router(control_v1)  # team contract (contracts/v1) surface
     return app
 
 

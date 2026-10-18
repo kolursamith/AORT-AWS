@@ -116,6 +116,7 @@ class Settings(BaseSettings):
 
     # --- misc -------------------------------------------------------------------------
     log_level: str = "INFO"
+    experiment_id: str = "trackb-local"  # contracts/v1 experiment_id for emitted messages
     random_seed: int = 42
     accounts_seed_balance_paise: int = Field(default=10_000_000_00, ge=0)
 

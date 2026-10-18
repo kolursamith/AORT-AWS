@@ -34,6 +34,9 @@ def create_app(settings: Settings | None = None, ctx: ServiceContext | None = No
     app.state.beneficiary = BeneficiaryService(ctx, LedgerService(ctx.db))
     install_error_handlers(app)
     app.include_router(router)
+    from backend.aorts.adapters.team_routes import beneficiary_v1
+
+    app.include_router(beneficiary_v1)  # team contract (contracts/v1) surface
     return app
 
 

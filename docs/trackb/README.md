@@ -157,8 +157,9 @@ The brief's `security/state_integrity.py` and `invariant_enforcer.py` are covere
   loop, limitations.
 - [SECURITY.md](SECURITY.md): threat model, HMAC, rules A–J, the three modules, audit
   chain, residual risks.
-- [API_CONTRACTS.md](API_CONTRACTS.md): every endpoint, schema, error code, and the
-  Track A contract.
+- [API_CONTRACTS.md](API_CONTRACTS.md): every endpoint, schema and error code, the
+  team-contract `/v1` surface (section 9), and the shared-contract controller adapter (section 6).
+- [STATUS.md](STATUS.md): per-requirement completion status of Track B.
 - [TESTING.md](TESTING.md): how to run the tests and what each group covers.
 - [AWS_DEPLOYMENT.md](AWS_DEPLOYMENT.md): CDK deploy, verify, cost, teardown.
   **Synthesized, not deployed.**

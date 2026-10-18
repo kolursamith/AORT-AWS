@@ -30,6 +30,9 @@ def create_app(settings: Settings | None = None, ctx: ServiceContext | None = No
     app.state.switch = SwitchService(ctx)
     install_error_handlers(app)
     app.include_router(router)
+    from backend.aorts.adapters.team_routes import switch_v1
+
+    app.include_router(switch_v1)  # team contract (contracts/v1) surface
     return app
 
 

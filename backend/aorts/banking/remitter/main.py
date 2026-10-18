@@ -42,6 +42,9 @@ def create_app(settings: Settings | None = None, ctx: ServiceContext | None = No
     app.state.remitter = RemitterService(ctx, make_ledger(settings, ctx))
     install_error_handlers(app)
     app.include_router(router)
+    from backend.aorts.adapters.team_routes import remitter_v1
+
+    app.include_router(remitter_v1)  # team contract (contracts/v1) surface
     return app
 
 
