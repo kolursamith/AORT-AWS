@@ -14,6 +14,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from backend.aorts.dashboard import security_evidence as ev
 from backend.aorts.dashboard.api_client import ControlClient
 
 # Reference palette (validated): categorical slots 1-3 and fixed status colours.
@@ -177,12 +178,13 @@ pay = summary["payments"]
 sec = summary["security"]
 checks = summary["status_checks"]
 
-tab_over, tab_routes, tab_twin, tab_sec, tab_exp, tab_cmp, tab_audit = st.tabs(
+tab_over, tab_routes, tab_twin, tab_sec, tab_val, tab_exp, tab_cmp, tab_audit = st.tabs(
     [
         "Overview",
         "Routes & recovery",
         "Twins & AORTS",
         "Security",
+        "Security validation",
         "Experiments",
         "Strategy comparison",
         "Audit trail",
@@ -398,6 +400,191 @@ with tab_sec:
             width="stretch",
             hide_index=True,
         )
+
+# ------------------------------------------------------------------ security validation evidence
+with tab_val:
+    st.caption(
+        "Recorded results of the security validation package (seeded, synthetic, local). Read from "
+        f"`{ev.EVIDENCE_DIR}`; regenerate with `python -m backend.aorts.experiments.security_package`."
+    )
+    man = ev.manifest()
+    if man.empty:
+        st.info("No evidence package found. Run the security_package experiments first.")
+    else:
+        done = man[man["status"] == "completed"]
+        k = st.columns(4)
+        k[0].metric("Runs recorded", len(man))
+        k[1].metric("Completed", len(done))
+        k[2].metric("Failed (kept in manifest)", int((man["status"] == "failed").sum()))
+        k[3].metric("Commits", man["git_commit"].nunique())
+
+    fl = ev.runs("flooding")
+    if not fl.empty:
+        st.subheader("Status-check flooding (A3 = simulated attacker)")
+        cond = st.selectbox(
+            "Condition",
+            [c for c in ev.FLOOD_ORDER if c in set(fl["condition"])],
+            index=2 if "flood_defended" in set(fl["condition"]) else 0,
+        )
+        c1, c2 = st.columns(2)
+        banks = ev.per_bank_requests(fl, cond)
+        c1.plotly_chart(
+            grouped_bars(
+                list(banks["bank"]),
+                {
+                    "admitted": list(banks["admitted"].round(1)),
+                    "rejected": list(banks["rejected"].round(1)),
+                },
+                f"Requests per bank at the switch ({cond}, mean per run)",
+                "requests",
+            ),
+            width="stretch",
+        )
+        reasons = ev.rejection_reasons(fl, cond)
+        c2.plotly_chart(
+            grouped_bars(
+                list(reasons["reason"]),
+                {"A3 rejections": list(reasons["requests"].round(1))},
+                "Why A3 was rejected (rate limits / Tier 2 credit exhaustion)",
+                "requests",
+            ),
+            width="stretch",
+        )
+        attack_conds = [c for c in ev.FLOOD_ORDER if c != "normal" and c in set(fl["condition"])]
+        means = ev.flood_by_condition(
+            fl,
+            [
+                "legit_success_during",
+                "legit_p95_ms_during",
+                "detection_s",
+                "containment_s",
+                "recovery_after_attack_s",
+                "fairness_jain_legit_banks",
+                "payments_unresolved_at_end",
+                "rejected_that_entered_processing",
+                "attacker_share_of_admitted_during",
+            ],
+        )
+        c1, c2 = st.columns(2)
+        c1.plotly_chart(
+            grouped_bars(
+                list(means.index),
+                {"legit p95 during attack (ms)": list(means["legit_p95_ms_during"].round(1))},
+                "Legitimate A1/A2 status-check latency during the attack",
+                "ms",
+            ),
+            width="stretch",
+        )
+        c2.plotly_chart(
+            grouped_bars(
+                list(means.index),
+                {"legit success during attack": list(means["legit_success_during"].round(3))},
+                "Share of legitimate checks answered during the attack",
+                "share",
+            ),
+            width="stretch",
+        )
+        st.markdown("**Detection, containment, recovery and fairness (mean over seeds)**")
+        st.dataframe(means.round(3), width="stretch")
+        st.caption(
+            "detection_s: first A3 rejection after attack start. containment_s: first second from which "
+            "A3's admitted rate stays <= 1.5x its bank limit. recovery_after_attack_s: seconds after the "
+            "attack until legitimate checks are healthy again. fairness: Jain index of A1/A2 admitted "
+            "ratios (1 = equal). rejected_that_entered_processing must be 0: rejections happen before "
+            "the costly path."
+        )
+        run_ids = ev.flood_run_ids(cond)
+        if run_ids:
+            rid = st.selectbox("Run (per-second timeline, backlog recovery)", run_ids)
+            tl = ev.request_timeline(rid)
+            if not tl.empty:
+                series = {
+                    f"{b} {o}": tl[(tl["bank"] == b) & (tl["outcome"] == o)].set_index("second")[
+                        "requests"
+                    ]
+                    for b, o in (("A3", "admitted"), ("A3", "rejected"), ("A1", "admitted"))
+                }
+                st.plotly_chart(
+                    line_series(
+                        series, "Requests per second (attack window = lead..lead+attack)", "req/s"
+                    ),
+                    width="stretch",
+                )
+        with st.expander("All flooding runs (table view)"):
+            st.dataframe(fl, width="stretch", hide_index=True)
+
+    po = ev.runs("poisoning")
+    if not po.empty:
+        st.subheader("Telemetry poisoning (model-in-the-loop)")
+        det = ev.poisoning_detection(po)
+        arms = [
+            a
+            for a in ("poisoned_protected", "poisoned_protected_nobias", "poisoned_unprotected")
+            if a in det.columns
+        ]
+        st.plotly_chart(
+            grouped_bars(
+                list(det.index),
+                {a: list(det[a].round(3)) for a in arms},
+                "Detection rate per poisoning case (share of attack samples not TRUSTED)",
+                "share",
+            ),
+            width="stretch",
+        )
+        clean = po[po["arm"] == "clean"]
+        k = st.columns(3)
+        k[0].metric("False positives (clean arm, all ticks)", int(clean["flagged_all_ticks"].sum()))
+        k[1].metric("Clean ticks checked", int(clean["ticks"].sum()))
+        prot = po[po["arm"] == "poisoned_protected"]
+        k[2].metric("Protected-arm ticks > 1 s delay", int(prot["ticks_over_1000ms"].sum()))
+        with st.expander("Per case and arm (table view)"):
+            st.dataframe(
+                po.groupby(["case", "arm"])[
+                    [
+                        "detection_rate",
+                        "detection_tick_offset",
+                        "guard_conservative_ticks",
+                        "max_budget_during_attack",
+                        "ticks_over_1000ms",
+                    ]
+                ]
+                .mean()
+                .round(3),
+                width="stretch",
+            )
+    pl = ev.runs("poisoning_live")
+    if not pl.empty:
+        st.subheader("Telemetry poisoning through the live ingestion path")
+        det = pl.groupby(["case", "arm"])["detection_rate"].mean().unstack("arm")
+        st.plotly_chart(
+            grouped_bars(
+                list(det.index),
+                {a: list(det[a].round(3)) for a in det.columns},
+                "Suspicious / rejected share of injected samples (real validator, real switch measurements)",
+                "share",
+            ),
+            width="stretch",
+        )
+        with st.expander("Live poisoning runs (table view)"):
+            st.dataframe(pl, width="stretch", hide_index=True)
+
+    rp = ev.runs("replay")
+    if not rp.empty:
+        st.subheader("Transaction replay")
+        k = st.columns(5)
+        k[0].metric("Replay cases run", int(rp["cases"].sum()))
+        k[1].metric("HTTP outcome as specified", int(rp["http_as_expected"].sum()))
+        k[2].metric("Unexpected financial changes", int(rp["unexpected_financial_changes"].sum()))
+        k[3].metric("Duplicate reversal postings", int(rp["duplicate_reversal_postings"].sum()))
+        k[4].metric(
+            "Ledger + audit chain OK",
+            f"{int((rp['ledger_ok'] & rp['audit_chain_ok']).sum())}/{len(rp)}",
+        )
+        st.dataframe(rp, width="stretch", hide_index=True)
+
+    if not man.empty:
+        with st.expander("Run manifest (every run, including failures)"):
+            st.dataframe(man, width="stretch", hide_index=True)
 
 # ------------------------------------------------------------------ experiments
 with tab_exp:
