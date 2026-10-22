@@ -1,0 +1,71 @@
+{
+  "_note": "SYNTHETIC ADDITIONAL metadata that Track B does NOT emit at 8b863da. Each value is what a future Track B /v1.1 export would have to produce from data it really holds (outbox row id, persisted check/evidence identifiers, verifier output). Tests use it only to prove the adapters map complete inputs faithfully; real 8b863da records without it are rejected.",
+  "events": {
+    "_future_producer": "Track B GET /v1.1 event export (or POST /v1.1/transaction-events relay) built from outbox rows",
+    "common": {
+      "experiment_id": "EXP-INT-1",
+      "source_id": "trackb-ledger-outbox"
+    },
+    "per_event": {
+      "debit": {"source_sequence": 101, "deadline_policy_id": "research-60min"},
+      "timeout": {"source_sequence": 102, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "B", "ambiguity_cause": "PAYMENT_TIMEOUT"},
+      "check_started": {"source_sequence": 103, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "B", "check_id": "CK-TXN-A1-0001-1"},
+      "check_inconclusive": {"source_sequence": 104, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "B", "check_id": "CK-TXN-A1-0001-1", "check_fact": {"kind": "ANSWERED", "check_result": "UNKNOWN"}},
+      "check_started_2": {"source_sequence": 105, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "B", "check_id": "CK-TXN-A1-0001-2"},
+      "succeeded": {"source_sequence": 106, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "B", "check_id": "CK-TXN-A1-0001-2", "evidence": {"evidence_id": "EV-SW-0001-2", "evidence_kind": "STATUS_CHECK_RESPONSE", "issuer_id": "SWITCH", "response_version": 2}},
+      "closed": {"source_sequence": 107, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "B", "evidence": {"evidence_id": "EV-SW-0001-2", "evidence_kind": "STATUS_CHECK_RESPONSE", "issuer_id": "SWITCH", "response_version": 2}},
+      "failed": {"source_sequence": 201, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "B", "check_id": "CK-TXN-A1-0002-1", "evidence": {"evidence_id": "EV-SW-0002-1", "evidence_kind": "STATUS_CHECK_RESPONSE", "issuer_id": "SWITCH", "response_version": 1}},
+      "reversal_initiated": {"source_sequence": 202, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "B"},
+      "reversal_completed": {"source_sequence": 203, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "B", "evidence": {"evidence_id": "EV-SW-0002-1", "evidence_kind": "STATUS_CHECK_RESPONSE", "issuer_id": "SWITCH", "response_version": 1}},
+      "not_admitted": {"source_sequence": 301, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "C", "check_id": "CK-TXN-A2-0003-1", "check_fact": {"kind": "REJECTED", "result_code": "RATE_LIMITED"}},
+      "escalated": {"source_sequence": 302, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "C"},
+      "reconciled": {"source_sequence": 303, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "C", "evidence": {"evidence_id": "EV-RC-0003", "evidence_kind": "RECONCILIATION_RECORD", "issuer_id": "SWITCH", "response_version": 1}},
+      "quarantined": {"source_sequence": 401, "deadline_policy_id": "research-60min", "beneficiary_bank_id": "B"}
+    }
+  },
+  "telemetry": {
+    "_future_producer": "Track B trust boundary: POST /v1.1/telemetry relay after telemetry_validator.ingest, from probe-declared windows and structured validator output",
+    "trusted": {
+      "experiment_id": "EXP-INT-1",
+      "observation_scope": "REMITTER_OWN_TRAFFIC",
+      "observation_window_start": "2026-10-18T10:00:14Z",
+      "observation_window_end": "2026-10-18T10:00:15Z",
+      "payment_rps": 30.0,
+      "check_rps": 8.5,
+      "latency_sample_count": 37,
+      "trust_status": "AUTHENTICATED",
+      "validation_flags": [],
+      "cross_check_status": "CONSISTENT",
+      "validator_id": "trackb-telemetry-validator",
+      "validator_version": "8b863da",
+      "validated_at": "2026-10-18T10:00:15.200000Z"
+    },
+    "suspicious": {
+      "experiment_id": "EXP-INT-1",
+      "observation_scope": "REMITTER_OWN_TRAFFIC",
+      "observation_window_start": "2026-10-18T10:00:14Z",
+      "observation_window_end": "2026-10-18T10:00:15Z",
+      "payment_rps": 30.0,
+      "check_rps": 8.5,
+      "latency_sample_count": 37,
+      "trust_status": "AUTHENTICATED",
+      "validation_flags": ["CROSS_CHECK_DEVIATION"],
+      "cross_check_status": "INCONSISTENT",
+      "validator_id": "trackb-telemetry-validator",
+      "validator_version": "8b863da",
+      "validated_at": "2026-10-18T10:00:15.200000Z"
+    }
+  },
+  "status_checks": {
+    "_future_producer": "Track B remitter/dispatcher after verify_response: persisted check_id, evidence id, signature metadata and a verifier record",
+    "success": {
+      "experiment_id": "EXP-INT-1",
+      "check_id": "CK-TXN-A1-0001-2",
+      "route_id": "A1-B",
+      "counted_check_attempts": 2,
+      "evidence_reference": {"evidence_id": "EV-SW-0001-2", "evidence_kind": "STATUS_CHECK_RESPONSE", "issuer_id": "SWITCH", "response_version": 2},
+      "evidence_signature": {"signature_alg": "HMAC-SHA256", "key_id": "switch-key-1", "signature": "c2lnbmF0dXJlLXBsYWNlaG9sZGVyLWZvci10ZXN0cw==", "signed_fields": ["status_code", "path", "timestamp", "body"]},
+      "verification": {"status": "VERIFIED", "verifier_id": "trackb-remitter-A1", "key_id": "switch-key-1", "verified_at": "2026-10-18T10:00:06.039000Z"}
+    }
+  }
+}

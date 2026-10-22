@@ -1,0 +1,117 @@
+{
+  "_note": "SYNTHETIC test data in Track B feature/backend@8b863da shapes: contracts/requests.py RouteTelemetry (119-142), security/telemetry_validator.py TelemetryAssessment.as_dict (53-73), remitter/service.py check_status return values (143-214), contracts/requests.py StatusEvidence (68-82), adapters/controller_client.py HttpController request (111-117), intelligence/controller/api.py starter RecoveryDecision, app/config.py defaults (52-95).",
+  "telemetry": {
+    "observation": {
+      "event_id": "twin-probe-1-A1-B-41",
+      "schema_version": "1.0",
+      "source_id": "twin-probe-1",
+      "route_id": "A1-B",
+      "sequence": 41,
+      "timestamp": "2026-10-18T10:00:15Z",
+      "latency_p50_ms": 180.0,
+      "latency_p95_ms": 420.0,
+      "throughput_tps": 38.5,
+      "timeout_rate": 0.02,
+      "backlog": 7,
+      "health_score": 0.93,
+      "correlation_id": null
+    },
+    "assessment_trusted": {
+      "event_id": "twin-probe-1-A1-B-41",
+      "route_id": "A1-B",
+      "verdict": "TRUSTED",
+      "confidence": 0.97,
+      "reasons": [],
+      "measured": {"throughput_tps": 38.1},
+      "reported": {"throughput_tps": 38.5}
+    },
+    "assessment_suspicious": {
+      "event_id": "twin-probe-1-A1-B-41",
+      "route_id": "A1-B",
+      "verdict": "SUSPICIOUS",
+      "confidence": 0.4,
+      "reasons": ["throughput_tps 50.0 exceeds switch-measured 38.1 beyond tolerance"],
+      "measured": {"throughput_tps": 38.1},
+      "reported": {"throughput_tps": 50.0}
+    },
+    "assessment_rejected": {
+      "event_id": "twin-probe-1-A1-B-41",
+      "route_id": "A1-B",
+      "verdict": "REJECTED",
+      "confidence": 0.0,
+      "reasons": ["unauthenticated source"],
+      "measured": {},
+      "reported": {"throughput_tps": 900.0}
+    }
+  },
+  "status_checks": {
+    "success": {
+      "outcome": {"admitted": true, "status": "SUCCESS", "latency_ms": 41.7, "result": {"decision": "ACCEPTED"}},
+      "evidence": {"transaction_id": "TXN-A1-0001", "status": "SUCCESS", "source": "SWITCH", "switch_reference": "SW-REF-1", "observed_at": "2026-10-18T10:00:06.039000Z", "authenticated": true, "reason": null}
+    },
+    "failed": {
+      "outcome": {"admitted": true, "status": "FAILED", "latency_ms": 38.2, "result": {"decision": "ACCEPTED"}},
+      "evidence": {"transaction_id": "TXN-A1-0001", "status": "FAILED", "source": "SWITCH", "switch_reference": "SW-REF-2", "observed_at": "2026-10-18T10:00:06.039000Z", "authenticated": true, "reason": "beneficiary rejected"}
+    },
+    "pending": {
+      "outcome": {"admitted": true, "status": "PENDING", "latency_ms": 40.0, "result": {"decision": "DEFERRED"}},
+      "evidence": {"transaction_id": "TXN-A1-0001", "status": "PENDING", "source": "SWITCH", "switch_reference": null, "observed_at": "2026-10-18T10:00:06.039000Z", "authenticated": true, "reason": null}
+    },
+    "not_found": {
+      "outcome": {"admitted": true, "status": "NOT_FOUND", "latency_ms": 35.0, "result": {"decision": "DEFERRED"}},
+      "evidence": {"transaction_id": "TXN-A1-0001", "status": "NOT_FOUND", "source": "SWITCH", "switch_reference": null, "observed_at": "2026-10-18T10:00:06.039000Z", "authenticated": true, "reason": null}
+    },
+    "unauthenticated": {
+      "outcome": {"admitted": true, "status": "SUCCESS", "latency_ms": 41.0, "result": {"decision": "DEFERRED"}},
+      "evidence": {"transaction_id": "TXN-A1-0001", "status": "SUCCESS", "source": "UNVERIFIED", "switch_reference": null, "observed_at": "2026-10-18T10:00:06.039000Z", "authenticated": false, "reason": null}
+    },
+    "not_admitted": {
+      "outcome": {"admitted": false, "status": null, "latency_ms": 3.1, "rejection_reason": "RATE_LIMITED", "result": {"decision": "DEFERRED"}},
+      "evidence": null
+    },
+    "not_admitted_unlabelled": {
+      "outcome": {"admitted": false, "status": null, "latency_ms": 3.1, "rejection_reason": "REJECTED", "result": {"decision": "DEFERRED"}},
+      "evidence": null
+    },
+    "read_timeout": {
+      "outcome": {"admitted": true, "status": null, "latency_ms": 2003.2, "error": "ReadTimeout", "result": {"decision": "DEFERRED"}},
+      "evidence": null
+    },
+    "connect_error": {
+      "outcome": {"admitted": true, "status": null, "latency_ms": 1.2, "error": "ConnectError", "result": {"decision": "DEFERRED"}},
+      "evidence": null
+    }
+  },
+  "controller": {
+    "starter_request": {
+      "experiment_id": "trackb-local",
+      "route_id": "A1-B",
+      "estimated_capacity_rps": 12.5,
+      "confidence": 0.8,
+      "pending_transaction_ids": ["TXN-A1-0001", "TXN-A1-0004"]
+    },
+    "starter_v1_decision": {
+      "schema_version": "1.0",
+      "experiment_id": "trackb-local",
+      "route_id": "A1-B",
+      "decision_id": "decision-4f2a",
+      "budget_rps": 3.125,
+      "selected_transaction_ids": ["TXN-A1-0001"],
+      "predicted_delay_ms": 0,
+      "predicted_new_ambiguous": 0,
+      "decision_reason": "conservative fallback; no financial outcome is inferred",
+      "expires_at": "2026-10-18T10:00:10Z"
+    }
+  },
+  "trackb_settings": {
+    "max_checks_per_transaction": 6,
+    "check_backoff_base_seconds": 1.0,
+    "check_backoff_max_seconds": 30.0,
+    "deadline_seconds": 120,
+    "remitter_switch_timeout_s": 2.0,
+    "status_check_timeout_s": 2.0,
+    "fallback_budget_per_route": 2,
+    "controller_timeout_seconds": 2.0,
+    "dispatch_tick_seconds": 1.0
+  }
+}
