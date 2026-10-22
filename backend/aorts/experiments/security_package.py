@@ -1068,6 +1068,11 @@ def verify_manifest(out: Path) -> dict:
     }
 
 
+def _contained(rows: list[dict]) -> float | None:
+    m = _mean(rows, "containment_s")
+    return m if m is not None and m < TIMELINE["attack_s"] else None
+
+
 def cmd_figures(args) -> None:
     from backend.aorts.experiments.svg_charts import grouped_bars
 
@@ -1085,7 +1090,8 @@ def cmd_figures(args) -> None:
         conds = [c for c in FLOOD_CONDITIONS if any(r["condition"] == c for r in fl)]
         by = {c: [r for r in fl if r["condition"] == c] for c in conds}
         n = len({r["seed"] for r in fl})
-        sub_t = f"mean over {n} seeds; attack {fl[0].get('attack_rps')} req/s from A3 for {TIMELINE['attack_s']:g} s"
+        rate = max(float(r["attack_rps"]) for r in fl)
+        sub_t = f"mean over {n} seeds; attack {rate:g} req/s from A3 for {TIMELINE['attack_s']:g} s"
         save(
             "flooding_legit_p95.svg",
             grouped_bars(
@@ -1133,13 +1139,14 @@ def cmd_figures(args) -> None:
                 attack,
                 {
                     "detection": [_mean(by[c], "detection_s") for c in attack],
-                    "containment": [_mean(by[c], "containment_s") for c in attack],
+                    # containment at/after the attack end only means the attack stopped
+                    "containment": [_contained(by[c]) for c in attack],
                     "recovery after attack": [
                         _mean(by[c], "recovery_after_attack_s") for c in attack
                     ],
                 },
                 unit="seconds",
-                subtitle=sub_t + "; n/a = never reached in the window",
+                subtitle=sub_t + "; n/a = not detected / not contained during the attack",
             ),
         )
     po = _latest_rows(out, "poisoning")

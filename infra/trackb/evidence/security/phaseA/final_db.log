@@ -1,0 +1,94 @@
+code: working tree on top of dba50571bebd47d7e5e464a79b49b9b09beaa786 (final; committed right after this run)
+cmd: AORTS_TEST_DATABASE_URL=<compose db>/aorts_test AORTS_REQUIRE_DB=1 python -m pytest tests/trackb tests/contracts -v -rs --durations=15
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.7.0
+rootdir: C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\AORT-AWS
+configfile: pyproject.toml
+plugins: anyio-4.15.1, platformdirs-4.13.3, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 255 items / 1 skipped
+
+tests\trackb\acceptance\test_protected_security.py .....                 [  1%]
+tests\trackb\contract\test_contracts.py .......                          [  4%]
+tests\trackb\integration\test_aorts_integration.py ......                [  7%]
+tests\trackb\integration\test_bulkhead.py ...                            [  8%]
+tests\trackb\integration\test_control_plane.py ..............            [ 13%]
+tests\trackb\integration\test_ledger_atomicity.py .....                  [ 15%]
+tests\trackb\integration\test_payment_flow.py ................           [ 21%]
+tests\trackb\integration\test_reconciliation.py ......                   [ 24%]
+tests\trackb\integration\test_recovery.py ........                       [ 27%]
+tests\trackb\integration\test_team_contract.py .........                 [ 30%]
+tests\trackb\security\test_request_auth.py ...........                   [ 35%]
+tests\trackb\security\test_transaction_namespace.py .....                [ 37%]
+tests\trackb\test_ledger_invariants.py ............                      [ 41%]
+tests\trackb\test_rate_limits.py .........                               [ 45%]
+tests\trackb\test_replay_protection.py ....................              [ 53%]
+tests\trackb\test_telemetry_integrity.py ............................... [ 65%]
+............................................                             [ 82%]
+tests\trackb\unit\test_baseline_policies.py ......                       [ 85%]
+tests\trackb\unit\test_gates_and_faults.py ...                           [ 86%]
+tests\trackb\unit\test_metrics_definitions.py ...                        [ 87%]
+tests\trackb\unit\test_paired_stats.py ...                               [ 88%]
+tests\trackb\unit\test_recovery_intelligence.py ............             [ 93%]
+tests\trackb\unit\test_security_package.py .......                       [ 96%]
+tests\trackb\unit\test_traffic_generator.py .                            [ 96%]
+tests\trackb\unit\test_twins.py ......                                   [ 98%]
+tests\contracts\test_models.py ...                                       [100%]
+
+============================== warnings summary ===============================
+..\..\..\..\..\..\..\..\..\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/trackb/acceptance/test_protected_security.py::test_P1_uncorroborated_false_high_capacity_telemetry_cannot_raise_budget
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\alembic\config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+    util.warn_deprecated(
+
+tests/trackb/acceptance/test_protected_security.py: 11 warnings
+tests/trackb/integration/test_aorts_integration.py: 17 warnings
+tests/trackb/integration/test_bulkhead.py: 15 warnings
+tests/trackb/integration/test_control_plane.py: 32 warnings
+tests/trackb/integration/test_ledger_atomicity.py: 12 warnings
+tests/trackb/integration/test_payment_flow.py: 45 warnings
+tests/trackb/integration/test_reconciliation.py: 20 warnings
+tests/trackb/integration/test_recovery.py: 30 warnings
+tests/trackb/integration/test_team_contract.py: 37 warnings
+tests/trackb/security/test_transaction_namespace.py: 16 warnings
+tests/trackb/test_ledger_invariants.py: 11 warnings
+tests/trackb/test_rate_limits.py: 12 warnings
+tests/trackb/test_replay_protection.py: 60 warnings
+  C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\AORT-AWS\backend\aorts\app\http_client.py:66: StarletteDeprecationWarning: You should not use the 'timeout' argument with the TestClient. See https://github.com/Kludex/starlette/issues/1108 for more information.
+    return self._client(target).request(
+
+tests/trackb/integration/test_team_contract.py::test_shared_contract_controller_drives_recovery
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:1053: StarletteDeprecationWarning: You should not use the 'timeout' argument with the TestClient. See https://github.com/Kludex/starlette/issues/1108 for more information.
+    return self.request(
+
+tests/trackb/integration/test_team_contract.py::test_shared_contract_controller_drives_recovery
+tests/trackb/integration/test_team_contract.py::test_expired_or_foreign_decisions_fall_back
+tests/trackb/integration/test_team_contract.py::test_expired_or_foreign_decisions_fall_back
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:1144: StarletteDeprecationWarning: You should not use the 'timeout' argument with the TestClient. See https://github.com/Kludex/starlette/issues/1108 for more information.
+    return self.request(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\AORT-AWS\infra\trackb\evidence\security\phaseA\final_db.junit.xml -
+============================ slowest 15 durations =============================
+6.80s call     tests/trackb/integration/test_control_plane.py::test_flooding_attack_via_lab
+3.47s call     tests/trackb/integration/test_payment_flow.py::test_mixed_concurrent_debits_settlements_reversals_same_senders
+3.33s call     tests/trackb/integration/test_bulkhead.py::test_bulkhead_keeps_payments_flowing_during_undefended_flood
+3.10s call     tests/trackb/integration/test_bulkhead.py::test_shared_pool_lets_undefended_flood_hurt_payments
+3.08s call     tests/trackb/integration/test_bulkhead.py::test_primary_reserve_protects_payments_even_on_a_shared_pool
+3.04s call     tests/trackb/test_rate_limits.py::test_flood_rejected_at_switch_before_downstream_work
+2.65s call     tests/trackb/integration/test_control_plane.py::test_replay_attack_via_lab
+2.64s call     tests/trackb/acceptance/test_protected_security.py::test_P4_recovery_traffic_cannot_consume_capacity_reserved_for_primary_payments
+2.42s call     tests/trackb/test_rate_limits.py::test_flood_with_defenses_disabled_admits_attacker
+2.02s setup    tests/trackb/test_replay_protection.py::test_stale_version_and_stale_timestamp[explicit_reverse]
+1.93s setup    tests/trackb/test_replay_protection.py::test_stale_version_and_stale_timestamp[auto_reverse]
+1.92s setup    tests/trackb/test_replay_protection.py::test_sequential_duplicate[auto_reverse]
+1.91s setup    tests/trackb/test_replay_protection.py::test_concurrent_duplicate_events_apply_once[auto_reverse]
+1.90s setup    tests/trackb/test_replay_protection.py::test_concurrent_reversals_post_once[auto_reverse]
+1.86s call     tests/trackb/integration/test_payment_flow.py::test_concurrent_different_payments_from_same_sender_do_not_deadlock
+=========================== short test summary info ===========================
+SKIPPED [1] tests\trackb\unit\test_security_dashboard.py:7: dashboard extras (pandas) not installed in this environment
+========== 255 passed, 1 skipped, 324 warnings in 119.92s (0:01:59) ===========
+exit=0

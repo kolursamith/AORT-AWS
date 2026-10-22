@@ -36,7 +36,7 @@ Status labels follow the project's reporting rules:
 | Extended workloads S1 / S2 (flood + poison) / S3 (held-out relapse) | Implemented and Tested | `workloads/scenarios.py`; used in the campaign |
 | Reproducible experiments: seed, scenario, config, source hash, run ID, raw results | Implemented and Tested | `experiments/provenance.py`, `docker_runner.py`. A source-tree SHA-256 is recorded instead of a Git commit, because the runs were made before the code was in Git. |
 | 30 seeds per scenario with paired bootstrap 95% CIs vs the strongest baseline | Implemented and Tested | `experiments/paired_stats.py`, `unit/test_paired_stats.py`; 449 completed runs (6 failed, reported and excluded). See `RESULTS.md`. |
-| Dashboard: twins, decisions, security, strategy comparison | Implemented but Not Tested | `backend/aorts/dashboard/app.py`; checked by hand, no automated UI tests |
+| Dashboard: twins, decisions, security, strategy comparison, security validation | Implemented, partly tested | `backend/aorts/dashboard/app.py` checked by hand (no automated UI tests); the evidence loaders behind the Security validation tab are unit-tested (`unit/test_security_dashboard.py`) |
 | Patent-oriented technical evidence folder | Implemented | `docs/track-b-technical-evidence/` (documentation, not code) |
 | Optional ML estimator | Not Implemented | It was optional. The capacity model is analytical (see evidence 05). |
 
@@ -49,13 +49,30 @@ Status labels follow the project's reporting rules:
 | End-to-end run against the real Track A controller | Not tested | Out of Track B's scope by instruction. The adapter is ready, and the integration is left to the joint integration step. |
 | CI runs the Track B DB tests (PostgreSQL service in `ci.yml`) | Implemented but Not Tested in CI | Added in this change. It runs on the next PR to `developer`. |
 
+## Security validation package (2026-10-22)
+
+Details: [SECURITY_VALIDATION.md](SECURITY_VALIDATION.md); raw evidence and run manifest:
+`infra/trackb/evidence/security/`.
+
+| Requirement | Status | Evidence / note |
+|---|---|---|
+| All PostgreSQL-backed tests run (the audit's 99 skipped) | Implemented and Tested | 184/184 on the unchanged baseline; 255 passed + 1 skipped with a reason in the final run |
+| Defects found and fixed (stale-balance funds check, cross-bank tombstone/read, +30 % telemetry lie, silent-probe trust, test-session collision) | Implemented and Tested | regression test for each; the first two reproduced on the baseline |
+| Flooding experiment (A3 attacker, 5 conditions × 5 seeds, calibrated rate) | Implemented and Tested | 25/25 runs; paired 95 % CIs |
+| Telemetry-poisoning experiments (model 280 runs; live ingestion 90 runs) | Implemented and Tested | 0 false positives; limits reported |
+| Replay experiment (23 cases × 2 modes × 5 seeds) | Implemented and Tested | 230/230 as specified, 0 financial changes |
+| Security dashboard tab | Implemented, partly tested | see Additional requirements |
+| Reproducible evidence (manifest, raw data, hashes, environment, figures, instructions) | Implemented and Tested | `verify`: 490 outputs, 0 mismatches |
+| Secret-scanning finding | Implemented and Tested locally | false positive; one-fingerprint `.gitleaksignore`; gitleaks clean over the full history |
+| 449-run campaign raw files available for verification | Implemented | committed under `infra/trackb/evidence/strategy-campaign/`; 60/60 recorded hashes match |
+
 ## Infrastructure
 
 | Requirement | Status | Note |
 |---|---|---|
 | Docker Compose stack and experiment profile | Implemented and Tested | `infra/trackb/docker-compose*.yml`; used for the 449-run campaign |
 | AWS CDK stack | Partial | `infra/trackb/cdk/` synthesizes only |
-| AWS deployment | Blocked | It needs AWS credentials and your explicit approval. No resources were created, and Free Tier coverage is not assumed. |
+| AWS deployment | Owned by a teammate | Not part of this Track B work. The CDK stack in `infra/trackb/cdk/` is provided and has never been deployed. |
 
 ## Measured results (summary; details in `RESULTS.md` and evidence 03)
 

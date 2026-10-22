@@ -93,8 +93,15 @@ Reading:
   never let the budget rise, and kept the delay at the clean level.
 - The **cost** of protection: during an attack it falls back to 2 checks/tick, below the clean
   arm's 3.76, so recovery is slower while integrity is in doubt.
-- **Limitation:** the +30 % lie stays inside the cross-check tolerance and is *not detected*. Harm
-  is avoided only because the budget is independently capped by switch-measured headroom.
+- **Limitation (at the time of this experiment):** the +30 % lie stays inside the cross-check
+  tolerance and is *not detected*. Harm is avoided only because the budget is independently capped
+  by switch-measured headroom.
+
+  > **Update 2026-10-22.** A persistent-bias (CUSUM) check was added to the validator. In the
+  > security validation package (5 seeds) the +30 % lie is now flagged in 95 % of attack samples in
+  > this model and in 58 % on the live ingestion path, still with 0 false positives; a bias below the
+  > 10 % allowance remains undetected. See [SECURITY_VALIDATION.md](SECURITY_VALIDATION.md). The
+  > table above is the original experiment and is left unchanged.
 
 The live ingestion path was also exercised through the control API (`test_poisoning_attack_via_lab`).
 All poisoned samples (900 tps claim, impossible range, unauthenticated, spoofed source, duplicate

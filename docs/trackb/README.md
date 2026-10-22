@@ -187,8 +187,9 @@ Important switches:
   no cross-service 2PC. Consistency comes from idempotency, evidence rules, fencing and
   escalation.
 - The telemetry-poisoning experiment uses a fluid-queue route model as ground truth (a
-  simulation). Subtle lies inside the tolerance are not detected; they are only bounded
-  by the independent headroom cap.
+  simulation); a live-path variant uses real switch measurements. A persistent bias below
+  the 10 % allowance and pessimistic lies are not detected; they are only bounded by the
+  independent headroom cap (see [SECURITY_VALIDATION.md](SECURITY_VALIDATION.md)).
 - The audit chain is tamper-evident, not tamper-proof; there is no external anchoring.
 - AWS: the ALB is HTTP only, the stack was not deployed, and Fault Injection Service is
   not included.

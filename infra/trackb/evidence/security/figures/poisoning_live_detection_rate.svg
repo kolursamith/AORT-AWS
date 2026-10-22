@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 445" width="1100" height="445" role="img" aria-label="Live ingestion path: share of injected samples flagged" font-family="system-ui, sans-serif">
+<style>svg{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--bg:#fcfcfb;--tx:#0b0b0b;--mu:#52514e;--gr:#e4e3df;}@media (prefers-color-scheme: dark){svg{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--bg:#1a1a19;--tx:#f0efec;--mu:#c3c2b7;--gr:#3a3936;}}.t{fill:var(--tx)}.m{fill:var(--mu)}</style>
+<rect width="1100" height="445" fill="var(--bg)"/>
+<text x="56" y="26" class="t" font-size="16" font-weight="600">Live ingestion path: share of injected samples flagged</text>
+<text x="56" y="46" class="m" font-size="12">real validator and real switch measurements; &#x27;missing&#x27; sends nothing (see guard columns)</text>
+<rect x="56" y="57" width="10" height="10" rx="2" fill="var(--s1)"/>
+<text x="70" y="66" class="t" font-size="12">protected</text>
+<rect x="141" y="57" width="10" height="10" rx="2" fill="var(--s2)"/>
+<text x="155" y="66" class="t" font-size="12">unprotected</text>
+<line x1="56" x2="1084" y1="299.2" y2="299.2" stroke="var(--gr)" stroke-width="1"/>
+<text x="50" y="303.2" class="m" font-size="11" text-anchor="end">0%</text>
+<line x1="56" x2="1084" y1="248.5" y2="248.5" stroke="var(--gr)" stroke-width="1"/>
+<text x="50" y="252.5" class="m" font-size="11" text-anchor="end">25%</text>
+<line x1="56" x2="1084" y1="197.7" y2="197.7" stroke="var(--gr)" stroke-width="1"/>
+<text x="50" y="201.7" class="m" font-size="11" text-anchor="end">50%</text>
+<line x1="56" x2="1084" y1="147.0" y2="147.0" stroke="var(--gr)" stroke-width="1"/>
+<text x="50" y="151.0" class="m" font-size="11" text-anchor="end">75%</text>
+<line x1="56" x2="1084" y1="96.2" y2="96.2" stroke="var(--gr)" stroke-width="1"/>
+<text x="50" y="100.2" class="m" font-size="11" text-anchor="end">100%</text>
+<path d="M84.1,299.2 V299.2 Q84.1,299.2 84.1,299.2 H112.1 Q112.1,299.2 112.1,299.2 V299.2 Z" fill="var(--s1)"><title>protected | honest: 0%</title></path>
+<text x="98.1" y="295.2" class="t" font-size="10" text-anchor="middle">0%</text>
+<path d="M114.1,299.2 V299.2 Q114.1,299.2 114.1,299.2 H142.1 Q142.1,299.2 142.1,299.2 V299.2 Z" fill="var(--s2)"><title>unprotected | honest: 0%</title></path>
+<text x="128.1" y="295.2" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="113.1" y="313.2" class="m" font-size="11" text-anchor="end" transform="rotate(-35 113.1 313.2)">honest</text>
+<path d="M198.3,299.2 V100.2 Q198.3,96.2 202.3,96.2 H222.3 Q226.3,96.2 226.3,100.2 V299.2 Z" fill="var(--s1)"><title>protected | throughput_high_4x: 100%</title></path>
+<text x="212.3" y="92.2" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M228.3,299.2 V299.2 Q228.3,299.2 228.3,299.2 H256.3 Q256.3,299.2 256.3,299.2 V299.2 Z" fill="var(--s2)"><title>unprotected | throughput_high_4x: 0%</title></path>
+<text x="242.3" y="295.2" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="227.3" y="313.2" class="m" font-size="11" text-anchor="end" transform="rotate(-35 227.3 313.2)">throughput_high_4x</text>
+<path d="M312.6,299.2 V100.2 Q312.6,96.2 316.6,96.2 H336.6 Q340.6,96.2 340.6,100.2 V299.2 Z" fill="var(--s1)"><title>protected | latency_low_80pct: 100%</title></path>
+<text x="326.6" y="92.2" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M342.6,299.2 V299.2 Q342.6,299.2 342.6,299.2 H370.6 Q370.6,299.2 370.6,299.2 V299.2 Z" fill="var(--s2)"><title>unprotected | latency_low_80pct: 0%</title></path>
+<text x="356.6" y="295.2" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="341.6" y="313.2" class="m" font-size="11" text-anchor="end" transform="rotate(-35 341.6 313.2)">latency_low_80pct</text>
+<path d="M426.8,299.2 V100.2 Q426.8,96.2 430.8,96.2 H450.8 Q454.8,96.2 454.8,100.2 V299.2 Z" fill="var(--s1)"><title>protected | timeout_rate_false_zero: 100%</title></path>
+<text x="440.8" y="92.2" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M456.8,299.2 V299.2 Q456.8,299.2 456.8,299.2 H484.8 Q484.8,299.2 484.8,299.2 V299.2 Z" fill="var(--s2)"><title>unprotected | timeout_rate_false_zero: 0%</title></path>
+<text x="470.8" y="295.2" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="455.8" y="313.2" class="m" font-size="11" text-anchor="end" transform="rotate(-35 455.8 313.2)">timeout_rate_false_zero</text>
+<path d="M541.0,299.2 V299.2 Q541.0,299.2 541.0,299.2 H569.0 Q569.0,299.2 569.0,299.2 V299.2 Z" fill="var(--s1)"><title>protected | backlog_inconsistent: 0%</title></path>
+<text x="555.0" y="295.2" class="t" font-size="10" text-anchor="middle">0%</text>
+<path d="M571.0,299.2 V299.2 Q571.0,299.2 571.0,299.2 H599.0 Q599.0,299.2 599.0,299.2 V299.2 Z" fill="var(--s2)"><title>unprotected | backlog_inconsistent: 0%</title></path>
+<text x="585.0" y="295.2" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="570.0" y="313.2" class="m" font-size="11" text-anchor="end" transform="rotate(-35 570.0 313.2)">backlog_inconsistent</text>
+<path d="M655.2,299.2 V184.8 Q655.2,180.8 659.2,180.8 H679.2 Q683.2,180.8 683.2,184.8 V299.2 Z" fill="var(--s1)"><title>protected | subtle_throughput_30pct: 58%</title></path>
+<text x="669.2" y="176.8" class="t" font-size="10" text-anchor="middle">58%</text>
+<path d="M685.2,299.2 V299.2 Q685.2,299.2 685.2,299.2 H713.2 Q713.2,299.2 713.2,299.2 V299.2 Z" fill="var(--s2)"><title>unprotected | subtle_throughput_30pct: 0%</title></path>
+<text x="699.2" y="295.2" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="684.2" y="313.2" class="m" font-size="11" text-anchor="end" transform="rotate(-35 684.2 313.2)">subtle_throughput_30pct</text>
+<path d="M769.4,299.2 V100.2 Q769.4,96.2 773.4,96.2 H793.4 Q797.4,96.2 797.4,100.2 V299.2 Z" fill="var(--s1)"><title>protected | stale_timestamp: 100%</title></path>
+<text x="783.4" y="92.2" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M799.4,299.2 V299.2 Q799.4,299.2 799.4,299.2 H827.4 Q827.4,299.2 827.4,299.2 V299.2 Z" fill="var(--s2)"><title>unprotected | stale_timestamp: 0%</title></path>
+<text x="813.4" y="295.2" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="798.4" y="313.2" class="m" font-size="11" text-anchor="end" transform="rotate(-35 798.4 313.2)">stale_timestamp</text>
+<path d="M883.7,299.2 V100.2 Q883.7,96.2 887.7,96.2 H907.7 Q911.7,96.2 911.7,100.2 V299.2 Z" fill="var(--s1)"><title>protected | wrong_source_identity: 100%</title></path>
+<text x="897.7" y="92.2" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M913.7,299.2 V299.2 Q913.7,299.2 913.7,299.2 H941.7 Q941.7,299.2 941.7,299.2 V299.2 Z" fill="var(--s2)"><title>unprotected | wrong_source_identity: 0%</title></path>
+<text x="927.7" y="295.2" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="912.7" y="313.2" class="m" font-size="11" text-anchor="end" transform="rotate(-35 912.7 313.2)">wrong_source_identity</text>
+<text x="1011.9" y="295.2" class="m" font-size="10" text-anchor="middle">n/a</text>
+<text x="1041.9" y="295.2" class="m" font-size="10" text-anchor="middle">n/a</text>
+<text x="1026.9" y="313.2" class="m" font-size="11" text-anchor="end" transform="rotate(-35 1026.9 313.2)">missing</text>
+<line x1="56" x2="1084" y1="299.2" y2="299.2" stroke="var(--mu)" stroke-width="1"/>
+</svg>

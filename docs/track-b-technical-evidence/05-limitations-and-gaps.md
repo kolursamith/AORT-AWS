@@ -56,8 +56,10 @@
 - Experiments record a **source-tree SHA-256** instead of a Git commit. Runs were made from the
   local working folder, which is not a Git repository. The code was later committed to
   `kolursamith/AORT-AWS` (`feature/backend`).
-- The raw and processed result files stay **local**: `results/` belongs to the other track in the
-  team repository, so they were not committed. Their hashes are listed in 04.
+- The raw and processed result files are committed under
+  `infra/trackb/evidence/strategy-campaign/` (a Track B-owned folder; `results/` belongs to the
+  other track). All 60 files listed in 04 match their recorded hashes; the folder's README
+  reconciles 452 result lines with 449 unique runs (3 duplicates of a re-run seed).
 - The dispatcher counter `stale_jobs_dropped` was cumulative across runs and is not reported.
 - The Docker engine hung twice under host memory pressure (under 2–3 GB free). Affected runs were
   excluded, and the seeds were re-run whole.

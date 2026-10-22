@@ -7,6 +7,7 @@ numbers are in the CSV next to the figure (table view).
 
 from __future__ import annotations
 
+import math
 from html import escape
 
 LIGHT = {
@@ -30,7 +31,19 @@ def _fmt(v: float | None, unit: str) -> str:
         return "n/a"
     if unit == "share":
         return f"{v:.0%}"
-    return f"{v:,.0f}" if abs(v) >= 100 else f"{v:,.1f}".rstrip("0").rstrip(".")
+    if abs(v) >= 100:
+        return f"{v:,.0f}"
+    if 0 < abs(v) < 1:
+        return f"{v:.2f}"
+    return f"{v:,.1f}".rstrip("0").rstrip(".")
+
+
+def _nice_step(raw: float) -> float:
+    """Round a tick step up to 1, 2, 2.5 or 5 x 10^k."""
+    if raw <= 0:
+        return 1.0
+    mag = 10 ** math.floor(math.log10(raw))
+    return next(m * mag for m in (1, 2, 2.5, 5, 10) if m * mag >= raw)
 
 
 def grouped_bars(
@@ -45,12 +58,18 @@ def grouped_bars(
 ) -> str:
     names = list(series)[:3]  # at most three series: the validated all-pairs slots
     vals = [v for n in names for v in series[n] if v is not None]
-    vmax = max(vals + [1e-9]) * 1.15
     if unit == "share":
-        vmax = max(vmax, 1.0)
-    left, right, top, bottom = 56, 16, 64 + (16 if subtitle else 0), 70
+        step, ticks = 0.25, 4  # 0 % .. 100 %
+    else:
+        step = _nice_step(max(vals + [1e-9]) / 4)
+        ticks = max(1, math.ceil(max(vals + [1e-9]) / step))
+    vmax = step * ticks * 1.08  # headroom for the value labels above the tallest bar
+    left, right, top = 56, 16, 64 + (16 if subtitle else 0)
+    group_w = (width - left - right) / max(1, len(categories))
+    rotate = max((len(c) for c in categories), default=0) * 6.2 > group_w - 6
+    bottom = 40 + (max(len(c) for c in categories) * 4.6 if rotate else 30)
+    height = max(height, int(top + 220 + bottom))
     pw, ph = width - left - right, height - top - bottom
-    group_w = pw / max(1, len(categories))
     bar_w = min(28.0, (group_w * 0.7) / len(names))
     gap = 2.0
     css_vars = (
@@ -81,9 +100,9 @@ def grouped_bars(
         out.append(f'<text x="{lx + 14}" y="{ly}" class="t" font-size="12">{escape(n)}</text>')
         lx += 22 + 7 * len(n)
     # recessive grid + y labels
-    for k in range(5):
-        v = vmax * k / 4
-        y = top + ph - ph * k / 4
+    for k in range(ticks + 1):
+        v = step * k
+        y = top + ph - ph * v / vmax
         out.append(
             f'<line x1="{left}" x2="{left + pw}" y1="{y:.1f}" y2="{y:.1f}" stroke="var(--gr)" stroke-width="1"/>'
         )
@@ -112,11 +131,17 @@ def grouped_bars(
             out.append(
                 f'<text x="{x + bar_w / 2:.1f}" y="{y - 4:.1f}" class="t" font-size="10" text-anchor="middle">{_fmt(v, unit)}</text>'
             )
-        label = cat if len(cat) <= 22 else cat[:21] + "…"
-        out.append(
-            f'<text x="{left + gi * group_w + group_w / 2:.1f}" y="{top + ph + 16}" class="m" font-size="11" '
-            f'text-anchor="middle">{escape(label)}</text>'
-        )
+        cx = left + gi * group_w + group_w / 2
+        if rotate:  # long labels: rotated, never truncated or overlapping
+            out.append(
+                f'<text x="{cx:.1f}" y="{top + ph + 14}" class="m" font-size="11" text-anchor="end" '
+                f'transform="rotate(-35 {cx:.1f} {top + ph + 14})">{escape(cat)}</text>'
+            )
+        else:
+            out.append(
+                f'<text x="{cx:.1f}" y="{top + ph + 16}" class="m" font-size="11" '
+                f'text-anchor="middle">{escape(cat)}</text>'
+            )
     out.append(
         f'<line x1="{left}" x2="{left + pw}" y1="{top + ph}" y2="{top + ph}" stroke="var(--mu)" stroke-width="1"/>'
     )

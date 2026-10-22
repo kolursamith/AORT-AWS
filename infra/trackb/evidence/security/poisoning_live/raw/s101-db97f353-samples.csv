@@ -1,0 +1,24 @@
+phase,i,t,verdict,confidence,reasons,measured_throughput_tps,measured_latency_p50_ms,reported,budget_recommended,budget_applied,guard_integrity,guard_reasons
+honest,0,2026-10-22T11:20:40.238419+00:00,TRUSTED,1.0,,0.8,43.21380000328645,"{""latency_p50_ms"": 43.21380000328645, ""latency_p95_ms"": 66.94823007564989, ""throughput_tps"": 0.8, ""timeout_rate"": 0.0, ""backlog"": 0, ""health_score"": 1.0}",1,1,TRUSTED,
+honest,1,2026-10-22T11:20:40.821303+00:00,TRUSTED,1.0,,0.8,43.73789997771382,"{""latency_p50_ms"": 43.73789997771382, ""latency_p95_ms"": 65.75725006405264, ""throughput_tps"": 0.8, ""timeout_rate"": 0.0, ""backlog"": 0, ""health_score"": 1.0}",1,1,TRUSTED,
+honest,2,2026-10-22T11:20:41.392560+00:00,TRUSTED,1.0,,0.9,44.12770003546029,"{""latency_p50_ms"": 44.12770003546029, ""latency_p95_ms"": 63.9707800466567, ""throughput_tps"": 0.9, ""timeout_rate"": 0.0, ""backlog"": 0, ""health_score"": 1.0}",1,1,TRUSTED,
+honest,3,2026-10-22T11:20:42.077546+00:00,TRUSTED,1.0,,0.9,45.41729995980859,"{""latency_p50_ms"": 45.41729995980859, ""latency_p95_ms"": 71.63650006987154, ""throughput_tps"": 0.9, ""timeout_rate"": 0.0, ""backlog"": 0, ""health_score"": 1.0}",1,1,TRUSTED,
+honest,4,2026-10-22T11:20:42.668072+00:00,TRUSTED,1.0,,1.033,44.12770003546029,"{""latency_p50_ms"": 44.12770003546029, ""latency_p95_ms"": 71.05614007450639, ""throughput_tps"": 1.033, ""timeout_rate"": 0.0, ""backlog"": 0, ""health_score"": 1.0}",1,1,TRUSTED,
+honest,5,2026-10-22T11:20:43.214420+00:00,TRUSTED,1.0,,1.167,44.77249999763444,"{""latency_p50_ms"": 44.77249999763444, ""latency_p95_ms"": 70.18560008145869, ""throughput_tps"": 1.167, ""timeout_rate"": 0.0, ""backlog"": 0, ""health_score"": 1.0}",1,1,TRUSTED,
+attack,0,2026-10-22T11:20:45.735049+00:00,NONE_SENT,,,1.433,43.73789997771382,null,1,1,TRUSTED,
+attack,1,2026-10-22T11:20:47.749655+00:00,NONE_SENT,,,1.733,41.81949992198497,null,1,1,TRUSTED,
+attack,2,2026-10-22T11:20:49.764071+00:00,NONE_SENT,,,2.0,39.479500032030046,null,1,1,TRUSTED,
+attack,3,2026-10-22T11:20:51.778578+00:00,NONE_SENT,,,2.233,38.59470004681498,null,1,1,TRUSTED,
+attack,4,2026-10-22T11:20:53.798065+00:00,NONE_SENT,,,2.533,37.18680003657937,null,1,1,TRUSTED,
+attack,5,2026-10-22T11:20:55.814055+00:00,NONE_SENT,,,2.8,36.90109995659441,null,1,1,TRUSTED,
+attack,6,2026-10-22T11:20:57.959852+00:00,NONE_SENT,,,3.067,36.90109995659441,null,1,1,TRUSTED,
+attack,7,2026-10-22T11:20:59.976647+00:00,NONE_SENT,,,3.333,37.04394999658689,null,1,1,TRUSTED,
+attack,8,2026-10-22T11:21:01.994668+00:00,NONE_SENT,,,3.6,36.8124499800615,null,1,1,TRUSTED,
+attack,9,2026-10-22T11:21:04.015237+00:00,NONE_SENT,,,3.833,37.225449981633574,null,1,1,TRUSTED,
+attack,10,2026-10-22T11:21:06.075974+00:00,NONE_SENT,,,3.967,37.26409992668778,null,1,1,TRUSTED,
+attack,11,2026-10-22T11:21:08.090638+00:00,NONE_SENT,,,4.033,36.67959995800629,null,2,2,TRUSTED,
+attack,12,2026-10-22T11:21:10.103180+00:00,NONE_SENT,,,3.967,36.11199994338676,null,1,1,TRUSTED,
+attack,13,2026-10-22T11:21:12.120440+00:00,NONE_SENT,,,4.033,35.40689998771995,null,2,2,TRUSTED,
+attack,14,2026-10-22T11:21:14.140888+00:00,NONE_SENT,,,4.033,34.58560002036393,null,2,2,STALE,latest trusted telemetry is 31s old (> 30s)
+attack,15,2026-10-22T11:21:16.157771+00:00,NONE_SENT,,,4.0,34.345899999607354,null,2,2,STALE,latest trusted telemetry is 33s old (> 30s)
+attack,16,2026-10-22T11:21:18.172735+00:00,NONE_SENT,,,4.0,34.02480005752295,null,2,2,STALE,latest trusted telemetry is 35s old (> 30s)
