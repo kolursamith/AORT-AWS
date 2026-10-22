@@ -23,6 +23,7 @@ from backend.aorts.app.logging_config import log_event
 from backend.aorts.banking.ledger.models import SwitchTransaction
 from backend.aorts.banking.switch.capacity import CapacityModel, DestinationPool
 from backend.aorts.contracts.enums import Decision, ErrorCode, SwitchStatus
+from backend.aorts.contracts.events import transaction_id_bank
 from backend.aorts.contracts.requests import (
     BeneficiaryCreditRequest,
     StatusCheckRequest,
@@ -136,6 +137,7 @@ class SwitchService:
             raise SwitchError(
                 ErrorCode.IDENTITY_MISMATCH, "remitter identity / route mismatch", 403
             )
+        self._require_namespace(req.transaction_id, ident, "pay_rejected")
         if req.beneficiary_bank_id not in self.destinations:
             m.inc("pay_rejected", reason="INVALID_ROUTE")
             raise SwitchError(
@@ -169,6 +171,11 @@ class SwitchService:
         if inserted is None:
             # Duplicate /pay (or a status-check fence got there first): never forward twice.
             existing = self._record(req.transaction_id)
+            if existing.remitter_bank_id != ident.identity:  # never reveal another bank's record
+                m.inc("pay_rejected", reason="WRONG_BANK")
+                raise SwitchError(
+                    ErrorCode.IDENTITY_MISMATCH, "transaction belongs to another remitter bank", 403
+                )
             m.inc("pay_duplicate")
             return SwitchPayResponse(
                 transaction_id=req.transaction_id,
@@ -348,8 +355,29 @@ class SwitchService:
                 )
             return self._lookup(req, ident)
 
+    def _require_namespace(self, txn_id: str, ident: VerifiedIdentity, counter: str) -> None:
+        owner = transaction_id_bank(txn_id)
+        if owner is not None and owner != ident.identity:
+            self.ctx.metrics.inc(counter, bank=ident.identity, reason="FOREIGN_TRANSACTION_ID")
+            self.ctx.audit_buffer.record(
+                make_record(
+                    "FOREIGN_TRANSACTION_ID",
+                    Decision.REJECTED,
+                    ident.identity,
+                    transaction_id=txn_id,
+                    reason=f"transaction id belongs to {owner}",
+                ),
+                sample_key=(ident.identity, "FOREIGN_TRANSACTION_ID"),
+            )
+            raise SwitchError(
+                ErrorCode.IDENTITY_MISMATCH, "transaction id belongs to another remitter bank", 403
+            )
+
     def _lookup(self, req: StatusCheckRequest, ident: VerifiedIdentity) -> StatusCheckResponse:
         m = self.ctx.metrics
+        # Bind the id to the signer BEFORE anything else: an unknown id would otherwise be fenced
+        # (FAILED tombstone) on behalf of whichever bank asked first.
+        self._require_namespace(req.transaction_id, ident, "check_rejected")
         rec = self._record(req.transaction_id)
         if rec is None:
             # Never received: insert a FAILED tombstone so a late /pay can no longer be processed.

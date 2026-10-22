@@ -154,6 +154,7 @@ class ReplaySimulator:
         self.case_wrong_transaction()
         self.case_missing_idempotency_key()
         self.case_forged_requests()
+        self.case_wrong_bank_identity()
         return self.records
 
     def case_sequential_duplicate(self):
@@ -427,4 +428,28 @@ class ReplaySimulator:
             event_id=ev2["event_id"],
             expected_version=txn2["version"],
             expectation="AUTH_MISSING",
+        )
+
+    def case_wrong_bank_identity(self):
+        """A bank asks the switch about another bank's transaction (status checks are signed)."""
+        txn = self.ambiguous_payment()  # remitter bank A1
+        claimed = {
+            "transaction_id": txn["transaction_id"],
+            "bank_id": "A1",
+            "route_id": txn["route_id"],
+        }
+        self._record(
+            "11_status_check_claiming_other_bank",
+            txn["transaction_id"],
+            self.client.post("switch", "/api/v1/check-status", claimed, as_identity="A2"),
+            expected_version=txn["version"],
+            expectation="IDENTITY_MISMATCH (signed as A2, claims A1)",
+        )
+        own = {"transaction_id": txn["transaction_id"], "bank_id": "A2", "route_id": "A2-B"}
+        self._record(
+            "11b_status_check_for_other_banks_transaction",
+            txn["transaction_id"],
+            self.client.post("switch", "/api/v1/check-status", own, as_identity="A2"),
+            expected_version=txn["version"],
+            expectation="IDENTITY_MISMATCH (transaction belongs to A1)",
         )

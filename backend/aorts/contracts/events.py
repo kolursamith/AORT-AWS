@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import uuid
 from datetime import UTC, datetime
 
@@ -16,6 +17,21 @@ def utcnow() -> datetime:
 
 def new_id(prefix: str) -> str:
     return f"{prefix}-{uuid.uuid4().hex[:20]}"
+
+
+# Transaction ids carry the remitter bank (``TXN<bank>-<16 hex>``) so the switch can bind an id it
+# has never seen to the signed caller: bank A2 cannot fence or read bank A1's transactions.
+_TXN_NAMESPACE = re.compile(r"^TXN([A-Z][A-Z0-9]{0,7})-[0-9A-F]{16}$")
+
+
+def new_transaction_id(bank_id: str) -> str:
+    return f"TXN{bank_id}-{uuid.uuid4().hex[:16].upper()}"
+
+
+def transaction_id_bank(transaction_id: str) -> str | None:
+    """The remitter bank encoded in a transaction id, or None for ids without a namespace (legacy)."""
+    m = _TXN_NAMESPACE.match(transaction_id)
+    return m.group(1) if m else None
 
 
 class DomainEvent(BaseModel):

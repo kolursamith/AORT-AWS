@@ -1,0 +1,7 @@
+# Reviewed gitleaks false positives. One exact finding per line (commit:file:rule:line), so the
+# exception covers only that occurrence; any new or changed secret-like value is still reported.
+#
+# generic-api-key on a synthetic idempotency key ("idem-" + 8 digits) in a schema-validation test.
+# It is request data, not a credential: it authenticates nothing and matches no configured secret.
+# Reviewed 2026-10-22 (Track B security validation, Phase G).
+4893212a74658e31fa42d7a9b3bc619ce472f91f:tests/trackb/contract/test_contracts.py:generic-api-key:45

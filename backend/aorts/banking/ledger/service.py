@@ -20,7 +20,6 @@ import hashlib
 import json
 import logging
 import random
-import uuid
 from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
 
@@ -51,7 +50,7 @@ from backend.aorts.contracts.enums import (
     SwitchStatus,
     TxnState,
 )
-from backend.aorts.contracts.events import DomainEvent, new_id
+from backend.aorts.contracts.events import DomainEvent, new_id, new_transaction_id
 from backend.aorts.contracts.requests import PaymentRequest, StatusEvidence
 from backend.aorts.contracts.responses import EligibilityResponse, OperationResult
 from backend.aorts.events.outbox import add_outbox
@@ -389,7 +388,6 @@ class LedgerService:
         if existing is not None:
             return existing, True
         ctx = _Ctx(actor)
-        txn_id = f"TXN{uuid.uuid4().hex[:16].upper()}"
         try:
             with self.db.session() as s:
                 sender = s.execute(
@@ -400,6 +398,7 @@ class LedgerService:
                         ErrorCode.ACCOUNT_NOT_FOUND, "sender account not found", 422
                     )
                 bank = sender.bank_id
+                txn_id = new_transaction_id(bank)
                 # Lock every account this payment will touch, in sorted order, BEFORE inserting rows that
                 # reference them: the transactions.sender_account_id FK takes a KEY SHARE lock, and two
                 # concurrent payments from one sender would otherwise deadlock upgrading it to FOR UPDATE.

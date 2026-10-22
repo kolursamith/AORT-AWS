@@ -176,7 +176,8 @@ def run_flood(client, txn_pool: dict[str, list[tuple[str, str]]], cfg: FloodConf
         with lock:
             result.records.append(rec)
 
-    streams = [(cfg.attacker, "attack", rps, duration, cfg.lead_s)]
+    # attack_rps <= 0 is the no-attack control condition: only the legitimate banks send.
+    streams = [(cfg.attacker, "attack", rps, duration, cfg.lead_s)] if cfg.attack_rps > 0 else []
     streams += [
         (b, "legit", cfg.legit_rps_per_bank, cfg.lead_s + duration + cfg.tail_s, 0.0)
         for b in cfg.legit_banks
