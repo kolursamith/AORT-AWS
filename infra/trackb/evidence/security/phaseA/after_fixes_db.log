@@ -1,0 +1,88 @@
+code: working tree on top of 8b863da1bb77335f299c472a65c46226bb43ed5d (fixes: ledger stale-balance read, validator bias check, guard staleness, test-session lock)
+cmd: AORTS_TEST_DATABASE_URL=<compose db>/aorts_test AORTS_REQUIRE_DB=1 python -m pytest tests/trackb -v -rs --durations=15
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.7.0
+rootdir: C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\AORT-AWS
+configfile: pyproject.toml
+plugins: anyio-4.15.1, platformdirs-4.13.3, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 240 items
+
+tests\trackb\acceptance\test_protected_security.py .....                 [  2%]
+tests\trackb\contract\test_contracts.py .......                          [  5%]
+tests\trackb\integration\test_aorts_integration.py ......                [  7%]
+tests\trackb\integration\test_bulkhead.py ...                            [  8%]
+tests\trackb\integration\test_control_plane.py ..............            [ 14%]
+tests\trackb\integration\test_ledger_atomicity.py .....                  [ 16%]
+tests\trackb\integration\test_payment_flow.py ................           [ 23%]
+tests\trackb\integration\test_reconciliation.py ......                   [ 25%]
+tests\trackb\integration\test_recovery.py ........                       [ 29%]
+tests\trackb\integration\test_team_contract.py .........                 [ 32%]
+tests\trackb\security\test_request_auth.py ...........                   [ 37%]
+tests\trackb\test_ledger_invariants.py ............                      [ 42%]
+tests\trackb\test_rate_limits.py .........                               [ 46%]
+tests\trackb\test_replay_protection.py ....................              [ 54%]
+tests\trackb\test_telemetry_integrity.py ............................... [ 67%]
+............................................                             [ 85%]
+tests\trackb\unit\test_baseline_policies.py ......                       [ 88%]
+tests\trackb\unit\test_gates_and_faults.py ...                           [ 89%]
+tests\trackb\unit\test_metrics_definitions.py ...                        [ 90%]
+tests\trackb\unit\test_paired_stats.py ...                               [ 92%]
+tests\trackb\unit\test_recovery_intelligence.py ............             [ 97%]
+tests\trackb\unit\test_traffic_generator.py .                            [ 97%]
+tests\trackb\unit\test_twins.py ......                                   [100%]
+
+============================== warnings summary ===============================
+..\..\..\..\..\..\..\..\..\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/trackb/acceptance/test_protected_security.py::test_P1_uncorroborated_false_high_capacity_telemetry_cannot_raise_budget
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\alembic\config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+    util.warn_deprecated(
+
+tests/trackb/acceptance/test_protected_security.py: 11 warnings
+tests/trackb/integration/test_aorts_integration.py: 17 warnings
+tests/trackb/integration/test_bulkhead.py: 15 warnings
+tests/trackb/integration/test_control_plane.py: 31 warnings
+tests/trackb/integration/test_ledger_atomicity.py: 12 warnings
+tests/trackb/integration/test_payment_flow.py: 46 warnings
+tests/trackb/integration/test_reconciliation.py: 20 warnings
+tests/trackb/integration/test_recovery.py: 30 warnings
+tests/trackb/integration/test_team_contract.py: 37 warnings
+tests/trackb/test_ledger_invariants.py: 11 warnings
+tests/trackb/test_rate_limits.py: 12 warnings
+tests/trackb/test_replay_protection.py: 40 warnings
+  C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\AORT-AWS\backend\aorts\app\http_client.py:66: StarletteDeprecationWarning: You should not use the 'timeout' argument with the TestClient. See https://github.com/Kludex/starlette/issues/1108 for more information.
+    return self._client(target).request(
+
+tests/trackb/integration/test_team_contract.py::test_shared_contract_controller_drives_recovery
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:1053: StarletteDeprecationWarning: You should not use the 'timeout' argument with the TestClient. See https://github.com/Kludex/starlette/issues/1108 for more information.
+    return self.request(
+
+tests/trackb/integration/test_team_contract.py::test_shared_contract_controller_drives_recovery
+tests/trackb/integration/test_team_contract.py::test_expired_or_foreign_decisions_fall_back
+tests/trackb/integration/test_team_contract.py::test_expired_or_foreign_decisions_fall_back
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:1144: StarletteDeprecationWarning: You should not use the 'timeout' argument with the TestClient. See https://github.com/Kludex/starlette/issues/1108 for more information.
+    return self.request(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\AORT-AWS\infra\trackb\evidence\security\phaseA\after_fixes_db.junit.xml -
+============================ slowest 15 durations =============================
+6.33s call     tests/trackb/integration/test_control_plane.py::test_flooding_attack_via_lab
+3.83s call     tests/trackb/acceptance/test_protected_security.py::test_P4_recovery_traffic_cannot_consume_capacity_reserved_for_primary_payments
+3.77s call     tests/trackb/integration/test_payment_flow.py::test_mixed_concurrent_debits_settlements_reversals_same_senders
+3.58s setup    tests/trackb/test_replay_protection.py::test_invalid_idempotency_keys[auto_reverse]
+3.36s call     tests/trackb/test_rate_limits.py::test_flood_rejected_at_switch_before_downstream_work
+3.27s call     tests/trackb/integration/test_bulkhead.py::test_shared_pool_lets_undefended_flood_hurt_payments
+3.14s call     tests/trackb/integration/test_bulkhead.py::test_bulkhead_keeps_payments_flowing_during_undefended_flood
+3.01s call     tests/trackb/integration/test_bulkhead.py::test_primary_reserve_protects_payments_even_on_a_shared_pool
+2.98s call     tests/trackb/test_rate_limits.py::test_flood_with_defenses_disabled_admits_attacker
+2.78s setup    tests/trackb/test_replay_protection.py::test_sequential_duplicate[explicit_reverse]
+2.69s setup    tests/trackb/test_replay_protection.py::test_stale_version_and_stale_timestamp[auto_reverse]
+2.27s setup    tests/trackb/test_replay_protection.py::test_sequential_duplicate[auto_reverse]
+2.26s setup    tests/trackb/test_replay_protection.py::test_repeated_reversal_posts_once[auto_reverse]
+2.24s setup    tests/trackb/test_replay_protection.py::test_duplicate_after_close[auto_reverse]
+2.24s setup    tests/trackb/test_replay_protection.py::test_ledger_integrity_after_all_replays[auto_reverse]
+================ 240 passed, 288 warnings in 135.28s (0:02:15) ================
+exit=0

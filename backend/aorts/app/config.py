@@ -101,6 +101,7 @@ class Settings(BaseSettings):
     telemetry_max_future_seconds: int = 5
     telemetry_min_confidence: float = 0.6
     telemetry_cross_check_tolerance: float = 0.5
+    telemetry_bias_check: bool = True  # CUSUM check for persistent in-tolerance optimistic bias
 
     # --- event / cloud adapters --------------------------------------------------------
     queue_backend: str = "local"  # local | sqs

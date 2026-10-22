@@ -1,0 +1,99 @@
+cmd: AORTS_TEST_DATABASE_URL=postgresql+psycopg://nobody@127.0.0.1:1/x python -m pytest tests/trackb -q -rs
+sssss.......ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 39%]
+ss..............sssssssss......sssssssssssssssssssssss.................. [ 78%]
+........................................                                 [100%]
+============================== warnings summary ===============================
+..\..\..\..\..\..\..\..\..\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+SKIPPED [1] tests\trackb\acceptance\test_protected_security.py:69: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\acceptance\test_protected_security.py:102: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\acceptance\test_protected_security.py:182: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\acceptance\test_protected_security.py:202: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\acceptance\test_protected_security.py:256: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_aorts_integration.py:35: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_aorts_integration.py:53: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_aorts_integration.py:70: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_aorts_integration.py:85: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_aorts_integration.py:103: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_aorts_integration.py:129: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_bulkhead.py:52: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_bulkhead.py:62: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_bulkhead.py:71: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:24: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:30: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:50: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:67: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:81: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:95: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:105: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:116: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:129: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:150: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:168: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:178: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:193: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_control_plane.py:207: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:12: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:25: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:37: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:55: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:62: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:69: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:85: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:92: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:105: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:118: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:125: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:130: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:135: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:146: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:157: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_payment_flow.py:169: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_reconciliation.py:42: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_reconciliation.py:61: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_reconciliation.py:74: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_reconciliation.py:80: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\integration\test_reconciliation.py:88: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_recovery.py:27: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_recovery.py:44: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_recovery.py:68: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_recovery.py:86: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_recovery.py:94: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_recovery.py:108: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_recovery.py:129: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_recovery.py:142: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_team_contract.py:37: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_team_contract.py:56: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_team_contract.py:66: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_team_contract.py:82: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_team_contract.py:99: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_team_contract.py:113: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_team_contract.py:134: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_team_contract.py:216: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\integration\test_team_contract.py:239: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_ledger_invariants.py:55: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_ledger_invariants.py:70: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_ledger_invariants.py:83: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_ledger_invariants.py:95: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_ledger_invariants.py:122: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_ledger_invariants.py:140: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_ledger_invariants.py:153: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_ledger_invariants.py:168: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_ledger_invariants.py:179: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_rate_limits.py:101: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_rate_limits.py:133: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [1] tests\trackb\test_rate_limits.py:146: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\test_replay_protection.py:20: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\test_replay_protection.py:25: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\test_replay_protection.py:33: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\test_replay_protection.py:40: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\test_replay_protection.py:54: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\test_replay_protection.py:63: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\test_replay_protection.py:70: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\test_replay_protection.py:82: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\test_replay_protection.py:89: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL
+SKIPPED [2] tests\trackb\test_replay_protection.py:95: PostgreSQL test server not reachable (OperationalError); start it with `make db` or set AORTS_TEST_DATABASE_URL

@@ -256,6 +256,9 @@ class LedgerService:
         )
         s.add(op)
         s.flush()  # unique constraints fire here -> IntegrityError on any duplicate
+        # populate_existing: the account objects may already be in the session from an unlocked read
+        # (create_payment loads the sender first); without it the funds check would use that stale
+        # balance instead of the row just locked, and concurrent debits would hit the DB constraint.
         accounts = {
             a.account_id: a
             for a in s.execute(
@@ -263,6 +266,7 @@ class LedgerService:
                 .where(Account.account_id.in_(sorted({debit_account, credit_account})))
                 .order_by(Account.account_id)
                 .with_for_update()
+                .execution_options(populate_existing=True)
             ).scalars()
         }
         for acc_id in (debit_account, credit_account):

@@ -5,7 +5,8 @@ Whatever the controller recommends, the applied budget is
     min(recommended, hard cap, independent switch-side headroom)
 
 and, when telemetry integrity for the route cannot be established (latest
-observation SUSPICIOUS/REJECTED, or no trusted observation recently), the budget
+observation SUSPICIOUS/REJECTED, no observation at all, or the latest TRUSTED observation is
+older than ``max_telemetry_age_s``, i.e. the sensor went silent), the budget
 is additionally limited to ``min(fallback budget, last budget applied while
 telemetry was trusted)``. Suspicious telemetry can therefore never *raise* the
 budget (freeze-or-reduce), and the system falls back to a documented safe policy.
@@ -14,6 +15,7 @@ budget (freeze-or-reduce), and the system falls back to a documented safe policy
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from datetime import UTC, datetime
 
 
 @dataclass
@@ -63,12 +65,14 @@ class BudgetGuard:
         enabled: bool = True,
         tick_s: float = 1.0,
         spare_fraction: float = 0.5,
+        max_telemetry_age_s: float | None = None,
     ):
         self.hard_cap = hard_cap
         self.fallback = fallback_budget
         self.enabled = enabled
         self.tick_s = tick_s
         self.spare = spare_fraction
+        self.max_age = max_telemetry_age_s
         self.last_trusted: dict[str, int] = {}
 
     def apply(
@@ -79,6 +83,7 @@ class BudgetGuard:
         telemetry: dict | None,
         measured: dict | None,
         enabled: bool | None = None,
+        now: datetime | None = None,
     ) -> RouteBudget:
         enabled = self.enabled if enabled is None else enabled
         rb = RouteBudget(route_id, recommended, max(0, recommended))
@@ -94,6 +99,10 @@ class BudgetGuard:
             rb.applied = headroom
             rb.reasons.append(f"switch-measured headroom {headroom}/tick")
         verdict = (telemetry or {}).get("verdict")
+        age = self._age_s(telemetry, now)
+        if verdict == "TRUSTED" and age is not None and age > self.max_age:
+            verdict = "STALE"  # a silent sensor is not evidence that the route is still healthy
+            rb.reasons.append(f"latest trusted telemetry is {age:.0f}s old (> {self.max_age:g}s)")
         if verdict != "TRUSTED":
             rb.integrity = verdict or "NO_TELEMETRY"
             ceiling = min(self.fallback, self.last_trusted.get(route_id, self.fallback))
@@ -105,3 +114,15 @@ class BudgetGuard:
         else:
             self.last_trusted[route_id] = rb.applied
         return rb
+
+    def _age_s(self, telemetry: dict | None, now: datetime | None) -> float | None:
+        """Seconds since the observation behind ``telemetry`` (None when unknown or not checked)."""
+        if self.max_age is None or not telemetry:
+            return None
+        ts = telemetry.get("observed_at") or telemetry.get("at")
+        if not ts:
+            return None
+        when = datetime.fromisoformat(ts) if isinstance(ts, str) else ts
+        if when.tzinfo is None:
+            when = when.replace(tzinfo=UTC)
+        return ((now or datetime.now(UTC)) - when).total_seconds()

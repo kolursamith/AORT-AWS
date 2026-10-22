@@ -52,6 +52,34 @@ ADMIN_TOKEN = os.environ.setdefault(
 )
 
 
+SESSION_LOCK = (
+    7_420_778  # advisory lock on the server's "postgres" database: one test session per server
+)
+
+
+def _acquire_session_lock(url: str):
+    """Hold a server-wide lock for the session.
+
+    The session fixture drops the test database WITH (FORCE), which kills every other session's
+    connections; a second concurrent pytest run must therefore fail fast instead of corrupting
+    the first one.
+    """
+    u = make_url(url)
+    engine = create_engine(
+        u.set(database="postgres"),
+        isolation_level="AUTOCOMMIT",
+        connect_args={"connect_timeout": 5},
+    )
+    conn = engine.connect()
+    if not conn.execute(text("SELECT pg_try_advisory_lock(:k)"), {"k": SESSION_LOCK}).scalar():
+        conn.close()
+        engine.dispose()
+        pytest.fail(
+            "another Track B test session is using this PostgreSQL server; run one session at a time"
+        )
+    return engine, conn
+
+
 def _recreate_database(url: str) -> None:
     u = make_url(url)
     admin = create_engine(
@@ -70,7 +98,10 @@ def _recreate_database(url: str) -> None:
 @pytest.fixture(scope="session")
 def database() -> Database:
     try:
+        lock_engine, lock_conn = _acquire_session_lock(TEST_DB_URL)
         _recreate_database(TEST_DB_URL)
+    except pytest.fail.Exception:
+        raise
     except Exception as exc:  # noqa: BLE001
         msg = (
             f"PostgreSQL test server not reachable ({type(exc).__name__}); start it with `make db` "
@@ -90,6 +121,8 @@ def database() -> Database:
     db = Database(TEST_DB_URL, pool_size=20)
     yield db
     db.dispose()
+    lock_conn.close()  # closing the connection releases the advisory lock
+    lock_engine.dispose()
 
 
 @pytest.fixture(scope="session")

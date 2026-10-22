@@ -474,6 +474,7 @@ def reset(request: Request, body: dict = Body(...)):
         max_future_s=int(old.max_future.total_seconds()),
         min_confidence=old.min_confidence,
         tolerance=old.tolerance,
+        bias_check=old.bias_check,
     )
     st(request).telemetry.recent.clear()
     return {"reset": True, "snapshot_saved_to": path}

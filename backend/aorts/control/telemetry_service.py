@@ -44,6 +44,7 @@ class TelemetryService:
             max_future_s=s.telemetry_max_future_seconds,
             min_confidence=s.telemetry_min_confidence,
             tolerance=s.telemetry_cross_check_tolerance,
+            bias_check=s.telemetry_bias_check,
         )
         self._measure = measurement_source or self._switch_measurements
         self._cache: tuple[float, dict] = (0.0, {})
@@ -147,6 +148,7 @@ def apply_to_twin(twin: VersionedStore, obs: RouteTelemetry, a: TelemetryAssessm
             "confidence": a.confidence,
             "reasons": a.reasons[:5],
             "event_id": obs.event_id,
+            "observed_at": obs.timestamp.isoformat(),
             "at": datetime.now(UTC).isoformat(),
         },
     )

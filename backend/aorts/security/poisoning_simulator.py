@@ -12,8 +12,15 @@ Model-in-the-loop experiment, clearly a SIMULATION:
   fed back into the route model, so a misled controller really overloads the route.
 
 Arms: ``clean`` (no poisoning), ``poisoned_unprotected`` (validation + integrity
-guard disabled) and ``poisoned_protected`` (defenses enabled). The static hard cap
-applies in every arm.
+guard disabled), ``poisoned_protected`` (defenses enabled) and ``poisoned_protected_nobias``
+(defenses enabled but the persistent-bias CUSUM check switched off, i.e. the validator as it
+was before that check existed). The static hard cap applies in every arm.
+
+Case groups: value lies (``latency_low``, ``throughput_high``, ``timeout_low``, ``timeout_high``,
+``conflicting_timeout_backlog``, ``backlog_inconsistent``, ``subtle_throughput_high`` = +30 %,
+``subtle_throughput_8pct`` = +8 %, below the bias allowance), freshness (``replay_old``,
+``stale_timestamp``, ``missing`` = the probe goes silent), identity (``wrong_source`` = signed by
+probe 2 while claiming probe 1, ``unregistered_source``) and ``invalid_values``.
 """
 
 from __future__ import annotations
@@ -39,6 +46,20 @@ CASES = [
     "invalid_values",
     "subtle_throughput_high",
 ]
+EXTENDED_CASES = [
+    *CASES,
+    "timeout_low",
+    "timeout_high",
+    "backlog_inconsistent",
+    "stale_timestamp",
+    "missing",
+    "wrong_source",
+    "unregistered_source",
+    "subtle_throughput_8pct",
+]
+# Which identity signs the observation (identity attacks only; everything else is probe 1).
+SIGNERS = {"wrong_source": "twin-probe-2", "unregistered_source": "rogue-probe"}
+ARMS = ("clean", "poisoned_unprotected", "poisoned_protected", "poisoned_protected_nobias")
 
 
 @dataclass
@@ -86,6 +107,7 @@ class PoisonConfig:
     seed: int = 42
     hard_cap: int = 30
     fallback_budget: int = 2
+    max_telemetry_age_s: float = 30.0
 
 
 def _poison(
@@ -104,6 +126,27 @@ def _poison(
         r["throughput_tps"] *= 4.0
     elif case == "subtle_throughput_high":
         r["throughput_tps"] *= 1.3  # within tolerance: designed to evade anomaly checks
+    elif case == "subtle_throughput_8pct":
+        r["throughput_tps"] *= 1.08  # below the bias allowance: the documented detection limit
+    elif case == "timeout_low":
+        r["timeout_rate"] = 0.0
+        r["latency_p50_ms"] *= 0.5
+        r["latency_p95_ms"] *= 0.5
+    elif case == "timeout_high":
+        r["timeout_rate"] = 0.6  # pessimistic lie: can only lower the budget (availability harm)
+    elif case == "backlog_inconsistent":
+        r["backlog"] = 0 if tick % 2 else 400
+    elif case == "stale_timestamp":
+        return base.model_copy(
+            update={
+                "timestamp": base.timestamp - timedelta(seconds=120),
+                "event_id": f"tel-st-{tick}",
+            }
+        )
+    elif case == "wrong_source":
+        return base.model_copy(update={"source_id": "twin-probe-1"})  # signer is probe 2
+    elif case == "unregistered_source":
+        return base.model_copy(update={"source_id": "rogue-probe"})
     elif case == "conflicting_timeout_backlog":
         r["timeout_rate"], r["backlog"] = 0.0, 0
         r["latency_p50_ms"] = min(r["latency_p50_ms"], 200.0)
@@ -138,11 +181,13 @@ def run_poisoning(cfg: PoisonConfig) -> dict:
         min_confidence=0.6,
         tolerance=0.5,
         enabled=(cfg.arm != "poisoned_unprotected"),
+        bias_check=(cfg.arm != "poisoned_protected_nobias"),
     )
     guard = BudgetGuard(
         hard_cap=cfg.hard_cap,
         fallback_budget=cfg.fallback_budget,
         enabled=(cfg.arm != "poisoned_unprotected"),
+        max_telemetry_age_s=cfg.max_telemetry_age_s,
     )
     twin = LocalVersionedStore()
     controller = MockController(tick_seconds=1.0, default_budget=cfg.fallback_budget)
@@ -186,10 +231,15 @@ def run_poisoning(cfg: PoisonConfig) -> dict:
         obs = _poison(cfg.case, clean, tick, rng, history, base) if attacking else base
         if not attacking:
             history.append(base)
-        assessment = validator.validate(
-            obs, authenticated_source="twin-probe-1", measured=measured, now=now
-        )
-        apply_to_twin(twin, obs, assessment)
+        signer = SIGNERS.get(cfg.case, "twin-probe-1") if attacking else "twin-probe-1"
+        silent = attacking and cfg.case == "missing"
+        if silent:  # the probe sends nothing: no new verdict, the twin keeps its last state
+            assessment = None
+        else:
+            assessment = validator.validate(
+                obs, authenticated_source=signer, measured=measured, now=now
+            )
+            apply_to_twin(twin, obs, assessment)
         believed = (twin.get(f"route:{ROUTE}") or (0, {}))[1]
         integrity = (twin.get(f"integrity:{ROUTE}") or (0, {}))[1]
         decision = controller.decide(
@@ -201,7 +251,7 @@ def run_poisoning(cfg: PoisonConfig) -> dict:
             )
         )
         recommended = decision.route_budgets[ROUTE]
-        rb = guard.apply(ROUTE, recommended, telemetry=integrity, measured=measured)
+        rb = guard.apply(ROUTE, recommended, telemetry=integrity, measured=measured, now=now)
         applied_budget = rb.applied
         actual_before = model.delay_ms()
         measured = model.step(applied_budget)
@@ -211,14 +261,17 @@ def run_poisoning(cfg: PoisonConfig) -> dict:
                 "attacking": attacking,
                 "case": cfg.case if attacking else "none",
                 "clean_throughput_tps": round(clean["throughput_tps"], 3),
-                "reported_throughput_tps": obs.throughput_tps,
+                "reported_throughput_tps": None if silent else obs.throughput_tps,
                 "clean_latency_p95_ms": round(clean["latency_p95_ms"], 2),
-                "reported_latency_p95_ms": obs.latency_p95_ms,
+                "reported_latency_p95_ms": None if silent else obs.latency_p95_ms,
+                "clean_timeout_rate": round(clean["timeout_rate"], 4),
+                "reported_timeout_rate": None if silent else obs.timeout_rate,
                 "clean_backlog": clean["backlog"],
-                "reported_backlog": obs.backlog,
-                "verdict": assessment.verdict.value,
-                "confidence": round(assessment.confidence, 3),
-                "reasons": "; ".join(assessment.reasons)[:300],
+                "reported_backlog": None if silent else obs.backlog,
+                "verdict": "MISSING" if silent else assessment.verdict.value,
+                "confidence": None if silent else round(assessment.confidence, 3),
+                "reasons": "probe silent" if silent else "; ".join(assessment.reasons)[:300],
+                "guard_integrity": rb.integrity,
                 "capacity_estimate_tps": believed.get("throughput_tps"),
                 "budget_recommended": recommended,
                 "budget_applied": applied_budget,
@@ -235,6 +288,10 @@ def summarize(rows: list[dict], cfg: PoisonConfig) -> dict:
     attack = [r for r in rows if r["attacking"]] or rows[cfg.attack_start :]
     delays = [r["actual_delay_after_ms"] for r in attack]
     first_flag = next((r["tick"] for r in attack if r["verdict"] != "TRUSTED"), None)
+    sent = [r for r in attack if r["verdict"] != "MISSING"]
+    flagged = [r for r in sent if r["verdict"] != "TRUSTED"]
+    conservative = [r for r in attack if r["guard_integrity"] not in ("TRUSTED", "UNCHECKED")]
+    first_guard = next((r["tick"] for r in conservative), None)
     return {
         "arm": cfg.arm,
         "case": cfg.case,
@@ -252,5 +309,12 @@ def summarize(rows: list[dict], cfg: PoisonConfig) -> dict:
         "detection_tick_offset": (first_flag - cfg.attack_start)
         if first_flag is not None
         else None,
+        "samples_during_attack": len(sent),
+        "detection_rate": round(len(flagged) / len(sent), 4) if sent else None,
+        "guard_conservative_ticks": len(conservative),
+        "guard_first_conservative_offset": (first_guard - cfg.attack_start)
+        if first_guard is not None
+        else None,
+        "flagged_all_ticks": sum(1 for r in rows if r["verdict"] not in ("TRUSTED", "MISSING")),
         "fallback_ticks": sum(1 for r in attack if r["fallback_reason"]),
     }

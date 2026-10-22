@@ -60,7 +60,9 @@ def create_app(
     app.state.telemetry = telemetry
     app.state.controller = make_controller(settings)
     app.state.guard = BudgetGuard(
-        hard_cap=settings.max_budget_per_route, fallback_budget=settings.fallback_budget_per_route
+        hard_cap=settings.max_budget_per_route,
+        fallback_budget=settings.fallback_budget_per_route,
+        max_telemetry_age_s=settings.telemetry_max_age_seconds,
     )
     app.state.metrics = MetricsService(ctx, ledger)
     app.state.registry = ExperimentRegistry(ctx.db, settings)

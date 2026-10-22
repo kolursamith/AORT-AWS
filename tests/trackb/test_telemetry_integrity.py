@@ -9,7 +9,12 @@ import pytest
 from backend.aorts.contracts.enums import TelemetryVerdict
 from backend.aorts.contracts.requests import RouteTelemetry
 from backend.aorts.security.budget_guard import BudgetGuard
-from backend.aorts.security.poisoning_simulator import CASES, PoisonConfig, run_poisoning
+from backend.aorts.security.poisoning_simulator import (
+    CASES,
+    EXTENDED_CASES,
+    PoisonConfig,
+    run_poisoning,
+)
 from backend.aorts.security.telemetry_validator import TelemetryValidator
 
 NOW = datetime(2026, 10, 14, 10, 0, 0, tzinfo=UTC)
@@ -196,13 +201,90 @@ def test_clean_arm_has_no_false_positives_through_real_degradation():
     assert s["ticks_over_1000ms"] == 0
 
 
-def test_subtle_poisoning_is_a_documented_limitation_but_still_bounded():
+def test_subtle_30pct_inflation_is_detected_by_the_bias_check_and_stays_bounded():
     protected = run_poisoning(
         PoisonConfig(case="subtle_throughput_high", arm="poisoned_protected")
     )["summary"]
     clean = run_poisoning(PoisonConfig(case="subtle_throughput_high", arm="clean"))["summary"]
-    # +30% stays within the cross-check tolerance, so it is NOT detected (limitation)...
-    assert protected["rejected"] + protected["suspicious"] == 0
-    # ...but the independent switch-measured headroom cap keeps the budget at the clean level.
+    # +30 % passes every per-sample check, but the persistent bias accumulates (CUSUM).
+    assert protected["detection_tick_offset"] is not None
+    assert protected["detection_tick_offset"] <= 5
+    assert protected["detection_rate"] >= 0.8
     assert protected["max_budget_during_attack"] <= clean["max_budget_during_attack"]
     assert protected["ticks_over_1000ms"] == 0
+
+
+def test_without_the_bias_check_subtle_inflation_is_missed_but_still_bounded():
+    """The validator as it was before the CUSUM check: documents why the check was added."""
+    s = run_poisoning(PoisonConfig(case="subtle_throughput_high", arm="poisoned_protected_nobias"))[
+        "summary"
+    ]
+    assert s["rejected"] + s["suspicious"] == 0
+    assert s["ticks_over_1000ms"] == 0  # the switch-measured headroom cap still bounds harm
+
+
+def test_bias_below_the_allowance_is_a_documented_limit_but_bounded():
+    s = run_poisoning(PoisonConfig(case="subtle_throughput_8pct", arm="poisoned_protected"))[
+        "summary"
+    ]
+    assert s["rejected"] + s["suspicious"] == 0  # 8 % < 10 % allowance: not detected (limit)
+    assert s["ticks_over_1000ms"] == 0
+
+
+@pytest.mark.parametrize("seed", [42, 43, 44])
+@pytest.mark.parametrize("case", EXTENDED_CASES)
+def test_clean_arm_has_no_false_positives_for_any_case(case, seed):
+    s = run_poisoning(PoisonConfig(case=case, arm="clean", seed=seed))["summary"]
+    assert s["flagged_all_ticks"] == 0 and s["guard_conservative_ticks"] == 0
+
+
+@pytest.mark.parametrize(
+    "case", ["stale_timestamp", "wrong_source", "unregistered_source", "timeout_low"]
+)
+def test_freshness_identity_and_timeout_lies_are_all_flagged(case):
+    s = run_poisoning(PoisonConfig(case=case, arm="poisoned_protected"))["summary"]
+    assert s["detection_rate"] == 1.0 and s["ticks_over_1000ms"] == 0
+
+
+def test_silent_probe_triggers_stale_fallback_after_max_age():
+    cfg = PoisonConfig(case="missing", arm="poisoned_protected")
+    s = run_poisoning(cfg)["summary"]
+    assert s["guard_first_conservative_offset"] is not None
+    # last trusted sample is at tick attack_start - 1, so staleness starts after max_age seconds
+    assert (
+        cfg.max_telemetry_age_s - 1
+        <= s["guard_first_conservative_offset"]
+        <= cfg.max_telemetry_age_s + 1
+    )
+    assert s["ticks_over_1000ms"] == 0
+    unprotected = run_poisoning(PoisonConfig(case="missing", arm="poisoned_unprotected"))["summary"]
+    assert unprotected["guard_conservative_ticks"] == 0
+
+
+def test_honest_source_recovers_after_bias_stops():
+    v = TelemetryValidator(sources={"twin-probe-1"}, max_age_s=30)
+    verdicts = []
+    for seq in range(1, 9):  # 8 samples reporting +30 % throughput
+        a = check(v, obs(seq=seq, throughput_tps=32.5))
+        verdicts.append(a.verdict)
+    assert TelemetryVerdict.SUSPICIOUS in verdicts
+    recovered = [check(v, obs(seq=seq)).verdict for seq in range(9, 21)]  # honest again
+    assert recovered[-1] == TelemetryVerdict.TRUSTED
+    assert recovered.index(TelemetryVerdict.TRUSTED) <= 8
+
+
+def test_budget_guard_treats_old_trusted_telemetry_as_stale():
+    guard = BudgetGuard(hard_cap=50, fallback_budget=2, max_telemetry_age_s=30)
+    fresh = {"verdict": "TRUSTED", "observed_at": (NOW - timedelta(seconds=5)).isoformat()}
+    old = {"verdict": "TRUSTED", "observed_at": (NOW - timedelta(seconds=60)).isoformat()}
+    assert guard.apply("A1-B", 6, telemetry=fresh, measured=MEASURED, now=NOW).applied == 6
+    stale = guard.apply("A1-B", 6, telemetry=old, measured=MEASURED, now=NOW)
+    assert stale.applied <= 2 and stale.integrity == "STALE"
+    # without an age limit (or a timestamp) the guard keeps its previous behaviour
+    assert (
+        BudgetGuard(hard_cap=50, fallback_budget=2)
+        .apply("A1-B", 6, telemetry=old, measured=MEASURED, now=NOW)
+        .applied
+        == 6
+    )
+    assert guard.apply("A1-B", 6, telemetry={"verdict": "TRUSTED"}, measured=MEASURED).applied == 6

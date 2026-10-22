@@ -1,0 +1,27 @@
+cmd: docker compose --env-file .env -f infra/trackb/docker-compose.yml stop switch beneficiary-b beneficiary-c remitter dispatcher control dashboard
+ Container aorts-switch-1 Stopping 
+ Container aorts-dispatcher-1 Stopping 
+ Container aorts-beneficiary-c-1 Stopping 
+ Container aorts-dashboard-1 Stopping 
+ Container aorts-beneficiary-b-1 Stopping 
+ Container aorts-remitter-1 Stopping 
+ Container aorts-beneficiary-c-1 Stopped 
+ Container aorts-switch-1 Stopped 
+ Container aorts-dispatcher-1 Stopped 
+ Container aorts-remitter-1 Stopped 
+ Container aorts-beneficiary-b-1 Stopped 
+ Container aorts-dashboard-1 Stopped 
+ Container aorts-control-1 Stopping 
+ Container aorts-control-1 Stopped 
+cmd: docker compose --env-file .env -f infra/trackb/docker-compose.yml up -d --no-build db
+ Container aorts-postgres Running 
+beneficiary-b aorts-trackb:local Exited (0) 7 seconds ago
+beneficiary-c aorts-trackb:local Exited (0) 7 seconds ago
+control aorts-trackb:local Exited (0) 6 seconds ago
+dashboard sha256:e195a1c2c0857624dfa30b92059fe69552594cf4edea8cb69099cd6c742af7a5 Exited (0) 7 seconds ago
+dispatcher aorts-trackb:local Exited (0) 7 seconds ago
+migrate aorts-trackb:local Exited (0) 4 days ago
+db postgres:16-alpine Up 14 minutes (healthy)
+remitter aorts-trackb:local Exited (0) 7 seconds ago
+switch aorts-trackb:local Exited (0) 7 seconds ago
+image digest: sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea

@@ -73,7 +73,9 @@ class Dispatcher:
         self.controller = controller or make_controller(s, db=ctx.db, store=self.twin)
         self.queue = queue or make_queue(s)
         self.guard = guard or BudgetGuard(
-            hard_cap=s.max_budget_per_route, fallback_budget=s.fallback_budget_per_route
+            hard_cap=s.max_budget_per_route,
+            fallback_budget=s.fallback_budget_per_route,
+            max_telemetry_age_s=s.telemetry_max_age_seconds,
         )
         self.gate = PreDispatchGate(
             self.ledger,

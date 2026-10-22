@@ -85,6 +85,9 @@ class TelemetryValidator:
         min_measured_samples: int = 5,
         detector: EwmaDetector | None = None,
         enabled: bool = True,
+        bias_check: bool = True,
+        bias_allowance: float = 0.10,
+        bias_threshold: float = 0.6,
     ):
         self.sources = sources
         self.max_age = timedelta(seconds=max_age_s)
@@ -94,6 +97,13 @@ class TelemetryValidator:
         self.min_samples = min_measured_samples
         self.detector = detector or EwmaDetector()
         self.enabled = enabled
+        # Persistent-bias (one-sided CUSUM) check: a lie that stays inside ``tolerance`` on every
+        # sample still accumulates. Per sample, the relative optimistic deviation minus the
+        # allowance is added; crossing the threshold marks the source/route as biased.
+        self.bias_check = bias_check
+        self.bias_allowance = bias_allowance
+        self.bias_threshold = bias_threshold
+        self._bias: dict[tuple[str, str, str], float] = {}
         self._last_seq: dict[tuple[str, str], int] = {}
         self._seen: OrderedDict[str, None] = OrderedDict()
         self._lock = threading.Lock()
@@ -191,6 +201,15 @@ class TelemetryValidator:
                         )
                     else:
                         corroborated.add(metric)
+                    if self.bias_check:
+                        score = self._accumulate_bias(key, metric, rv, mv, direction)
+                        if score >= self.bias_threshold:
+                            corroborated.discard(metric)
+                            penalty += 0.45
+                            a.reasons.append(
+                                f"{metric}: persistent optimistic bias vs switch measurement "
+                                f"(CUSUM {score:.2f} >= {self.bias_threshold:g})"
+                            )
             else:
                 # Without an independent measurement nothing can be corroborated: stay below the
                 # trust threshold so uncorroborated telemetry can never raise the budget.
@@ -236,6 +255,22 @@ class TelemetryValidator:
                 for metric in present:
                     self.detector.update(obs.route_id, metric, float(reported[metric]))
         return a
+
+    def _accumulate_bias(
+        self, key: tuple[str, str], metric: str, rv: float, mv: float, direction: int
+    ) -> float:
+        """Update and return the one-sided CUSUM of the relative optimistic deviation.
+
+        The score is capped at twice the threshold so an honest source recovers within a few
+        samples once its reports agree with the switch again.
+        """
+        rel = direction * (rv - mv) / max(abs(mv), ABS_FLOOR[metric])
+        rel = max(-1.0, min(1.0, rel))
+        k = (*key, metric)
+        score = max(0.0, self._bias.get(k, 0.0) + rel - self.bias_allowance)
+        score = min(score, 2 * self.bias_threshold)
+        self._bias[k] = score
+        return score
 
     def _remember(self, event_id: str) -> None:
         self._seen[event_id] = None
