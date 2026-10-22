@@ -461,7 +461,8 @@ with tab_val:
                 "recovery_after_attack_s",
                 "fairness_jain_legit_banks",
                 "payments_unresolved_at_end",
-                "rejected_that_entered_processing",
+                "rejected_that_reached_worker_pool",
+                "legit_overloaded_at_pool",
                 "attacker_share_of_admitted_during",
             ],
         )
@@ -490,7 +491,7 @@ with tab_val:
             "detection_s: first A3 rejection after attack start. containment_s: first second from which "
             "A3's admitted rate stays <= 1.5x its bank limit. recovery_after_attack_s: seconds after the "
             "attack until legitimate checks are healthy again. fairness: Jain index of A1/A2 admitted "
-            "ratios (1 = equal). rejected_that_entered_processing must be 0: rejections happen before "
+            "ratios (1 = equal). rejected_that_reached_worker_pool must be 0: rejections happen before "
             "the costly path."
         )
         run_ids = ev.flood_run_ids(cond)

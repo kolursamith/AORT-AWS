@@ -68,3 +68,35 @@ def test_replay_expectations_cover_every_simulated_case():
         assert sp._expected(case), f"no HTTP expectation for replay case {case}"
     assert sp._expected("4_same_reversal_delivery_1") == {200}  # most specific prefix wins
     assert sp._expected("10b_repeated_nonce") == {401}
+
+
+def test_verify_manifest_detects_tampered_and_missing_outputs(tmp_path):
+    man = sp.Manifest(tmp_path, "demo", ENV)
+    paths = {}
+
+    def ok(key):
+        paths[key] = sp.write_json(tmp_path / "raw" / f"{key}.json", {"v": 1})
+        return {"raw": paths[key]}, {"seed": 1}
+
+    man.run("S", "a", 1, {}, ok)
+    man.run("S", "b", 2, {}, ok)
+    clean = sp.verify_manifest(tmp_path)
+    assert clean["outputs_verified"] == 2 and not clean["hash_mismatches"]
+    first, second = list(paths.values())
+    first.write_text('{"v": 2}', encoding="utf-8")  # tampered after the run
+    second.unlink()
+    result = sp.verify_manifest(tmp_path)
+    assert len(result["hash_mismatches"]) == 1 and len(result["missing_files"]) == 1
+
+
+def test_counter_lookup_matches_metrics_label_order():
+    """Regression: labels are stored sorted, so a hand-built 'core_overloaded{kind=check' prefix missed them."""
+    from backend.aorts.app.metrics import Metrics
+
+    m = Metrics("switch")
+    m.inc("core_overloaded", kind="check", bank="A3")
+    m.inc("check_rejected", bank="A3", reason="RATE_LIMITED")
+    c = m.snapshot()["counters"]
+    assert sp._ctr(c, "core_overloaded", bank="A3", kind="check") == 1
+    assert sp._ctr(c, "core_overloaded", kind="check", bank="A3") == 1
+    assert sp._ctr(c, "check_rejected", reason="RATE_LIMITED", bank="A3") == 1

@@ -38,7 +38,7 @@ from pathlib import Path
 from sqlalchemy import text
 
 from backend.aorts.app.config import Settings
-from backend.aorts.app.metrics import percentile
+from backend.aorts.app.metrics import Metrics, percentile
 from backend.aorts.contracts.enums import TelemetryVerdict
 from backend.aorts.contracts.requests import DefenseConfig, RouteTelemetry
 from backend.aorts.control.traffic import TrafficConfig, TrafficGenerator
@@ -294,6 +294,11 @@ def _jain(xs: list[float]) -> float | None:
     return round(sum(xs) ** 2 / (len(xs) * sum(x * x for x in xs)), 4)
 
 
+def _ctr(counters: dict, name: str, **labels) -> float:
+    """A counter by name and labels, keyed exactly like Metrics.inc (labels sorted)."""
+    return counters.get(Metrics.key(name, **labels), 0)
+
+
 def flood_once(
     condition: str, seed: int, attack_rps: float, run_id: str | None, out: Path | None
 ) -> tuple[dict, dict]:
@@ -337,10 +342,6 @@ def flood_once(
         )
         th.join()
         counters = sw.ctx.metrics.snapshot()["counters"]
-        service_entries = {
-            b: sw.ctx.metrics.latency_stats("check_service_latency", 3600, bank=b)["count"]
-            for b in ("A1", "A2", "A3")
-        }
         quotas = {b: sw.admission.quota_view(b) for b in ("A1", "A2", "A3")}
         with st.db.session() as s:
             states = dict(
@@ -380,12 +381,17 @@ def flood_once(
         row[f"{b}_sent"] = pb.get(b, {}).get("sent", 0)
         row[f"{b}_admitted"] = pb.get(b, {}).get("admitted_ok", 0)
         row[f"{b}_admitted_ratio"] = pb.get(b, {}).get("admitted_ratio")
-        row[f"{b}_server_received"] = counters.get(f"check_received{{bank={b}}}", 0)
-        row[f"{b}_server_admitted"] = counters.get(f"check_admitted{{bank={b}}}", 0)
+        row[f"{b}_server_received"] = _ctr(counters, "check_received", bank=b)
+        row[f"{b}_server_admitted"] = _ctr(counters, "check_admitted", bank=b)
         row[f"{b}_server_rejected"] = sum(
             v for k, v in counters.items() if k.startswith("check_rejected{") and f"bank={b}" in k
         )
-        row[f"{b}_entered_processing"] = service_entries[b]
+        # Admitted checks either complete or are turned away by the saturated worker pool
+        # (SWITCH_OVERLOADED); admission rejections never get that far.
+        row[f"{b}_overloaded_at_pool"] = _ctr(counters, "core_overloaded", bank=b, kind="check")
+        row[f"{b}_reached_worker_pool"] = (
+            _ctr(counters, "check_completed", bank=b) + row[f"{b}_overloaded_at_pool"]
+        )
         row[f"{b}_credits_left"] = quotas[b]["credits"]
     for code in (
         "RATE_LIMITED",
@@ -393,18 +399,19 @@ def flood_once(
         "ROUTE_RATE_LIMITED",
         "CREDIT_EXHAUSTED",
     ):
-        row[f"A3_rejected_{code}"] = counters.get(f"check_rejected{{bank=A3,reason={code}}}", 0)
+        row[f"A3_rejected_{code}"] = _ctr(counters, "check_rejected", bank="A3", reason=code)
     a3_rej = [r.latency_ms for r in recs if r.bank == "A3" and r.status == 429]
     a3_ok = [r.latency_ms for r in recs if r.bank == "A3" and r.status == 200]
     row["A3_rejected_p50_ms"] = _p(a3_rej, 0.5)
     row["A3_admitted_p50_ms"] = _p(a3_ok, 0.5)
-    # Rejections must happen before the costly path: only admitted checks may enter processing.
-    row["rejected_that_entered_processing"] = max(
-        0, row["A3_entered_processing"] - row["A3_server_admitted"]
+    # Rejections must happen before the costly path: only admitted checks may reach the pool.
+    row["rejected_that_reached_worker_pool"] = max(
+        0, row["A3_reached_worker_pool"] - row["A3_server_admitted"]
     )
     row["switch_overloaded_checks"] = sum(
-        v for k, v in counters.items() if k.startswith("core_overloaded{kind=check")
+        row[f"{b}_overloaded_at_pool"] for b in ("A1", "A2", "A3")
     )
+    row["legit_overloaded_at_pool"] = row["A1_overloaded_at_pool"] + row["A2_overloaded_at_pool"]
     row["detection_s"] = summ["attack_detection_s"]
     row["containment_s"] = summ["attack_containment_s"]
     row["recovery_after_attack_s"] = summ.get("recovery_after_attack_s")
@@ -1032,6 +1039,35 @@ def _mean(rows: list[dict], key: str) -> float | None:
     return round(statistics.fmean(vals), 4) if vals else None
 
 
+def verify_manifest(out: Path) -> dict:
+    """Recompute the SHA-256 of every output recorded in the manifest (files may move with the repo)."""
+    lines = [
+        json.loads(x) for x in (out / "manifest.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    ends = [r for r in lines if r.get("event") == "end"]
+    started = {r["run_id"] for r in lines if r.get("event") == "start"}
+    ok, bad, missing = 0, [], []
+    for r in ends:
+        for o in r.get("outputs", {}).values():
+            path = Path(o["path"])
+            path = path if path.is_absolute() else ROOT / path
+            if not path.exists():
+                missing.append(o["path"])
+            elif sha256_file(path) != o["sha256"]:
+                bad.append(o["path"])
+            else:
+                ok += 1
+    return {
+        "runs_started": len(started),
+        "runs_ended": len(ends),
+        "runs_interrupted_without_end_record": sorted(started - {r["run_id"] for r in ends}),
+        "by_status": {s: sum(1 for r in ends if r["status"] == s) for s in ("completed", "failed")},
+        "outputs_verified": ok,
+        "hash_mismatches": bad,
+        "missing_files": missing,
+    }
+
+
 def cmd_figures(args) -> None:
     from backend.aorts.experiments.svg_charts import grouped_bars
 
@@ -1181,6 +1217,7 @@ def main() -> None:
             "poisoning-live",
             "replay",
             "figures",
+            "verify",
         ],
     )
     p.add_argument("--out", default=str(OUT))
@@ -1197,6 +1234,10 @@ def main() -> None:
     if args.command == "figures":
         cmd_figures(args)
         return
+    if args.command == "verify":
+        result = verify_manifest(out)
+        print(json.dumps(result, indent=2))
+        raise SystemExit(1 if result["hash_mismatches"] or result["missing_files"] else 0)
     env = environment()
     write_json(out / f"environment-{args.command}.json", env)
     if args.command == "environment":
