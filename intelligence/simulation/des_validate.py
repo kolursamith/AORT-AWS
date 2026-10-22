@@ -29,18 +29,25 @@ Modelling choices that differ on purpose from the fluid model
   ``[k*dt, (k+1)*dt)``; queue depth at ``t`` counts requests enqueued before ``t`` and not yet
   completed or dropped before ``t`` (in-service requests included).
 
+Closed-loop control (Stage 05): an optional ``controller`` callback is called every
+``decision_interval_s`` with a causal ``DesObservation`` covering ``[previous decision, now)``
+(only events strictly before ``now``) and the acceptance feedback of its previous requests. It
+returns ``CheckRequest`` values naming transactions; they pass the same eligibility gate as the
+schedule path. Without a controller the model runs exactly as before.
+
 Ground truth (capacity, credit, latency, intent) drives the model but is reported only in
 ``DesResult.intervals`` and ``totals``, which are evaluation data. ``DesResult.observations``
 holds only what a remitter could see and never carries truth.
 """
 
 import hashlib
+import heapq
 import json
 import math
 import random
 from bisect import bisect_right
 from collections import Counter, deque
-from collections.abc import Iterable, Sequence
+from collections.abc import Callable, Iterable, Sequence
 from dataclasses import asdict, dataclass, field
 from enum import StrEnum
 
@@ -102,6 +109,26 @@ class CheckRelease:
             raise ValueError("CheckRelease.time_s must be finite and >= 0")
         if not isinstance(self.count, int) or self.count < 0:
             raise ValueError("CheckRelease.count must be a non-negative int")
+
+
+@dataclass(frozen=True)
+class CheckRequest:
+    """Closed-loop request: check these ambiguous transactions on one route now."""
+
+    route_id: str
+    transaction_ids: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ReleaseFeedback:
+    """What happened to the previous decision's requests (known at the decision instant)."""
+
+    decided_at_s: float
+    released: tuple[tuple[str, str], ...]  # (transaction_id, check_id)
+    refused: tuple[tuple[str, str], ...]  # (transaction_id, reason)
+
+
+Controller = Callable[[float, "DesObservation", ReleaseFeedback | None], Iterable[CheckRequest]]
 
 
 class DesError(ValueError):
@@ -301,6 +328,8 @@ class DiscreteEventSimulation:
         workload: Workload,
         config: DesConfig | None = None,
         check_schedule: Sequence[CheckRelease] = (),
+        controller: Controller | None = None,
+        decision_interval_s: float = 1.0,
     ) -> None:
         if not isinstance(workload, Workload):
             raise TypeError("workload must be a Stage 3A Workload")
@@ -377,6 +406,17 @@ class DiscreteEventSimulation:
         self._released: list[tuple[float, str]] = []
         self._ambiguous: dict[str, dict[str, _Payment]] = {r: {} for r in self._routes}
         self._ran = False
+        if not math.isfinite(decision_interval_s) or decision_interval_s <= 0:
+            raise DesError("decision_interval_s must be positive and finite")
+        self._controller = controller
+        self._decision_interval = float(decision_interval_s)
+        # Causal observation logs, kept only for closed-loop runs.
+        self._log_ambiguous: deque = deque()
+        self._log_resolutions: list = []
+        self._log_answers: list = []
+        self._log_timeouts: deque = deque()
+        self._outstanding: dict[str, set[str]] = {r: set() for r in self._routes}
+        self._seq = 0
 
     @staticmethod
     def _route_capacity(changes: list[tuple[float, float]], t: float) -> float:
@@ -398,6 +438,8 @@ class DiscreteEventSimulation:
             env.process(self._server(bottleneck))
         env.process(self._arrivals())
         env.process(self._releases())
+        if self._controller is not None:
+            env.process(self._control_loop())
         env.run(until=self._horizon)
         for bottleneck in self._bottlenecks.values():
             self._purge(bottleneck, self._horizon)  # stale drops due before the horizon
@@ -467,27 +509,102 @@ class DiscreteEventSimulation:
             if self._eligible(payment, now):
                 chosen.append(payment)
         for payment in chosen:
-            payment.checks_counted += 1
-            payment.last_check_s = now
-            check = _Check(
-                f"CK-{payment.txn}-{payment.checks_counted}",
-                payment,
-                now,
-                now + self._policy.check_timeout_s,
-            )
-            payment.check_in_flight = check
-            self._checks.append(check)
-            self._released.append((now, payment.route))
-            check.request = _Request(
-                DesClass.STATUS_CHECK,
-                check.check_id,
-                payment.route,
-                now,
-                payment=payment,
-                check=check,
-            )
-            self._enqueue(check.request)
-            self._at(check.deadline_s, lambda c=check: self._on_check_deadline(c))
+            self._release_payment(payment, now)
+
+    def _release_payment(self, payment: _Payment, now: float) -> "_Check":
+        payment.checks_counted += 1
+        payment.last_check_s = now
+        check = _Check(
+            f"CK-{payment.txn}-{payment.checks_counted}",
+            payment,
+            now,
+            now + self._policy.check_timeout_s,
+        )
+        payment.check_in_flight = check
+        self._checks.append(check)
+        self._released.append((now, payment.route))
+        check.request = _Request(
+            DesClass.STATUS_CHECK,
+            check.check_id,
+            payment.route,
+            now,
+            payment=payment,
+            check=check,
+        )
+        self._enqueue(check.request)
+        self._at(check.deadline_s, lambda c=check: self._on_check_deadline(c))
+        return check
+
+    # ------------------------------------------------------------- closed-loop control
+
+    def _control_loop(self):
+        env = self._env
+        previous, feedback, k = 0.0, None, 0
+        while env.now < self._horizon:
+            now = env.now
+            observation = self._causal_observation(k, previous, now)
+            requests = tuple(self._controller(now, observation, feedback))
+            feedback = self._apply_requests(requests, now)
+            previous, k = now, k + 1
+            yield env.timeout(self._decision_interval)
+
+    def _apply_requests(self, requests: tuple, now: float) -> ReleaseFeedback:
+        released, refused, seen = [], [], set()
+        for request in requests:
+            if not isinstance(request, CheckRequest):
+                raise TypeError("controllers must return CheckRequest values")
+            if request.route_id not in self._ambiguous:
+                raise DesError(f"controller names unknown route {request.route_id}")
+            for txn in request.transaction_ids:
+                payment = self._ambiguous[request.route_id].get(txn)
+                if txn in seen:
+                    refused.append((txn, "duplicate_request"))
+                elif payment is None or payment.ambiguous_s is None or payment.ambiguous_s >= now:
+                    refused.append((txn, "not_observed_ambiguous"))
+                elif payment.resolved_by(now):
+                    refused.append((txn, "resolved"))
+                elif payment.check_in_flight is not None:
+                    refused.append((txn, "in_flight"))
+                elif not self._eligible(payment, now):
+                    refused.append((txn, "timing_policy"))
+                else:
+                    released.append((txn, self._release_payment(payment, now).check_id))
+                seen.add(txn)
+        return ReleaseFeedback(now, tuple(released), tuple(refused))
+
+    def _log(self, heap: list, when: float, item) -> None:
+        self._seq += 1
+        heapq.heappush(heap, (when, self._seq, item))
+
+    def _causal_observation(self, k: int, start: float, end: float) -> "DesObservation":
+        """Everything revealed in ``[start, end)``; nothing at or after ``end``."""
+
+        ambiguous, resolutions, answers, timeouts = [], [], [], []
+        while self._log_ambiguous and self._log_ambiguous[0][0] < end:
+            _, payment = self._log_ambiguous.popleft()
+            ambiguous.append(payment.txn)
+            self._outstanding[payment.route].add(payment.txn)
+        while self._log_resolutions and self._log_resolutions[0][0] < end:
+            when, _, (payment, how) = heapq.heappop(self._log_resolutions)
+            if payment.resolved_s != when or payment.resolved_how != how:
+                continue  # superseded by an earlier resolution
+            resolutions.append((payment.txn, _observed(payment), how, when))
+            self._outstanding[payment.route].discard(payment.txn)
+        while self._log_answers and self._log_answers[0][0] < end:
+            when, _, check = heapq.heappop(self._log_answers)
+            answers.append((check.check_id, check.payment.txn, check.result.value, when))
+        while self._log_timeouts and self._log_timeouts[0][0] < end:
+            timeouts.append(self._log_timeouts.popleft()[1].check_id)
+        return DesObservation(
+            k,
+            start,
+            end,
+            tuple(sorted(ambiguous)),
+            tuple(sorted(resolutions, key=lambda x: (x[3], x[0]))),
+            tuple(sorted(answers, key=lambda x: (x[3], x[0]))),
+            tuple(sorted(timeouts)),
+            tuple((r, tuple(sorted(self._outstanding[r]))) for r in self._routes),
+        )
 
     def _eligible(self, payment: _Payment, now: float) -> bool:
         if payment.resolved_by(now) or payment.check_in_flight is not None:
@@ -599,6 +716,8 @@ class DiscreteEventSimulation:
             if answer <= check.deadline_s:
                 check.answer_s, check.result = answer, result
                 self._at(answer, lambda: self._on_check_answer(check))
+                if self._controller is not None:
+                    self._log(self._log_answers, answer, check)
                 authoritative = result in (
                     CheckResultKind.AUTHORITATIVE_SUCCESS,
                     CheckResultKind.AUTHORITATIVE_FAILURE,
@@ -617,6 +736,8 @@ class DiscreteEventSimulation:
     def _schedule_resolution(self, payment: _Payment, when: float, how: str) -> None:
         if payment.resolved_s is None or when < payment.resolved_s:
             payment.resolved_s, payment.resolved_how = when, how
+            if self._controller is not None:
+                self._log(self._log_resolutions, when, (payment, how))
 
     def _on_deadline(self, payment: _Payment) -> None:
         if self._timely(payment):
@@ -624,6 +745,8 @@ class DiscreteEventSimulation:
         payment.ambiguous_s = payment.deadline_s
         if not payment.resolved_by(payment.deadline_s):
             self._ambiguous[payment.route][payment.txn] = payment
+            if self._controller is not None:
+                self._log_ambiguous.append((payment.deadline_s, payment))
         if payment.kind is DesClass.PAYMENT and not payment.customer_acted:
             payment.customer_acted = True
             if payment.would_repay:
@@ -659,6 +782,8 @@ class DiscreteEventSimulation:
             return  # completes exactly now; its answer arrives in time
         check.timed_out = True
         self._clear_in_flight(check)
+        if self._controller is not None:
+            self._log_timeouts.append((check.deadline_s, check))
 
     def _clear_in_flight(self, check: _Check) -> None:
         if check.payment.check_in_flight is check:
@@ -915,8 +1040,12 @@ def simulate_des(
     workload: Workload,
     config: DesConfig | None = None,
     check_schedule: Iterable[CheckRelease] = (),
+    controller: Controller | None = None,
+    decision_interval_s: float = 1.0,
 ) -> DesResult:
-    return DiscreteEventSimulation(workload, config, tuple(check_schedule)).run()
+    return DiscreteEventSimulation(
+        workload, config, tuple(check_schedule), controller, decision_interval_s
+    ).run()
 
 
 def conservation_residuals(result: DesResult) -> dict[str, int]:
