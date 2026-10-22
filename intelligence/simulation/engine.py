@@ -14,7 +14,9 @@ Model (fixed timestep ``dt_s``, default 1 s; all rates in requests/s, times in s
   interval ``[t, t + dt)``. Routes listed together in ``bottleneck_groups`` share one FIFO queue
   whose capacity is the sum of their route capacities; otherwise each route is its own
   bottleneck (Stage 3A defines route capacities only, no separate switch or beneficiary tier).
-* Order inside an interval: (1) drop cohorts older than ``stale_drop_age_s``; (2) enqueue, in
+* Order inside an interval: (1) drop waiting cohorts older than ``stale_drop_age_s`` (the
+  request in service, i.e. the partially served head, is never dropped and keeps the service
+  it has already received); (2) enqueue, in
   time order, the status checks released at ``t``, scheduled customer actions and exogenous
   arrivals in ``[t, t + dt)``; (3) serve; (4) process remitter-side events with time
   ``< t + dt``. A request served in an interval completes at ``t + dt``; timing resolution is one
@@ -271,8 +273,12 @@ class _Bottleneck:
     name: str
     routes: tuple[str, ...]
     cohorts: deque = field(default_factory=deque)  # [tick, deque[(cls, obj, route)]]
-    head_progress: float = 0.0
+    head_progress: float = 0.0  # service already received by the head request (in service)
     queued_by_route: Counter = field(default_factory=Counter)
+    # Service ledger (units of work): capacity offered, service delivered, requests finished.
+    available: float = 0.0
+    consumed: float = 0.0
+    completed: int = 0
 
 
 @dataclass
@@ -491,6 +497,14 @@ class FluidSimulation:
             raise SimulationFinishedError(f"tick {tick} has not been simulated yet")
         return tuple(m for m in self._metrics if m.tick < tick)
 
+    def service_accounting(self) -> tuple[tuple[str, float, float, int, float], ...]:
+        """Ground truth per bottleneck: (name, offered, delivered, completed, head progress)."""
+
+        return tuple(
+            (b.name, b.available, b.consumed, b.completed, b.head_progress)
+            for b in self._bottlenecks.values()
+        )
+
     def check_invariants(self) -> None:
         """Full scan: every arrival is queued, completed or dropped, per request class."""
 
@@ -512,9 +526,16 @@ class FluidSimulation:
             return
         dt = self._config.dt_s
         for bottleneck in self._bottlenecks.values():
+            # The partially served head is in service, not waiting: set it aside so that the
+            # stale rule applies only to waiting requests, then put it back with its progress.
+            in_service = None
+            if bottleneck.head_progress > 0.0 and bottleneck.cohorts:
+                tick, items = bottleneck.cohorts[0]
+                in_service = [tick, deque([items.popleft()])]
+                if not items:
+                    bottleneck.cohorts.popleft()
             while bottleneck.cohorts and start - bottleneck.cohorts[0][0] * dt > age_limit:
                 _, items = bottleneck.cohorts.popleft()
-                bottleneck.head_progress = 0.0
                 for cls, obj, route in items:
                     self._dequeue(bottleneck, cls, route)
                     self._dropped_count[cls] += 1
@@ -528,6 +549,8 @@ class FluidSimulation:
                         and not (obj.timed_out)
                     ):
                         self._time_out_check(obj, acc)
+            if in_service is not None:
+                bottleneck.cohorts.appendleft(in_service)
 
     def _release_checks(self, decisions, start, acc, pending, denied) -> None:
         for decision in decisions:
@@ -664,13 +687,17 @@ class FluidSimulation:
             )
 
     def _serve(self, bottleneck: _Bottleneck, budget: float, end: float, acc) -> None:
+        bottleneck.available += budget
         while bottleneck.cohorts and budget > 0.0:
             items = bottleneck.cohorts[0][1]
             need = 1.0 - bottleneck.head_progress
             if budget + 1e-12 < need:
                 bottleneck.head_progress += budget
+                bottleneck.consumed += budget
                 return
             budget -= need
+            bottleneck.consumed += need
+            bottleneck.completed += 1
             bottleneck.head_progress = 0.0
             cls, obj, route = items.popleft()
             if not items:
@@ -870,6 +897,12 @@ class FluidSimulation:
                 or min(self._queued[cls], self._completed[cls], self._dropped_count[cls]) < 0
             ):
                 raise SimulationAccountingError(f"{cls}: arrivals are not conserved")
+        for b in self._bottlenecks.values():
+            scale = max(1.0, b.consumed)
+            if abs(b.consumed - (b.completed + b.head_progress)) > 1e-9 * scale:
+                raise SimulationAccountingError(f"{b.name}: service delivered is not conserved")
+            if b.consumed > b.available + 1e-9 * scale or not 0.0 <= b.head_progress < 1.0:
+                raise SimulationAccountingError(f"{b.name}: service exceeds offered capacity")
 
     @staticmethod
     def _validate_capacity(workload: Workload) -> None:

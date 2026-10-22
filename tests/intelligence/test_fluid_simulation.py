@@ -410,6 +410,7 @@ def test_c06_no_reversal_or_money_operation_exists():
         "now",
         "result",
         "run",
+        "service_accounting",
         "step",
         "tick",
     }
