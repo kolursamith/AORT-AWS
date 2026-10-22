@@ -1,0 +1,100 @@
+{
+  "experiment_id": "policy-comparison-20261016T164922",
+  "scenario": "policy_comparison",
+  "args": {
+    "mode": "inprocess",
+    "repeats": 1,
+    "seed": 42,
+    "policies": [
+      "naive-polling",
+      "exp-backoff-jitter"
+    ],
+    "arms": [
+      "raw"
+    ],
+    "rps": 12.0,
+    "degraded": 15.0,
+    "restored": 8.0,
+    "drain": 30.0
+  },
+  "stack_overrides": {
+    "deadline_seconds": 30,
+    "check_backoff_base_seconds": 0.0,
+    "check_backoff_max_seconds": 0.0,
+    "max_checks_per_transaction": 60,
+    "dispatch_tick_seconds": 0.25,
+    "switch_core_workers": 4,
+    "switch_base_processing_ms": 20,
+    "switch_beneficiary_timeout_s": 1.0,
+    "reconciliation_interval_seconds": 0
+  },
+  "fault": {
+    "target": "beneficiary:B",
+    "latency_ms": 200,
+    "error_rate": 0.6,
+    "drop_response_rate": 0.4,
+    "unavailable": false,
+    "capacity_workers": null,
+    "note": "policy comparison: Bank B degraded"
+  },
+  "slo_ms": 2000.0,
+  "environment": {
+    "mode": "inprocess",
+    "python": "3.14.6",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu_count": 8,
+    "label": "synthetic mock environment"
+  },
+  "started_at": "2026-10-16T16:49:22.782804+00:00",
+  "note": "baselines are reference policies, not the AORTS controller; 'npci-static' is a simplified simulation schedule, not a regulatory rule",
+  "runs": [
+    {
+      "policy": "naive-polling",
+      "arm": "raw",
+      "seed": 42,
+      "payments": 230,
+      "ambiguous_txns": 50,
+      "resolved": 48,
+      "escalated": 2,
+      "still_unresolved": 0,
+      "deadline_compliance": 0.96,
+      "resolution_p50_s": 1.182,
+      "resolution_p95_s": 3.137,
+      "checks_per_ambiguous_txn": 2.42,
+      "checks_received": 123,
+      "checks_rejected_429": 0,
+      "checks_forwarded_downstream": 123,
+      "core_overloaded": 0,
+      "payment_goodput_per_s": 6.565,
+      "payment_p95_ms": 3967.158,
+      "backlog_peak": 10,
+      "recovery_time_s": null,
+      "ledger_ok": true,
+      "repeat": 0
+    },
+    {
+      "policy": "exp-backoff-jitter",
+      "arm": "raw",
+      "seed": 42,
+      "payments": 231,
+      "ambiguous_txns": 50,
+      "resolved": 47,
+      "escalated": 3,
+      "still_unresolved": 0,
+      "deadline_compliance": 0.94,
+      "resolution_p50_s": 0.826,
+      "resolution_p95_s": 5.574,
+      "checks_per_ambiguous_txn": 2.2,
+      "checks_received": 113,
+      "checks_rejected_429": 0,
+      "checks_forwarded_downstream": 113,
+      "core_overloaded": 0,
+      "payment_goodput_per_s": 7.217,
+      "payment_p95_ms": 2540.48,
+      "backlog_peak": 15,
+      "recovery_time_s": null,
+      "ledger_ok": true,
+      "repeat": 0
+    }
+  ]
+}

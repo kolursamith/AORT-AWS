@@ -1,0 +1,5 @@
+ambiguous_txns,arm,backlog_peak,checks_forwarded_downstream,checks_per_ambiguous_txn,checks_received,checks_rejected_429,core_overloaded,deadline_compliance,escalated,ledger_ok,payment_goodput_per_s,payment_p95_ms,payments,policy,recovery_time_s,repeat,resolution_p50_s,resolution_p95_s,resolved,seed,still_unresolved
+20,raw,5,35,1.75,35,0,0,1.0,0,True,4.333,533.584,72,naive-polling,1.074,0,1.548,2.619,20,42,0
+18,guarded,6,33,1.833,33,0,0,1.0,0,True,4.5,650.855,72,naive-polling,1.04,0,1.103,4.3,18,42,0
+20,raw,5,34,1.7,34,0,0,1.0,0,True,4.333,479.516,72,exp-backoff-jitter,1.073,0,0.921,4.354,20,42,0
+19,guarded,6,32,1.684,32,0,0,1.0,0,True,4.417,508.047,72,exp-backoff-jitter,0.552,0,1.063,2.875,19,42,0

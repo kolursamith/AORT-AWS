@@ -1,0 +1,3668 @@
+{
+  "inputs": [
+    {
+      "run_id": "strategy-comparison-20261017T074447-a99d88",
+      "experiment": "strategy-comparison",
+      "started_at": "2026-10-17T07:44:47.571907+00:00",
+      "git_commit": "not-a-git-repository",
+      "source_sha256": "d7175e965aa68aa5812936f98fdc81ec2db379fe55a186fc7cc4f1afa4a95355",
+      "python": "3.14.6",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "scenario": {
+        "name": "S1-degraded-B",
+        "description": "Bank B degraded for 10 s while Bank C stays healthy; bursts, retries, duplicate jobs",
+        "phases": [
+          {
+            "name": "warmup",
+            "duration_s": 3.0,
+            "faults": [],
+            "flood_rps": 0.0,
+            "poison": false
+          },
+          {
+            "name": "degraded",
+            "duration_s": 10.0,
+            "faults": [
+              {
+                "target": "beneficiary:B",
+                "latency_ms": 200,
+                "error_rate": 0.5,
+                "drop_response_rate": 0.4,
+                "note": "Bank B degraded: slow, failing, lost/delayed confirmations"
+              }
+            ],
+            "flood_rps": 0.0,
+            "poison": false
+          },
+          {
+            "name": "recovered",
+            "duration_s": 5.0,
+            "faults": [],
+            "flood_rps": 0.0,
+            "poison": false
+          }
+        ],
+        "rps": 6.0,
+        "burst_every_s": 4.0,
+        "burst_multiplier": 3.0,
+        "retry_probability": 0.2,
+        "duplicate_job_prob": 0.1,
+        "held_out": false
+      },
+      "mode": "docker",
+      "stack_overrides": "docker-compose.experiments.yml",
+      "strategies": [
+        "static-polling",
+        "exp-backoff-jitter",
+        "fixed-budget",
+        "aimd",
+        "aorts"
+      ],
+      "seeds": 30,
+      "first_seed": 1000,
+      "slo_ms": 2000.0,
+      "file": "C:\\Users\\girinandan\\OneDrive\\Documents\\CAD PROJECT-2\\results\\raw\\strategy-strategy-comparison-20261017T074447-a99d88.jsonl",
+      "sha256": "eb9e031979e67727e8137872fa9e77d9f4545a053222b94b1a063c47910df6e9"
+    },
+    {
+      "run_id": "strategy-comparison-20261017T083744-b245b7",
+      "experiment": "strategy-comparison",
+      "started_at": "2026-10-17T08:37:44.509201+00:00",
+      "git_commit": "not-a-git-repository",
+      "source_sha256": "c164f1b1a13f40fc9e0437714b05ef91f47b3eb1a31a822eaa554231b7dbf8f3",
+      "python": "3.14.6",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "scenario": {
+        "name": "S2-degraded-B-flood-poison",
+        "description": "S1 plus an A3 status-check flood (80 req/s) and false high-capacity telemetry from a compromised probe during the degradation",
+        "phases": [
+          {
+            "name": "warmup",
+            "duration_s": 3.0,
+            "faults": [],
+            "flood_rps": 0.0,
+            "poison": false
+          },
+          {
+            "name": "degraded",
+            "duration_s": 10.0,
+            "faults": [
+              {
+                "target": "beneficiary:B",
+                "latency_ms": 200,
+                "error_rate": 0.5,
+                "drop_response_rate": 0.4,
+                "note": "Bank B degraded: slow, failing, lost/delayed confirmations"
+              }
+            ],
+            "flood_rps": 80.0,
+            "poison": true
+          },
+          {
+            "name": "recovered",
+            "duration_s": 5.0,
+            "faults": [],
+            "flood_rps": 0.0,
+            "poison": false
+          }
+        ],
+        "rps": 6.0,
+        "burst_every_s": 4.0,
+        "burst_multiplier": 3.0,
+        "retry_probability": 0.2,
+        "duplicate_job_prob": 0.1,
+        "held_out": false
+      },
+      "mode": "docker",
+      "stack_overrides": "docker-compose.experiments.yml",
+      "strategies": [
+        "static-polling",
+        "exp-backoff-jitter",
+        "fixed-budget",
+        "aimd",
+        "aorts"
+      ],
+      "seeds": 30,
+      "first_seed": 1000,
+      "slo_ms": 2000.0,
+      "file": "C:\\Users\\girinandan\\OneDrive\\Documents\\CAD PROJECT-2\\results\\raw\\strategy-strategy-comparison-20261017T083744-b245b7.jsonl",
+      "sha256": "78aeddb63bc0495fe1b6abe0ad3876b3ab2ee304e003c16ff461395ae6b365d6"
+    },
+    {
+      "run_id": "strategy-comparison-20261017T093705-7346ef",
+      "experiment": "strategy-comparison",
+      "started_at": "2026-10-17T09:37:05.952379+00:00",
+      "git_commit": "not-a-git-repository",
+      "source_sha256": "c164f1b1a13f40fc9e0437714b05ef91f47b3eb1a31a822eaa554231b7dbf8f3",
+      "python": "3.14.6",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "scenario": {
+        "name": "S3-heldout-relapse",
+        "description": "HELD-OUT combination: B degrades, recovers, relapses with a different fault mix; C mildly slow; poisoning throughout; heavier bursts",
+        "phases": [
+          {
+            "name": "warmup",
+            "duration_s": 2.0,
+            "faults": [],
+            "flood_rps": 0.0,
+            "poison": false
+          },
+          {
+            "name": "degraded-1",
+            "duration_s": 6.0,
+            "faults": [
+              {
+                "target": "beneficiary:B",
+                "latency_ms": 200,
+                "error_rate": 0.5,
+                "drop_response_rate": 0.4,
+                "note": "Bank B degraded: slow, failing, lost/delayed confirmations"
+              },
+              {
+                "target": "beneficiary:C",
+                "latency_ms": 50
+              }
+            ],
+            "flood_rps": 0.0,
+            "poison": true
+          },
+          {
+            "name": "respite",
+            "duration_s": 3.0,
+            "faults": [
+              {
+                "target": "beneficiary:C",
+                "latency_ms": 50
+              }
+            ],
+            "flood_rps": 0.0,
+            "poison": true
+          },
+          {
+            "name": "relapse",
+            "duration_s": 6.0,
+            "faults": [
+              {
+                "target": "beneficiary:B",
+                "latency_ms": 350,
+                "error_rate": 0.2,
+                "drop_response_rate": 0.6
+              },
+              {
+                "target": "beneficiary:C",
+                "latency_ms": 50
+              }
+            ],
+            "flood_rps": 40.0,
+            "poison": true
+          },
+          {
+            "name": "recovered",
+            "duration_s": 3.0,
+            "faults": [],
+            "flood_rps": 0.0,
+            "poison": false
+          }
+        ],
+        "rps": 7.0,
+        "burst_every_s": 3.0,
+        "burst_multiplier": 4.0,
+        "retry_probability": 0.2,
+        "duplicate_job_prob": 0.1,
+        "held_out": true
+      },
+      "mode": "docker",
+      "stack_overrides": "docker-compose.experiments.yml",
+      "strategies": [
+        "static-polling",
+        "exp-backoff-jitter",
+        "fixed-budget",
+        "aimd",
+        "aorts"
+      ],
+      "seeds": 30,
+      "first_seed": 1000,
+      "slo_ms": 2000.0,
+      "file": "C:\\Users\\girinandan\\OneDrive\\Documents\\CAD PROJECT-2\\results\\raw\\strategy-strategy-comparison-20261017T093705-7346ef.jsonl",
+      "sha256": "34159f2778c493c0271ccfed386c1922e4c88fd8a1b85b461d93d7a690450e71"
+    },
+    {
+      "run_id": "strategy-comparison-20261017T095014-2ec23f",
+      "experiment": "strategy-comparison",
+      "started_at": "2026-10-17T09:50:14.704489+00:00",
+      "git_commit": "not-a-git-repository",
+      "source_sha256": "c164f1b1a13f40fc9e0437714b05ef91f47b3eb1a31a822eaa554231b7dbf8f3",
+      "python": "3.14.6",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "scenario": {
+        "name": "S2-degraded-B-flood-poison",
+        "description": "S1 plus an A3 status-check flood (80 req/s) and false high-capacity telemetry from a compromised probe during the degradation",
+        "phases": [
+          {
+            "name": "warmup",
+            "duration_s": 3.0,
+            "faults": [],
+            "flood_rps": 0.0,
+            "poison": false
+          },
+          {
+            "name": "degraded",
+            "duration_s": 10.0,
+            "faults": [
+              {
+                "target": "beneficiary:B",
+                "latency_ms": 200,
+                "error_rate": 0.5,
+                "drop_response_rate": 0.4,
+                "note": "Bank B degraded: slow, failing, lost/delayed confirmations"
+              }
+            ],
+            "flood_rps": 80.0,
+            "poison": true
+          },
+          {
+            "name": "recovered",
+            "duration_s": 5.0,
+            "faults": [],
+            "flood_rps": 0.0,
+            "poison": false
+          }
+        ],
+        "rps": 6.0,
+        "burst_every_s": 4.0,
+        "burst_multiplier": 3.0,
+        "retry_probability": 0.2,
+        "duplicate_job_prob": 0.1,
+        "held_out": false
+      },
+      "mode": "docker",
+      "stack_overrides": "docker-compose.experiments.yml",
+      "strategies": [
+        "static-polling",
+        "exp-backoff-jitter",
+        "fixed-budget",
+        "aimd",
+        "aorts"
+      ],
+      "seeds": 17,
+      "first_seed": 1013,
+      "slo_ms": 2000.0,
+      "file": "C:\\Users\\girinandan\\OneDrive\\Documents\\CAD PROJECT-2\\results\\raw\\strategy-strategy-comparison-20261017T095014-2ec23f.jsonl",
+      "sha256": "3b803a6837a9be418c8bffa253a82d15497354bfd41475022d6afba53c796f43"
+    },
+    {
+      "run_id": "strategy-comparison-20261017T124943-64bdbc",
+      "experiment": "strategy-comparison",
+      "started_at": "2026-10-17T12:49:43.505834+00:00",
+      "git_commit": "not-a-git-repository",
+      "source_sha256": "62ae3cbac60e52aae161ef19092daef56607b9c06c3f7d297bc3a7eda1239ecc",
+      "python": "3.14.6",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "scenario": {
+        "name": "S3-heldout-relapse",
+        "description": "HELD-OUT combination: B degrades, recovers, relapses with a different fault mix; C mildly slow; poisoning throughout; heavier bursts",
+        "phases": [
+          {
+            "name": "warmup",
+            "duration_s": 2.0,
+            "faults": [],
+            "flood_rps": 0.0,
+            "poison": false
+          },
+          {
+            "name": "degraded-1",
+            "duration_s": 6.0,
+            "faults": [
+              {
+                "target": "beneficiary:B",
+                "latency_ms": 200,
+                "error_rate": 0.5,
+                "drop_response_rate": 0.4,
+                "note": "Bank B degraded: slow, failing, lost/delayed confirmations"
+              },
+              {
+                "target": "beneficiary:C",
+                "latency_ms": 50
+              }
+            ],
+            "flood_rps": 0.0,
+            "poison": true
+          },
+          {
+            "name": "respite",
+            "duration_s": 3.0,
+            "faults": [
+              {
+                "target": "beneficiary:C",
+                "latency_ms": 50
+              }
+            ],
+            "flood_rps": 0.0,
+            "poison": true
+          },
+          {
+            "name": "relapse",
+            "duration_s": 6.0,
+            "faults": [
+              {
+                "target": "beneficiary:B",
+                "latency_ms": 350,
+                "error_rate": 0.2,
+                "drop_response_rate": 0.6
+              },
+              {
+                "target": "beneficiary:C",
+                "latency_ms": 50
+              }
+            ],
+            "flood_rps": 40.0,
+            "poison": true
+          },
+          {
+            "name": "recovered",
+            "duration_s": 3.0,
+            "faults": [],
+            "flood_rps": 0.0,
+            "poison": false
+          }
+        ],
+        "rps": 7.0,
+        "burst_every_s": 3.0,
+        "burst_multiplier": 4.0,
+        "retry_probability": 0.2,
+        "duplicate_job_prob": 0.1,
+        "held_out": true
+      },
+      "mode": "docker",
+      "stack_overrides": "docker-compose.experiments.yml",
+      "strategies": [
+        "static-polling",
+        "exp-backoff-jitter",
+        "fixed-budget",
+        "aimd",
+        "aorts"
+      ],
+      "seeds": 30,
+      "first_seed": 1000,
+      "slo_ms": 2000.0,
+      "file": "C:\\Users\\girinandan\\OneDrive\\Documents\\CAD PROJECT-2\\results\\raw\\strategy-strategy-comparison-20261017T124943-64bdbc.jsonl",
+      "sha256": "329b7adb3140b430de22a3542a839acb0c296c07139984ef12230737a89172ee"
+    }
+  ],
+  "failed_runs": 6,
+  "analysis": {
+    "S1-degraded-B": {
+      "strategies": [
+        "aimd",
+        "aorts",
+        "exp-backoff-jitter",
+        "fixed-budget",
+        "static-polling"
+      ],
+      "seeds": 30,
+      "runs": 150,
+      "stats": {
+        "aimd": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 2.0854,
+            "std": 0.7005,
+            "ci95": [
+              1.8442,
+              2.3312
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 3.9348,
+            "std": 1.3048,
+            "ci95": [
+              3.4797,
+              4.3786
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 71.4997,
+            "std": 32.7554,
+            "ci95": [
+              60.5477,
+              83.2693
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 11.6,
+            "std": 4.0565,
+            "ci95": [
+              10.2,
+              13.0
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.9004,
+            "std": 0.167,
+            "ci95": [
+              1.8401,
+              1.9587
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 6.8167,
+            "std": 0.2841,
+            "ci95": [
+              6.7167,
+              6.9167
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 280.9476,
+            "std": 15.0941,
+            "ci95": [
+              276.1315,
+              286.6093
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7525,
+            "std": 0.0373,
+            "ci95": [
+              0.7396,
+              0.7656
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.089,
+            "std": 0.1911,
+            "ci95": [
+              0.0222,
+              0.1566
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 0
+          },
+          "flood_a3_admitted": {
+            "n": 0
+          },
+          "flood_containment_s": {
+            "n": 0
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 616.8667,
+            "std": 324.4598,
+            "ci95": [
+              501.2667,
+              732.8
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 7.2,
+            "std": 1.0954,
+            "ci95": [
+              6.8,
+              7.5667
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "aorts": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 3.1157,
+            "std": 0.77,
+            "ci95": [
+              2.8461,
+              3.3922
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 8.0942,
+            "std": 1.8674,
+            "ci95": [
+              7.4193,
+              8.736
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 105.3393,
+            "std": 39.1863,
+            "ci95": [
+              91.9057,
+              119.9243
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 15.1,
+            "std": 3.6422,
+            "ci95": [
+              13.8333,
+              16.4333
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.8886,
+            "std": 0.1911,
+            "ci95": [
+              1.8229,
+              1.9573
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 6.8241,
+            "std": 0.2795,
+            "ci95": [
+              6.7241,
+              6.9222
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 286.6813,
+            "std": 26.3661,
+            "ci95": [
+              278.0066,
+              296.6887
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7533,
+            "std": 0.0372,
+            "ci95": [
+              0.7403,
+              0.7662
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.3125,
+            "std": 0.5332,
+            "ci95": [
+              0.1409,
+              0.518
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 30,
+            "mean": 6.7425,
+            "std": 2.0239,
+            "ci95": [
+              6.028,
+              7.4344
+            ]
+          },
+          "capacity_rel_err_point_median": {
+            "n": 30,
+            "mean": 4.9529,
+            "std": 6.0035,
+            "ci95": [
+              2.8944,
+              7.0964
+            ]
+          },
+          "capacity_low_signed_err_median": {
+            "n": 30,
+            "mean": 3.432,
+            "std": 4.6052,
+            "ci95": [
+              1.8674,
+              5.0718
+            ]
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 30,
+            "mean": 0.4641,
+            "std": 0.1309,
+            "ci95": [
+              0.4163,
+              0.5073
+            ]
+          },
+          "flood_a3_sent": {
+            "n": 0
+          },
+          "flood_a3_admitted": {
+            "n": 0
+          },
+          "flood_containment_s": {
+            "n": 0
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 623.8333,
+            "std": 324.2771,
+            "ci95": [
+              508.1,
+              739.7
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 6.9667,
+            "std": 1.2994,
+            "ci95": [
+              6.5333,
+              7.4333
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "exp-backoff-jitter": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 1.3049,
+            "std": 0.265,
+            "ci95": [
+              1.2099,
+              1.3989
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 3.1707,
+            "std": 1.239,
+            "ci95": [
+              2.744,
+              3.6285
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 44.2363,
+            "std": 13.1376,
+            "ci95": [
+              39.7047,
+              48.988
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 8.3333,
+            "std": 2.2944,
+            "ci95": [
+              7.5333,
+              9.1667
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 2.1679,
+            "std": 0.2164,
+            "ci95": [
+              2.0935,
+              2.2465
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 6.8222,
+            "std": 0.289,
+            "ci95": [
+              6.7204,
+              6.9241
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 322.1641,
+            "std": 176.615,
+            "ci95": [
+              282.418,
+              390.7208
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7532,
+            "std": 0.0387,
+            "ci95": [
+              0.7398,
+              0.7668
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.1056,
+            "std": 0.2061,
+            "ci95": [
+              0.038,
+              0.1889
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 0
+          },
+          "flood_a3_admitted": {
+            "n": 0
+          },
+          "flood_containment_s": {
+            "n": 0
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 601.9667,
+            "std": 324.525,
+            "ci95": [
+              486.5,
+              717.9667
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 7.9333,
+            "std": 1.1427,
+            "ci95": [
+              7.5333,
+              8.3333
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "fixed-budget": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 1.1596,
+            "std": 0.272,
+            "ci95": [
+              1.0685,
+              1.2615
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 2.2994,
+            "std": 0.6608,
+            "ci95": [
+              2.0839,
+              2.5472
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 39.41,
+            "std": 14.5986,
+            "ci95": [
+              34.559,
+              44.9397
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 7.7,
+            "std": 2.1679,
+            "ci95": [
+              6.9667,
+              8.4667
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 2.0755,
+            "std": 0.2025,
+            "ci95": [
+              2.0042,
+              2.1476
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 6.8315,
+            "std": 0.2977,
+            "ci95": [
+              6.7278,
+              6.937
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 289.7952,
+            "std": 32.2307,
+            "ci95": [
+              279.4596,
+              302.1999
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7542,
+            "std": 0.0395,
+            "ci95": [
+              0.7406,
+              0.768
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.072,
+            "std": 0.1745,
+            "ci95": [
+              0.0209,
+              0.1392
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 0
+          },
+          "flood_a3_admitted": {
+            "n": 0
+          },
+          "flood_containment_s": {
+            "n": 0
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 609.6667,
+            "std": 324.5256,
+            "ci95": [
+              494.0667,
+              725.5667
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 7.7,
+            "std": 1.3933,
+            "ci95": [
+              7.2,
+              8.2
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "static-polling": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 1.754,
+            "std": 0.6402,
+            "ci95": [
+              1.5312,
+              1.9837
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 4.1869,
+            "std": 2.075,
+            "ci95": [
+              3.4755,
+              4.9455
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 60.1273,
+            "std": 27.0881,
+            "ci95": [
+              50.6523,
+              69.9347
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 10.3667,
+            "std": 3.6998,
+            "ci95": [
+              9.1,
+              11.6667
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.9936,
+            "std": 0.235,
+            "ci95": [
+              1.9119,
+              2.0748
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 6.8204,
+            "std": 0.2689,
+            "ci95": [
+              6.7259,
+              6.9148
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 292.7888,
+            "std": 31.6761,
+            "ci95": [
+              282.4801,
+              304.7811
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7528,
+            "std": 0.0367,
+            "ci95": [
+              0.7401,
+              0.7655
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.0713,
+            "std": 0.1747,
+            "ci95": [
+              0.0203,
+              0.1386
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 0
+          },
+          "flood_a3_admitted": {
+            "n": 0
+          },
+          "flood_containment_s": {
+            "n": 0
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 594.0333,
+            "std": 324.6929,
+            "ci95": [
+              478.5333,
+              709.9333
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 7.5,
+            "std": 1.2798,
+            "ci95": [
+              7.0333,
+              7.9333
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "aorts_vs_strongest_baseline": {
+        "resolution_mean_s": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 3.1157,
+          "baseline_mean": 1.1596,
+          "pairs": 30,
+          "mean_diff": 1.9561,
+          "ci95": [
+            1.7078,
+            2.2129
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "resolution_p95_s": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 8.0942,
+          "baseline_mean": 2.2994,
+          "pairs": 30,
+          "mean_diff": 5.7948,
+          "ci95": [
+            5.154,
+            6.4165
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "backlog_area": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 105.3393,
+          "baseline_mean": 39.41,
+          "pairs": 30,
+          "mean_diff": 65.9293,
+          "ci95": [
+            55.5907,
+            76.911
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "backlog_peak": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 15.1,
+          "baseline_mean": 7.7,
+          "pairs": 30,
+          "mean_diff": 7.4,
+          "ci95": [
+            6.5333,
+            8.3333
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "status_check_amplification": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": true,
+          "aorts_mean": 1.8886,
+          "baseline_mean": 1.9004,
+          "pairs": 30,
+          "mean_diff": -0.0118,
+          "ci95": [
+            -0.1001,
+            0.0746
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "deadline_compliance": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": false,
+          "aorts_mean": 1.0,
+          "baseline_mean": 1.0,
+          "pairs": 30,
+          "mean_diff": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "escalated": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": true,
+          "aorts_mean": 0.0,
+          "baseline_mean": 0.0,
+          "pairs": 30,
+          "mean_diff": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "primary_goodput_per_s": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": false,
+          "aorts_mean": 6.8241,
+          "baseline_mean": 6.8315,
+          "pairs": 30,
+          "mean_diff": -0.0074,
+          "ci95": [
+            -0.0426,
+            0.0296
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "primary_p95_ms": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": true,
+          "aorts_mean": 286.6813,
+          "baseline_mean": 280.9476,
+          "pairs": 30,
+          "mean_diff": 5.7337,
+          "ci95": [
+            -3.1686,
+            15.9266
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "primary_success_ratio": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": false,
+          "aorts_mean": 0.7533,
+          "baseline_mean": 0.7542,
+          "pairs": 30,
+          "mean_diff": -0.0008,
+          "ci95": [
+            -0.0048,
+            0.0035
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "recovery_time_s": {
+          "strongest_baseline": "static-polling",
+          "lower_is_better": true,
+          "aorts_mean": 0.3125,
+          "baseline_mean": 0.0713,
+          "pairs": 30,
+          "mean_diff": 0.2412,
+          "ci95": [
+            0.0519,
+            0.4632
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "invariant_violations": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": true,
+          "aorts_mean": 0.0,
+          "baseline_mean": 0.0,
+          "pairs": 30,
+          "mean_diff": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        }
+      },
+      "held_out": false
+    },
+    "S2-degraded-B-flood-poison": {
+      "strategies": [
+        "aimd",
+        "aorts",
+        "exp-backoff-jitter",
+        "fixed-budget",
+        "static-polling"
+      ],
+      "seeds": 30,
+      "runs": 152,
+      "stats": {
+        "aimd": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 3.5328,
+            "std": 2.5548,
+            "ci95": [
+              2.6847,
+              4.5129
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 6.4973,
+            "std": 4.1344,
+            "ci95": [
+              5.1113,
+              8.0676
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 100.5853,
+            "std": 65.5899,
+            "ci95": [
+              78.7633,
+              125.155
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 13.7333,
+            "std": 5.003,
+            "ci95": [
+              12.0,
+              15.5333
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.8288,
+            "std": 0.1583,
+            "ci95": [
+              1.773,
+              1.883
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 5.9278,
+            "std": 1.8466,
+            "ci95": [
+              5.2278,
+              6.5371
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 2554.9993,
+            "std": 4683.2688,
+            "ci95": [
+              1077.2732,
+              4325.9735
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7596,
+            "std": 0.0414,
+            "ci95": [
+              0.7446,
+              0.7741
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.0908,
+            "std": 0.1903,
+            "ci95": [
+              0.0253,
+              0.1592
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 30,
+            "mean": 800.0,
+            "std": 0.0,
+            "ci95": [
+              800.0,
+              800.0
+            ]
+          },
+          "flood_a3_admitted": {
+            "n": 30,
+            "mean": 114.1333,
+            "std": 11.0414,
+            "ci95": [
+              110.5667,
+              118.3667
+            ]
+          },
+          "flood_containment_s": {
+            "n": 30,
+            "mean": 1.4,
+            "std": 1.07,
+            "ci95": [
+              1.0667,
+              1.8
+            ]
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 764.7,
+            "std": 569.7319,
+            "ci95": [
+              568.0,
+              962.0667
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 6.4,
+            "std": 2.0943,
+            "ci95": [
+              5.6333,
+              7.1
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "aorts": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 4.5224,
+            "std": 2.7348,
+            "ci95": [
+              3.6217,
+              5.5453
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 9.9095,
+            "std": 3.4581,
+            "ci95": [
+              8.7351,
+              11.1725
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 140.2133,
+            "std": 71.3611,
+            "ci95": [
+              115.8897,
+              166.246
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 16.2333,
+            "std": 5.0629,
+            "ci95": [
+              14.5333,
+              18.0667
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.8027,
+            "std": 0.1584,
+            "ci95": [
+              1.7484,
+              1.8593
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 5.9389,
+            "std": 1.9356,
+            "ci95": [
+              5.2074,
+              6.5778
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 2256.4728,
+            "std": 4527.5957,
+            "ci95": [
+              730.0353,
+              3978.3563
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7527,
+            "std": 0.0454,
+            "ci95": [
+              0.7368,
+              0.7686
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.5211,
+            "std": 0.9277,
+            "ci95": [
+              0.2264,
+              0.8803
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 30,
+            "mean": 6.3597,
+            "std": 2.2963,
+            "ci95": [
+              5.5682,
+              7.1794
+            ]
+          },
+          "capacity_rel_err_point_median": {
+            "n": 30,
+            "mean": 4.9732,
+            "std": 5.732,
+            "ci95": [
+              3.049,
+              7.0963
+            ]
+          },
+          "capacity_low_signed_err_median": {
+            "n": 30,
+            "mean": 2.5514,
+            "std": 3.5583,
+            "ci95": [
+              1.3628,
+              3.8815
+            ]
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 30,
+            "mean": 0.5306,
+            "std": 0.2262,
+            "ci95": [
+              0.4535,
+              0.6131
+            ]
+          },
+          "flood_a3_sent": {
+            "n": 30,
+            "mean": 800.0,
+            "std": 0.0,
+            "ci95": [
+              800.0,
+              800.0
+            ]
+          },
+          "flood_a3_admitted": {
+            "n": 30,
+            "mean": 114.0,
+            "std": 13.9531,
+            "ci95": [
+              109.5,
+              119.5
+            ]
+          },
+          "flood_containment_s": {
+            "n": 30,
+            "mean": 1.1667,
+            "std": 0.5307,
+            "ci95": [
+              1.0,
+              1.3667
+            ]
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 771.1333,
+            "std": 569.3217,
+            "ci95": [
+              574.6,
+              968.4333
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 6.4333,
+            "std": 1.6955,
+            "ci95": [
+              5.8333,
+              7.0
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "exp-backoff-jitter": {
+          "resolution_mean_s": {
+            "n": 29,
+            "mean": 58.1773,
+            "std": 297.1122,
+            "ci95": [
+              2.2845,
+              169.1221
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 29,
+            "mean": 282.1782,
+            "std": 1486.2469,
+            "ci95": [
+              5.0485,
+              835.0515
+            ]
+          },
+          "backlog_area": {
+            "n": 29,
+            "mean": 641.2045,
+            "std": 2961.8193,
+            "ci95": [
+              72.5334,
+              1757.3445
+            ]
+          },
+          "backlog_peak": {
+            "n": 29,
+            "mean": 12.1034,
+            "std": 4.2874,
+            "ci95": [
+              10.6207,
+              13.6897
+            ]
+          },
+          "status_check_amplification": {
+            "n": 29,
+            "mean": 1.9984,
+            "std": 0.2518,
+            "ci95": [
+              1.9112,
+              2.0877
+            ]
+          },
+          "deadline_compliance": {
+            "n": 29,
+            "mean": 0.9931,
+            "std": 0.0371,
+            "ci95": [
+              0.9793,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 29,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 29,
+            "mean": 5.9693,
+            "std": 1.817,
+            "ci95": [
+              5.2739,
+              6.5651
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 29,
+            "mean": 2410.5026,
+            "std": 4611.2724,
+            "ci95": [
+              847.5456,
+              4121.7917
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 29,
+            "mean": 0.747,
+            "std": 0.0449,
+            "ci95": [
+              0.7308,
+              0.7625
+            ]
+          },
+          "recovery_time_s": {
+            "n": 29,
+            "mean": 0.0243,
+            "std": 0.0935,
+            "ci95": [
+              0.0057,
+              0.0599
+            ]
+          },
+          "invariant_violations": {
+            "n": 29,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 29,
+            "mean": 800.0,
+            "std": 0.0,
+            "ci95": [
+              800.0,
+              800.0
+            ]
+          },
+          "flood_a3_admitted": {
+            "n": 29,
+            "mean": 115.4483,
+            "std": 18.3314,
+            "ci95": [
+              109.6897,
+              122.4483
+            ]
+          },
+          "flood_containment_s": {
+            "n": 29,
+            "mean": 1.5517,
+            "std": 1.5021,
+            "ci95": [
+              1.1034,
+              2.1379
+            ]
+          },
+          "financial_gate_rejections": {
+            "n": 29,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 29,
+            "mean": 765.2414,
+            "std": 574.6781,
+            "ci95": [
+              560.8276,
+              971.3448
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 29,
+            "mean": 7.1034,
+            "std": 1.8194,
+            "ci95": [
+              6.4483,
+              7.7586
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 29,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "fixed-budget": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 3.0097,
+            "std": 3.0032,
+            "ci95": [
+              2.0334,
+              4.148
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 5.4776,
+            "std": 4.8431,
+            "ci95": [
+              3.8848,
+              7.3056
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 95.3107,
+            "std": 86.724,
+            "ci95": [
+              66.7273,
+              128.0967
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 11.3,
+            "std": 4.9211,
+            "ci95": [
+              9.6333,
+              13.1
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.9415,
+            "std": 0.2466,
+            "ci95": [
+              1.8536,
+              2.0273
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 5.9111,
+            "std": 1.9901,
+            "ci95": [
+              5.1555,
+              6.5574
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 2413.4771,
+            "std": 4730.949,
+            "ci95": [
+              796.2504,
+              4152.4466
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7465,
+            "std": 0.044,
+            "ci95": [
+              0.7314,
+              0.7619
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.0728,
+            "std": 0.1742,
+            "ci95": [
+              0.0216,
+              0.1401
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 30,
+            "mean": 800.0,
+            "std": 0.0,
+            "ci95": [
+              800.0,
+              800.0
+            ]
+          },
+          "flood_a3_admitted": {
+            "n": 30,
+            "mean": 114.7,
+            "std": 13.2825,
+            "ci95": [
+              110.5333,
+              119.7667
+            ]
+          },
+          "flood_containment_s": {
+            "n": 30,
+            "mean": 1.9333,
+            "std": 2.9117,
+            "ci95": [
+              1.1667,
+              3.1
+            ]
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 758.3,
+            "std": 569.8056,
+            "ci95": [
+              561.5667,
+              955.8667
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 7.1333,
+            "std": 1.4559,
+            "ci95": [
+              6.6,
+              7.6333
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "static-polling": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 10.2945,
+            "std": 39.5829,
+            "ci95": [
+              2.4461,
+              25.1445
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 14.4786,
+            "std": 47.1661,
+            "ci95": [
+              4.9446,
+              32.3049
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 485.0443,
+            "std": 1469.2631,
+            "ci95": [
+              89.3997,
+              1076.1397
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 11.8667,
+            "std": 4.3765,
+            "ci95": [
+              10.3667,
+              13.4333
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.9009,
+            "std": 0.3709,
+            "ci95": [
+              1.7635,
+              2.0216
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 0.9667,
+            "std": 0.1826,
+            "ci95": [
+              0.9,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 5.8741,
+            "std": 1.9961,
+            "ci95": [
+              5.1481,
+              6.5278
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 1921.7417,
+            "std": 4091.8293,
+            "ci95": [
+              694.05,
+              3478.1285
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7463,
+            "std": 0.0595,
+            "ci95": [
+              0.7253,
+              0.7669
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.0997,
+            "std": 0.3297,
+            "ci95": [
+              0.0102,
+              0.2346
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 30,
+            "mean": 800.0,
+            "std": 0.0,
+            "ci95": [
+              800.0,
+              800.0
+            ]
+          },
+          "flood_a3_admitted": {
+            "n": 30,
+            "mean": 110.2,
+            "std": 16.6638,
+            "ci95": [
+              103.5333,
+              115.8667
+            ]
+          },
+          "flood_containment_s": {
+            "n": 30,
+            "mean": 1.2333,
+            "std": 0.8976,
+            "ci95": [
+              1.0,
+              1.6
+            ]
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 744.2667,
+            "std": 569.4399,
+            "ci95": [
+              547.4,
+              941.7
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 6.6667,
+            "std": 2.3684,
+            "ci95": [
+              5.8,
+              7.4667
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "aorts_vs_strongest_baseline": {
+        "resolution_mean_s": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 4.5224,
+          "baseline_mean": 3.0097,
+          "pairs": 30,
+          "mean_diff": 1.5127,
+          "ci95": [
+            0.79,
+            2.1203
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "resolution_p95_s": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 9.9095,
+          "baseline_mean": 5.4776,
+          "pairs": 30,
+          "mean_diff": 4.4319,
+          "ci95": [
+            3.0744,
+            5.6167
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "backlog_area": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 140.2133,
+          "baseline_mean": 95.3107,
+          "pairs": 30,
+          "mean_diff": 44.9027,
+          "ci95": [
+            21.811,
+            65.5197
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "backlog_peak": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 16.2333,
+          "baseline_mean": 11.3,
+          "pairs": 30,
+          "mean_diff": 4.9333,
+          "ci95": [
+            3.0667,
+            6.8
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "status_check_amplification": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": true,
+          "aorts_mean": 1.8027,
+          "baseline_mean": 1.8288,
+          "pairs": 30,
+          "mean_diff": -0.0261,
+          "ci95": [
+            -0.0927,
+            0.0401
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "deadline_compliance": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": false,
+          "aorts_mean": 1.0,
+          "baseline_mean": 1.0,
+          "pairs": 30,
+          "mean_diff": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "escalated": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": true,
+          "aorts_mean": 0.0,
+          "baseline_mean": 0.0,
+          "pairs": 30,
+          "mean_diff": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "primary_goodput_per_s": {
+          "strongest_baseline": "exp-backoff-jitter",
+          "lower_is_better": false,
+          "aorts_mean": 5.9389,
+          "baseline_mean": 5.9693,
+          "pairs": 29,
+          "mean_diff": -0.046,
+          "ci95": [
+            -0.6322,
+            0.4942
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "primary_p95_ms": {
+          "strongest_baseline": "static-polling",
+          "lower_is_better": true,
+          "aorts_mean": 2256.4728,
+          "baseline_mean": 1921.7417,
+          "pairs": 30,
+          "mean_diff": 334.7311,
+          "ci95": [
+            -1285.0881,
+            2044.4656
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "primary_success_ratio": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": false,
+          "aorts_mean": 0.7527,
+          "baseline_mean": 0.7596,
+          "pairs": 30,
+          "mean_diff": -0.0068,
+          "ci95": [
+            -0.0183,
+            0.0023
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "recovery_time_s": {
+          "strongest_baseline": "exp-backoff-jitter",
+          "lower_is_better": true,
+          "aorts_mean": 0.5211,
+          "baseline_mean": 0.0243,
+          "pairs": 29,
+          "mean_diff": 0.4261,
+          "ci95": [
+            0.145,
+            0.7616
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "invariant_violations": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": true,
+          "aorts_mean": 0.0,
+          "baseline_mean": 0.0,
+          "pairs": 30,
+          "mean_diff": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        }
+      },
+      "held_out": false
+    },
+    "S3-heldout-relapse": {
+      "strategies": [
+        "aimd",
+        "aorts",
+        "exp-backoff-jitter",
+        "fixed-budget",
+        "static-polling"
+      ],
+      "seeds": 30,
+      "runs": 150,
+      "stats": {
+        "aimd": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 3.0725,
+            "std": 0.9976,
+            "ci95": [
+              2.7376,
+              3.4384
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 5.5868,
+            "std": 2.0674,
+            "ci95": [
+              4.9156,
+              6.3554
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 191.6387,
+            "std": 67.7106,
+            "ci95": [
+              168.4267,
+              216.3707
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 20.2667,
+            "std": 5.2387,
+            "ci95": [
+              18.4,
+              22.1
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.4728,
+            "std": 0.0863,
+            "ci95": [
+              1.4417,
+              1.5018
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 9.5433,
+            "std": 1.978,
+            "ci95": [
+              8.7967,
+              10.1667
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 1387.2819,
+            "std": 2869.6045,
+            "ci95": [
+              461.926,
+              2475.253
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7451,
+            "std": 0.0557,
+            "ci95": [
+              0.7267,
+              0.7656
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.1059,
+            "std": 0.246,
+            "ci95": [
+              0.0374,
+              0.2069
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 30,
+            "mean": 240.0,
+            "std": 0.0,
+            "ci95": [
+              240.0,
+              240.0
+            ]
+          },
+          "flood_a3_admitted": {
+            "n": 30,
+            "mean": 77.2,
+            "std": 1.9722,
+            "ci95": [
+              76.5,
+              77.8667
+            ]
+          },
+          "flood_containment_s": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 1264.5333,
+            "std": 382.7867,
+            "ci95": [
+              1128.0,
+              1401.3
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 8.9,
+            "std": 2.0569,
+            "ci95": [
+              8.1333,
+              9.5333
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 1.1,
+            "std": 1.269,
+            "ci95": [
+              0.6667,
+              1.5667
+            ]
+          }
+        },
+        "aorts": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 4.6071,
+            "std": 1.0424,
+            "ci95": [
+              4.2417,
+              4.988
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 10.5566,
+            "std": 1.9964,
+            "ci95": [
+              9.855,
+              11.2593
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 284.6907,
+            "std": 97.5732,
+            "ci95": [
+              251.5727,
+              320.9383
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 23.5667,
+            "std": 8.0801,
+            "ci95": [
+              20.7667,
+              26.4667
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.4044,
+            "std": 0.0885,
+            "ci95": [
+              1.3739,
+              1.4362
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 9.5617,
+            "std": 1.9061,
+            "ci95": [
+              8.84,
+              10.1633
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 1476.2259,
+            "std": 3148.6537,
+            "ci95": [
+              453.2871,
+              2666.7776
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7462,
+            "std": 0.0575,
+            "ci95": [
+              0.7269,
+              0.7668
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 4.0562,
+            "std": 2.1588,
+            "ci95": [
+              3.2992,
+              4.8009
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 30,
+            "mean": 3.6966,
+            "std": 1.4013,
+            "ci95": [
+              3.2035,
+              4.1885
+            ]
+          },
+          "capacity_rel_err_point_median": {
+            "n": 30,
+            "mean": 1.2592,
+            "std": 0.761,
+            "ci95": [
+              1.0341,
+              1.5603
+            ]
+          },
+          "capacity_low_signed_err_median": {
+            "n": 30,
+            "mean": 0.1269,
+            "std": 0.4759,
+            "ci95": [
+              -0.0146,
+              0.3139
+            ]
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 30,
+            "mean": 0.4468,
+            "std": 0.2403,
+            "ci95": [
+              0.3665,
+              0.5357
+            ]
+          },
+          "flood_a3_sent": {
+            "n": 30,
+            "mean": 240.0,
+            "std": 0.0,
+            "ci95": [
+              240.0,
+              240.0
+            ]
+          },
+          "flood_a3_admitted": {
+            "n": 30,
+            "mean": 78.8667,
+            "std": 0.9371,
+            "ci95": [
+              78.5,
+              79.1
+            ]
+          },
+          "flood_containment_s": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 1273.0333,
+            "std": 382.8975,
+            "ci95": [
+              1136.6333,
+              1409.9333
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 8.5,
+            "std": 2.0968,
+            "ci95": [
+              7.7333,
+              9.1667
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.6333,
+            "std": 1.129,
+            "ci95": [
+              0.2667,
+              1.0667
+            ]
+          }
+        },
+        "exp-backoff-jitter": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 23.2815,
+            "std": 114.0303,
+            "ci95": [
+              2.2109,
+              65.1181
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 147.2904,
+            "std": 779.9582,
+            "ci95": [
+              4.4696,
+              432.4169
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 2283.585,
+            "std": 11703.1127,
+            "ci95": [
+              133.3283,
+              6567.7483
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 19.0667,
+            "std": 4.653,
+            "ci95": [
+              17.4333,
+              20.7
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.585,
+            "std": 0.0986,
+            "ci95": [
+              1.5512,
+              1.6205
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 0.9951,
+            "std": 0.0266,
+            "ci95": [
+              0.9854,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 9.6683,
+            "std": 1.8584,
+            "ci95": [
+              8.9567,
+              10.2267
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 1041.0163,
+            "std": 2341.9208,
+            "ci95": [
+              418.9935,
+              1969.5527
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7373,
+            "std": 0.0586,
+            "ci95": [
+              0.7155,
+              0.7566
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.1489,
+            "std": 0.5317,
+            "ci95": [
+              0.0202,
+              0.3714
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 30,
+            "mean": 240.0,
+            "std": 0.0,
+            "ci95": [
+              240.0,
+              240.0
+            ]
+          },
+          "flood_a3_admitted": {
+            "n": 30,
+            "mean": 77.3,
+            "std": 2.0703,
+            "ci95": [
+              76.5333,
+              77.9667
+            ]
+          },
+          "flood_containment_s": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 1246.4333,
+            "std": 382.9026,
+            "ci95": [
+              1110.0667,
+              1383.5
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 9.3667,
+            "std": 1.0981,
+            "ci95": [
+              8.9667,
+              9.7333
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 1.0667,
+            "std": 1.388,
+            "ci95": [
+              0.6333,
+              1.5667
+            ]
+          }
+        },
+        "fixed-budget": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 2.6109,
+            "std": 0.8902,
+            "ci95": [
+              2.3273,
+              2.9528
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 4.6366,
+            "std": 1.5849,
+            "ci95": [
+              4.1442,
+              5.2506
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 156.9327,
+            "std": 57.4021,
+            "ci95": [
+              138.2157,
+              178.27
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 19.2,
+            "std": 4.2943,
+            "ci95": [
+              17.7,
+              20.7333
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.5379,
+            "std": 0.1147,
+            "ci95": [
+              1.4969,
+              1.5786
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 9.8283,
+            "std": 1.759,
+            "ci95": [
+              9.1267,
+              10.3317
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 1075.5746,
+            "std": 2485.7255,
+            "ci95": [
+              419.2296,
+              2078.5194
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.747,
+            "std": 0.0451,
+            "ci95": [
+              0.7318,
+              0.7631
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.1066,
+            "std": 0.2059,
+            "ci95": [
+              0.039,
+              0.1754
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 30,
+            "mean": 240.0,
+            "std": 0.0,
+            "ci95": [
+              240.0,
+              240.0
+            ]
+          },
+          "flood_a3_admitted": {
+            "n": 30,
+            "mean": 77.6333,
+            "std": 1.3515,
+            "ci95": [
+              77.1333,
+              78.0667
+            ]
+          },
+          "flood_containment_s": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 1255.6333,
+            "std": 382.8377,
+            "ci95": [
+              1119.3,
+              1392.7333
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 9.2,
+            "std": 1.4479,
+            "ci95": [
+              8.6333,
+              9.6333
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 1.1333,
+            "std": 1.0417,
+            "ci95": [
+              0.7667,
+              1.5
+            ]
+          }
+        },
+        "static-polling": {
+          "resolution_mean_s": {
+            "n": 30,
+            "mean": 3.0643,
+            "std": 0.9177,
+            "ci95": [
+              2.7629,
+              3.4046
+            ]
+          },
+          "resolution_p95_s": {
+            "n": 30,
+            "mean": 6.0409,
+            "std": 1.6388,
+            "ci95": [
+              5.4928,
+              6.6372
+            ]
+          },
+          "backlog_area": {
+            "n": 30,
+            "mean": 404.3397,
+            "std": 1233.2127,
+            "ci95": [
+              166.7643,
+              862.324
+            ]
+          },
+          "backlog_peak": {
+            "n": 30,
+            "mean": 20.5,
+            "std": 5.463,
+            "ci95": [
+              18.6333,
+              22.5
+            ]
+          },
+          "status_check_amplification": {
+            "n": 30,
+            "mean": 1.4845,
+            "std": 0.1116,
+            "ci95": [
+              1.4451,
+              1.523
+            ]
+          },
+          "deadline_compliance": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "escalated": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "primary_goodput_per_s": {
+            "n": 30,
+            "mean": 9.485,
+            "std": 2.3228,
+            "ci95": [
+              8.6067,
+              10.2033
+            ]
+          },
+          "primary_p95_ms": {
+            "n": 30,
+            "mean": 1376.4504,
+            "std": 2879.3028,
+            "ci95": [
+              436.3418,
+              2402.248
+            ]
+          },
+          "primary_success_ratio": {
+            "n": 30,
+            "mean": 0.7282,
+            "std": 0.1009,
+            "ci95": [
+              0.6876,
+              0.7575
+            ]
+          },
+          "recovery_time_s": {
+            "n": 30,
+            "mean": 0.0553,
+            "std": 0.154,
+            "ci95": [
+              0.0049,
+              0.1218
+            ]
+          },
+          "invariant_violations": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "capacity_rel_err_point": {
+            "n": 0
+          },
+          "capacity_rel_err_point_median": {
+            "n": 0
+          },
+          "capacity_low_signed_err_median": {
+            "n": 0
+          },
+          "capacity_low_overestimate_ratio": {
+            "n": 0
+          },
+          "flood_a3_sent": {
+            "n": 30,
+            "mean": 240.0,
+            "std": 0.0,
+            "ci95": [
+              240.0,
+              240.0
+            ]
+          },
+          "flood_a3_admitted": {
+            "n": 30,
+            "mean": 77.5,
+            "std": 3.6836,
+            "ci95": [
+              76.1,
+              78.6
+            ]
+          },
+          "flood_containment_s": {
+            "n": 30,
+            "mean": 1.0,
+            "std": 0.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "financial_gate_rejections": {
+            "n": 30,
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "stale_jobs_dropped": {
+            "n": 30,
+            "mean": 1237.0667,
+            "std": 382.9098,
+            "ci95": [
+              1100.6333,
+              1374.2
+            ]
+          },
+          "duplicate_jobs_injected": {
+            "n": 30,
+            "mean": 8.8333,
+            "std": 2.1348,
+            "ci95": [
+              8.0,
+              9.5
+            ]
+          },
+          "recovery_blocked_by_reserve": {
+            "n": 30,
+            "mean": 0.9333,
+            "std": 1.4126,
+            "ci95": [
+              0.5,
+              1.5
+            ]
+          }
+        }
+      },
+      "aorts_vs_strongest_baseline": {
+        "resolution_mean_s": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 4.6071,
+          "baseline_mean": 2.6109,
+          "pairs": 30,
+          "mean_diff": 1.9962,
+          "ci95": [
+            1.5901,
+            2.3993
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "resolution_p95_s": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 10.5566,
+          "baseline_mean": 4.6366,
+          "pairs": 30,
+          "mean_diff": 5.9201,
+          "ci95": [
+            4.9968,
+            6.7864
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "backlog_area": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": true,
+          "aorts_mean": 284.6907,
+          "baseline_mean": 156.9327,
+          "pairs": 30,
+          "mean_diff": 127.758,
+          "ci95": [
+            97.259,
+            161.3157
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "backlog_peak": {
+          "strongest_baseline": "exp-backoff-jitter",
+          "lower_is_better": true,
+          "aorts_mean": 23.5667,
+          "baseline_mean": 19.0667,
+          "pairs": 30,
+          "mean_diff": 4.5,
+          "ci95": [
+            2.2667,
+            6.8
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "status_check_amplification": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": true,
+          "aorts_mean": 1.4044,
+          "baseline_mean": 1.4728,
+          "pairs": 30,
+          "mean_diff": -0.0683,
+          "ci95": [
+            -0.1117,
+            -0.0201
+          ],
+          "verdict": "AORTS better (95% CI excludes 0)"
+        },
+        "deadline_compliance": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": false,
+          "aorts_mean": 1.0,
+          "baseline_mean": 1.0,
+          "pairs": 30,
+          "mean_diff": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "escalated": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": true,
+          "aorts_mean": 0.0,
+          "baseline_mean": 0.0,
+          "pairs": 30,
+          "mean_diff": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "primary_goodput_per_s": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": false,
+          "aorts_mean": 9.5617,
+          "baseline_mean": 9.8283,
+          "pairs": 30,
+          "mean_diff": -0.2667,
+          "ci95": [
+            -0.8417,
+            0.0833
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "primary_p95_ms": {
+          "strongest_baseline": "exp-backoff-jitter",
+          "lower_is_better": true,
+          "aorts_mean": 1476.2259,
+          "baseline_mean": 1041.0163,
+          "pairs": 30,
+          "mean_diff": 435.2096,
+          "ci95": [
+            -21.9849,
+            1268.6644
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "primary_success_ratio": {
+          "strongest_baseline": "fixed-budget",
+          "lower_is_better": false,
+          "aorts_mean": 0.7462,
+          "baseline_mean": 0.747,
+          "pairs": 30,
+          "mean_diff": -0.0009,
+          "ci95": [
+            -0.0121,
+            0.0107
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        },
+        "recovery_time_s": {
+          "strongest_baseline": "static-polling",
+          "lower_is_better": true,
+          "aorts_mean": 4.0562,
+          "baseline_mean": 0.0553,
+          "pairs": 30,
+          "mean_diff": 4.0008,
+          "ci95": [
+            3.2481,
+            4.7559
+          ],
+          "verdict": "AORTS worse (95% CI excludes 0)"
+        },
+        "invariant_violations": {
+          "strongest_baseline": "aimd",
+          "lower_is_better": true,
+          "aorts_mean": 0.0,
+          "baseline_mean": 0.0,
+          "pairs": 30,
+          "mean_diff": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "verdict": "no clear difference (95% CI includes 0)"
+        }
+      },
+      "held_out": true
+    }
+  }
+}

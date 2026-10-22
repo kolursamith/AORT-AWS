@@ -1,0 +1,198 @@
+{
+  "summary": {
+    "generated_at": "2026-10-16T17:53:53.293786+00:00",
+    "label": "SYNTHETIC MOCK ENVIRONMENT - measured values",
+    "payments": {
+      "total": 300,
+      "by_state": {
+        "CLOSED": 300
+      },
+      "by_outcome": {
+        "SUCCESS": 300
+      },
+      "successful": 300,
+      "failed_or_reversed": 0,
+      "ambiguous_backlog": 0,
+      "escalated": 0,
+      "quarantined": 0,
+      "by_route": [
+        {
+          "route_id": "A1-B",
+          "total": 66,
+          "ambiguous": 0,
+          "success": 66
+        },
+        {
+          "route_id": "A1-C",
+          "total": 70,
+          "ambiguous": 0,
+          "success": 70
+        },
+        {
+          "route_id": "A2-B",
+          "total": 87,
+          "ambiguous": 0,
+          "success": 87
+        },
+        {
+          "route_id": "A2-C",
+          "total": 77,
+          "ambiguous": 0,
+          "success": 77
+        }
+      ]
+    },
+    "resolution_latency_s": {
+      "samples": 28,
+      "p50": 2.044,
+      "p95": 3.046
+    },
+    "kpis": {
+      "deadline_compliance": 1.0,
+      "deadline_population": 28,
+      "payment_goodput_per_s_60s": 0.0,
+      "payments_created_60s": 0,
+      "outcomes_per_status_check": 1.0,
+      "switch_timeout_rate": null
+    },
+    "status_checks": {
+      "avg_checks_per_ambiguous_txn": 1.0,
+      "total_checks_used": 28,
+      "received": 0,
+      "admitted": 0,
+      "rejected": 0,
+      "forwarded_downstream": 0,
+      "rejected_by_reason": {},
+      "admitted_by_bank": {},
+      "rejected_by_bank": {},
+      "core_overloaded": 0
+    },
+    "security": {
+      "auth_failures": 0,
+      "telemetry": {
+        "SUSPICIOUS": 9,
+        "TRUSTED": 246
+      },
+      "duplicate_events_rejected": 0,
+      "duplicate_financial_operations_prevented": 0,
+      "invalid_transitions_or_stale_prevented": 0,
+      "payments_rejected": 0,
+      "rate_limit_audit_rows_sampled": 0
+    },
+    "outbox": {
+      "pending": 0,
+      "dead_lettered": 0
+    },
+    "switch": {
+      "routes": {
+        "B": {
+          "latency_p50_ms": null,
+          "latency_p95_ms": null,
+          "samples": 0,
+          "throughput_tps": 0.0,
+          "timeout_rate": 0.0,
+          "backlog": 0,
+          "in_flight": 0,
+          "workers": 8
+        },
+        "C": {
+          "latency_p50_ms": null,
+          "latency_p95_ms": null,
+          "samples": 0,
+          "throughput_tps": 0.0,
+          "timeout_rate": 0.0,
+          "backlog": 0,
+          "in_flight": 0,
+          "workers": 8
+        }
+      },
+      "capacity": [
+        {
+          "destination": "B",
+          "workers": 8,
+          "in_flight": 0,
+          "waiting": 0,
+          "rejected_total": 0
+        },
+        {
+          "destination": "C",
+          "workers": 8,
+          "in_flight": 0,
+          "waiting": 0,
+          "rejected_total": 0
+        }
+      ],
+      "core": {
+        "destination": "core",
+        "workers": 16,
+        "in_flight": 0,
+        "waiting": 0,
+        "rejected_total": 0
+      },
+      "defenses": {
+        "rate_limiting": true,
+        "tier2_credits": true,
+        "telemetry_validation": true,
+        "replay_protection": true
+      },
+      "uptime_s": 20.4
+    },
+    "quotas": {
+      "A1": {
+        "bank_id": "A1",
+        "bank_tokens": 20.0,
+        "bank_rate_per_sec": 10.0,
+        "credits": 60.0,
+        "credit_cap": 60.0,
+        "credit_refill_per_sec": 5.0,
+        "defenses": {
+          "rate_limiting": true,
+          "tier2_credits": true,
+          "telemetry_validation": true,
+          "replay_protection": true
+        }
+      },
+      "A2": {
+        "bank_id": "A2",
+        "bank_tokens": 20.0,
+        "bank_rate_per_sec": 10.0,
+        "credits": 60.0,
+        "credit_cap": 60.0,
+        "credit_refill_per_sec": 5.0,
+        "defenses": {
+          "rate_limiting": true,
+          "tier2_credits": true,
+          "telemetry_validation": true,
+          "replay_protection": true
+        }
+      },
+      "A3": {
+        "bank_id": "A3",
+        "bank_tokens": 20.0,
+        "bank_rate_per_sec": 10.0,
+        "credits": 60.0,
+        "credit_cap": 60.0,
+        "credit_refill_per_sec": 5.0,
+        "defenses": {
+          "rate_limiting": true,
+          "tier2_credits": true,
+          "telemetry_validation": true,
+          "replay_protection": true
+        }
+      }
+    }
+  },
+  "ledger_integrity": {
+    "ok": true,
+    "unbalanced_operations": [],
+    "duplicate_operations": [],
+    "balance_mismatches": [],
+    "conservation_violations": []
+  },
+  "audit_chain": {
+    "ok": true,
+    "checked": 1915,
+    "first_bad_seq": null,
+    "head_hash": "48041e5c6c07c0613bb559bf341cc30202cc6b9b2a04618cf97068e8d6665136"
+  }
+}

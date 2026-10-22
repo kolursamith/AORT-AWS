@@ -14,6 +14,7 @@ Example payloads live in [backend/aorts/contracts/fixtures/](backend/aorts/contr
 | Timestamps | ISO-8601 with a UTC offset (`2026-10-14T10:00:15Z`). A timestamp without a timezone is rejected. |
 | Money | `amount_paise`: **integer** paise, `0 < amount ≤ 1_000_000_000`. Floats are rejected (`StrictInt`). |
 | IDs | `^[A-Za-z0-9][A-Za-z0-9_.:\-]{0,79}$`. Banks: `A1`, `A2`, `A3` (remitters), `B`, `C` (beneficiaries). Routes: `<remitter>-<beneficiary>`, e.g. `A1-B`. |
+| Transaction ids | Issued by the remitter as `TXN<remitter bank>-<16 hex>`, e.g. `TXNA1-3F2A9C0B7D1E5A44`. The switch answers status checks, reconciliation queries and `/pay` only for ids in the signer's own namespace (otherwise 403 `IDENTITY_MISMATCH`). Ids without a bank namespace (older data, test fixtures) are still accepted and checked against the stored record's owner. |
 | Enums | Explicit string values; see [enums.py](backend/aorts/contracts/enums.py). New values can be added, but existing ones are never renamed. |
 | Unknown fields | Rejected (`extra="forbid"`). |
 | Errors | Every non-2xx response has this shape: `{"error_code", "message", "retryable", "details", "schema_version"}`. |
@@ -190,7 +191,7 @@ something invalid, Track B uses a fixed fallback budget per route
 [ambiguous_transaction.json](backend/aorts/contracts/fixtures/ambiguous_transaction.json):
 ```json
 {"event_id": "evt-1001", "schema_version": "1.0", "timestamp": "2026-10-14T10:00:15Z",
- "transaction_id": "TXN1001", "route_id": "A1-B", "bank_id": "A1", "amount_paise": 100000,
+ "transaction_id": "TXNA1-3F2A9C0B7D1E5A44", "route_id": "A1-B", "bank_id": "A1", "amount_paise": 100000,
  "event_type": "PAYMENT_AMBIGUOUS", "transaction_version": 2, "correlation_id": "exp-001",
  "payload": {"last_known_state": "AMBIGUOUS", "checks_used": 0}}
 ```

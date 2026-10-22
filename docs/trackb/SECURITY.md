@@ -79,6 +79,12 @@ debited together, so a rejected request consumes nothing):
 
 1. **Identity binding:** the claimed `bank_id` must equal the HMAC identity, and the
    route must start with that bank. Otherwise `IDENTITY_MISMATCH` (403).
+   Transaction ids carry the remitter bank (`TXN<bank>-<16 hex>`), and the switch also
+   rejects (403, audited as `FOREIGN_TRANSACTION_ID`) a status check, reconciliation query
+   or `/pay` whose id belongs to another bank. This happens *before* any lookup, so a
+   bank cannot fence (write a "not received" tombstone for) or read another bank's
+   transaction. A duplicate `/pay` answers only the bank that owns the record. Ids
+   without a namespace (older data) keep the previous record-based check.
 2. **Global ceiling** (default 60/s, burst 100) → `GLOBAL_CAPACITY_EXCEEDED`.
 3. **Per-bank bucket** (10/s, burst 20) → `RATE_LIMITED`.
 4. **Per-route bucket** (15/s, burst 30) → `ROUTE_RATE_LIMITED`.
@@ -114,7 +120,14 @@ Each observation gets a verdict TRUSTED / SUSPICIOUS / REJECTED and a confidence
     in the *optimistic* (unsafe) direction;
   - no independent measurement available at all (an uncorroborated sample is never
     trusted);
-  - EWMA anomalies that the switch measurements do not corroborate.
+  - EWMA anomalies that the switch measurements do not corroborate;
+  - **persistent optimistic bias** (one-sided CUSUM per source, route and metric): each
+    sample adds its relative optimistic deviation from the switch measurement minus a 10 %
+    allowance; at a score of 0.6 the metric is no longer treated as corroborated. A lie
+    that stays inside the per-sample tolerance (e.g. +30 % throughput every sample)
+    accumulates and is flagged within a few samples, while honest noise of a few percent
+    does not. The score is capped, so an honest source recovers within a few samples.
+    `AORTS_TELEMETRY_BIAS_CHECK` (default on).
 
   A sharp change that the switch measurements *do* corroborate is a real route change.
   It is learned rather than flagged, so a genuine Bank B slowdown does not freeze the
@@ -122,12 +135,21 @@ Each observation gets a verdict TRUSTED / SUSPICIOUS / REJECTED and a confidence
 - **Only TRUSTED observations** update the twin and the EWMA baselines.
 - **BudgetGuard:** `applied = min(recommended, hard cap, switch-measured headroom)`. If
   integrity is not TRUSTED, `applied ≤ min(fallback, last trusted budget)`. Suspicious
-  telemetry can therefore never *raise* the budget; it freezes or reduces it.
+  telemetry can therefore never *raise* the budget; it freezes or reduces it. A TRUSTED
+  verdict older than `AORTS_TELEMETRY_MAX_AGE_SECONDS` (30 s) counts as **STALE**, so a
+  probe that goes silent no longer keeps a route "trusted" indefinitely.
 
-**Residual risk (measured, not hidden):** a subtle lie that stays inside the
-cross-check tolerance (+30 % throughput in E5) is **not detected**. The independent
-headroom cap is what still bounds the budget in that case. Statistical detection never
-proves authenticity.
+**Residual risk (measured, not hidden; see [SECURITY_VALIDATION.md](SECURITY_VALIDATION.md)):**
+- a persistent optimistic bias **below the 10 % allowance** (+8 % in the experiments) is
+  not detected;
+- **pessimistic** lies (false-high timeout rate, inflated backlog) are not detected. They
+  can only lower the budget, so the harm is slower recovery, never overload;
+- when the measured value is below the metric's absolute floor (e.g. throughput under
+  2 tps), the relative deviation is computed against the floor, so lies on a nearly idle
+  route accumulate slowly.
+
+The independent headroom cap bounds the budget in all of these cases. Statistical
+detection never proves authenticity.
 
 ## 6. Security Module 3 — replay
 

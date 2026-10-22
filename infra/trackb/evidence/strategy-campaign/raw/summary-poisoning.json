@@ -1,0 +1,667 @@
+{
+  "rows": [
+    {
+      "case": "conflicting_timeout_backlog",
+      "arm": "clean",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 3.76,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        3.76,
+        3.76
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 10.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        10.0,
+        10.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 362.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        362.0,
+        362.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "conflicting_timeout_backlog",
+      "arm": "poisoned_protected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 2.0,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        2.0,
+        2.0
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 2.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        2.0,
+        2.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 360.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        360.0,
+        360.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 5,
+      "detection_tick_offset_mean": 0.0,
+      "detection_tick_offset_std": 0.0,
+      "detection_tick_offset_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "case": "conflicting_timeout_backlog",
+      "arm": "poisoned_unprotected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 20.0,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        20.0,
+        20.0
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 20.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        20.0,
+        20.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 10200.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        10200.0,
+        10200.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 39.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        39.0,
+        39.0
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "invalid_values",
+      "arm": "clean",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 3.76,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        3.76,
+        3.76
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 10.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        10.0,
+        10.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 362.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        362.0,
+        362.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "invalid_values",
+      "arm": "poisoned_protected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 2.0,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        2.0,
+        2.0
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 2.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        2.0,
+        2.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 360.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        360.0,
+        360.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 5,
+      "detection_tick_offset_mean": 0.0,
+      "detection_tick_offset_std": 0.0,
+      "detection_tick_offset_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "case": "invalid_values",
+      "arm": "poisoned_unprotected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 9.94,
+      "mean_budget_during_attack_std": 0.0374,
+      "mean_budget_during_attack_ci95": [
+        9.8935,
+        9.9865
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 11.2,
+      "max_budget_during_attack_std": 0.4472,
+      "max_budget_during_attack_ci95": [
+        10.6448,
+        11.7552
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 1756.6,
+      "mean_actual_delay_ms_std": 62.3883,
+      "mean_actual_delay_ms_ci95": [
+        1679.1471,
+        1834.0529
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 33.8,
+      "ticks_over_1000ms_std": 0.4472,
+      "ticks_over_1000ms_ci95": [
+        33.2448,
+        34.3552
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "latency_low",
+      "arm": "clean",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 3.76,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        3.76,
+        3.76
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 10.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        10.0,
+        10.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 362.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        362.0,
+        362.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "latency_low",
+      "arm": "poisoned_protected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 2.0,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        2.0,
+        2.0
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 2.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        2.0,
+        2.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 360.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        360.0,
+        360.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 5,
+      "detection_tick_offset_mean": 0.0,
+      "detection_tick_offset_std": 0.0,
+      "detection_tick_offset_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "case": "latency_low",
+      "arm": "poisoned_unprotected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 9.836,
+      "mean_budget_during_attack_std": 0.0358,
+      "mean_budget_during_attack_ci95": [
+        9.7916,
+        9.8804
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 11.2,
+      "max_budget_during_attack_std": 0.4472,
+      "max_budget_during_attack_ci95": [
+        10.6448,
+        11.7552
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 1669.8,
+      "mean_actual_delay_ms_std": 48.1944,
+      "mean_actual_delay_ms_ci95": [
+        1609.9683,
+        1729.6317
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 33.4,
+      "ticks_over_1000ms_std": 0.8944,
+      "ticks_over_1000ms_ci95": [
+        32.2896,
+        34.5104
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "replay_old",
+      "arm": "clean",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 3.76,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        3.76,
+        3.76
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 10.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        10.0,
+        10.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 362.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        362.0,
+        362.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "replay_old",
+      "arm": "poisoned_protected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 2.0,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        2.0,
+        2.0
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 2.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        2.0,
+        2.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 360.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        360.0,
+        360.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 5,
+      "detection_tick_offset_mean": 0.0,
+      "detection_tick_offset_std": 0.0,
+      "detection_tick_offset_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "case": "replay_old",
+      "arm": "poisoned_unprotected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 11.0,
+      "mean_budget_during_attack_std": 0.7071,
+      "mean_budget_during_attack_ci95": [
+        10.1222,
+        11.8778
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 11.0,
+      "max_budget_during_attack_std": 0.7071,
+      "max_budget_during_attack_ci95": [
+        10.1222,
+        11.8778
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 2820.0,
+      "mean_actual_delay_ms_std": 579.8276,
+      "mean_actual_delay_ms_ci95": [
+        2100.1644,
+        3539.8356
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 35.8,
+      "ticks_over_1000ms_std": 1.0954,
+      "ticks_over_1000ms_ci95": [
+        34.44,
+        37.16
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "subtle_throughput_high",
+      "arm": "clean",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 3.76,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        3.76,
+        3.76
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 10.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        10.0,
+        10.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 362.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        362.0,
+        362.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "subtle_throughput_high",
+      "arm": "poisoned_protected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 3.76,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        3.76,
+        3.76
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 10.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        10.0,
+        10.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 362.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        362.0,
+        362.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "subtle_throughput_high",
+      "arm": "poisoned_unprotected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 13.94,
+      "mean_budget_during_attack_std": 0.0447,
+      "mean_budget_during_attack_ci95": [
+        13.8845,
+        13.9955
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 21.4,
+      "max_budget_during_attack_std": 0.5477,
+      "max_budget_during_attack_ci95": [
+        20.72,
+        22.08
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 4369.8,
+      "mean_actual_delay_ms_std": 33.2069,
+      "mean_actual_delay_ms_ci95": [
+        4328.5748,
+        4411.0252
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 39.2,
+      "ticks_over_1000ms_std": 0.4472,
+      "ticks_over_1000ms_ci95": [
+        38.6448,
+        39.7552
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "throughput_high",
+      "arm": "clean",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 3.76,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        3.76,
+        3.76
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 10.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        10.0,
+        10.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 362.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        362.0,
+        362.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    },
+    {
+      "case": "throughput_high",
+      "arm": "poisoned_protected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 2.0,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        2.0,
+        2.0
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 2.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        2.0,
+        2.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 360.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        360.0,
+        360.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 0.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        0.0,
+        0.0
+      ],
+      "detection_tick_offset_n": 5,
+      "detection_tick_offset_mean": 0.0,
+      "detection_tick_offset_std": 0.0,
+      "detection_tick_offset_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "case": "throughput_high",
+      "arm": "poisoned_unprotected",
+      "mean_budget_during_attack_n": 5,
+      "mean_budget_during_attack_mean": 30.0,
+      "mean_budget_during_attack_std": 0.0,
+      "mean_budget_during_attack_ci95": [
+        30.0,
+        30.0
+      ],
+      "max_budget_during_attack_n": 5,
+      "max_budget_during_attack_mean": 30.0,
+      "max_budget_during_attack_std": 0.0,
+      "max_budget_during_attack_ci95": [
+        30.0,
+        30.0
+      ],
+      "mean_actual_delay_ms_n": 5,
+      "mean_actual_delay_ms_mean": 19255.0,
+      "mean_actual_delay_ms_std": 0.0,
+      "mean_actual_delay_ms_ci95": [
+        19255.0,
+        19255.0
+      ],
+      "ticks_over_1000ms_n": 5,
+      "ticks_over_1000ms_mean": 40.0,
+      "ticks_over_1000ms_std": 0.0,
+      "ticks_over_1000ms_ci95": [
+        40.0,
+        40.0
+      ],
+      "detection_tick_offset_n": 0,
+      "detection_tick_offset_mean": null,
+      "detection_tick_offset_std": null,
+      "detection_tick_offset_ci95": null
+    }
+  ]
+}

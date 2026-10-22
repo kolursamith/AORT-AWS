@@ -1,0 +1,5757 @@
+{
+  "experiment_id": "flooding-20261014T182546",
+  "scenario": "E4_flooding",
+  "args": {
+    "mode": "inprocess",
+    "repeats": 5,
+    "seed": 42,
+    "rates": [
+      10,
+      50,
+      100
+    ],
+    "duration": 5.0,
+    "tail": 2.0,
+    "core_workers": null,
+    "base_ms": null,
+    "label": ""
+  },
+  "environment": {
+    "mode": "inprocess",
+    "python": "3.14.6",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu_count": 8,
+    "label": "synthetic mock environment"
+  },
+  "started_at": 1792002346.6400468,
+  "ended_at": 1792002850.4189565,
+  "ledger_verification": {
+    "ok": true,
+    "unbalanced_operations": [],
+    "duplicate_operations": [],
+    "balance_mismatches": [],
+    "conservation_violations": []
+  },
+  "runs": [
+    {
+      "scenario": "same_route",
+      "attack_rps": 10,
+      "defenses": "off",
+      "seed": 42,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 52.03,
+      "legit_check_p95_after_ms": 16.5,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 172.07,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.996,
+              "latency_p95_ms": 41.457
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.009,
+              "latency_p95_ms": 37.846
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 13.101,
+              "latency_p95_ms": 19.456
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 111.89,
+          "latency_p95_ms": 172.07,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 10,
+      "defenses": "on",
+      "seed": 42,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 19.85,
+      "legit_check_p95_after_ms": 21.83,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 122.59,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.83,
+              "latency_p95_ms": 20.495
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.671,
+              "latency_p95_ms": 20.079
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.808,
+              "latency_p95_ms": 17.842
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 106.46,
+          "latency_p95_ms": 122.59,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 50,
+      "defenses": "off",
+      "seed": 42,
+      "a3_sent": 250,
+      "a3_admitted": 250,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.1438,
+      "legit_check_p95_during_ms": 18.28,
+      "legit_check_p95_after_ms": 23.08,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 164.7,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.554,
+              "latency_p95_ms": 18.443
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.74,
+              "latency_p95_ms": 18.449
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 250,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 250
+              },
+              "latency_p50_ms": 11.557,
+              "latency_p95_ms": 15.295
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.1438
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 107.19,
+          "latency_p95_ms": 164.7,
+          "elapsed_s": 7.02
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 50,
+      "defenses": "on",
+      "seed": 42,
+      "a3_sent": 250,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.276,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 21.51,
+      "legit_check_p95_after_ms": 17.12,
+      "detection_s": 0.481,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 141.72,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.897,
+              "latency_p95_ms": 22.001
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.996,
+              "latency_p95_ms": 20.868
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.276,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 181
+              },
+              "latency_p50_ms": 12.297,
+              "latency_p95_ms": 18.2
+            }
+          },
+          "attack_detection_s": 0.481,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 107.32,
+          "latency_p95_ms": 141.72,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 100,
+      "defenses": "off",
+      "seed": 42,
+      "a3_sent": 500,
+      "a3_admitted": 500,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.0775,
+      "legit_check_p95_during_ms": 25.66,
+      "legit_check_p95_after_ms": 23.85,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 171.67,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.64,
+              "latency_p95_ms": 23.335
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.788,
+              "latency_p95_ms": 24.476
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 500,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 500
+              },
+              "latency_p50_ms": 13.966,
+              "latency_p95_ms": 21.015
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.0775
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 118.3,
+          "latency_p95_ms": 171.67,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 100,
+      "defenses": "on",
+      "seed": 42,
+      "a3_sent": 500,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.138,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 18.95,
+      "legit_check_p95_after_ms": 15.73,
+      "detection_s": 0.22,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 144.1,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.783,
+              "latency_p95_ms": 18.07
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.192,
+              "latency_p95_ms": 18.757
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.138,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 431
+              },
+              "latency_p50_ms": 13.621,
+              "latency_p95_ms": 17.598
+            }
+          },
+          "attack_detection_s": 0.22,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 117.3,
+          "latency_p95_ms": 144.1,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 10,
+      "defenses": "off",
+      "seed": 42,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 24.96,
+      "legit_check_p95_after_ms": 16.73,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 117.9,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.786,
+              "latency_p95_ms": 20.459
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.755,
+              "latency_p95_ms": 19.9
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.168,
+              "latency_p95_ms": 18.031
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 95.46,
+          "latency_p95_ms": 117.9,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 10,
+      "defenses": "on",
+      "seed": 42,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 35.34,
+      "legit_check_p95_after_ms": 17.38,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 1121.97,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 16.077,
+              "latency_p95_ms": 25.57
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.365,
+              "latency_p95_ms": 31.993
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 13.074,
+              "latency_p95_ms": 18.346
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 116.11,
+          "latency_p95_ms": 1121.97,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 50,
+      "defenses": "off",
+      "seed": 42,
+      "a3_sent": 250,
+      "a3_admitted": 250,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.1438,
+      "legit_check_p95_during_ms": 17.96,
+      "legit_check_p95_after_ms": 18.92,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 118.59,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.877,
+              "latency_p95_ms": 18.044
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.584,
+              "latency_p95_ms": 18.051
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 250,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 250
+              },
+              "latency_p50_ms": 11.588,
+              "latency_p95_ms": 14.646
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.1438
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 105.54,
+          "latency_p95_ms": 118.59,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 50,
+      "defenses": "on",
+      "seed": 42,
+      "a3_sent": 250,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.276,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 19.15,
+      "legit_check_p95_after_ms": 21.5,
+      "detection_s": 0.48,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 145.16,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.576,
+              "latency_p95_ms": 20.086
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.776,
+              "latency_p95_ms": 21.296
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.276,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 181
+              },
+              "latency_p50_ms": 12.412,
+              "latency_p95_ms": 17.984
+            }
+          },
+          "attack_detection_s": 0.48,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 114.14,
+          "latency_p95_ms": 145.16,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 100,
+      "defenses": "off",
+      "seed": 42,
+      "a3_sent": 500,
+      "a3_admitted": 500,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.0775,
+      "legit_check_p95_during_ms": 22.35,
+      "legit_check_p95_after_ms": 20.4,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 138.84,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.194,
+              "latency_p95_ms": 21.465
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.422,
+              "latency_p95_ms": 20.41
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 500,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 500
+              },
+              "latency_p50_ms": 12.403,
+              "latency_p95_ms": 16.798
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.0775
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 103.5,
+          "latency_p95_ms": 138.84,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 100,
+      "defenses": "on",
+      "seed": 42,
+      "a3_sent": 500,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.138,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 21.89,
+      "legit_check_p95_after_ms": 25.92,
+      "detection_s": 0.221,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 171.21,
+      "repeat": 0,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.243,
+              "latency_p95_ms": 23.305
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.023,
+              "latency_p95_ms": 22.044
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.138,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 431
+              },
+              "latency_p50_ms": 13.408,
+              "latency_p95_ms": 17.721
+            }
+          },
+          "attack_detection_s": 0.221,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 42,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 20,
+            "C": 8
+          },
+          "latency_p50_ms": 106.96,
+          "latency_p95_ms": 171.21,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 10,
+      "defenses": "off",
+      "seed": 43,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 19.31,
+      "legit_check_p95_after_ms": 16.77,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 116.9,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.806,
+              "latency_p95_ms": 19.497
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.797,
+              "latency_p95_ms": 17.683
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.589,
+              "latency_p95_ms": 17.613
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 101.27,
+          "latency_p95_ms": 116.9,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 10,
+      "defenses": "on",
+      "seed": 43,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 21.69,
+      "legit_check_p95_after_ms": 16.72,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 250.04,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.869,
+              "latency_p95_ms": 18.855
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.04,
+              "latency_p95_ms": 20.633
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.439,
+              "latency_p95_ms": 18.27
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 131.48,
+          "latency_p95_ms": 250.04,
+          "elapsed_s": 7.05
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 50,
+      "defenses": "off",
+      "seed": 43,
+      "a3_sent": 250,
+      "a3_admitted": 250,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.1438,
+      "legit_check_p95_during_ms": 21.29,
+      "legit_check_p95_after_ms": 17.65,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 287.99,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.005,
+              "latency_p95_ms": 20.497
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.97,
+              "latency_p95_ms": 18.966
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 250,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 250
+              },
+              "latency_p50_ms": 11.282,
+              "latency_p95_ms": 15.035
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.1438
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 185.39,
+          "latency_p95_ms": 287.99,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 50,
+      "defenses": "on",
+      "seed": 43,
+      "a3_sent": 250,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.276,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 16.13,
+      "legit_check_p95_after_ms": 15.55,
+      "detection_s": 0.48,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 220.72,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.362,
+              "latency_p95_ms": 16.085
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.309,
+              "latency_p95_ms": 16.286
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.276,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 181
+              },
+              "latency_p50_ms": 11.851,
+              "latency_p95_ms": 15.511
+            }
+          },
+          "attack_detection_s": 0.48,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 113.63,
+          "latency_p95_ms": 220.72,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 100,
+      "defenses": "off",
+      "seed": 43,
+      "a3_sent": 500,
+      "a3_admitted": 500,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.0775,
+      "legit_check_p95_during_ms": 19.75,
+      "legit_check_p95_after_ms": 15.75,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 228.64,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.157,
+              "latency_p95_ms": 20.015
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.592,
+              "latency_p95_ms": 18.764
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 500,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 500
+              },
+              "latency_p50_ms": 12.503,
+              "latency_p95_ms": 15.667
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.0775
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 116.22,
+          "latency_p95_ms": 228.64,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 100,
+      "defenses": "on",
+      "seed": 43,
+      "a3_sent": 500,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.138,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 44.95,
+      "legit_check_p95_after_ms": 20.28,
+      "detection_s": 0.221,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 227.21,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.148,
+              "latency_p95_ms": 20.737
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.001,
+              "latency_p95_ms": 23.757
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.138,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 431
+              },
+              "latency_p50_ms": 12.793,
+              "latency_p95_ms": 16.775
+            }
+          },
+          "attack_detection_s": 0.221,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 121.53,
+          "latency_p95_ms": 227.21,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 10,
+      "defenses": "off",
+      "seed": 43,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 19.13,
+      "legit_check_p95_after_ms": 21.52,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 202.14,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.493,
+              "latency_p95_ms": 18.524
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.996,
+              "latency_p95_ms": 21.602
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.405,
+              "latency_p95_ms": 16.086
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 103.43,
+          "latency_p95_ms": 202.14,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 10,
+      "defenses": "on",
+      "seed": 43,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 18.88,
+      "legit_check_p95_after_ms": 23.02,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 120.36,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.333,
+              "latency_p95_ms": 19.938
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.386,
+              "latency_p95_ms": 21.147
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.315,
+              "latency_p95_ms": 18.14
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 100.97,
+          "latency_p95_ms": 120.36,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 50,
+      "defenses": "off",
+      "seed": 43,
+      "a3_sent": 250,
+      "a3_admitted": 250,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.1438,
+      "legit_check_p95_during_ms": 19.27,
+      "legit_check_p95_after_ms": 23.0,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 113.1,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.009,
+              "latency_p95_ms": 21.761
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.007,
+              "latency_p95_ms": 20.455
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 250,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 250
+              },
+              "latency_p50_ms": 11.427,
+              "latency_p95_ms": 15.532
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.1438
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 99.98,
+          "latency_p95_ms": 113.1,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 50,
+      "defenses": "on",
+      "seed": 43,
+      "a3_sent": 250,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.276,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 16.93,
+      "legit_check_p95_after_ms": 20.8,
+      "detection_s": 0.48,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 114.81,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.06,
+              "latency_p95_ms": 17.497
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.794,
+              "latency_p95_ms": 17.934
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.276,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 181
+              },
+              "latency_p50_ms": 11.713,
+              "latency_p95_ms": 14.411
+            }
+          },
+          "attack_detection_s": 0.48,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 101.56,
+          "latency_p95_ms": 114.81,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 100,
+      "defenses": "off",
+      "seed": 43,
+      "a3_sent": 500,
+      "a3_admitted": 500,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.0775,
+      "legit_check_p95_during_ms": 22.05,
+      "legit_check_p95_after_ms": 21.11,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 150.07,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.868,
+              "latency_p95_ms": 20.61
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.882,
+              "latency_p95_ms": 22.233
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 500,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 500
+              },
+              "latency_p50_ms": 12.405,
+              "latency_p95_ms": 16.9
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.0775
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 117.04,
+          "latency_p95_ms": 150.07,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 100,
+      "defenses": "on",
+      "seed": 43,
+      "a3_sent": 500,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.138,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 19.43,
+      "legit_check_p95_after_ms": 17.08,
+      "detection_s": 0.22,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 169.18,
+      "repeat": 1,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.093,
+              "latency_p95_ms": 18.326
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.619,
+              "latency_p95_ms": 18.594
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.138,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 431
+              },
+              "latency_p50_ms": 13.054,
+              "latency_p95_ms": 17.026
+            }
+          },
+          "attack_detection_s": 0.22,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 43,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 13,
+            "B": 15
+          },
+          "latency_p50_ms": 111.47,
+          "latency_p95_ms": 169.18,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 10,
+      "defenses": "off",
+      "seed": 44,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 20.17,
+      "legit_check_p95_after_ms": 31.04,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 148.05,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.739,
+              "latency_p95_ms": 21.29
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.747,
+              "latency_p95_ms": 21.766
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.418,
+              "latency_p95_ms": 18.636
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 99.26,
+          "latency_p95_ms": 148.05,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 10,
+      "defenses": "on",
+      "seed": 44,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 18.15,
+      "legit_check_p95_after_ms": 20.42,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 195.56,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.619,
+              "latency_p95_ms": 18.193
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.88,
+              "latency_p95_ms": 18.896
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.406,
+              "latency_p95_ms": 19.231
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 97.47,
+          "latency_p95_ms": 195.56,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 50,
+      "defenses": "off",
+      "seed": 44,
+      "a3_sent": 250,
+      "a3_admitted": 250,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.1438,
+      "legit_check_p95_during_ms": 16.99,
+      "legit_check_p95_after_ms": 20.35,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 115.32,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.61,
+              "latency_p95_ms": 19.447
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.066,
+              "latency_p95_ms": 17.582
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 250,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 250
+              },
+              "latency_p50_ms": 11.149,
+              "latency_p95_ms": 15.369
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.1438
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 97.09,
+          "latency_p95_ms": 115.32,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 50,
+      "defenses": "on",
+      "seed": 44,
+      "a3_sent": 250,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.276,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 22.68,
+      "legit_check_p95_after_ms": 21.65,
+      "detection_s": 0.48,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 118.05,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.622,
+              "latency_p95_ms": 22.177
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.014,
+              "latency_p95_ms": 21.216
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.276,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 181
+              },
+              "latency_p50_ms": 11.441,
+              "latency_p95_ms": 14.734
+            }
+          },
+          "attack_detection_s": 0.48,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 103.06,
+          "latency_p95_ms": 118.05,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 100,
+      "defenses": "off",
+      "seed": 44,
+      "a3_sent": 500,
+      "a3_admitted": 500,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.0775,
+      "legit_check_p95_during_ms": 23.52,
+      "legit_check_p95_after_ms": 26.15,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 129.22,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.812,
+              "latency_p95_ms": 24.884
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.539,
+              "latency_p95_ms": 24.448
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 500,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 500
+              },
+              "latency_p50_ms": 12.455,
+              "latency_p95_ms": 16.074
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.0775
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 115.66,
+          "latency_p95_ms": 129.22,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 100,
+      "defenses": "on",
+      "seed": 44,
+      "a3_sent": 500,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.138,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 19.24,
+      "legit_check_p95_after_ms": 20.93,
+      "detection_s": 0.221,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 135.65,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.605,
+              "latency_p95_ms": 19.5
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.974,
+              "latency_p95_ms": 21.367
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.138,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 431
+              },
+              "latency_p50_ms": 12.466,
+              "latency_p95_ms": 18.666
+            }
+          },
+          "attack_detection_s": 0.221,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 108.37,
+          "latency_p95_ms": 135.65,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 10,
+      "defenses": "off",
+      "seed": 44,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 28.47,
+      "legit_check_p95_after_ms": 19.38,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 120.94,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.313,
+              "latency_p95_ms": 20.671
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.767,
+              "latency_p95_ms": 18.331
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.117,
+              "latency_p95_ms": 16.388
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 100.1,
+          "latency_p95_ms": 120.94,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 10,
+      "defenses": "on",
+      "seed": 44,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 21.05,
+      "legit_check_p95_after_ms": 15.86,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 111.13,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.994,
+              "latency_p95_ms": 18.747
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.756,
+              "latency_p95_ms": 18.302
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.265,
+              "latency_p95_ms": 17.418
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 101.08,
+          "latency_p95_ms": 111.13,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 50,
+      "defenses": "off",
+      "seed": 44,
+      "a3_sent": 250,
+      "a3_admitted": 250,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.1438,
+      "legit_check_p95_during_ms": 20.65,
+      "legit_check_p95_after_ms": 20.4,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 113.11,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.555,
+              "latency_p95_ms": 20.081
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.155,
+              "latency_p95_ms": 20.795
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 250,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 250
+              },
+              "latency_p50_ms": 11.38,
+              "latency_p95_ms": 14.314
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.1438
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 99.62,
+          "latency_p95_ms": 113.11,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 50,
+      "defenses": "on",
+      "seed": 44,
+      "a3_sent": 250,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.276,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 16.5,
+      "legit_check_p95_after_ms": 17.51,
+      "detection_s": 0.48,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 227.7,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.844,
+              "latency_p95_ms": 18.014
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.944,
+              "latency_p95_ms": 16.158
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.276,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 181
+              },
+              "latency_p50_ms": 11.884,
+              "latency_p95_ms": 15.305
+            }
+          },
+          "attack_detection_s": 0.48,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 112.73,
+          "latency_p95_ms": 227.7,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 100,
+      "defenses": "off",
+      "seed": 44,
+      "a3_sent": 500,
+      "a3_admitted": 500,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.0775,
+      "legit_check_p95_during_ms": 23.03,
+      "legit_check_p95_after_ms": 15.38,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 277.11,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.586,
+              "latency_p95_ms": 21.146
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.985,
+              "latency_p95_ms": 21.63
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 500,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 500
+              },
+              "latency_p50_ms": 12.572,
+              "latency_p95_ms": 16.616
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.0775
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 120.99,
+          "latency_p95_ms": 277.11,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 100,
+      "defenses": "on",
+      "seed": 44,
+      "a3_sent": 500,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.138,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 23.4,
+      "legit_check_p95_after_ms": 17.41,
+      "detection_s": 0.22,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 320.54,
+      "repeat": 2,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.003,
+              "latency_p95_ms": 21.904
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.961,
+              "latency_p95_ms": 23.397
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.138,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 431
+              },
+              "latency_p50_ms": 12.923,
+              "latency_p95_ms": 18.25
+            }
+          },
+          "attack_detection_s": 0.22,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 44,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "B": 12,
+            "C": 16
+          },
+          "latency_p50_ms": 171.13,
+          "latency_p95_ms": 320.54,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 10,
+      "defenses": "off",
+      "seed": 45,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 17.76,
+      "legit_check_p95_after_ms": 16.64,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 262.88,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.807,
+              "latency_p95_ms": 18.313
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.429,
+              "latency_p95_ms": 17.056
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.574,
+              "latency_p95_ms": 18.259
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 162.22,
+          "latency_p95_ms": 262.88,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 10,
+      "defenses": "on",
+      "seed": 45,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 26.38,
+      "legit_check_p95_after_ms": 17.72,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 250.25,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.769,
+              "latency_p95_ms": 18.547
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.009,
+              "latency_p95_ms": 18.656
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.256,
+              "latency_p95_ms": 17.016
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 141.2,
+          "latency_p95_ms": 250.25,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 50,
+      "defenses": "off",
+      "seed": 45,
+      "a3_sent": 250,
+      "a3_admitted": 250,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.1438,
+      "legit_check_p95_during_ms": 17.92,
+      "legit_check_p95_after_ms": 21.05,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 264.89,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.796,
+              "latency_p95_ms": 18.55
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.845,
+              "latency_p95_ms": 18.112
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 250,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 250
+              },
+              "latency_p50_ms": 11.413,
+              "latency_p95_ms": 14.953
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.1438
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 110.67,
+          "latency_p95_ms": 264.89,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 50,
+      "defenses": "on",
+      "seed": 45,
+      "a3_sent": 250,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.276,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 16.02,
+      "legit_check_p95_after_ms": 17.69,
+      "detection_s": 0.48,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 194.4,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.474,
+              "latency_p95_ms": 16.257
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.444,
+              "latency_p95_ms": 16.335
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.276,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 181
+              },
+              "latency_p50_ms": 11.761,
+              "latency_p95_ms": 15.119
+            }
+          },
+          "attack_detection_s": 0.48,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 106.02,
+          "latency_p95_ms": 194.4,
+          "elapsed_s": 7.02
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 100,
+      "defenses": "off",
+      "seed": 45,
+      "a3_sent": 500,
+      "a3_admitted": 500,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.0775,
+      "legit_check_p95_during_ms": 21.34,
+      "legit_check_p95_after_ms": 21.08,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 142.71,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.19,
+              "latency_p95_ms": 22.363
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.305,
+              "latency_p95_ms": 21.086
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 500,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 500
+              },
+              "latency_p50_ms": 12.541,
+              "latency_p95_ms": 16.883
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.0775
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 106.67,
+          "latency_p95_ms": 142.71,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 100,
+      "defenses": "on",
+      "seed": 45,
+      "a3_sent": 500,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.138,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 19.37,
+      "legit_check_p95_after_ms": 20.32,
+      "detection_s": 0.221,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 196.86,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.883,
+              "latency_p95_ms": 20.263
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.07,
+              "latency_p95_ms": 19.909
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.138,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 431
+              },
+              "latency_p50_ms": 12.828,
+              "latency_p95_ms": 17.177
+            }
+          },
+          "attack_detection_s": 0.221,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 120.2,
+          "latency_p95_ms": 196.86,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 10,
+      "defenses": "off",
+      "seed": 45,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 20.38,
+      "legit_check_p95_after_ms": 15.73,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 136.58,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.582,
+              "latency_p95_ms": 20.277
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.716,
+              "latency_p95_ms": 19.057
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.17,
+              "latency_p95_ms": 17.674
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 104.18,
+          "latency_p95_ms": 136.58,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 10,
+      "defenses": "on",
+      "seed": 45,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 23.58,
+      "legit_check_p95_after_ms": 17.25,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 124.07,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.909,
+              "latency_p95_ms": 21.22
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.091,
+              "latency_p95_ms": 19.328
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.354,
+              "latency_p95_ms": 18.142
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 100.35,
+          "latency_p95_ms": 124.07,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 50,
+      "defenses": "off",
+      "seed": 45,
+      "a3_sent": 250,
+      "a3_admitted": 250,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.1438,
+      "legit_check_p95_during_ms": 17.63,
+      "legit_check_p95_after_ms": 21.03,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 134.61,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.113,
+              "latency_p95_ms": 19.242
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.103,
+              "latency_p95_ms": 21.219
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 250,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 250
+              },
+              "latency_p50_ms": 11.475,
+              "latency_p95_ms": 15.182
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.1438
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 104.55,
+          "latency_p95_ms": 134.61,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 50,
+      "defenses": "on",
+      "seed": 45,
+      "a3_sent": 250,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.276,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 18.72,
+      "legit_check_p95_after_ms": 20.95,
+      "detection_s": 0.48,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 119.24,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.75,
+              "latency_p95_ms": 18.839
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.096,
+              "latency_p95_ms": 20.831
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.276,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 181
+              },
+              "latency_p50_ms": 11.802,
+              "latency_p95_ms": 15.363
+            }
+          },
+          "attack_detection_s": 0.48,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 102.33,
+          "latency_p95_ms": 119.24,
+          "elapsed_s": 7.02
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 100,
+      "defenses": "off",
+      "seed": 45,
+      "a3_sent": 500,
+      "a3_admitted": 500,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.0775,
+      "legit_check_p95_during_ms": 19.6,
+      "legit_check_p95_after_ms": 21.85,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 129.72,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.726,
+              "latency_p95_ms": 19.165
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.668,
+              "latency_p95_ms": 21.404
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 500,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 500
+              },
+              "latency_p50_ms": 12.397,
+              "latency_p95_ms": 15.689
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.0775
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 106.98,
+          "latency_p95_ms": 129.72,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 100,
+      "defenses": "on",
+      "seed": 45,
+      "a3_sent": 500,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.138,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 39.86,
+      "legit_check_p95_after_ms": 37.89,
+      "detection_s": 0.22,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 215.96,
+      "repeat": 3,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 17.194,
+              "latency_p95_ms": 37.461
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.922,
+              "latency_p95_ms": 38.425
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.138,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 431
+              },
+              "latency_p50_ms": 14.191,
+              "latency_p95_ms": 19.115
+            }
+          },
+          "attack_detection_s": 0.22,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 45,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 122.17,
+          "latency_p95_ms": 215.96,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 10,
+      "defenses": "off",
+      "seed": 46,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 23.74,
+      "legit_check_p95_after_ms": 15.5,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 137.75,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.476,
+              "latency_p95_ms": 22.723
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 16.602,
+              "latency_p95_ms": 21.925
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 13.274,
+              "latency_p95_ms": 19.583
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 102.81,
+          "latency_p95_ms": 137.75,
+          "elapsed_s": 7.02
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 10,
+      "defenses": "on",
+      "seed": 46,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 19.92,
+      "legit_check_p95_after_ms": 19.84,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 117.42,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.919,
+              "latency_p95_ms": 19.945
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.834,
+              "latency_p95_ms": 19.136
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.662,
+              "latency_p95_ms": 18.568
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 98.72,
+          "latency_p95_ms": 117.42,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 50,
+      "defenses": "off",
+      "seed": 46,
+      "a3_sent": 250,
+      "a3_admitted": 250,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.1438,
+      "legit_check_p95_during_ms": 16.6,
+      "legit_check_p95_after_ms": 22.02,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 119.66,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.357,
+              "latency_p95_ms": 16.779
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.645,
+              "latency_p95_ms": 16.517
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 250,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 250
+              },
+              "latency_p50_ms": 11.48,
+              "latency_p95_ms": 14.54
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.1438
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 105.45,
+          "latency_p95_ms": 119.66,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 50,
+      "defenses": "on",
+      "seed": 46,
+      "a3_sent": 250,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.276,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 16.9,
+      "legit_check_p95_after_ms": 20.89,
+      "detection_s": 0.48,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 121.17,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.654,
+              "latency_p95_ms": 20.296
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.727,
+              "latency_p95_ms": 19.25
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.276,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 181
+              },
+              "latency_p50_ms": 12.07,
+              "latency_p95_ms": 14.239
+            }
+          },
+          "attack_detection_s": 0.48,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 104.76,
+          "latency_p95_ms": 121.17,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 100,
+      "defenses": "off",
+      "seed": 46,
+      "a3_sent": 500,
+      "a3_admitted": 500,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.0775,
+      "legit_check_p95_during_ms": 20.77,
+      "legit_check_p95_after_ms": 17.46,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 133.37,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.099,
+              "latency_p95_ms": 17.585
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.743,
+              "latency_p95_ms": 19.236
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 500,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 500
+              },
+              "latency_p50_ms": 12.352,
+              "latency_p95_ms": 16.123
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.0775
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 108.38,
+          "latency_p95_ms": 133.37,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": 100,
+      "defenses": "on",
+      "seed": 46,
+      "a3_sent": 500,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.138,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 19.06,
+      "legit_check_p95_after_ms": 16.19,
+      "detection_s": 0.221,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 147.3,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.138,
+              "latency_p95_ms": 18.704
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.28,
+              "latency_p95_ms": 18.884
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.138,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 431
+              },
+              "latency_p50_ms": 13.25,
+              "latency_p95_ms": 16.84
+            }
+          },
+          "attack_detection_s": 0.221,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 113.92,
+          "latency_p95_ms": 147.3,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 10,
+      "defenses": "off",
+      "seed": 46,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 24.4,
+      "legit_check_p95_after_ms": 15.44,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 265.01,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.1,
+              "latency_p95_ms": 18.218
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.389,
+              "latency_p95_ms": 20.857
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.542,
+              "latency_p95_ms": 19.172
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 154.29,
+          "latency_p95_ms": 265.01,
+          "elapsed_s": 7.0
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 10,
+      "defenses": "on",
+      "seed": 46,
+      "a3_sent": 50,
+      "a3_admitted": 50,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.4565,
+      "legit_check_p95_during_ms": 20.55,
+      "legit_check_p95_after_ms": 15.85,
+      "detection_s": null,
+      "containment_s": 0.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 124.55,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.578,
+              "latency_p95_ms": 19.268
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.801,
+              "latency_p95_ms": 18.886
+            },
+            "A3": {
+              "sent": 50,
+              "admitted_ok": 50,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 50
+              },
+              "latency_p50_ms": 12.929,
+              "latency_p95_ms": 18.057
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": 0.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.4565
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 102.79,
+          "latency_p95_ms": 124.55,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 50,
+      "defenses": "off",
+      "seed": 46,
+      "a3_sent": 250,
+      "a3_admitted": 250,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.1438,
+      "legit_check_p95_during_ms": 17.23,
+      "legit_check_p95_after_ms": 20.97,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 115.02,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.83,
+              "latency_p95_ms": 17.982
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.717,
+              "latency_p95_ms": 17.317
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 250,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 250
+              },
+              "latency_p50_ms": 11.517,
+              "latency_p95_ms": 14.101
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.1438
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 103.13,
+          "latency_p95_ms": 115.02,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 50,
+      "defenses": "on",
+      "seed": 46,
+      "a3_sent": 250,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.276,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 19.56,
+      "legit_check_p95_after_ms": 17.95,
+      "detection_s": 0.481,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 139.21,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.435,
+              "latency_p95_ms": 19.033
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.32,
+              "latency_p95_ms": 17.535
+            },
+            "A3": {
+              "sent": 250,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.276,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 181
+              },
+              "latency_p50_ms": 12.159,
+              "latency_p95_ms": 15.747
+            }
+          },
+          "attack_detection_s": 0.481,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 107.05,
+          "latency_p95_ms": 139.21,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 100,
+      "defenses": "off",
+      "seed": 46,
+      "a3_sent": 500,
+      "a3_admitted": 500,
+      "a3_admitted_ratio": 1.0,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.0775,
+      "legit_check_p95_during_ms": 30.28,
+      "legit_check_p95_after_ms": 18.49,
+      "detection_s": null,
+      "containment_s": null,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 228.39,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 15.43,
+              "latency_p95_ms": 18.761
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.949,
+              "latency_p95_ms": 18.262
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 500,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 500
+              },
+              "latency_p50_ms": 12.226,
+              "latency_p95_ms": 16.072
+            }
+          },
+          "attack_detection_s": null,
+          "attack_containment_s": null,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.0775
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 116.18,
+          "latency_p95_ms": 228.39,
+          "elapsed_s": 7.01
+        }
+      }
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": 100,
+      "defenses": "on",
+      "seed": 46,
+      "a3_sent": 500,
+      "a3_admitted": 69,
+      "a3_admitted_ratio": 0.138,
+      "a1_admitted_ratio": 1.0,
+      "a2_admitted_ratio": 1.0,
+      "legit_success_ratio": 1.0,
+      "legit_share_of_admitted": 0.3784,
+      "legit_check_p95_during_ms": 17.32,
+      "legit_check_p95_after_ms": 16.16,
+      "detection_s": 0.22,
+      "containment_s": 1.0,
+      "payments_sent": 28,
+      "payments_closed": 28,
+      "payment_p95_ms": 219.88,
+      "repeat": 4,
+      "detail": {
+        "summary": {
+          "per_bank": {
+            "A1": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 13.341,
+              "latency_p95_ms": 17.323
+            },
+            "A2": {
+              "sent": 21,
+              "admitted_ok": 21,
+              "admitted_ratio": 1.0,
+              "outcomes": {
+                "200": 21
+              },
+              "latency_p50_ms": 14.169,
+              "latency_p95_ms": 16.334
+            },
+            "A3": {
+              "sent": 500,
+              "admitted_ok": 69,
+              "admitted_ratio": 0.138,
+              "outcomes": {
+                "200": 69,
+                "RATE_LIMITED": 431
+              },
+              "latency_p50_ms": 12.497,
+              "latency_p95_ms": 16.693
+            }
+          },
+          "attack_detection_s": 0.22,
+          "attack_containment_s": 1.0,
+          "legit_success_ratio": 1.0,
+          "legit_share_of_admitted": 0.3784
+        },
+        "traffic": {
+          "config": {
+            "rps": 4,
+            "duration_s": 7.0,
+            "banks": [
+              "A1"
+            ],
+            "destinations": [
+              "B",
+              "C"
+            ],
+            "customers_per_bank": 10,
+            "min_amount_paise": 1000,
+            "max_amount_paise": 500000,
+            "retry_probability": 0.0,
+            "burst_every_s": 0.0,
+            "burst_multiplier": 3.0,
+            "seed": 46,
+            "concurrency": 32
+          },
+          "sent": 28,
+          "outcomes": {
+            "CLOSED": 28
+          },
+          "retries": 0,
+          "idempotent_replays": 0,
+          "by_destination": {
+            "C": 11,
+            "B": 17
+          },
+          "latency_p50_ms": 120.57,
+          "latency_p95_ms": 219.88,
+          "elapsed_s": 7.0
+        }
+      }
+    }
+  ]
+}
