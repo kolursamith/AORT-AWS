@@ -1,0 +1,2714 @@
+{
+  "experiment_id": "secpkg-flooding-20261022T110257Z",
+  "attack_rps": 150,
+  "seeds": [
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "runs_completed": 25,
+  "by_condition": {
+    "normal": {
+      "legit_sent_before": {
+        "n": 5,
+        "mean": 24.0,
+        "std": 0.0,
+        "ci95": [
+          24.0,
+          24.0
+        ]
+      },
+      "legit_success_before": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_before": {
+        "n": 5,
+        "mean": 51.578,
+        "std": 0.9745,
+        "ci95": [
+          50.3681,
+          52.7879
+        ]
+      },
+      "legit_p95_ms_before": {
+        "n": 5,
+        "mean": 76.23,
+        "std": 11.1728,
+        "ci95": [
+          62.3594,
+          90.1006
+        ]
+      },
+      "legit_sent_during": {
+        "n": 5,
+        "mean": 48.0,
+        "std": 0.0,
+        "ci95": [
+          48.0,
+          48.0
+        ]
+      },
+      "legit_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_during": {
+        "n": 5,
+        "mean": 51.026,
+        "std": 0.8518,
+        "ci95": [
+          49.9686,
+          52.0834
+        ]
+      },
+      "legit_p95_ms_during": {
+        "n": 5,
+        "mean": 62.68,
+        "std": 4.3423,
+        "ci95": [
+          57.2892,
+          68.0708
+        ]
+      },
+      "legit_sent_after": {
+        "n": 5,
+        "mean": 36.0,
+        "std": 0.0,
+        "ci95": [
+          36.0,
+          36.0
+        ]
+      },
+      "legit_success_after": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_after": {
+        "n": 5,
+        "mean": 51.196,
+        "std": 1.0172,
+        "ci95": [
+          49.9332,
+          52.4588
+        ]
+      },
+      "legit_p95_ms_after": {
+        "n": 5,
+        "mean": 72.114,
+        "std": 13.5856,
+        "ci95": [
+          55.248,
+          88.98
+        ]
+      },
+      "A1_sent": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_admitted_ratio": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "A1_server_received": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_server_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A1_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A1_reached_worker_pool": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A2_sent": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_admitted_ratio": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "A2_server_received": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_server_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A2_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A2_reached_worker_pool": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A3_sent": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_admitted": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_server_received": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_server_admitted": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_reached_worker_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A3_rejected_RATE_LIMITED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_GLOBAL_CAPACITY_EXCEEDED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_ROUTE_RATE_LIMITED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_CREDIT_EXHAUSTED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected_that_reached_worker_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "switch_overloaded_checks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "legit_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "baseline_legit_p50_ms": {
+        "n": 5,
+        "mean": 51.578,
+        "std": 0.9745,
+        "ci95": [
+          50.3681,
+          52.7879
+        ]
+      },
+      "fairness_jain_legit_banks": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "attacker_share_of_admitted_during": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "payments_sent": {
+        "n": 5,
+        "mean": 72.0,
+        "std": 0.0,
+        "ci95": [
+          72.0,
+          72.0
+        ]
+      },
+      "payments_closed": {
+        "n": 5,
+        "mean": 72.0,
+        "std": 0.0,
+        "ci95": [
+          72.0,
+          72.0
+        ]
+      },
+      "payment_p50_ms": {
+        "n": 5,
+        "mean": 207.81,
+        "std": 27.1389,
+        "ci95": [
+          174.1181,
+          241.5019
+        ]
+      },
+      "payment_p95_ms": {
+        "n": 5,
+        "mean": 600.828,
+        "std": 610.021,
+        "ci95": [
+          -156.4916,
+          1358.1476
+        ]
+      },
+      "payment_throughput_per_s": {
+        "n": 5,
+        "mean": 4.0,
+        "std": 0.0,
+        "ci95": [
+          4.0,
+          4.0
+        ]
+      },
+      "payments_unresolved_at_end": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "ledger_ok": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "flood_undefended": {
+      "legit_sent_before": {
+        "n": 5,
+        "mean": 24.0,
+        "std": 0.0,
+        "ci95": [
+          24.0,
+          24.0
+        ]
+      },
+      "legit_success_before": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_before": {
+        "n": 5,
+        "mean": 52.05,
+        "std": 2.0525,
+        "ci95": [
+          49.5019,
+          54.5981
+        ]
+      },
+      "legit_p95_ms_before": {
+        "n": 5,
+        "mean": 70.14,
+        "std": 4.0439,
+        "ci95": [
+          65.1197,
+          75.1603
+        ]
+      },
+      "legit_sent_during": {
+        "n": 5,
+        "mean": 47.8,
+        "std": 0.4472,
+        "ci95": [
+          47.2448,
+          48.3552
+        ]
+      },
+      "legit_success_during": {
+        "n": 5,
+        "mean": 0.8829,
+        "std": 0.0405,
+        "ci95": [
+          0.8327,
+          0.9331
+        ]
+      },
+      "legit_p50_ms_during": {
+        "n": 5,
+        "mean": 321.48,
+        "std": 44.598,
+        "ci95": [
+          266.1131,
+          376.8469
+        ]
+      },
+      "legit_p95_ms_during": {
+        "n": 5,
+        "mean": 569.59,
+        "std": 50.1204,
+        "ci95": [
+          507.3673,
+          631.8127
+        ]
+      },
+      "legit_sent_after": {
+        "n": 5,
+        "mean": 36.2,
+        "std": 0.4472,
+        "ci95": [
+          35.6448,
+          36.7552
+        ]
+      },
+      "legit_success_after": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_after": {
+        "n": 5,
+        "mean": 52.436,
+        "std": 1.5652,
+        "ci95": [
+          50.4929,
+          54.3791
+        ]
+      },
+      "legit_p95_ms_after": {
+        "n": 5,
+        "mean": 252.778,
+        "std": 84.0867,
+        "ci95": [
+          148.3873,
+          357.1687
+        ]
+      },
+      "A1_sent": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_admitted": {
+        "n": 5,
+        "mean": 52.2,
+        "std": 1.4832,
+        "ci95": [
+          50.3586,
+          54.0414
+        ]
+      },
+      "A1_admitted_ratio": {
+        "n": 5,
+        "mean": 0.9667,
+        "std": 0.0275,
+        "ci95": [
+          0.9326,
+          1.0008
+        ]
+      },
+      "A1_server_received": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_server_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A1_overloaded_at_pool": {
+        "n": 5,
+        "mean": 1.8,
+        "std": 1.4832,
+        "ci95": [
+          -0.0414,
+          3.6414
+        ]
+      },
+      "A1_reached_worker_pool": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A2_sent": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_admitted": {
+        "n": 5,
+        "mean": 50.2,
+        "std": 1.3038,
+        "ci95": [
+          48.5813,
+          51.8187
+        ]
+      },
+      "A2_admitted_ratio": {
+        "n": 5,
+        "mean": 0.9296,
+        "std": 0.0242,
+        "ci95": [
+          0.8996,
+          0.9596
+        ]
+      },
+      "A2_server_received": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_server_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A2_overloaded_at_pool": {
+        "n": 5,
+        "mean": 3.8,
+        "std": 1.3038,
+        "ci95": [
+          2.1813,
+          5.4187
+        ]
+      },
+      "A2_reached_worker_pool": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A3_sent": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_admitted": {
+        "n": 5,
+        "mean": 1015.0,
+        "std": 24.0936,
+        "ci95": [
+          985.0887,
+          1044.9113
+        ]
+      },
+      "A3_server_received": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_server_admitted": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_overloaded_at_pool": {
+        "n": 5,
+        "mean": 185.0,
+        "std": 24.0936,
+        "ci95": [
+          155.0887,
+          214.9113
+        ]
+      },
+      "A3_reached_worker_pool": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A3_rejected_RATE_LIMITED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_GLOBAL_CAPACITY_EXCEEDED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_ROUTE_RATE_LIMITED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_CREDIT_EXHAUSTED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected_that_reached_worker_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "switch_overloaded_checks": {
+        "n": 5,
+        "mean": 190.6,
+        "std": 24.9058,
+        "ci95": [
+          159.6803,
+          221.5197
+        ]
+      },
+      "legit_overloaded_at_pool": {
+        "n": 5,
+        "mean": 5.6,
+        "std": 1.9494,
+        "ci95": [
+          3.1799,
+          8.0201
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "baseline_legit_p50_ms": {
+        "n": 5,
+        "mean": 52.05,
+        "std": 2.0525,
+        "ci95": [
+          49.5019,
+          54.5981
+        ]
+      },
+      "fairness_jain_legit_banks": {
+        "n": 5,
+        "mean": 0.9962,
+        "std": 0.0056,
+        "ci95": [
+          0.9892,
+          1.0031
+        ]
+      },
+      "attacker_share_of_admitted_during": {
+        "n": 5,
+        "mean": 0.959,
+        "std": 0.0021,
+        "ci95": [
+          0.9564,
+          0.9617
+        ]
+      },
+      "payments_sent": {
+        "n": 5,
+        "mean": 72.0,
+        "std": 0.0,
+        "ci95": [
+          72.0,
+          72.0
+        ]
+      },
+      "payments_closed": {
+        "n": 5,
+        "mean": 72.0,
+        "std": 0.0,
+        "ci95": [
+          72.0,
+          72.0
+        ]
+      },
+      "payment_p50_ms": {
+        "n": 5,
+        "mean": 239.544,
+        "std": 36.4068,
+        "ci95": [
+          194.3462,
+          284.7418
+        ]
+      },
+      "payment_p95_ms": {
+        "n": 5,
+        "mean": 501.05,
+        "std": 161.716,
+        "ci95": [
+          300.2853,
+          701.8147
+        ]
+      },
+      "payment_throughput_per_s": {
+        "n": 5,
+        "mean": 4.0,
+        "std": 0.0,
+        "ci95": [
+          4.0,
+          4.0
+        ]
+      },
+      "payments_unresolved_at_end": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "ledger_ok": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "flood_defended": {
+      "legit_sent_before": {
+        "n": 5,
+        "mean": 24.0,
+        "std": 0.0,
+        "ci95": [
+          24.0,
+          24.0
+        ]
+      },
+      "legit_success_before": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_before": {
+        "n": 5,
+        "mean": 51.18,
+        "std": 0.8387,
+        "ci95": [
+          50.1388,
+          52.2212
+        ]
+      },
+      "legit_p95_ms_before": {
+        "n": 5,
+        "mean": 76.704,
+        "std": 11.4487,
+        "ci95": [
+          62.4909,
+          90.9171
+        ]
+      },
+      "legit_sent_during": {
+        "n": 5,
+        "mean": 48.0,
+        "std": 0.0,
+        "ci95": [
+          48.0,
+          48.0
+        ]
+      },
+      "legit_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_during": {
+        "n": 5,
+        "mean": 52.598,
+        "std": 1.0274,
+        "ci95": [
+          51.3225,
+          53.8735
+        ]
+      },
+      "legit_p95_ms_during": {
+        "n": 5,
+        "mean": 63.566,
+        "std": 7.6443,
+        "ci95": [
+          54.0759,
+          73.0561
+        ]
+      },
+      "legit_sent_after": {
+        "n": 5,
+        "mean": 36.0,
+        "std": 0.0,
+        "ci95": [
+          36.0,
+          36.0
+        ]
+      },
+      "legit_success_after": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_after": {
+        "n": 5,
+        "mean": 50.942,
+        "std": 0.3446,
+        "ci95": [
+          50.5142,
+          51.3698
+        ]
+      },
+      "legit_p95_ms_after": {
+        "n": 5,
+        "mean": 60.676,
+        "std": 5.0057,
+        "ci95": [
+          54.4616,
+          66.8904
+        ]
+      },
+      "A1_sent": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_admitted_ratio": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "A1_server_received": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_server_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A1_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A1_reached_worker_pool": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A2_sent": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_admitted_ratio": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "A2_server_received": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_server_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A2_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A2_reached_worker_pool": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A3_sent": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_admitted": {
+        "n": 5,
+        "mean": 99.0,
+        "std": 0.0,
+        "ci95": [
+          99.0,
+          99.0
+        ]
+      },
+      "A3_server_received": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_server_admitted": {
+        "n": 5,
+        "mean": 99.0,
+        "std": 0.0,
+        "ci95": [
+          99.0,
+          99.0
+        ]
+      },
+      "A3_server_rejected": {
+        "n": 5,
+        "mean": 1101.0,
+        "std": 0.0,
+        "ci95": [
+          1101.0,
+          1101.0
+        ]
+      },
+      "A3_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_reached_worker_pool": {
+        "n": 5,
+        "mean": 99.0,
+        "std": 0.0,
+        "ci95": [
+          99.0,
+          99.0
+        ]
+      },
+      "A3_credits_left": {
+        "n": 5,
+        "mean": 30.9794,
+        "std": 0.0361,
+        "ci95": [
+          30.9346,
+          31.0242
+        ]
+      },
+      "A3_rejected_RATE_LIMITED": {
+        "n": 5,
+        "mean": 1101.0,
+        "std": 0.0,
+        "ci95": [
+          1101.0,
+          1101.0
+        ]
+      },
+      "A3_rejected_GLOBAL_CAPACITY_EXCEEDED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_ROUTE_RATE_LIMITED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_CREDIT_EXHAUSTED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected_that_reached_worker_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "switch_overloaded_checks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "legit_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "baseline_legit_p50_ms": {
+        "n": 5,
+        "mean": 51.18,
+        "std": 0.8387,
+        "ci95": [
+          50.1388,
+          52.2212
+        ]
+      },
+      "fairness_jain_legit_banks": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "attacker_share_of_admitted_during": {
+        "n": 5,
+        "mean": 0.6735,
+        "std": 0.0,
+        "ci95": [
+          0.6735,
+          0.6735
+        ]
+      },
+      "payments_sent": {
+        "n": 5,
+        "mean": 72.0,
+        "std": 0.0,
+        "ci95": [
+          72.0,
+          72.0
+        ]
+      },
+      "payments_closed": {
+        "n": 5,
+        "mean": 72.0,
+        "std": 0.0,
+        "ci95": [
+          72.0,
+          72.0
+        ]
+      },
+      "payment_p50_ms": {
+        "n": 5,
+        "mean": 189.104,
+        "std": 12.8554,
+        "ci95": [
+          173.1445,
+          205.0635
+        ]
+      },
+      "payment_p95_ms": {
+        "n": 5,
+        "mean": 281.202,
+        "std": 32.8036,
+        "ci95": [
+          240.4775,
+          321.9265
+        ]
+      },
+      "payment_throughput_per_s": {
+        "n": 5,
+        "mean": 4.0,
+        "std": 0.0,
+        "ci95": [
+          4.0,
+          4.0
+        ]
+      },
+      "payments_unresolved_at_end": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "ledger_ok": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "parallel_route_undefended": {
+      "legit_sent_before": {
+        "n": 5,
+        "mean": 24.0,
+        "std": 0.0,
+        "ci95": [
+          24.0,
+          24.0
+        ]
+      },
+      "legit_success_before": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_before": {
+        "n": 5,
+        "mean": 52.154,
+        "std": 1.6587,
+        "ci95": [
+          50.0948,
+          54.2132
+        ]
+      },
+      "legit_p95_ms_before": {
+        "n": 5,
+        "mean": 73.596,
+        "std": 8.1783,
+        "ci95": [
+          63.4429,
+          83.7491
+        ]
+      },
+      "legit_sent_during": {
+        "n": 5,
+        "mean": 48.0,
+        "std": 0.0,
+        "ci95": [
+          48.0,
+          48.0
+        ]
+      },
+      "legit_success_during": {
+        "n": 5,
+        "mean": 0.8375,
+        "std": 0.0539,
+        "ci95": [
+          0.7706,
+          0.9044
+        ]
+      },
+      "legit_p50_ms_during": {
+        "n": 5,
+        "mean": 234.814,
+        "std": 57.4405,
+        "ci95": [
+          163.5036,
+          306.1244
+        ]
+      },
+      "legit_p95_ms_during": {
+        "n": 5,
+        "mean": 463.502,
+        "std": 106.6356,
+        "ci95": [
+          331.1177,
+          595.8863
+        ]
+      },
+      "legit_sent_after": {
+        "n": 5,
+        "mean": 36.0,
+        "std": 0.0,
+        "ci95": [
+          36.0,
+          36.0
+        ]
+      },
+      "legit_success_after": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_after": {
+        "n": 5,
+        "mean": 53.062,
+        "std": 1.3325,
+        "ci95": [
+          51.4078,
+          54.7162
+        ]
+      },
+      "legit_p95_ms_after": {
+        "n": 5,
+        "mean": 162.398,
+        "std": 109.9418,
+        "ci95": [
+          25.9091,
+          298.8869
+        ]
+      },
+      "A1_sent": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_admitted": {
+        "n": 5,
+        "mean": 50.2,
+        "std": 1.6432,
+        "ci95": [
+          48.1601,
+          52.2399
+        ]
+      },
+      "A1_admitted_ratio": {
+        "n": 5,
+        "mean": 0.9296,
+        "std": 0.0304,
+        "ci95": [
+          0.8918,
+          0.9674
+        ]
+      },
+      "A1_server_received": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_server_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A1_overloaded_at_pool": {
+        "n": 5,
+        "mean": 3.8,
+        "std": 1.6432,
+        "ci95": [
+          1.7601,
+          5.8399
+        ]
+      },
+      "A1_reached_worker_pool": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A2_sent": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_admitted": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 2.7386,
+        "ci95": [
+          46.6001,
+          53.3999
+        ]
+      },
+      "A2_admitted_ratio": {
+        "n": 5,
+        "mean": 0.9259,
+        "std": 0.0507,
+        "ci95": [
+          0.863,
+          0.9889
+        ]
+      },
+      "A2_server_received": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_server_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A2_overloaded_at_pool": {
+        "n": 5,
+        "mean": 4.0,
+        "std": 2.7386,
+        "ci95": [
+          0.6001,
+          7.3999
+        ]
+      },
+      "A2_reached_worker_pool": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A3_sent": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_admitted": {
+        "n": 5,
+        "mean": 985.6,
+        "std": 12.1161,
+        "ci95": [
+          970.5583,
+          1000.6417
+        ]
+      },
+      "A3_server_received": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_server_admitted": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_overloaded_at_pool": {
+        "n": 5,
+        "mean": 214.4,
+        "std": 12.1161,
+        "ci95": [
+          199.3583,
+          229.4417
+        ]
+      },
+      "A3_reached_worker_pool": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A3_rejected_RATE_LIMITED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_GLOBAL_CAPACITY_EXCEEDED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_ROUTE_RATE_LIMITED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_CREDIT_EXHAUSTED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected_that_reached_worker_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "switch_overloaded_checks": {
+        "n": 5,
+        "mean": 222.2,
+        "std": 13.5536,
+        "ci95": [
+          205.3737,
+          239.0263
+        ]
+      },
+      "legit_overloaded_at_pool": {
+        "n": 5,
+        "mean": 7.8,
+        "std": 2.5884,
+        "ci95": [
+          4.5865,
+          11.0135
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "baseline_legit_p50_ms": {
+        "n": 5,
+        "mean": 52.154,
+        "std": 1.6587,
+        "ci95": [
+          50.0948,
+          54.2132
+        ]
+      },
+      "fairness_jain_legit_banks": {
+        "n": 5,
+        "mean": 0.9936,
+        "std": 0.0056,
+        "ci95": [
+          0.9867,
+          1.0005
+        ]
+      },
+      "attacker_share_of_admitted_during": {
+        "n": 5,
+        "mean": 0.9606,
+        "std": 0.0024,
+        "ci95": [
+          0.9576,
+          0.9637
+        ]
+      },
+      "payments_sent": {
+        "n": 5,
+        "mean": 72.0,
+        "std": 0.0,
+        "ci95": [
+          72.0,
+          72.0
+        ]
+      },
+      "payments_closed": {
+        "n": 5,
+        "mean": 72.0,
+        "std": 0.0,
+        "ci95": [
+          72.0,
+          72.0
+        ]
+      },
+      "payment_p50_ms": {
+        "n": 5,
+        "mean": 229.226,
+        "std": 30.8999,
+        "ci95": [
+          190.8649,
+          267.5871
+        ]
+      },
+      "payment_p95_ms": {
+        "n": 5,
+        "mean": 405.446,
+        "std": 55.3089,
+        "ci95": [
+          336.782,
+          474.11
+        ]
+      },
+      "payment_throughput_per_s": {
+        "n": 5,
+        "mean": 4.0,
+        "std": 0.0,
+        "ci95": [
+          4.0,
+          4.0
+        ]
+      },
+      "payments_unresolved_at_end": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "ledger_ok": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "parallel_route_defended": {
+      "legit_sent_before": {
+        "n": 5,
+        "mean": 24.0,
+        "std": 0.0,
+        "ci95": [
+          24.0,
+          24.0
+        ]
+      },
+      "legit_success_before": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_before": {
+        "n": 5,
+        "mean": 52.928,
+        "std": 1.5442,
+        "ci95": [
+          51.011,
+          54.845
+        ]
+      },
+      "legit_p95_ms_before": {
+        "n": 5,
+        "mean": 72.362,
+        "std": 14.6308,
+        "ci95": [
+          54.1984,
+          90.5256
+        ]
+      },
+      "legit_sent_during": {
+        "n": 5,
+        "mean": 48.0,
+        "std": 0.0,
+        "ci95": [
+          48.0,
+          48.0
+        ]
+      },
+      "legit_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_during": {
+        "n": 5,
+        "mean": 53.056,
+        "std": 3.6173,
+        "ci95": [
+          48.5653,
+          57.5467
+        ]
+      },
+      "legit_p95_ms_during": {
+        "n": 5,
+        "mean": 63.976,
+        "std": 6.8489,
+        "ci95": [
+          55.4733,
+          72.4787
+        ]
+      },
+      "legit_sent_after": {
+        "n": 5,
+        "mean": 36.0,
+        "std": 0.0,
+        "ci95": [
+          36.0,
+          36.0
+        ]
+      },
+      "legit_success_after": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_p50_ms_after": {
+        "n": 5,
+        "mean": 51.26,
+        "std": 1.2964,
+        "ci95": [
+          49.6506,
+          52.8694
+        ]
+      },
+      "legit_p95_ms_after": {
+        "n": 5,
+        "mean": 60.418,
+        "std": 7.0113,
+        "ci95": [
+          51.7137,
+          69.1223
+        ]
+      },
+      "A1_sent": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_admitted_ratio": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "A1_server_received": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_server_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A1_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A1_reached_worker_pool": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A1_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A2_sent": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_admitted_ratio": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "A2_server_received": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_server_admitted": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_server_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A2_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A2_reached_worker_pool": {
+        "n": 5,
+        "mean": 54.0,
+        "std": 0.0,
+        "ci95": [
+          54.0,
+          54.0
+        ]
+      },
+      "A2_credits_left": {
+        "n": 5,
+        "mean": 60.0,
+        "std": 0.0,
+        "ci95": [
+          60.0,
+          60.0
+        ]
+      },
+      "A3_sent": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_admitted": {
+        "n": 5,
+        "mean": 99.0,
+        "std": 0.0,
+        "ci95": [
+          99.0,
+          99.0
+        ]
+      },
+      "A3_server_received": {
+        "n": 5,
+        "mean": 1200.0,
+        "std": 0.0,
+        "ci95": [
+          1200.0,
+          1200.0
+        ]
+      },
+      "A3_server_admitted": {
+        "n": 5,
+        "mean": 99.0,
+        "std": 0.0,
+        "ci95": [
+          99.0,
+          99.0
+        ]
+      },
+      "A3_server_rejected": {
+        "n": 5,
+        "mean": 1101.0,
+        "std": 0.0,
+        "ci95": [
+          1101.0,
+          1101.0
+        ]
+      },
+      "A3_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_reached_worker_pool": {
+        "n": 5,
+        "mean": 99.0,
+        "std": 0.0,
+        "ci95": [
+          99.0,
+          99.0
+        ]
+      },
+      "A3_credits_left": {
+        "n": 5,
+        "mean": 31.0368,
+        "std": 0.0187,
+        "ci95": [
+          31.0136,
+          31.06
+        ]
+      },
+      "A3_rejected_RATE_LIMITED": {
+        "n": 5,
+        "mean": 1101.0,
+        "std": 0.0,
+        "ci95": [
+          1101.0,
+          1101.0
+        ]
+      },
+      "A3_rejected_GLOBAL_CAPACITY_EXCEEDED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_ROUTE_RATE_LIMITED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected_CREDIT_EXHAUSTED": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected_that_reached_worker_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "switch_overloaded_checks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "legit_overloaded_at_pool": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "baseline_legit_p50_ms": {
+        "n": 5,
+        "mean": 52.928,
+        "std": 1.5442,
+        "ci95": [
+          51.011,
+          54.845
+        ]
+      },
+      "fairness_jain_legit_banks": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "attacker_share_of_admitted_during": {
+        "n": 5,
+        "mean": 0.6735,
+        "std": 0.0,
+        "ci95": [
+          0.6735,
+          0.6735
+        ]
+      },
+      "payments_sent": {
+        "n": 5,
+        "mean": 72.0,
+        "std": 0.0,
+        "ci95": [
+          72.0,
+          72.0
+        ]
+      },
+      "payments_closed": {
+        "n": 5,
+        "mean": 72.0,
+        "std": 0.0,
+        "ci95": [
+          72.0,
+          72.0
+        ]
+      },
+      "payment_p50_ms": {
+        "n": 5,
+        "mean": 208.246,
+        "std": 34.1414,
+        "ci95": [
+          165.8607,
+          250.6313
+        ]
+      },
+      "payment_p95_ms": {
+        "n": 5,
+        "mean": 321.712,
+        "std": 111.8764,
+        "ci95": [
+          182.8214,
+          460.6026
+        ]
+      },
+      "payment_throughput_per_s": {
+        "n": 5,
+        "mean": 4.0,
+        "std": 0.0,
+        "ci95": [
+          4.0,
+          4.0
+        ]
+      },
+      "payments_unresolved_at_end": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "ledger_ok": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    }
+  },
+  "paired_bootstrap": {
+    "flood_defended_minus_flood_undefended": {
+      "legit_success_during": {
+        "pairs": 5,
+        "mean_diff": 0.1171,
+        "ci95_bootstrap": [
+          0.0921,
+          0.1542
+        ],
+        "ci_excludes_zero": true
+      },
+      "legit_p95_ms_during": {
+        "pairs": 5,
+        "mean_diff": -506.024,
+        "ci95_bootstrap": [
+          -545.228,
+          -469.906
+        ],
+        "ci_excludes_zero": true
+      },
+      "A3_server_admitted": {
+        "pairs": 5,
+        "mean_diff": -1101.0,
+        "ci95_bootstrap": [
+          -1101.0,
+          -1101.0
+        ],
+        "ci_excludes_zero": true
+      },
+      "payment_p95_ms": {
+        "pairs": 5,
+        "mean_diff": -219.848,
+        "ci95_bootstrap": [
+          -365.702,
+          -134.67
+        ],
+        "ci_excludes_zero": true
+      },
+      "payments_unresolved_at_end": {
+        "pairs": 5,
+        "mean_diff": 0.0,
+        "ci95_bootstrap": [
+          0.0,
+          0.0
+        ],
+        "ci_excludes_zero": false
+      },
+      "attacker_share_of_admitted_during": {
+        "pairs": 5,
+        "mean_diff": -0.2855,
+        "ci95_bootstrap": [
+          -0.2873,
+          -0.284
+        ],
+        "ci_excludes_zero": true
+      }
+    },
+    "parallel_route_defended_minus_parallel_route_undefended": {
+      "legit_success_during": {
+        "pairs": 5,
+        "mean_diff": 0.1625,
+        "ci95_bootstrap": [
+          0.1208,
+          0.2042
+        ],
+        "ci_excludes_zero": true
+      },
+      "legit_p95_ms_during": {
+        "pairs": 5,
+        "mean_diff": -399.526,
+        "ci95_bootstrap": [
+          -481.522,
+          -312.076
+        ],
+        "ci_excludes_zero": true
+      },
+      "A3_server_admitted": {
+        "pairs": 5,
+        "mean_diff": -1101.0,
+        "ci95_bootstrap": [
+          -1101.0,
+          -1101.0
+        ],
+        "ci_excludes_zero": true
+      },
+      "payment_p95_ms": {
+        "pairs": 5,
+        "mean_diff": -83.734,
+        "ci95_bootstrap": [
+          -182.174,
+          22.812
+        ],
+        "ci_excludes_zero": false
+      },
+      "payments_unresolved_at_end": {
+        "pairs": 5,
+        "mean_diff": 0.0,
+        "ci95_bootstrap": [
+          0.0,
+          0.0
+        ],
+        "ci_excludes_zero": false
+      },
+      "attacker_share_of_admitted_during": {
+        "pairs": 5,
+        "mean_diff": -0.2871,
+        "ci95_bootstrap": [
+          -0.289,
+          -0.2853
+        ],
+        "ci_excludes_zero": true
+      }
+    },
+    "flood_defended_minus_normal": {
+      "legit_success_during": {
+        "pairs": 5,
+        "mean_diff": 0.0,
+        "ci95_bootstrap": [
+          0.0,
+          0.0
+        ],
+        "ci_excludes_zero": false
+      },
+      "legit_p95_ms_during": {
+        "pairs": 5,
+        "mean_diff": 0.886,
+        "ci95_bootstrap": [
+          -6.21,
+          9.902
+        ],
+        "ci_excludes_zero": false
+      },
+      "A3_server_admitted": {
+        "pairs": 5,
+        "mean_diff": 99.0,
+        "ci95_bootstrap": [
+          99.0,
+          99.0
+        ],
+        "ci_excludes_zero": true
+      },
+      "payment_p95_ms": {
+        "pairs": 5,
+        "mean_diff": -319.626,
+        "ci95_bootstrap": [
+          -871.064,
+          -7.676
+        ],
+        "ci_excludes_zero": true
+      },
+      "payments_unresolved_at_end": {
+        "pairs": 5,
+        "mean_diff": 0.0,
+        "ci95_bootstrap": [
+          0.0,
+          0.0
+        ],
+        "ci_excludes_zero": false
+      },
+      "attacker_share_of_admitted_during": {
+        "pairs": 5,
+        "mean_diff": 0.6735,
+        "ci95_bootstrap": [
+          0.6735,
+          0.6735
+        ],
+        "ci_excludes_zero": true
+      }
+    }
+  }
+}
