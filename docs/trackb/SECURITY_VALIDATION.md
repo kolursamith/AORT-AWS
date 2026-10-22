@@ -195,6 +195,7 @@ its README reconciles 452 result lines with 449 unique runs.
 | Check | Result |
 |---|---|
 | Secret scanning (gitleaks v8.24.3, full history, as in `security.yml`) | The `main` failure was **one false positive**: `generic-api-key` on `tests/trackb/contract/test_contracts.py:45`, value `"idem-12345678"`, a synthetic idempotency key in a schema test (matches no configured secret, authenticates nothing). Narrowest exception: one exact fingerprint in `.gitleaksignore`. Reproduced without it (1 leak), no leaks with it: `phaseG/`. No credential rotation needed. |
+| Secret scanning of this package's own commits | The first full-history scan after the evidence commits found **92 more false positives**, all the same: `"file_key": "s101-55e53c6d"` in `manifest.jsonl` (a run's raw-file name; the rule matches any `*_key` field with a random-looking value). Fix: `.gitleaks.toml` adds one **rule-level** allowlist to `generic-api-key` that requires both this one file *and* the exact `s<seed>-<8 hex>` shape. A test with planted fake keys shows a real-looking key in the manifest and the same shape in another file are both still reported (`phaseG/gitleaks_allowlist_narrowness_test.log`). The global `[allowlist]` form was tried first and rejected: gitleaks 8.24.3 ignores its `condition = "AND"`, which would have allowed the shape in every file. Full-history scan with this configuration (all 16 commits before the one that adds it): **no leaks** (`phaseG/gitleaks_final_history.log`). |
 | Real secrets in this package's commits | 0. Two test logs captured the local database password in tracebacks; it was redacted before any commit, and every commit was scanned against the local `.env` values. |
 | `ruff format --check` / `ruff check` | Clean (225 files formatted, all checks passed): `phaseG/lint_schema.log` |
 | Contract schema drift | No drift after `python -m contracts.v1.generate_schemas` |
@@ -204,7 +205,7 @@ its README reconciles 452 result lines with 449 unique runs.
 
 ## I. Git changes and branch status
 
-Branch `feature/backend`, **10 local commits on top of `8b863da`, not pushed** (pushing and
+Branch `feature/backend`, **11 local commits on top of `8b863da`, not pushed** (pushing and
 merging need your explicit authorization):
 
 | Commit | Content |
@@ -218,7 +219,8 @@ merging need your explicit authorization):
 | `9c5595d` | Poisoning (model) evidence |
 | `8778efd` | Replay evidence |
 | `dba5057` | Strategy-campaign raw files; `SECURITY.md`, `API_CONTRACTS.md` |
-| (this commit) | Live poisoning evidence, figures, final test logs, this report, `STATUS.md` |
+| `7fb55d0` | Live poisoning evidence, figures, final test logs, this report, `STATUS.md` |
+| (last commit) | `.gitleaks.toml` (rule-level allowlist for the manifest `file_key`), gitleaks evidence, report section H |
 
 Every commit was scanned against the local `.env` secret values (0 hits) and passed ruff before it
 was made.

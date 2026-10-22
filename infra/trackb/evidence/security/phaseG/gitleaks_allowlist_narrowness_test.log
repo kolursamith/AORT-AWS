@@ -1,0 +1,12 @@
+narrowness test of .gitleaks.toml (throwaway directory, random fake key; --no-git):
+  infra/trackb/evidence/security/manifest.jsonl: lines 1-2 file_key s<seed>-<8hex>, line 3 api_key <random 32>
+  other/manifest.jsonl: lines 1-2 the same file_key values
+== default rules
+File:        /scan/infra/trackb/evidence/security/manifest.jsonl	Line:        2
+File:        /scan/infra/trackb/evidence/security/manifest.jsonl	Line:        3
+File:        /scan/other/manifest.jsonl	Line:        2
+11:55AM WRN leaks found: 3	
+== with .gitleaks.toml (expected: manifest line 3 and other/ line 2 still reported)
+File:        /scan/infra/trackb/evidence/security/manifest.jsonl	Line:        3
+File:        /scan/other/manifest.jsonl	Line:        2
+11:55AM WRN leaks found: 2	
