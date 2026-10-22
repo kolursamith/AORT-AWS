@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-10-22T10:47:08.466032+00:00",
+  "git_commit": "b7b69edc1745027ad48e39e726b1d1159794fc6a",
+  "git_branch": "feature/backend",
+  "tracked_changes_uncommitted": false,
+  "source_sha256": "814feacbeb3cbed4cebbe2eaf6fa0244267f728f30c578ab81a87248b7548c0b",
+  "python": "3.14.6",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "dependencies": {
+    "fastapi": "0.143.1",
+    "starlette": "1.8.0",
+    "pydantic": "2.12.3",
+    "sqlalchemy": "2.0.44",
+    "psycopg": "3.2.10",
+    "alembic": "1.20.0",
+    "httpx": "0.28.1",
+    "uvicorn": "0.38.0"
+  },
+  "postgres_server": "PostgreSQL 16.15 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
+  "postgres_container_image": "postgres:16-alpine",
+  "postgres_image_digest": "sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+  "label": "synthetic local environment; in-process Track B services; Compose PostgreSQL"
+}

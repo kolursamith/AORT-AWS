@@ -59,6 +59,7 @@ def manifest(base: Path | None = None) -> pd.DataFrame:
         "duration_s",
         "git_commit",
         "run_id",
+        "file_key",
         "error",
     ]
     return pd.DataFrame([{c: r.get(c) for c in cols} for r in ends])
@@ -96,9 +97,9 @@ def rejection_reasons(df: pd.DataFrame, condition: str) -> pd.DataFrame:
     )
 
 
-def request_timeline(run_id: str, base: Path | None = None) -> pd.DataFrame:
+def request_timeline(file_key: str, base: Path | None = None) -> pd.DataFrame:
     """Per-second admitted / rejected requests per bank for one flooding run (from its raw CSV)."""
-    path = (base or EVIDENCE_DIR) / "flooding" / "raw" / f"{run_id}-requests.csv"
+    path = (base or EVIDENCE_DIR) / "flooding" / "raw" / f"{file_key}-requests.csv"
     if not path.exists():
         return pd.DataFrame()
     r = pd.read_csv(path)
@@ -116,7 +117,7 @@ def flood_run_ids(condition: str, base: Path | None = None) -> list[str]:
         & (m["condition"] == condition)
         & (m["status"] == "completed")
     ]
-    return list(m["run_id"])
+    return [k for k in m.get("file_key", pd.Series(dtype=str)) if isinstance(k, str)]
 
 
 def poisoning_detection(df: pd.DataFrame) -> pd.DataFrame:

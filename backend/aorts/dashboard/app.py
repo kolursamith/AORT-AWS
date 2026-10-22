@@ -495,7 +495,7 @@ with tab_val:
         )
         run_ids = ev.flood_run_ids(cond)
         if run_ids:
-            rid = st.selectbox("Run (per-second timeline, backlog recovery)", run_ids)
+            rid = st.selectbox("Run file key (per-second timeline, backlog recovery)", run_ids)
             tl = ev.request_timeline(rid)
             if not tl.empty:
                 series = {

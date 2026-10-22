@@ -182,8 +182,13 @@ class Manifest:
             f.write(json.dumps(rec, default=str) + "\n")
 
     def run(self, scenario: str, condition: str, seed: int, config: dict, fn):
-        """Run ``fn()`` -> (outputs dict of paths, row dict); record start/end lines; never raise."""
-        run_id = f"{self.experiment_id}-{condition}-s{seed}-{uuid.uuid4().hex[:6]}"
+        """Run ``fn(file_key)`` -> (outputs dict of paths, row dict); record start/end lines; never raise.
+
+        Raw files are named by the short ``file_key`` (Windows paths are limited to 260 characters);
+        the manifest maps the full ``run_id`` to it.
+        """
+        file_key = f"s{seed}-{uuid.uuid4().hex[:8]}"
+        run_id = f"{self.experiment_id}-{condition}-{file_key}"
         base = {
             "experiment_id": self.experiment_id,
             "experiment": self.experiment,
@@ -191,6 +196,7 @@ class Manifest:
             "condition": condition,
             "seed": seed,
             "run_id": run_id,
+            "file_key": file_key,
             "git_commit": self.env["git_commit"],
             "tracked_changes_uncommitted": self.env["tracked_changes_uncommitted"],
             "source_sha256": self.env["source_sha256"],
@@ -200,7 +206,7 @@ class Manifest:
         self._write({**base, "event": "start", "started_at": started})
         t0 = time.perf_counter()
         try:
-            outputs, row = fn(run_id)
+            outputs, row = fn(file_key)
             status, error = "completed", None
         except Exception as exc:  # noqa: BLE001 - a failed run is recorded, not hidden
             outputs, row = {}, None
@@ -543,8 +549,10 @@ def cmd_flooding(args, env) -> None:
             if row:
                 rows.append({**row, "experiment_id": man.experiment_id})
             if fails >= 3:
-                print("3 consecutive failures: aborting", flush=True)
                 break
+        if fails >= 3:
+            print("3 consecutive failures: aborting the experiment", flush=True)
+            break
     write_csv(edir / f"{man.experiment_id}-runs.csv", rows)
     metrics = [k for k in (rows[0] if rows else {}) if isinstance(rows[0][k], (int, float))]
     metrics = [m for m in metrics if m not in ("seed", "attack_rps")]
@@ -1011,11 +1019,169 @@ def cmd_replay(args, env) -> None:
     )
 
 
+def _latest_rows(out: Path, kind: str) -> list[dict]:
+    files = sorted((out / kind).glob("*-runs.csv"))
+    if not files:
+        return []
+    with files[-1].open(encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def _mean(rows: list[dict], key: str) -> float | None:
+    vals = [float(r[key]) for r in rows if r.get(key) not in (None, "", "None")]
+    return round(statistics.fmean(vals), 4) if vals else None
+
+
+def cmd_figures(args) -> None:
+    from backend.aorts.experiments.svg_charts import grouped_bars
+
+    out = Path(args.out)
+    fig = out / "figures"
+    fig.mkdir(parents=True, exist_ok=True)
+    written = []
+
+    def save(name: str, svg: str) -> None:
+        (fig / name).write_text(svg, encoding="utf-8")
+        written.append(name)
+
+    fl = _latest_rows(out, "flooding")
+    if fl:
+        conds = [c for c in FLOOD_CONDITIONS if any(r["condition"] == c for r in fl)]
+        by = {c: [r for r in fl if r["condition"] == c] for c in conds}
+        n = len({r["seed"] for r in fl})
+        sub_t = f"mean over {n} seeds; attack {fl[0].get('attack_rps')} req/s from A3 for {TIMELINE['attack_s']:g} s"
+        save(
+            "flooding_legit_p95.svg",
+            grouped_bars(
+                "Legitimate A1/A2 status-check p95 latency",
+                conds,
+                {
+                    w: [_mean(by[c], f"legit_p95_ms_{w}") for c in conds]
+                    for w in ("before", "during", "after")
+                },
+                unit="ms",
+                subtitle=sub_t,
+            ),
+        )
+        save(
+            "flooding_legit_success.svg",
+            grouped_bars(
+                "Share of legitimate status checks answered",
+                conds,
+                {
+                    w: [_mean(by[c], f"legit_success_{w}") for c in conds]
+                    for w in ("before", "during", "after")
+                },
+                unit="share",
+                subtitle=sub_t,
+            ),
+        )
+        save(
+            "flooding_a3_admission.svg",
+            grouped_bars(
+                "Attacker A3 requests at the switch",
+                conds,
+                {
+                    "admitted": [_mean(by[c], "A3_server_admitted") for c in conds],
+                    "rejected": [_mean(by[c], "A3_server_rejected") for c in conds],
+                },
+                unit="requests per run",
+                subtitle=sub_t,
+            ),
+        )
+        attack = [c for c in conds if c != "normal"]
+        save(
+            "flooding_detection_containment_recovery.svg",
+            grouped_bars(
+                "Detection, containment and recovery time",
+                attack,
+                {
+                    "detection": [_mean(by[c], "detection_s") for c in attack],
+                    "containment": [_mean(by[c], "containment_s") for c in attack],
+                    "recovery after attack": [
+                        _mean(by[c], "recovery_after_attack_s") for c in attack
+                    ],
+                },
+                unit="seconds",
+                subtitle=sub_t + "; n/a = never reached in the window",
+            ),
+        )
+    po = _latest_rows(out, "poisoning")
+    if po:
+        cases = list(dict.fromkeys(r["case"] for r in po))
+        arms = ("poisoned_protected", "poisoned_protected_nobias", "poisoned_unprotected")
+        save(
+            "poisoning_detection_rate.svg",
+            grouped_bars(
+                "Telemetry poisoning: share of attack samples flagged (model-in-the-loop)",
+                cases,
+                {
+                    a.replace("poisoned_", ""): [
+                        _mean([r for r in po if r["case"] == c and r["arm"] == a], "detection_rate")
+                        for c in cases
+                    ]
+                    for a in arms
+                },
+                unit="share",
+                width=1500,
+                subtitle="protected = current validator; protected_nobias = validator without the bias check (before this package); unprotected = validation off",
+            ),
+        )
+        save(
+            "poisoning_harm.svg",
+            grouped_bars(
+                "Ticks with route delay over 1 s while poisoned",
+                cases,
+                {
+                    a.replace("poisoned_", ""): [
+                        _mean(
+                            [r for r in po if r["case"] == c and r["arm"] == a], "ticks_over_1000ms"
+                        )
+                        for c in cases
+                    ]
+                    for a in arms
+                },
+                unit="ticks of 50",
+                width=1500,
+                subtitle="mean over seeds; the clean arm has 0 in every case",
+            ),
+        )
+    pl = _latest_rows(out, "poisoning_live")
+    if pl:
+        cases = list(dict.fromkeys(r["case"] for r in pl))
+        save(
+            "poisoning_live_detection_rate.svg",
+            grouped_bars(
+                "Live ingestion path: share of injected samples flagged",
+                cases,
+                {
+                    a: [
+                        _mean([r for r in pl if r["case"] == c and r["arm"] == a], "detection_rate")
+                        for c in cases
+                    ]
+                    for a in ("protected", "unprotected")
+                },
+                unit="share",
+                width=1100,
+                subtitle="real validator and real switch measurements; 'missing' sends nothing (see guard columns)",
+            ),
+        )
+    print("figures:", written)
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument(
         "command",
-        choices=["environment", "calibrate", "flooding", "poisoning", "poisoning-live", "replay"],
+        choices=[
+            "environment",
+            "calibrate",
+            "flooding",
+            "poisoning",
+            "poisoning-live",
+            "replay",
+            "figures",
+        ],
     )
     p.add_argument("--out", default=str(OUT))
     p.add_argument("--seeds", type=int, nargs="+", default=DEFAULT_SEEDS)
@@ -1027,6 +1193,9 @@ def main() -> None:
     out = Path(args.out)
     if args.command == "calibrate":
         cmd_calibrate(args)
+        return
+    if args.command == "figures":
+        cmd_figures(args)
         return
     env = environment()
     write_json(out / f"environment-{args.command}.json", env)
