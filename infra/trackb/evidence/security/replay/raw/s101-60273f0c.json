@@ -1,0 +1,114 @@
+{
+  "ledger": {
+    "ok": true,
+    "unbalanced_operations": [],
+    "duplicate_operations": [],
+    "balance_mismatches": [],
+    "conservation_violations": []
+  },
+  "audit_chain": {
+    "ok": true,
+    "checked": 94,
+    "first_bad_seq": null,
+    "head_hash": "bda3917680529dfb63ff50fbaddb7618bf2144e6f656b838fb8f9c8fd81ae802"
+  },
+  "audit_actions": [
+    {
+      "action": "AUTH_FAILURE",
+      "decision": "REJECTED",
+      "count": 4
+    },
+    {
+      "action": "DEBIT_COMMITTED",
+      "decision": "ACCEPTED",
+      "count": 12
+    },
+    {
+      "action": "DUPLICATE_EVENT_REJECTED",
+      "decision": "REJECTED",
+      "count": 10
+    },
+    {
+      "action": "EVIDENCE_DUPLICATE",
+      "decision": "DUPLICATE",
+      "count": 1
+    },
+    {
+      "action": "EVIDENCE_REJECTED",
+      "decision": "REJECTED",
+      "count": 2
+    },
+    {
+      "action": "FOREIGN_TRANSACTION_ID",
+      "decision": "REJECTED",
+      "count": 1
+    },
+    {
+      "action": "PAYMENT_ACCEPTED",
+      "decision": "ACCEPTED",
+      "count": 12
+    },
+    {
+      "action": "REVERSAL_COMMITTED",
+      "decision": "ACCEPTED",
+      "count": 6
+    },
+    {
+      "action": "REVERSAL_DUPLICATE",
+      "decision": "DUPLICATE",
+      "count": 7
+    },
+    {
+      "action": "REVERSAL_REJECTED",
+      "decision": "REJECTED",
+      "count": 5
+    },
+    {
+      "action": "STATE_AMBIGUOUS",
+      "decision": "ACCEPTED",
+      "count": 12
+    },
+    {
+      "action": "STATE_CONFIRMED_FAILED",
+      "decision": "ACCEPTED",
+      "count": 6
+    },
+    {
+      "action": "STATE_EVENT_REJECTED",
+      "decision": "REJECTED",
+      "count": 2
+    },
+    {
+      "action": "STATE_REVERSAL_INITIATED",
+      "decision": "ACCEPTED",
+      "count": 6
+    },
+    {
+      "action": "STATE_REVERSED",
+      "decision": "ACCEPTED",
+      "count": 6
+    },
+    {
+      "action": "STATUS_CHECK_ADMITTED",
+      "decision": "ACCEPTED",
+      "count": 1
+    },
+    {
+      "action": "STATUS_CHECK_REJECTED",
+      "decision": "REJECTED",
+      "count": 1
+    }
+  ],
+  "row": {
+    "condition": "auto_reverse=True",
+    "seed": 101,
+    "cases": 23,
+    "http_as_expected": 23,
+    "unexpected_financial_changes": 0,
+    "duplicate_reversal_postings": 0,
+    "ledger_ok": true,
+    "audit_chain_ok": true,
+    "audit_rows_checked": 94,
+    "audit_rejections": 25
+  }
+}
