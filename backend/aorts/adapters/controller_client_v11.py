@@ -103,17 +103,11 @@ class V11ControllerClient:
         self._window = dispatch_window_s
         self._skew = max_clock_skew_s
 
-    def decide(
-        self,
-        route_id: str,
-        views: Iterable,
-        *,
-        now: datetime,
-        rate_allowance: int,
-        credit_allowance: int | None = None,
-        watermark: tuple[SourceSequenceMark, ...] = (),
-        gate_time: datetime | None = None,
-    ) -> V11Exchange:
+    def request(
+        self, route_id: str, *, now: datetime, watermark: tuple[SourceSequenceMark, ...] = ()
+    ) -> tuple[DecisionRequest, httpx.Response | None, ControllerOutcome | None]:
+        """Ask for a decision. Returns (request, response, transport-failure outcome)."""
+
         request = DecisionRequest(
             schema_version=SCHEMA_VERSION,
             experiment_id=self._experiment_id,
@@ -132,47 +126,69 @@ class V11ControllerClient:
                 timeout=self._timeout,
             )
         except httpx.TimeoutException:
-            return self._transport(TransportFailure.TIMEOUT)
+            return request, None, outcome_for_transport_failure(TransportFailure.TIMEOUT)
         except httpx.TransportError:
-            return self._transport(TransportFailure.CONNECT_ERROR)
+            return request, None, outcome_for_transport_failure(TransportFailure.CONNECT_ERROR)
         if response.status_code >= 500:
-            return self._transport(TransportFailure.HTTP_5XX, response.status_code)
-        if response.status_code != 200:
-            # a structured refusal of the request (e.g. auth, stale request): treat as malformed
-            plan = gate_decision(
-                b"{}",
-                request=request,
-                controller_id=self._controller_id,
-                authorized_controllers=frozenset({self._controller_id}),
-                timing_policy=self._policy,
-                candidates={},
-                limits=DispatchLimits(rate_allowance=0),
-                now=now,
-                dispatch_window_s=self._window,
-                max_clock_skew_s=self._skew,
-            )
-            return V11Exchange(plan, response.status_code, response.content)
+            return request, response, outcome_for_transport_failure(TransportFailure.HTTP_5XX)
+        return request, response, None
+
+    def gate(
+        self,
+        request: DecisionRequest,
+        response: httpx.Response,
+        views: Iterable,
+        *,
+        now: datetime,
+        rate_allowance: int,
+        credit_allowance: int | None = None,
+    ) -> DispatchPlan:
+        """Gate a 200 response against authoritative rows read just before dispatch."""
+
+        body = response.content if response.status_code == 200 else b"{}"  # refusal = malformed
         candidates: Mapping[str, DispatchCandidate] = {
             v.transaction_id: dispatch_candidate(v, experiment_id=self._experiment_id)
             for v in views
         }
-        plan = gate_decision(
-            response.content,
+        return gate_decision(
+            body,
             request=request,
             controller_id=self._controller_id,
             authorized_controllers=frozenset({self._controller_id}),
             timing_policy=self._policy,
             candidates=candidates,
             limits=DispatchLimits(rate_allowance=rate_allowance, credit_allowance=credit_allowance),
-            now=gate_time or now,
+            now=now,
             dispatch_window_s=self._window,
             max_clock_skew_s=self._skew,
         )
-        return V11Exchange(plan, 200, response.content)
 
-    def _transport(self, failure: TransportFailure, status: int | None = None) -> V11Exchange:
-        outcome = outcome_for_transport_failure(failure)
-        return V11Exchange(DispatchPlan(outcome, None, None, (), ()), status, None)
+    def decide(
+        self,
+        route_id: str,
+        views: Iterable,
+        *,
+        now: datetime,
+        rate_allowance: int,
+        credit_allowance: int | None = None,
+        watermark: tuple[SourceSequenceMark, ...] = (),
+        gate_time: datetime | None = None,
+    ) -> V11Exchange:
+        """Request and gate in one call (views read before the request; tests and tools)."""
+
+        request, response, failure = self.request(route_id, now=now, watermark=watermark)
+        if failure is not None:
+            status = response.status_code if response is not None else None
+            return V11Exchange(DispatchPlan(failure, None, None, (), ()), status, None)
+        plan = self.gate(
+            request,
+            response,
+            views,
+            now=gate_time or now,
+            rate_allowance=rate_allowance,
+            credit_allowance=credit_allowance,
+        )
+        return V11Exchange(plan, response.status_code, response.content)
 
 
 __all__ = [

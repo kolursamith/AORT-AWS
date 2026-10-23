@@ -100,6 +100,9 @@ class Transaction(Base):
     switch_reference: Mapped[str | None] = mapped_column(String(80), nullable=True)
     last_reason: Mapped[str | None] = mapped_column(String(200), nullable=True)
     correlation_id: Mapped[str | None] = mapped_column(String(80), nullable=True, index=True)
+    # v1.1 provenance (migration 0002; NULL on rows created before it)
+    experiment_id: Mapped[str | None] = mapped_column(String(80), nullable=True, index=True)
+    check_in_flight_id: Mapped[str | None] = mapped_column(String(80), nullable=True)
 
     __table_args__ = (
         CheckConstraint("amount_paise > 0", name="ck_transactions_amount_positive"),
@@ -288,3 +291,103 @@ class TelemetryObservation(Base):
     reasons: Mapped[list] = mapped_column(JSON, default=list)
     experiment_id: Mapped[str | None] = mapped_column(String(80), nullable=True)
     created_at: Mapped[datetime] = _ts()
+
+
+# --------------------------------------------------------------------------- v1.1 provenance
+
+
+class EvidenceRecord(Base):
+    """A switch response exactly as received and verified (migration 0002).
+
+    The signature material is stored as received; ``verified`` is the result of
+    ``request_auth.verify_response`` at receipt time, never a caller's assertion.
+    """
+
+    __tablename__ = "evidence_records"
+    evidence_id: Mapped[str] = mapped_column(String(80), primary_key=True)
+    transaction_id: Mapped[str] = mapped_column(String(80), index=True)
+    evidence_kind: Mapped[str] = mapped_column(String(40))
+    issuer_id: Mapped[str] = mapped_column(String(16))
+    path: Mapped[str] = mapped_column(String(80))
+    http_status: Mapped[int] = mapped_column(Integer)
+    reported_status: Mapped[str | None] = mapped_column(String(16), nullable=True)
+    reported_transaction_id: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    body_sha256: Mapped[str] = mapped_column(String(64))
+    response_timestamp: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    key_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    signature_hex: Mapped[str | None] = mapped_column(String(128), nullable=True)
+    signature_alg: Mapped[str] = mapped_column(String(32))
+    signed_fields: Mapped[list] = mapped_column(JSON)
+    verified: Mapped[bool] = mapped_column(Boolean)
+    verifier_id: Mapped[str] = mapped_column(String(40))
+    verified_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    check_id: Mapped[str | None] = mapped_column(String(80), nullable=True, index=True)
+    latency_ms: Mapped[float | None] = mapped_column(nullable=True)
+    created_at: Mapped[datetime] = _ts()
+
+    __table_args__ = (
+        CheckConstraint(
+            "NOT verified OR (key_id IS NOT NULL AND signature_hex IS NOT NULL)",
+            name="ck_evidence_verified_has_signature",
+        ),
+        CheckConstraint(
+            "evidence_kind IN ('ORIGINAL_PAYMENT_RESPONSE','STATUS_CHECK_RESPONSE',"
+            "'RECONCILIATION_RECORD')",
+            name="ck_evidence_kind",
+        ),
+    )
+
+
+class TelemetryWindow(Base):
+    """One measured telemetry window of the v1.1 producer (migration 0002)."""
+
+    __tablename__ = "v11_telemetry_windows"
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    experiment_id: Mapped[str] = mapped_column(String(80))
+    source_id: Mapped[str] = mapped_column(String(80))
+    route_id: Mapped[str] = mapped_column(String(20))
+    sequence: Mapped[int] = mapped_column(BigInteger)
+    window_start: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    window_end: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    observed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    measurement: Mapped[dict] = mapped_column(JSON)
+    verdict: Mapped[str] = mapped_column(String(16))
+    confidence: Mapped[float] = mapped_column()
+    reasons: Mapped[list] = mapped_column(JSON)
+    cross_check: Mapped[str] = mapped_column(String(16))
+    validator_id: Mapped[str] = mapped_column(String(40))
+    validator_version: Mapped[str] = mapped_column(String(40))
+    validated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    delivered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    attempts: Mapped[int] = mapped_column(Integer, default=0)
+    last_error: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    __table_args__ = (
+        UniqueConstraint("experiment_id", "source_id", "sequence", name="uq_v11_window_seq"),
+        UniqueConstraint("experiment_id", "source_id", "window_start", name="uq_v11_window_start"),
+        CheckConstraint("window_end > window_start", name="ck_v11_window_positive"),
+        CheckConstraint("sequence >= 0", name="ck_v11_window_sequence"),
+    )
+
+
+class V11DeliveryState(Base):
+    __tablename__ = "v11_delivery_state"
+    stream: Mapped[str] = mapped_column(String(40), primary_key=True)
+    last_id: Mapped[int] = mapped_column(BigInteger)
+    attempts: Mapped[int] = mapped_column(Integer, default=0)
+    next_attempt_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    last_error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    updated_at: Mapped[datetime] = _ts()
+
+
+class V11DeadLetter(Base):
+    __tablename__ = "v11_dead_letters"
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    stream: Mapped[str] = mapped_column(String(40))
+    ref_id: Mapped[str] = mapped_column(String(80))
+    error_code: Mapped[str] = mapped_column(String(40))
+    detail: Mapped[str] = mapped_column(Text)
+    payload: Mapped[dict] = mapped_column(JSON)
+    created_at: Mapped[datetime] = _ts()
+
+    __table_args__ = (UniqueConstraint("stream", "ref_id", name="uq_v11_dead_letter"),)

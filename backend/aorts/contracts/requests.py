@@ -80,6 +80,8 @@ class StatusEvidence(StrictModel):
     observed_at: datetime
     authenticated: bool = False
     reason: str | None = None
+    # v1.1 provenance: the EvidenceRecord written when this response was received and verified.
+    evidence_id: str | None = None
 
 
 class TransactionStateEvent(StrictModel):

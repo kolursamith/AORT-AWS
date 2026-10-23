@@ -91,8 +91,10 @@ class LedgerService:
         backoff_max: float = 30.0,
         max_checks: int = 6,
         rng: random.Random | None = None,
+        experiment_id: str | None = None,
     ):
         self.db = db
+        self.experiment_id = experiment_id  # v1.1 provenance; recorded on new transactions
         self.deadline_seconds = deadline_seconds
         self.auto_reverse = auto_reverse
         self.backoff_base = backoff_base
@@ -158,6 +160,8 @@ class LedgerService:
         txn.version = prev_version + 1
         txn.updated_at = now
         txn.last_reason = reason[:200]
+        if new_state != TxnState.CHECK_IN_FLIGHT:
+            txn.check_in_flight_id = None  # the check (if any) has ended
         if new_state == TxnState.AMBIGUOUS and txn.ambiguous_since is None:
             txn.ambiguous_since = now
         if new_state in inv.TERMINAL or new_state in (
@@ -432,6 +436,7 @@ class LedgerService:
                     updated_at=now,
                     deadline_at=deadline,
                     correlation_id=req.correlation_id,
+                    experiment_id=self.experiment_id,
                 )
                 s.add(txn)
                 s.flush()
@@ -447,9 +452,10 @@ class LedgerService:
                     credit_account=suspense_account(bank),
                     route_id=txn.route_id,
                 )
+                debit_event_id = new_id("evt")  # one id for the history row and its outbox event
                 s.add(
                     TransactionEvent(
-                        event_id=new_id("evt"),
+                        event_id=debit_event_id,
                         transaction_id=txn_id,
                         event_type=EventType.PAYMENT_DEBITED.value,
                         previous_state=None,
@@ -464,6 +470,7 @@ class LedgerService:
                 add_outbox(
                     s,
                     DomainEvent(
+                        event_id=debit_event_id,
                         transaction_id=txn_id,
                         route_id=txn.route_id,
                         bank_id=bank,
@@ -524,7 +531,7 @@ class LedgerService:
         return txn
 
     def mark_ambiguous(
-        self, txn_id: str, reason: str, *, actor: str = "REMITTER"
+        self, txn_id: str, reason: str, *, actor: str = "REMITTER", metadata: dict | None = None
     ) -> OperationResult:
         """A timeout/lost response: record uncertainty, never a failure (rule C)."""
         ctx = _Ctx(actor)
@@ -540,6 +547,7 @@ class LedgerService:
                 TxnState.AMBIGUOUS,
                 reason=reason,
                 event_type=EventType.PAYMENT_AMBIGUOUS,
+                metadata=metadata,
             )
             txn.next_eligible_at = self._now() + self._backoff(1)
             self._commit(s, ctx)
@@ -556,7 +564,9 @@ class LedgerService:
         event_id: str | None = None,
         count_check: bool = False,
         consumer: str = "remitter-evidence",
+        check_fact: dict | None = None,
     ) -> OperationResult:
+        """``check_fact`` records, at its source, what this status check returned (v1.1)."""
         """Apply an authenticated switch statement to a transaction (rules B, C, F, G, H, I)."""
         ctx = _Ctx(actor)
         try:
@@ -597,7 +607,9 @@ class LedgerService:
                             409 if check.code == ErrorCode.WRONG_TRANSACTION else 401,
                         )
                     # PENDING / NOT_FOUND / no answer: preserve uncertainty (rule I).
-                    result = self._preserve_uncertainty(s, ctx, txn, check.reason)
+                    result = self._preserve_uncertainty(
+                        s, ctx, txn, check.reason, metadata=check_fact
+                    )
                     self._commit(s, ctx)
                     return result
                 status = evidence.status
@@ -644,6 +656,9 @@ class LedgerService:
                         409,
                     )
                 ev = evidence.model_dump(mode="json")
+                provenance = {"evidence_id": evidence.evidence_id}
+                if check_fact and check_fact.get("check_id"):
+                    provenance["check_id"] = check_fact["check_id"]
                 self._lock_accounts(s, txn)
                 if state == TxnState.HANDOFF_UDIR:
                     self._reconcile(s, ctx, txn, status, ev)
@@ -655,7 +670,7 @@ class LedgerService:
                         TxnState.CONFIRMED_SUCCESS,
                         reason="authoritative SUCCESS",
                         event_type=EventType.PAYMENT_SUCCEEDED,
-                        metadata={"evidence_source": evidence.source},
+                        metadata={"evidence_source": evidence.source, **provenance},
                     )
                     txn.switch_reference = evidence.switch_reference
                     self._settle(s, ctx, txn, ev)
@@ -667,7 +682,11 @@ class LedgerService:
                         TxnState.CONFIRMED_FAILED,
                         reason="authoritative FAILED",
                         event_type=EventType.PAYMENT_FAILED,
-                        metadata={"evidence_source": evidence.source, "why": evidence.reason},
+                        metadata={
+                            "evidence_source": evidence.source,
+                            "why": evidence.reason,
+                            **provenance,
+                        },
                     )
                     txn.switch_reference = evidence.switch_reference
                     if self.auto_reverse:
@@ -689,10 +708,16 @@ class LedgerService:
             raise
 
     def _preserve_uncertainty(
-        self, s: Session, ctx: _Ctx, txn: Transaction, reason: str
+        self, s: Session, ctx: _Ctx, txn: Transaction, reason: str, metadata: dict | None = None
     ) -> OperationResult:
         prev = txn.version
         if txn.state == TxnState.CHECK_IN_FLIGHT:
+            fact = metadata or {
+                "kind": "TIMED_OUT",
+                "result_code": "CHECK_TIMEOUT",
+                "check_id": txn.check_in_flight_id,
+                "note": "no answer recorded (crash recovery of a stuck check)",
+            }
             self._transition(
                 s,
                 ctx,
@@ -700,6 +725,7 @@ class LedgerService:
                 TxnState.AMBIGUOUS,
                 reason=f"check inconclusive: {reason}",
                 event_type=EventType.CHECK_RESULT,
+                metadata={"check_fact": fact},
             )
             txn.next_eligible_at = self._now() + self._backoff(txn.checks_used)
             if txn.checks_used >= self.max_checks:
@@ -719,6 +745,7 @@ class LedgerService:
                 TxnState.AMBIGUOUS,
                 reason=reason,
                 event_type=EventType.PAYMENT_AMBIGUOUS,
+                metadata=metadata,
             )
             txn.next_eligible_at = self._now() + self._backoff(1)
         return self._result(txn, Decision.DEFERRED, reason, prev=prev)
@@ -739,7 +766,14 @@ class LedgerService:
             route_id=txn.route_id,
         )
         self._transition(
-            s, ctx, txn, TxnState.CLOSED, reason="settled", event_type=EventType.PAYMENT_CLOSED
+            s,
+            ctx,
+            txn,
+            TxnState.CLOSED,
+            reason="settled",
+            event_type=EventType.PAYMENT_CLOSED,
+            # v1.1 provenance: the verified evidence that justified the settlement
+            metadata={"evidence_id": (evidence or {}).get("evidence_id")},
         )
 
     def _reverse_locked(
@@ -785,7 +819,7 @@ class LedgerService:
             TxnState.REVERSED,
             reason="reversal posted",
             event_type=EventType.REVERSAL_COMPLETED,
-            metadata={"operation_id": op_id},
+            metadata={"operation_id": op_id, "evidence_id": (evidence or {}).get("evidence_id")},
         )
 
     def _reconcile(
@@ -831,6 +865,7 @@ class LedgerService:
             reason=f"reconciled as {status}",
             event_type=EventType.PAYMENT_CLOSED,
             outcome_override=outcome,
+            metadata={"evidence_id": (evidence or {}).get("evidence_id")},
         )
 
     # ------------------------------------------------------------------ explicit reversal
@@ -1067,6 +1102,7 @@ class LedgerService:
             txn = self._lock_txn(s, txn_id)
             prev = txn.version
             inv.assert_version(txn.version, expected_version)
+            check_id = new_id("chk")  # genuine identity of this dispatch attempt
             self._transition(
                 s,
                 ctx,
@@ -1074,12 +1110,20 @@ class LedgerService:
                 TxnState.CHECK_IN_FLIGHT,
                 reason="status check dispatched",
                 event_type=EventType.CHECK_STARTED,
+                metadata={"check_id": check_id},
             )
+            txn.check_in_flight_id = check_id
             self._commit(s, ctx)
             return self._result(txn, Decision.ACCEPTED, "check in flight", prev=prev)
 
     def check_not_admitted(
-        self, txn_id: str, expected_version: int, reason: str, *, actor: str = "DISPATCHER"
+        self,
+        txn_id: str,
+        expected_version: int,
+        reason: str,
+        *,
+        actor: str = "DISPATCHER",
+        check_fact: dict | None = None,
     ) -> OperationResult:
         """Switch refused the check (rate limit / credits): return to AMBIGUOUS WITHOUT using an allowance."""
         ctx = _Ctx(actor)
@@ -1094,6 +1138,14 @@ class LedgerService:
                 TxnState.AMBIGUOUS,
                 reason=f"check not admitted: {reason}",
                 event_type=EventType.CHECK_RESULT,
+                metadata={
+                    "check_fact": check_fact
+                    or {
+                        "kind": "REJECTED",
+                        "trackb_code": reason,
+                        "check_id": txn.check_in_flight_id,
+                    }
+                },
             )
             txn.next_eligible_at = self._now() + self._backoff(max(1, txn.checks_used))
             self._commit(s, ctx)

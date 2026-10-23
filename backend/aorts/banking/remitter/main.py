@@ -22,6 +22,7 @@ def make_ledger(settings: Settings, ctx: ServiceContext) -> LedgerService:
         backoff_base=settings.check_backoff_base_seconds,
         backoff_max=settings.check_backoff_max_seconds,
         max_checks=settings.max_checks_per_transaction,
+        experiment_id=settings.experiment_id,
     )
 
 

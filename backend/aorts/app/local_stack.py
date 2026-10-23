@@ -46,6 +46,10 @@ def generate_service_keys(identities=IDENTITIES) -> str:
 
 
 TABLES = [
+    "evidence_records",
+    "v11_telemetry_windows",
+    "v11_delivery_state",
+    "v11_dead_letters",
     "twin_state",
     "ledger_entries",
     "financial_operations",

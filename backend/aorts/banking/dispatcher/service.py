@@ -64,9 +64,13 @@ class Dispatcher:
         twin: VersionedStore | None = None,
         queue=None,
         guard: BudgetGuard | None = None,
+        v11=None,
     ):
         s = ctx.settings
         self.ctx = ctx
+        # Optional v1.1 controller client (controller_client_v11.V11ControllerClient). When set,
+        # every tick uses the v1.1 protocol and its execution gate instead of the /v1 path.
+        self.v11 = v11
         self.remitter = remitter
         self.ledger = remitter.ledger
         self.twin = twin or make_store(s, ctx.db)
@@ -213,6 +217,8 @@ class Dispatcher:
 
     # ------------------------------------------------------------------ one tick
     def tick(self, *, inline: bool = False) -> dict:
+        if self.v11 is not None:
+            return self.tick_v11(inline=inline)
         self._maybe_switch_controller()
         now = datetime.now(UTC)
         started = time.perf_counter()
@@ -338,6 +344,137 @@ class Dispatcher:
                 metadata=record,
             )
         )
+        self.ctx.metrics.inc("dispatch_ticks")
+        self.ctx.metrics.inc("checks_dispatched", dispatched)
+        return record
+
+    # ------------------------------------------------------------------ v1.1 tick
+    def _rows(self, txn_ids) -> list[Transaction]:
+        """Authoritative rows, read immediately before dispatch (not the decision-time view)."""
+        if not txn_ids:
+            return []
+        with self.ctx.db.session() as s:
+            return list(
+                s.execute(
+                    select(Transaction).where(Transaction.transaction_id.in_(list(txn_ids)))
+                ).scalars()
+            )
+
+    def tick_v11(self, *, inline: bool = False) -> dict:
+        """One v1.1 tick per route with recovery work.
+
+        * DECISION: only the controller's selected transactions, only those the shared
+          execution gate admits against rows re-read now, then Track B's pre-dispatch gate,
+          then ``start_check``'s row-locked version compare-and-set. Nothing is padded in.
+        * EXPLICIT_FAIL_CLOSED / WARMING_UP: zero checks and no fallback.
+        * controller unavailable, timeout, malformed, expired, identity or policy mismatch:
+          Track B's own labelled fallback (``fallback_budget_per_route``, oldest first),
+          recorded with its true cause and never attributed to the controller.
+        """
+        from contracts.v1_1.protocol import ControllerOutcome
+
+        now = datetime.now(UTC)
+        escalated = self.escalate_expired(now)
+        candidates = self._candidates(now)
+        routes = sorted({c.route_id for c in candidates})
+        inflight = self.inflight_by_route()
+        measured = self._measured() if routes else {}
+        per_route: dict[str, dict] = {}
+        dispatched = 0
+        for rid in routes:
+            request, response, failure = self.v11.request(rid, now=now)
+            route_cands = [c for c in candidates if c.route_id == rid]
+            if failure is None:
+                selected = []
+                if response.status_code == 200:
+                    selected = list(response.json().get("selected_transaction_ids") or [])
+                rows = self._rows(selected)
+                plan = self.v11.gate(
+                    request,
+                    response,
+                    rows,
+                    now=datetime.now(UTC),
+                    rate_allowance=self.guard.hard_cap,
+                )
+                outcome, refused, decision_id = plan.outcome, dict(plan.refused), plan.decision_id
+                fallback = plan.backend_fallback_permitted
+                admitted_ids = list(plan.admitted)
+            else:
+                outcome, refused, decision_id, fallback, admitted_ids = failure, {}, None, True, []
+            if outcome is ControllerOutcome.DECISION:
+                to_dispatch, source = self._rows(admitted_ids), "controller"
+                order = {t: i for i, t in enumerate(admitted_ids)}
+                to_dispatch.sort(key=lambda r: order[r.transaction_id])
+                budget = len(to_dispatch)
+            elif fallback:
+                budget, source = self.guard.fallback, "trackb_fallback"
+                to_dispatch = route_cands[:budget]
+            else:  # explicit FAIL_CLOSED or WARMING_UP: zero discretionary checks
+                budget, source, to_dispatch = 0, "fail_closed_honoured", []
+            sent, gate_refusals = 0, {}
+            for txn in to_dispatch:
+                g = self.gate.check(
+                    txn,
+                    dispatched_on_route=sent,
+                    route_budget=budget,
+                    inflight_on_route=inflight.get(rid, 0),
+                    measured=measured.get(rid.split("-")[1]),
+                )
+                if not g.allowed:
+                    gate_refusals[g.reason] = gate_refusals.get(g.reason, 0) + 1
+                    continue
+                try:
+                    res = self.ledger.start_check(txn.transaction_id, txn.version)
+                except SafetyViolation as exc:  # version moved: another dispatcher won the race
+                    gate_refusals[f"cas:{exc.code.value}"] = (
+                        gate_refusals.get(f"cas:{exc.code.value}", 0) + 1
+                    )
+                    continue
+                self.queue.send(
+                    DispatchJob(
+                        transaction_id=txn.transaction_id,
+                        route_id=txn.route_id,
+                        bank_id=txn.remitter_bank_id,
+                        expected_version=res.new_version,
+                        decision_id=decision_id or f"trackb-fallback-{uuid.uuid4().hex[:12]}",
+                        correlation_id=txn.correlation_id,
+                    )
+                )
+                sent += 1
+            dispatched += sent
+            per_route[rid] = {
+                "outcome": outcome.value,
+                "source": source,
+                "decision_id": decision_id,
+                "selected": len(admitted_ids) + len(refused),
+                "admitted": len(admitted_ids),
+                "gate_refused": {k: v.value for k, v in refused.items()},
+                "dispatched": sent,
+                "predispatch_refused": gate_refusals,
+            }
+            self.ctx.audit_buffer.record(
+                make_record(
+                    "RECOVERY_DECISION_V11",
+                    Decision.FALLBACK
+                    if source == "trackb_fallback"
+                    else (Decision.ACCEPTED if sent else Decision.DEFERRED),
+                    "DISPATCHER",
+                    route_id=rid,
+                    reason=f"{outcome.value} -> {source}",
+                    metadata=per_route[rid],
+                )
+            )
+        if inline:
+            self.queue.drain(self.handle_job)
+        record = {
+            "protocol": "v1.1",
+            "routes": per_route,
+            "dispatched": dispatched,
+            "escalated": escalated,
+            "candidates": len(candidates),
+            "timestamp": now.isoformat(),
+        }
+        self.last_decision = record
         self.ctx.metrics.inc("dispatch_ticks")
         self.ctx.metrics.inc("checks_dispatched", dispatched)
         return record
