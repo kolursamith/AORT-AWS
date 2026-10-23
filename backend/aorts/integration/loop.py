@@ -72,17 +72,18 @@ def sleep_until(t: float) -> None:
         time.sleep(min(left, 0.05))
 
 
-def build_controller(
+def controller_config(
     settings,
     experiment_id: str,
     routes: tuple[str, ...],
     *,
     estimator: CapacityEstimatorConfig | None = None,
     checks_per_bank_per_decision: int | None = 10,
-):
-    """A Track A controller for ``routes`` (``"A1-B"`` ...) and its FastAPI app + bearer token."""
+) -> ControllerConfig:
+    """The Track A controller configuration for Track B ``settings`` and ``routes``
+    (``"A1-B"`` ...): Track B's timing policy expressed in v1.1, one own-traffic telemetry
+    source per route, and the Track B ledger as the event source."""
 
-    policy = trackb_timing_policy(settings)
     regs = tuple(
         RouteRegistration(
             descriptor=RouteDescriptor(
@@ -97,9 +98,9 @@ def build_controller(
         )
         for r in routes
     )
-    config = ControllerConfig(
+    return ControllerConfig(
         experiment_id=experiment_id,
-        timing_policy=policy,
+        timing_policy=trackb_timing_policy(settings),
         routes=regs,
         event_sources=(LEDGER_SOURCE,),
         twin=RouteTwinConfig(
@@ -111,9 +112,28 @@ def build_controller(
         estimator=estimator or CapacityEstimatorConfig(),
         checks_per_bank_per_decision=checks_per_bank_per_decision,
     )
+
+
+def build_controller(
+    settings,
+    experiment_id: str,
+    routes: tuple[str, ...],
+    *,
+    estimator: CapacityEstimatorConfig | None = None,
+    checks_per_bank_per_decision: int | None = 10,
+):
+    """A Track A controller for ``routes`` (``"A1-B"`` ...) and its FastAPI app + bearer token."""
+
+    config = controller_config(
+        settings,
+        experiment_id,
+        routes,
+        estimator=estimator,
+        checks_per_bank_per_decision=checks_per_bank_per_decision,
+    )
     token = secrets.token_urlsafe(24)
     core = ControllerCore(config, SystemClock())
-    return core, TestClient(create_app(core, token)), token, policy
+    return core, TestClient(create_app(core, token)), token, config.timing_policy
 
 
 @dataclass

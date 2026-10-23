@@ -1,0 +1,172 @@
+# AORTS Stage 11 - the complete integrated system. SYNTHETIC MOCK ENVIRONMENT, no real banks.
+#
+#   python infra/aorts/scripts/generate_env.py
+#   docker compose -p aorts-s11 -f infra/aorts/docker-compose.yml up -d --build --wait
+#   docker compose -p aorts-s11 -f infra/aorts/docker-compose.yml down -v   # disposable volume
+#
+# A separate Compose project, network and volume from Track B's own stack (infra/trackb), and
+# different host ports, so neither can touch the other's database. Ports bind to 127.0.0.1.
+# Services: PostgreSQL; migrate+seed (one-shot); payment switch; beneficiary banks B and C;
+# remitter bank service (A1/A2/A3 identities); Track B control API; Track A v1.1 controller;
+# aorts-loop (telemetry producer + validator, outbox/evidence delivery, v1.1 dispatcher with
+# the execution gate); Streamlit security dashboard. Track B's legacy /v1 dispatcher is not
+# started: the aorts-loop is the only recovery dispatcher on this database.
+name: aorts-s11
+
+x-env: &env
+  AORTS_DATABASE_URL: postgresql+psycopg://aorts:${POSTGRES_PASSWORD:?run infra/aorts/scripts/generate_env.py}@db:5432/aorts
+  AORTS_REMITTER_URL: http://remitter:8100
+  AORTS_SWITCH_URL: http://switch:8110
+  AORTS_BENEFICIARY_URLS: B=http://beneficiary-b:8121,C=http://beneficiary-c:8122
+  AORTS_CONTROL_URL: http://control:8130
+  AORTS_ENVIRONMENT: local
+  AORTS_EXPERIMENT_ID: aorts-s11-demo
+  AORTS_ENABLE_FAULT_CONTROLS: "true"
+  AORTS_ENABLE_ATTACK_CONTROLS: "true"
+  # the Stage 10 verified stack: measurable shared capacity, one v1.1-expressible check spacing
+  AORTS_SWITCH_CORE_WORKERS: "8"
+  AORTS_SWITCH_BASE_PROCESSING_MS: "40"
+  AORTS_SWITCH_CHECK_WORKERS: "0"
+  AORTS_CHECK_BACKOFF_BASE_SECONDS: "1.0"
+  AORTS_CHECK_BACKOFF_MAX_SECONDS: "1.0"
+  AORTS_DEADLINE_SECONDS: "900"
+  AORTS_QUEUE_BACKEND: local
+  AORTS_EVENT_SINK: local
+  AORTS_TWIN_STORE: postgres
+  AORTS_LOG_LEVEL: INFO
+
+x-service: &service
+  image: aorts-integrated:s11
+  env_file: .env
+  restart: unless-stopped
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+
+x-health: &health
+  test: ["CMD", "python", "-c", "import os,urllib.request; urllib.request.urlopen(f'http://localhost:{os.environ[\"PORT\"]}/api/v1/health', timeout=2)"]
+  interval: 5s
+  timeout: 3s
+  retries: 20
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: aorts
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run infra/aorts/scripts/generate_env.py}
+      POSTGRES_DB: aorts
+    ports: ["127.0.0.1:55442:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aorts -d aorts"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  migrate:
+    image: aorts-integrated:s11
+    build:
+      context: ../..
+      dockerfile: infra/aorts/Dockerfile
+    env_file: .env
+    environment: *env
+    command: ["sh", "-c", "alembic -c backend/aorts/alembic.ini upgrade head && python -m backend.aorts.app.seed"]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  switch:
+    <<: *service
+    environment: {<<: *env, AORTS_SERVICE_NAME: switch, PORT: "8110"}
+    command: ["uvicorn", "--factory", "backend.aorts.banking.switch.main:build", "--host", "0.0.0.0", "--port", "8110"]
+    ports: ["127.0.0.1:18110:8110"]
+    healthcheck: *health
+
+  beneficiary-b:
+    <<: *service
+    environment: {<<: *env, AORTS_SERVICE_NAME: beneficiary-B, AORTS_BANK_ID: B, PORT: "8121"}
+    command: ["uvicorn", "--factory", "backend.aorts.banking.beneficiary.main:build", "--host", "0.0.0.0", "--port", "8121"]
+    ports: ["127.0.0.1:18121:8121"]
+    healthcheck: *health
+
+  beneficiary-c:
+    <<: *service
+    environment: {<<: *env, AORTS_SERVICE_NAME: beneficiary-C, AORTS_BANK_ID: C, PORT: "8122"}
+    command: ["uvicorn", "--factory", "backend.aorts.banking.beneficiary.main:build", "--host", "0.0.0.0", "--port", "8122"]
+    ports: ["127.0.0.1:18122:8122"]
+    healthcheck: *health
+
+  remitter:
+    <<: *service
+    environment: {<<: *env, AORTS_SERVICE_NAME: remitter, PORT: "8100"}
+    command: ["uvicorn", "--factory", "backend.aorts.banking.remitter.main:build", "--host", "0.0.0.0", "--port", "8100"]
+    ports: ["127.0.0.1:18100:8100"]
+    healthcheck: *health
+
+  control:
+    <<: *service
+    environment: {<<: *env, AORTS_SERVICE_NAME: control, PORT: "8130"}
+    command: ["uvicorn", "--factory", "backend.aorts.control.main:build", "--host", "0.0.0.0", "--port", "8130"]
+    ports: ["127.0.0.1:18130:8130"]
+    healthcheck: *health
+
+  controller:
+    <<: *service
+    environment:
+      <<: *env
+      AORTS_SERVICE_NAME: controller
+      AORTS_CONTROLLER_CONFIG: /run/aorts/controller.json
+      AORTS_ESTIMATOR_PROFILE: fast
+    # the config step must not see AORTS_CONTROLLER_CONFIG: importing intelligence.controller.api
+    # builds its module-level app from that file, which does not exist yet
+    command: ["sh", "-c", "env -u AORTS_CONTROLLER_CONFIG python -m backend.aorts.integration.worker controller-config --out /run/aorts/controller.json && exec uvicorn intelligence.controller.api:app --host 0.0.0.0 --port 8140"]
+    ports: ["127.0.0.1:18140:8140"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8140/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  aorts-loop:
+    <<: *service
+    environment:
+      <<: *env
+      AORTS_SERVICE_NAME: aorts-loop
+      AORTS_V11_CONTROLLER_URL: http://controller:8140
+      AORTS_V11_ROUTES: A1-B,A1-C
+      AORTS_V11_WINDOW_S: "2"
+    command: ["python", "-m", "backend.aorts.integration.worker", "loop"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      controller:
+        condition: service_healthy
+      remitter:
+        condition: service_healthy
+      switch:
+        condition: service_healthy
+    volumes:
+      - ./exports:/app/results
+
+  dashboard:
+    image: aorts-integrated:s11
+    env_file: .env
+    environment:
+      AORTS_CONTROL_URL: http://control:8130
+      AORTS_EXPERIMENT_ID: aorts-s11-demo
+    command: ["streamlit", "run", "backend/aorts/dashboard/app.py", "--server.port", "8501", "--server.address", "0.0.0.0", "--browser.gatherUsageStats", "false", "--server.headless", "true"]
+    ports: ["127.0.0.1:18501:8501"]
+    volumes:
+      # the Stage 10 evidence package shown in the "AORTS v1.1 security" tab (read-only)
+      - ../../docs/integration/evidence:/app/docs/integration/evidence:ro
+    depends_on:
+      control:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:

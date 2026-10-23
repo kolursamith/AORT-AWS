@@ -26,3 +26,6 @@ models/*.joblib
 models/*.pkl
 models/*.xgb
 .DS_Store
+
+# Stage 11 local exports from the Docker stack (regenerable; may hold synthetic ledger rows)
+infra/aorts/exports/

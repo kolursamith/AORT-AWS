@@ -36,7 +36,12 @@ research = [
   "simpy==4.1.1",
 ]
 aws = ["boto3==1.40.58"]
-dashboard = ["streamlit==1.66.1", "pillow==13.0.0"]  # pillow pinned past known CVEs
+dashboard = [
+  "streamlit==1.66.1",
+  "pillow==13.0.0",  # pinned past known CVEs (streamlit 1.66.1 allows <14)
+  "plotly==6.4.0",  # backend/aorts/dashboard/app.py
+  "pandas==2.3.3",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["backend", "contracts", "intelligence"]

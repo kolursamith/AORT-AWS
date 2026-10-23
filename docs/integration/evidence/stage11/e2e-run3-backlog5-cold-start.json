@@ -1,0 +1,183 @@
+{
+  "experiment_id": "aorts-s11-demo",
+  "steps": {
+    "zero_budget": {
+      "ambiguous_created": [
+        "TXNA1-F89F3EC1686B4244",
+        "TXNA1-35986E0CCDEF4462",
+        "TXNA1-8CE7F7A2BBF245DD",
+        "TXNA1-7B3D2B9E7E634D36",
+        "TXNA1-4BE4283E2D414A58"
+      ],
+      "states": [
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS"
+      ],
+      "decision_ticks_by_source": {
+        "fail_closed_honoured": 4
+      },
+      "outcomes": [
+        "WARMING_UP"
+      ],
+      "checks_dispatched_under_controller_decisions": 0
+    },
+    "honest_payments": 2044,
+    "positive_budget": {
+      "ambiguous_created": [
+        "TXNA1-F89F3EC1686B4244",
+        "TXNA1-35986E0CCDEF4462",
+        "TXNA1-8CE7F7A2BBF245DD",
+        "TXNA1-7B3D2B9E7E634D36",
+        "TXNA1-4BE4283E2D414A58"
+      ],
+      "final_states": {
+        "TXNA1-F89F3EC1686B4244": "AMBIGUOUS",
+        "TXNA1-35986E0CCDEF4462": "AMBIGUOUS",
+        "TXNA1-8CE7F7A2BBF245DD": "AMBIGUOUS",
+        "TXNA1-7B3D2B9E7E634D36": "AMBIGUOUS",
+        "TXNA1-4BE4283E2D414A58": "AMBIGUOUS"
+      },
+      "controller_decisions_with_dispatch": 0,
+      "decision_example": null,
+      "verified_status_check_evidence": 0,
+      "resolved": 0,
+      "history": [
+        {
+          "transaction_id": "TXNA1-35986E0CCDEF4462",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-35986E0CCDEF4462",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-4BE4283E2D414A58",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-4BE4283E2D414A58",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-7B3D2B9E7E634D36",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-7B3D2B9E7E634D36",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-8CE7F7A2BBF245DD",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-8CE7F7A2BBF245DD",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-F89F3EC1686B4244",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-F89F3EC1686B4244",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        }
+      ],
+      "evidence": []
+    }
+  },
+  "controller_reasons": {
+    "WARMING_UP:CONTROLLER_WARMING_UP": 4,
+    "DECISION:NO_SAFE_BUDGET": 90
+  },
+  "telemetry_windows_by_verdict": [
+    {
+      "source_id": "trackb-remitter-A1-B",
+      "verdict": "SUSPICIOUS",
+      "n": 14
+    },
+    {
+      "source_id": "trackb-remitter-A1-B",
+      "verdict": "TRUSTED",
+      "n": 104
+    },
+    {
+      "source_id": "trackb-remitter-A1-C",
+      "verdict": "SUSPICIOUS",
+      "n": 12
+    },
+    {
+      "source_id": "trackb-remitter-A1-C",
+      "verdict": "TRUSTED",
+      "n": 106
+    }
+  ],
+  "ledger_entries": 12284,
+  "verdict": {
+    "zero_budget_honoured": true,
+    "positive_budget_resolved": false
+  }
+}

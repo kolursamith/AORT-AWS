@@ -1,0 +1,2099 @@
+{
+  "experiment_id": "aorts-s11-demo",
+  "steps": {
+    "zero_budget": {
+      "ambiguous_created": [
+        "TXNA1-DED2842A7A914B1D",
+        "TXNA1-933089700B8346F0",
+        "TXNA1-51E9ED3A833A4D70",
+        "TXNA1-779C1D63D17846A5",
+        "TXNA1-F0F04990D8914EF8",
+        "TXNA1-18AB64A338EC4D04",
+        "TXNA1-8A1DBD42A0E743FC",
+        "TXNA1-2C336521687D4635",
+        "TXNA1-6F894C2F26DC4C52",
+        "TXNA1-0D3B3950001B43B4",
+        "TXNA1-BE49EF7631EE4452",
+        "TXNA1-06740C54BF984387",
+        "TXNA1-584732CFE1AC44BB",
+        "TXNA1-926291FB505F47A9",
+        "TXNA1-FB010D069D914A7E",
+        "TXNA1-DDF60EE7DD4B442F",
+        "TXNA1-86DC42E09F704DD2",
+        "TXNA1-7CA9FD4365FE4B25",
+        "TXNA1-57D1B049EE564E1F",
+        "TXNA1-72310CCDD4DB4C8A",
+        "TXNA1-EFE19A136E8B42D6",
+        "TXNA1-A544B6D48CB94D55",
+        "TXNA1-8B92EE643A57419F",
+        "TXNA1-CA9A9D3F0C924846",
+        "TXNA1-3D09DAF20AFF4D65",
+        "TXNA1-BF82FA81C627432E",
+        "TXNA1-0F771635FDD545BB",
+        "TXNA1-1264D8D13FDD4694",
+        "TXNA1-E95CAA9AE72746DA",
+        "TXNA1-4231D7D0618748E0"
+      ],
+      "states": [
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS",
+        "AMBIGUOUS"
+      ],
+      "decision_ticks_by_source": {
+        "fail_closed_honoured": 4
+      },
+      "outcomes": [
+        "WARMING_UP"
+      ],
+      "checks_dispatched_under_controller_decisions": 0
+    },
+    "honest_payments": 1394,
+    "positive_budget": {
+      "ambiguous_created": [
+        "TXNA1-DED2842A7A914B1D",
+        "TXNA1-933089700B8346F0",
+        "TXNA1-51E9ED3A833A4D70",
+        "TXNA1-779C1D63D17846A5",
+        "TXNA1-F0F04990D8914EF8",
+        "TXNA1-18AB64A338EC4D04",
+        "TXNA1-8A1DBD42A0E743FC",
+        "TXNA1-2C336521687D4635",
+        "TXNA1-6F894C2F26DC4C52",
+        "TXNA1-0D3B3950001B43B4",
+        "TXNA1-BE49EF7631EE4452",
+        "TXNA1-06740C54BF984387",
+        "TXNA1-584732CFE1AC44BB",
+        "TXNA1-926291FB505F47A9",
+        "TXNA1-FB010D069D914A7E",
+        "TXNA1-DDF60EE7DD4B442F",
+        "TXNA1-86DC42E09F704DD2",
+        "TXNA1-7CA9FD4365FE4B25",
+        "TXNA1-57D1B049EE564E1F",
+        "TXNA1-72310CCDD4DB4C8A",
+        "TXNA1-EFE19A136E8B42D6",
+        "TXNA1-A544B6D48CB94D55",
+        "TXNA1-8B92EE643A57419F",
+        "TXNA1-CA9A9D3F0C924846",
+        "TXNA1-3D09DAF20AFF4D65",
+        "TXNA1-BF82FA81C627432E",
+        "TXNA1-0F771635FDD545BB",
+        "TXNA1-1264D8D13FDD4694",
+        "TXNA1-E95CAA9AE72746DA",
+        "TXNA1-4231D7D0618748E0"
+      ],
+      "final_states": {
+        "TXNA1-926291FB505F47A9": "CLOSED",
+        "TXNA1-FB010D069D914A7E": "CLOSED",
+        "TXNA1-779C1D63D17846A5": "CLOSED",
+        "TXNA1-DDF60EE7DD4B442F": "CLOSED",
+        "TXNA1-86DC42E09F704DD2": "CLOSED",
+        "TXNA1-F0F04990D8914EF8": "CLOSED",
+        "TXNA1-7CA9FD4365FE4B25": "CLOSED",
+        "TXNA1-18AB64A338EC4D04": "CLOSED",
+        "TXNA1-8A1DBD42A0E743FC": "CLOSED",
+        "TXNA1-57D1B049EE564E1F": "CLOSED",
+        "TXNA1-2C336521687D4635": "CLOSED",
+        "TXNA1-72310CCDD4DB4C8A": "CLOSED",
+        "TXNA1-6F894C2F26DC4C52": "CLOSED",
+        "TXNA1-0D3B3950001B43B4": "CLOSED",
+        "TXNA1-EFE19A136E8B42D6": "CLOSED",
+        "TXNA1-BE49EF7631EE4452": "CLOSED",
+        "TXNA1-A544B6D48CB94D55": "CLOSED",
+        "TXNA1-BF82FA81C627432E": "CLOSED",
+        "TXNA1-0F771635FDD545BB": "CLOSED",
+        "TXNA1-1264D8D13FDD4694": "CLOSED",
+        "TXNA1-E95CAA9AE72746DA": "CLOSED",
+        "TXNA1-4231D7D0618748E0": "CLOSED",
+        "TXNA1-06740C54BF984387": "CLOSED",
+        "TXNA1-584732CFE1AC44BB": "CLOSED",
+        "TXNA1-DED2842A7A914B1D": "CLOSED",
+        "TXNA1-933089700B8346F0": "CLOSED",
+        "TXNA1-51E9ED3A833A4D70": "CLOSED",
+        "TXNA1-8B92EE643A57419F": "CLOSED",
+        "TXNA1-3D09DAF20AFF4D65": "CLOSED",
+        "TXNA1-CA9A9D3F0C924846": "CLOSED"
+      },
+      "controller_decisions_with_dispatch": 30,
+      "decision_example": {
+        "ts": "2026-10-23 19:14:57.152348+00:00",
+        "route_id": "A1-B",
+        "decision": "ACCEPTED",
+        "reason": "DECISION -> controller",
+        "metadata": {
+          "outcome": "DECISION",
+          "source": "controller",
+          "decision_id": "dec-00000026-f5407073a582591b74073a1f",
+          "controller_decision_id": "dec-00000026-f5407073a582591b74073a1f",
+          "selected": 5,
+          "admitted": 1,
+          "gate_refused": {
+            "TXNA1-933089700B8346F0": "OVER_BUDGET",
+            "TXNA1-51E9ED3A833A4D70": "OVER_BUDGET",
+            "TXNA1-779C1D63D17846A5": "OVER_BUDGET",
+            "TXNA1-F0F04990D8914EF8": "OVER_BUDGET"
+          },
+          "dispatched": 1,
+          "predispatch_refused": {},
+          "controller_reason": "SAFE_BUDGET_SELECTED",
+          "controller_mode": "NORMAL",
+          "controller_budget_rps": 1
+        }
+      },
+      "verified_status_check_evidence": 30,
+      "resolved": 30,
+      "history": [
+        {
+          "transaction_id": "TXNA1-06740C54BF984387",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-06740C54BF984387",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-06740C54BF984387",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-718a154a2c87412dbbd1"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-06740C54BF984387",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-21e3dfc268f74de090bf",
+            "check_id": "chk-718a154a2c87412dbbd1"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-06740C54BF984387",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-21e3dfc268f74de090bf"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-0D3B3950001B43B4",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-0D3B3950001B43B4",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-0D3B3950001B43B4",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-325e7471fd394c848fd3"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-0D3B3950001B43B4",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-be4bd5287ba346caab5b",
+            "check_id": "chk-325e7471fd394c848fd3"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-0D3B3950001B43B4",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-be4bd5287ba346caab5b"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-0F771635FDD545BB",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-0F771635FDD545BB",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-0F771635FDD545BB",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-5fd4f6dbc2cd4cd699a1"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-0F771635FDD545BB",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-647b584e8afb421ea07d",
+            "check_id": "chk-5fd4f6dbc2cd4cd699a1"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-0F771635FDD545BB",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-647b584e8afb421ea07d"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-1264D8D13FDD4694",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-1264D8D13FDD4694",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-1264D8D13FDD4694",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-2aff89b626d347eab358"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-1264D8D13FDD4694",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-5f047e94092842008743",
+            "check_id": "chk-2aff89b626d347eab358"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-1264D8D13FDD4694",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-5f047e94092842008743"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-18AB64A338EC4D04",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-18AB64A338EC4D04",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-18AB64A338EC4D04",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-87e731cb0f0340ae818a"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-18AB64A338EC4D04",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-87a0cb99eb03418682f8",
+            "check_id": "chk-87e731cb0f0340ae818a"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-18AB64A338EC4D04",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-87a0cb99eb03418682f8"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-2C336521687D4635",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-2C336521687D4635",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-2C336521687D4635",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-09fd63e78c3a4c90815f"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-2C336521687D4635",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-36b6c8e734d0442da232",
+            "check_id": "chk-09fd63e78c3a4c90815f"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-2C336521687D4635",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-36b6c8e734d0442da232"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-3D09DAF20AFF4D65",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-3D09DAF20AFF4D65",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-3D09DAF20AFF4D65",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-d09ab266c7bc4f3b9d6b"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-3D09DAF20AFF4D65",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-bb056cd1f23a4e1fa27a",
+            "check_id": "chk-d09ab266c7bc4f3b9d6b"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-3D09DAF20AFF4D65",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-bb056cd1f23a4e1fa27a"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-4231D7D0618748E0",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-4231D7D0618748E0",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-4231D7D0618748E0",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-a82112ecdeed406da812"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-4231D7D0618748E0",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-b0c90cf8f9e347dda8e2",
+            "check_id": "chk-a82112ecdeed406da812"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-4231D7D0618748E0",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-b0c90cf8f9e347dda8e2"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-51E9ED3A833A4D70",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-51E9ED3A833A4D70",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-51E9ED3A833A4D70",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-2c6eca57bb1e44df92fa"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-51E9ED3A833A4D70",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-2dad69e815d849a496cc",
+            "check_id": "chk-2c6eca57bb1e44df92fa"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-51E9ED3A833A4D70",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-2dad69e815d849a496cc"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-57D1B049EE564E1F",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-57D1B049EE564E1F",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-57D1B049EE564E1F",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-aebe67c4fe6144dea54c"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-57D1B049EE564E1F",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-8c452e0cd1ca410eaa58",
+            "check_id": "chk-aebe67c4fe6144dea54c"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-57D1B049EE564E1F",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-8c452e0cd1ca410eaa58"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-584732CFE1AC44BB",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-584732CFE1AC44BB",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-584732CFE1AC44BB",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-c40e386cf1c64f02b4bd"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-584732CFE1AC44BB",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-492510b336554c618e6b",
+            "check_id": "chk-c40e386cf1c64f02b4bd"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-584732CFE1AC44BB",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-492510b336554c618e6b"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-6F894C2F26DC4C52",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-6F894C2F26DC4C52",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-6F894C2F26DC4C52",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-29f79592a3b44b169bff"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-6F894C2F26DC4C52",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-06104b7a78d74936a7e1",
+            "check_id": "chk-29f79592a3b44b169bff"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-6F894C2F26DC4C52",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-06104b7a78d74936a7e1"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-72310CCDD4DB4C8A",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-72310CCDD4DB4C8A",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-72310CCDD4DB4C8A",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-a6c8910056c846eaae4c"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-72310CCDD4DB4C8A",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-a18d1f0742e645bcbcbc",
+            "check_id": "chk-a6c8910056c846eaae4c"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-72310CCDD4DB4C8A",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-a18d1f0742e645bcbcbc"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-779C1D63D17846A5",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-779C1D63D17846A5",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-779C1D63D17846A5",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-b7b98dfb03e24bae8127"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-779C1D63D17846A5",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-69a92369b47c44e0b655",
+            "check_id": "chk-b7b98dfb03e24bae8127"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-779C1D63D17846A5",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-69a92369b47c44e0b655"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-7CA9FD4365FE4B25",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-7CA9FD4365FE4B25",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-7CA9FD4365FE4B25",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-8ffc6694a6094c238193"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-7CA9FD4365FE4B25",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-780710e1b7094b4faf64",
+            "check_id": "chk-8ffc6694a6094c238193"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-7CA9FD4365FE4B25",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-780710e1b7094b4faf64"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-86DC42E09F704DD2",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-86DC42E09F704DD2",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-86DC42E09F704DD2",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-404908f99f564843902b"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-86DC42E09F704DD2",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-1f042f40a2914629b72e",
+            "check_id": "chk-404908f99f564843902b"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-86DC42E09F704DD2",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-1f042f40a2914629b72e"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-8A1DBD42A0E743FC",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-8A1DBD42A0E743FC",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-8A1DBD42A0E743FC",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-12183c673b834bb6b060"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-8A1DBD42A0E743FC",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-1b691b4d8738419ca925",
+            "check_id": "chk-12183c673b834bb6b060"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-8A1DBD42A0E743FC",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-1b691b4d8738419ca925"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-8B92EE643A57419F",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-8B92EE643A57419F",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-8B92EE643A57419F",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-8342a103b9064664a95b"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-8B92EE643A57419F",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-7e009b5f1a2444b8b2db",
+            "check_id": "chk-8342a103b9064664a95b"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-8B92EE643A57419F",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-7e009b5f1a2444b8b2db"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-926291FB505F47A9",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-926291FB505F47A9",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-926291FB505F47A9",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-955d9e122dad42c99909"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-926291FB505F47A9",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-b68cbc33857041ac8809",
+            "check_id": "chk-955d9e122dad42c99909"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-926291FB505F47A9",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-b68cbc33857041ac8809"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-933089700B8346F0",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-933089700B8346F0",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-933089700B8346F0",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-74a17f416c664c36b434"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-933089700B8346F0",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-5ca5c6113ef84a61aa35",
+            "check_id": "chk-74a17f416c664c36b434"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-933089700B8346F0",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-5ca5c6113ef84a61aa35"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-A544B6D48CB94D55",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-A544B6D48CB94D55",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-A544B6D48CB94D55",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-6deaef1d4e1a41fcb67b"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-A544B6D48CB94D55",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-7242f525317047f6b164",
+            "check_id": "chk-6deaef1d4e1a41fcb67b"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-A544B6D48CB94D55",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-7242f525317047f6b164"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-BE49EF7631EE4452",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-BE49EF7631EE4452",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-BE49EF7631EE4452",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-0bf1570569894229960e"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-BE49EF7631EE4452",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-eb1af8d5d264406fb0c7",
+            "check_id": "chk-0bf1570569894229960e"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-BE49EF7631EE4452",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-eb1af8d5d264406fb0c7"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-BF82FA81C627432E",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-BF82FA81C627432E",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-BF82FA81C627432E",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-a899fcea5fa5421ebe42"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-BF82FA81C627432E",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-54dfc89ed82f4bc9a61a",
+            "check_id": "chk-a899fcea5fa5421ebe42"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-BF82FA81C627432E",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-54dfc89ed82f4bc9a61a"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-CA9A9D3F0C924846",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-CA9A9D3F0C924846",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-CA9A9D3F0C924846",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-113c3fb3df1245ae83b1"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-CA9A9D3F0C924846",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-07b353c763764fbeb75d",
+            "check_id": "chk-113c3fb3df1245ae83b1"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-CA9A9D3F0C924846",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-07b353c763764fbeb75d"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-DDF60EE7DD4B442F",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-DDF60EE7DD4B442F",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-DDF60EE7DD4B442F",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-a009dc5dde2c4e28acfd"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-DDF60EE7DD4B442F",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-97d481e150e347e38b92",
+            "check_id": "chk-a009dc5dde2c4e28acfd"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-DDF60EE7DD4B442F",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-97d481e150e347e38b92"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-DED2842A7A914B1D",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-DED2842A7A914B1D",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-DED2842A7A914B1D",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-4b3e16d32dcc45eda528"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-DED2842A7A914B1D",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-84b07f93589f4da38ac0",
+            "check_id": "chk-4b3e16d32dcc45eda528"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-DED2842A7A914B1D",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-84b07f93589f4da38ac0"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-E95CAA9AE72746DA",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-E95CAA9AE72746DA",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-E95CAA9AE72746DA",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-0c940610d6d348b3abd6"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-E95CAA9AE72746DA",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-0517d35c25b547579ce6",
+            "check_id": "chk-0c940610d6d348b3abd6"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-E95CAA9AE72746DA",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-0517d35c25b547579ce6"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-EFE19A136E8B42D6",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-EFE19A136E8B42D6",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-EFE19A136E8B42D6",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-3936280bc9ad4c28b7d4"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-EFE19A136E8B42D6",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-95542f6469474693b1dc",
+            "check_id": "chk-3936280bc9ad4c28b7d4"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-EFE19A136E8B42D6",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-95542f6469474693b1dc"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-F0F04990D8914EF8",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-F0F04990D8914EF8",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-F0F04990D8914EF8",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-3b7de53a2f5b42e4b4a2"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-F0F04990D8914EF8",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-2fff00b2bdaf4df98248",
+            "check_id": "chk-3b7de53a2f5b42e4b4a2"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-F0F04990D8914EF8",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-2fff00b2bdaf4df98248"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-FB010D069D914A7E",
+          "event_type": "PAYMENT_DEBITED",
+          "previous_state": null,
+          "new_state": "DEBITED",
+          "new_version": 1,
+          "actor": "REMITTER",
+          "metadata": {}
+        },
+        {
+          "transaction_id": "TXNA1-FB010D069D914A7E",
+          "event_type": "PAYMENT_AMBIGUOUS",
+          "previous_state": "DEBITED",
+          "new_state": "AMBIGUOUS",
+          "new_version": 2,
+          "actor": "REMITTER",
+          "metadata": {
+            "ambiguity_cause": "LOST_RESPONSE"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-FB010D069D914A7E",
+          "event_type": "CHECK_STARTED",
+          "previous_state": "AMBIGUOUS",
+          "new_state": "CHECK_IN_FLIGHT",
+          "new_version": 3,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "check_id": "chk-f886ff9121824e7fb3da"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-FB010D069D914A7E",
+          "event_type": "PAYMENT_SUCCEEDED",
+          "previous_state": "CHECK_IN_FLIGHT",
+          "new_state": "CONFIRMED_SUCCESS",
+          "new_version": 4,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_source": "SWITCH",
+            "evidence_id": "evd-f21cfc0f7c204b73ae7f",
+            "check_id": "chk-f886ff9121824e7fb3da"
+          }
+        },
+        {
+          "transaction_id": "TXNA1-FB010D069D914A7E",
+          "event_type": "PAYMENT_CLOSED",
+          "previous_state": "CONFIRMED_SUCCESS",
+          "new_state": "CLOSED",
+          "new_version": 5,
+          "actor": "DISPATCHER",
+          "metadata": {
+            "evidence_id": "evd-f21cfc0f7c204b73ae7f"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "transaction_id": "TXNA1-DED2842A7A914B1D",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-4b3e16d32dcc45eda528",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-933089700B8346F0",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-74a17f416c664c36b434",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-51E9ED3A833A4D70",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-2c6eca57bb1e44df92fa",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-779C1D63D17846A5",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-b7b98dfb03e24bae8127",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-F0F04990D8914EF8",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-3b7de53a2f5b42e4b4a2",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-18AB64A338EC4D04",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-87e731cb0f0340ae818a",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-8A1DBD42A0E743FC",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-12183c673b834bb6b060",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-2C336521687D4635",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-09fd63e78c3a4c90815f",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-6F894C2F26DC4C52",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-29f79592a3b44b169bff",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-0D3B3950001B43B4",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-325e7471fd394c848fd3",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-BE49EF7631EE4452",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-0bf1570569894229960e",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-06740C54BF984387",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-718a154a2c87412dbbd1",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-584732CFE1AC44BB",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-c40e386cf1c64f02b4bd",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-926291FB505F47A9",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-955d9e122dad42c99909",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-FB010D069D914A7E",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-f886ff9121824e7fb3da",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-DDF60EE7DD4B442F",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-a009dc5dde2c4e28acfd",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-86DC42E09F704DD2",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-404908f99f564843902b",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-7CA9FD4365FE4B25",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-8ffc6694a6094c238193",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-57D1B049EE564E1F",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-aebe67c4fe6144dea54c",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-72310CCDD4DB4C8A",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-a6c8910056c846eaae4c",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-EFE19A136E8B42D6",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-3936280bc9ad4c28b7d4",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-A544B6D48CB94D55",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-6deaef1d4e1a41fcb67b",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-8B92EE643A57419F",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-8342a103b9064664a95b",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-CA9A9D3F0C924846",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-113c3fb3df1245ae83b1",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-3D09DAF20AFF4D65",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-d09ab266c7bc4f3b9d6b",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-BF82FA81C627432E",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-a899fcea5fa5421ebe42",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-0F771635FDD545BB",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-5fd4f6dbc2cd4cd699a1",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-1264D8D13FDD4694",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-2aff89b626d347eab358",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-E95CAA9AE72746DA",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-0c940610d6d348b3abd6",
+          "key_id": "SWITCH-v1"
+        },
+        {
+          "transaction_id": "TXNA1-4231D7D0618748E0",
+          "evidence_kind": "STATUS_CHECK_RESPONSE",
+          "reported_status": "SUCCESS",
+          "verified": true,
+          "check_id": "chk-a82112ecdeed406da812",
+          "key_id": "SWITCH-v1"
+        }
+      ]
+    }
+  },
+  "controller_reasons": {
+    "WARMING_UP:CONTROLLER_WARMING_UP": 4,
+    "DECISION:NO_SAFE_BUDGET": 6,
+    "DECISION:SAFE_BUDGET_SELECTED": 30
+  },
+  "telemetry_windows_by_verdict": [
+    {
+      "source_id": "trackb-remitter-A1-B",
+      "verdict": "SUSPICIOUS",
+      "n": 7
+    },
+    {
+      "source_id": "trackb-remitter-A1-B",
+      "verdict": "TRUSTED",
+      "n": 55
+    },
+    {
+      "source_id": "trackb-remitter-A1-C",
+      "verdict": "SUSPICIOUS",
+      "n": 7
+    },
+    {
+      "source_id": "trackb-remitter-A1-C",
+      "verdict": "TRUSTED",
+      "n": 55
+    }
+  ],
+  "ledger_entries": 8544,
+  "verdict": {
+    "zero_budget_honoured": true,
+    "positive_budget_resolved": true
+  }
+}

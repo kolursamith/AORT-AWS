@@ -1,0 +1,273 @@
+{
+  "transaction": [
+    {
+      "transaction_id": "TXNA1-926291FB505F47A9",
+      "sender_account_id": "A1-CUST-0004",
+      "beneficiary_account_id": "B-CUST-0004",
+      "remitter_bank_id": "A1",
+      "beneficiary_bank_id": "B",
+      "route_id": "A1-B",
+      "amount_paise": 1013,
+      "currency": "INR",
+      "state": "CLOSED",
+      "financial_outcome": "SUCCESS",
+      "workflow_state": "CLOSED",
+      "version": 5,
+      "idempotency_key": "e2e-zero-1bdf0ad2fae049d9b5ef4b845df8d17e",
+      "request_hash": "4685cbc80ff88727a616eef329f6ff0cf71702303166f5ba7b9eca431858b20e",
+      "checks_used": 1,
+      "created_at": "2026-10-23 19:14:05.766191+00:00",
+      "updated_at": "2026-10-23 19:15:27.204436+00:00",
+      "deadline_at": "2026-10-23 19:29:05.766191+00:00",
+      "ambiguous_since": "2026-10-23 19:14:05.825837+00:00",
+      "resolved_at": "2026-10-23 19:15:27.199926+00:00",
+      "next_eligible_at": "2026-10-23 19:14:06.499073+00:00",
+      "last_check_at": "2026-10-23 19:15:27.199187+00:00",
+      "switch_reference": "SW-TXNA1-926291FB505F47A9",
+      "last_reason": "settled",
+      "correlation_id": null,
+      "experiment_id": "aorts-s11-demo",
+      "check_in_flight_id": null
+    }
+  ],
+  "history": [
+    {
+      "id": 27,
+      "event_id": "evt-aa35a4fcd66e400eb1c4",
+      "transaction_id": "TXNA1-926291FB505F47A9",
+      "event_type": "PAYMENT_DEBITED",
+      "previous_state": null,
+      "new_state": "DEBITED",
+      "previous_version": null,
+      "new_version": 1,
+      "actor": "REMITTER",
+      "reason": "payment accepted and debited",
+      "metadata": {},
+      "created_at": "2026-10-23 19:14:05.765768+00:00"
+    },
+    {
+      "id": 28,
+      "event_id": "evt-515ed86818984dcab070",
+      "transaction_id": "TXNA1-926291FB505F47A9",
+      "event_type": "PAYMENT_AMBIGUOUS",
+      "previous_state": "DEBITED",
+      "new_state": "AMBIGUOUS",
+      "previous_version": 1,
+      "new_version": 2,
+      "actor": "REMITTER",
+      "reason": "response lost (simulated)",
+      "metadata": {
+        "ambiguity_cause": "LOST_RESPONSE"
+      },
+      "created_at": "2026-10-23 19:14:05.825500+00:00"
+    },
+    {
+      "id": 3562,
+      "event_id": "evt-30ae3b9def514669a216",
+      "transaction_id": "TXNA1-926291FB505F47A9",
+      "event_type": "CHECK_STARTED",
+      "previous_state": "AMBIGUOUS",
+      "new_state": "CHECK_IN_FLIGHT",
+      "previous_version": 2,
+      "new_version": 3,
+      "actor": "DISPATCHER",
+      "reason": "status check dispatched",
+      "metadata": {
+        "check_id": "chk-955d9e122dad42c99909"
+      },
+      "created_at": "2026-10-23 19:15:27.150688+00:00"
+    },
+    {
+      "id": 3563,
+      "event_id": "evt-9e83a49b18114caa8224",
+      "transaction_id": "TXNA1-926291FB505F47A9",
+      "event_type": "PAYMENT_SUCCEEDED",
+      "previous_state": "CHECK_IN_FLIGHT",
+      "new_state": "CONFIRMED_SUCCESS",
+      "previous_version": 3,
+      "new_version": 4,
+      "actor": "DISPATCHER",
+      "reason": "authoritative SUCCESS",
+      "metadata": {
+        "evidence_source": "SWITCH",
+        "evidence_id": "evd-b68cbc33857041ac8809",
+        "check_id": "chk-955d9e122dad42c99909"
+      },
+      "created_at": "2026-10-23 19:15:27.198881+00:00"
+    },
+    {
+      "id": 3564,
+      "event_id": "evt-b6494efae7974afe822b",
+      "transaction_id": "TXNA1-926291FB505F47A9",
+      "event_type": "PAYMENT_CLOSED",
+      "previous_state": "CONFIRMED_SUCCESS",
+      "new_state": "CLOSED",
+      "previous_version": 4,
+      "new_version": 5,
+      "actor": "DISPATCHER",
+      "reason": "settled",
+      "metadata": {
+        "evidence_id": "evd-b68cbc33857041ac8809"
+      },
+      "created_at": "2026-10-23 19:15:27.198881+00:00"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "evd-b68cbc33857041ac8809",
+      "transaction_id": "TXNA1-926291FB505F47A9",
+      "evidence_kind": "STATUS_CHECK_RESPONSE",
+      "issuer_id": "SWITCH",
+      "path": "/api/v1/check-status",
+      "http_status": 200,
+      "reported_status": "SUCCESS",
+      "reported_transaction_id": "TXNA1-926291FB505F47A9",
+      "body_sha256": "72fcd1f979b0896993a506f92f8e592e6cbcb9ebf74c8d65d1c24480a8a86042",
+      "response_timestamp": "1792782927",
+      "key_id": "SWITCH-v1",
+      "signature_hex": "c86ca70ab7a63fe3b37a037905106970dde93d015e50794f89c346e9fe1ddce8",
+      "signature_alg": "AORTS-HMAC-SHA256-RESPONSE",
+      "signed_fields": [
+        "http_status",
+        "path",
+        "timestamp",
+        "body_sha256"
+      ],
+      "verified": true,
+      "verifier_id": "aorts-loop",
+      "verified_at": "2026-10-23 19:15:27.197004+00:00",
+      "check_id": "chk-955d9e122dad42c99909",
+      "latency_ms": 42.84504100360209,
+      "created_at": "2026-10-23 19:15:27.197482+00:00"
+    }
+  ],
+  "outbox": [
+    {
+      "id": 27,
+      "event_type": "PAYMENT_DEBITED",
+      "created_at": "2026-10-23 19:14:05.765768+00:00"
+    },
+    {
+      "id": 28,
+      "event_type": "PAYMENT_AMBIGUOUS",
+      "created_at": "2026-10-23 19:14:05.825500+00:00"
+    },
+    {
+      "id": 3562,
+      "event_type": "CHECK_STARTED",
+      "created_at": "2026-10-23 19:15:27.150688+00:00"
+    },
+    {
+      "id": 3563,
+      "event_type": "PAYMENT_SUCCEEDED",
+      "created_at": "2026-10-23 19:15:27.198881+00:00"
+    },
+    {
+      "id": 3564,
+      "event_type": "PAYMENT_CLOSED",
+      "created_at": "2026-10-23 19:15:27.198881+00:00"
+    }
+  ],
+  "decisions_naming_it": [
+    {
+      "ts": "2026-10-23 19:15:19.145591+00:00",
+      "route_id": "A1-B",
+      "decision": "ACCEPTED",
+      "reason": "DECISION -> controller",
+      "metadata": {
+        "outcome": "DECISION",
+        "source": "controller",
+        "decision_id": "dec-00000037-c472132e01356c4b3f0a6957",
+        "controller_decision_id": "dec-00000037-c472132e01356c4b3f0a6957",
+        "selected": 5,
+        "admitted": 1,
+        "gate_refused": {
+          "TXNA1-BE49EF7631EE4452": "OVER_BUDGET",
+          "TXNA1-06740C54BF984387": "OVER_BUDGET",
+          "TXNA1-584732CFE1AC44BB": "OVER_BUDGET",
+          "TXNA1-926291FB505F47A9": "OVER_BUDGET"
+        },
+        "dispatched": 1,
+        "predispatch_refused": {},
+        "controller_reason": "SAFE_BUDGET_SELECTED",
+        "controller_mode": "NORMAL",
+        "controller_budget_rps": 1
+      }
+    },
+    {
+      "ts": "2026-10-23 19:15:21.142458+00:00",
+      "route_id": "A1-B",
+      "decision": "ACCEPTED",
+      "reason": "DECISION -> controller",
+      "metadata": {
+        "outcome": "DECISION",
+        "source": "controller",
+        "decision_id": "dec-00000038-8cc8ede5fa226c56d0cf8eb2",
+        "controller_decision_id": "dec-00000038-8cc8ede5fa226c56d0cf8eb2",
+        "selected": 5,
+        "admitted": 1,
+        "gate_refused": {
+          "TXNA1-06740C54BF984387": "OVER_BUDGET",
+          "TXNA1-584732CFE1AC44BB": "OVER_BUDGET",
+          "TXNA1-926291FB505F47A9": "OVER_BUDGET",
+          "TXNA1-FB010D069D914A7E": "OVER_BUDGET"
+        },
+        "dispatched": 1,
+        "predispatch_refused": {},
+        "controller_reason": "SAFE_BUDGET_SELECTED",
+        "controller_mode": "NORMAL",
+        "controller_budget_rps": 1
+      }
+    },
+    {
+      "ts": "2026-10-23 19:15:23.150616+00:00",
+      "route_id": "A1-B",
+      "decision": "ACCEPTED",
+      "reason": "DECISION -> controller",
+      "metadata": {
+        "outcome": "DECISION",
+        "source": "controller",
+        "decision_id": "dec-00000039-08e4e445f35bdcd04f5a461a",
+        "controller_decision_id": "dec-00000039-08e4e445f35bdcd04f5a461a",
+        "selected": 5,
+        "admitted": 1,
+        "gate_refused": {
+          "TXNA1-584732CFE1AC44BB": "OVER_BUDGET",
+          "TXNA1-926291FB505F47A9": "OVER_BUDGET",
+          "TXNA1-FB010D069D914A7E": "OVER_BUDGET",
+          "TXNA1-DDF60EE7DD4B442F": "OVER_BUDGET"
+        },
+        "dispatched": 1,
+        "predispatch_refused": {},
+        "controller_reason": "SAFE_BUDGET_SELECTED",
+        "controller_mode": "NORMAL",
+        "controller_budget_rps": 1
+      }
+    },
+    {
+      "ts": "2026-10-23 19:15:25.142719+00:00",
+      "route_id": "A1-B",
+      "decision": "ACCEPTED",
+      "reason": "DECISION -> controller",
+      "metadata": {
+        "outcome": "DECISION",
+        "source": "controller",
+        "decision_id": "dec-00000040-a6d34e621e947b6f3286f29b",
+        "controller_decision_id": "dec-00000040-a6d34e621e947b6f3286f29b",
+        "selected": 5,
+        "admitted": 1,
+        "gate_refused": {
+          "TXNA1-926291FB505F47A9": "OVER_BUDGET",
+          "TXNA1-FB010D069D914A7E": "OVER_BUDGET",
+          "TXNA1-DDF60EE7DD4B442F": "OVER_BUDGET",
+          "TXNA1-86DC42E09F704DD2": "OVER_BUDGET"
+        },
+        "dispatched": 1,
+        "predispatch_refused": {},
+        "controller_reason": "SAFE_BUDGET_SELECTED",
+        "controller_mode": "NORMAL",
+        "controller_budget_rps": 1
+      }
+    }
+  ]
+}

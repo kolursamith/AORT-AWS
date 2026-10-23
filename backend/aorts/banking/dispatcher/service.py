@@ -389,10 +389,15 @@ class Dispatcher:
             watermark = self.v11_watermark(rid) if self.v11_watermark else ()
             request, response, failure = self.v11.request(rid, now=now, watermark=watermark)
             route_cands = [c for c in candidates if c.route_id == rid]
+            claimed: dict = {}  # what the controller said (audit only; never trusted for action)
             if failure is None:
                 selected = []
                 if response.status_code == 200:
-                    selected = list(response.json().get("selected_transaction_ids") or [])
+                    body = response.json()
+                    selected = list(body.get("selected_transaction_ids") or [])
+                    claimed = {
+                        k: body.get(k) for k in ("decision_mode", "reason_code", "budget_rps")
+                    }
                 rows = self._rows(selected)
                 plan = self.v11.gate(
                     request,
@@ -463,6 +468,9 @@ class Dispatcher:
                 "gate_refused": {k: v.value for k, v in refused.items()},
                 "dispatched": sent,
                 "predispatch_refused": gate_refusals,
+                "controller_reason": claimed.get("reason_code"),
+                "controller_mode": claimed.get("decision_mode"),
+                "controller_budget_rps": claimed.get("budget_rps"),
             }
             self.ctx.audit_buffer.record(
                 make_record(

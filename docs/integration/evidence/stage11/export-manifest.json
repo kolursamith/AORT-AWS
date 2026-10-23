@@ -1,0 +1,29 @@
+{
+  "experiment_id": "aorts-s11-demo",
+  "files": {
+    "transactions": {
+      "rows": 1424,
+      "sha256": "e6517ae2a618d1c633ab14a62c36b099da00ac80f344ffc127515222c1b0300f"
+    },
+    "transaction_events": {
+      "rows": 4332,
+      "sha256": "cf98a7101fd42e263b1f12d7c910286198e60648def92f05e85fc42ec103de38"
+    },
+    "evidence_records": {
+      "rows": 1424,
+      "sha256": "f64154c71588f1f2c4822e082f63eb31bdca0ea493ac260f780879802655b022"
+    },
+    "telemetry_windows": {
+      "rows": 134,
+      "sha256": "62e2a6e06649a7b0fc082f02a66f9c213941251762e96355fd506ea03b10e9dd"
+    },
+    "decision_audit": {
+      "rows": 60,
+      "sha256": "da4b94a346318ff534f5a4ec49dbfc2be14b76b9053c3663e844735e667cb476"
+    },
+    "dead_letters": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  }
+}
