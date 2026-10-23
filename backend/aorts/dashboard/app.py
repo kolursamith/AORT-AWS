@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import os
 from datetime import UTC, datetime
+from pathlib import Path
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -178,13 +179,14 @@ pay = summary["payments"]
 sec = summary["security"]
 checks = summary["status_checks"]
 
-tab_over, tab_routes, tab_twin, tab_sec, tab_val, tab_exp, tab_cmp, tab_audit = st.tabs(
+tab_over, tab_routes, tab_twin, tab_sec, tab_val, tab_v11, tab_exp, tab_cmp, tab_audit = st.tabs(
     [
         "Overview",
         "Routes & recovery",
         "Twins & AORTS",
         "Security",
         "Security validation",
+        "AORTS v1.1 security",
         "Experiments",
         "Strategy comparison",
         "Audit trail",
@@ -861,6 +863,83 @@ with tab_cmp:
             width="stretch",
             hide_index=True,
         )
+
+# ------------------------------------------------------------------ AORTS v1.1 security
+with tab_v11:
+    from backend.aorts.dashboard import v11_metrics as v11
+
+    st.caption(
+        "Integrated Track A controller + Track B backend. Live values come from the ledger, the "
+        "stored evidence records, the validated telemetry windows, the hash-chained audit log and "
+        "the switch counters; the experiment results come from the Stage 10 evidence package."
+    )
+    try:
+        live = client.aorts_v11()
+    except Exception as exc:  # noqa: BLE001 - the control service may be down
+        live = None
+        st.error(f"control service unavailable: {type(exc).__name__}")
+    if live:
+        safety = live["financial_safety"]
+        k = st.columns(5)
+        k[0].metric("Ledger integrity", "OK" if safety["ledger_ok"] else "FAILED")
+        k[1].metric("Duplicate check starts", safety["duplicate_check_starts"])
+        k[2].metric("Second reversals", safety["multiple_reversals"])
+        k[3].metric("Unverified evidence applied", safety["unverified_evidence_applied"])
+        cb = live["checks_and_backlog"]
+        k[4].metric(
+            "Unresolved backlog", cb["unresolved"], help=f"in flight: {cb['in_flight_checks']}"
+        )
+        st.subheader(
+            "Recovery decisions: genuine AORTS vs Track B fallback vs honoured fail-closed"
+        )
+        rows = [
+            {
+                "route": r,
+                "source": src,
+                "ticks": n,
+                "checks_dispatched": d["dispatched"].get(src, 0),
+            }
+            for r, d in live["decisions"]["routes"].items()
+            for src, n in d["ticks"].items()
+        ]
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+        st.subheader("Telemetry trust (Track B validator verdicts on the produced windows)")
+        st.dataframe(
+            pd.DataFrame(
+                [
+                    {"route": r, "source": t.get("source_id"), "windows": t["windows"],
+                     "suspicious_share": t["suspicious_share"], **t["verdicts"],
+                     "latest": (t.get("latest") or {}).get("verdict")}
+                    for r, t in live["telemetry"].items()
+                ]
+            ),
+            width="stretch",
+            hide_index=True,
+        )  # fmt: skip
+        c1, c2 = st.columns(2)
+        with c1:
+            st.subheader("Per-bank status traffic (switch counters)")
+            st.dataframe(
+                pd.DataFrame([{"bank": b, **{k: v for k, v in d.items() if k != "rejected_by_reason"},
+                               **d["rejected_by_reason"]} for b, d in live["per_bank_checks"].items()]),
+                width="stretch", hide_index=True,
+            )  # fmt: skip
+            st.subheader("Rejected checks (ledger check facts)")
+            st.json(cb["rejected_checks_by_code"])
+        with c2:
+            st.subheader("Replay / authentication rejections")
+            st.json(live["replay_rejections"])
+            st.subheader("Evidence records and payment latency")
+            st.json(live["evidence"])
+    st.subheader("Stage 10 experiments (evidence package)")
+    runs = v11.stage10_runs(
+        Path(__file__).resolve().parents[3] / "docs/integration/evidence/stage10"
+    )
+    if not runs:
+        st.info("No Stage 10 evidence package found.")
+    for kind, rs in runs.items():
+        st.markdown(f"**{kind}** - {len(rs)} runs")
+        st.dataframe(pd.DataFrame(rs), width="stretch", hide_index=True)
 
 # ------------------------------------------------------------------ audit
 with tab_audit:

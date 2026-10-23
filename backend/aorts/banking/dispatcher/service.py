@@ -65,12 +65,16 @@ class Dispatcher:
         queue=None,
         guard: BudgetGuard | None = None,
         v11=None,
+        v11_watermark=None,
     ):
         s = ctx.settings
         self.ctx = ctx
         # Optional v1.1 controller client (controller_client_v11.V11ControllerClient). When set,
         # every tick uses the v1.1 protocol and its execution gate instead of the /v1 path.
         self.v11 = v11
+        # Optional route_id -> telemetry watermark (integration.v11.delivered_watermark): the
+        # controller must have applied what Track B knows it delivered, or it fails closed.
+        self.v11_watermark = v11_watermark
         self.remitter = remitter
         self.ledger = remitter.ledger
         self.twin = twin or make_store(s, ctx.db)
@@ -382,7 +386,8 @@ class Dispatcher:
         per_route: dict[str, dict] = {}
         dispatched = 0
         for rid in routes:
-            request, response, failure = self.v11.request(rid, now=now)
+            watermark = self.v11_watermark(rid) if self.v11_watermark else ()
+            request, response, failure = self.v11.request(rid, now=now, watermark=watermark)
             route_cands = [c for c in candidates if c.route_id == rid]
             if failure is None:
                 selected = []
@@ -401,6 +406,12 @@ class Dispatcher:
                 admitted_ids = list(plan.admitted)
             else:
                 outcome, refused, decision_id, fallback, admitted_ids = failure, {}, None, True, []
+            # ``decision_id`` names the controller decision that authorised the dispatched checks,
+            # so it is set only for DECISION. Whatever the controller returned is kept as
+            # ``controller_decision_id``; it never labels Track B's own fallback checks.
+            controller_decision_id = decision_id
+            if outcome is not ControllerOutcome.DECISION:
+                decision_id = None
             if outcome is ControllerOutcome.DECISION:
                 to_dispatch, source = self._rows(admitted_ids), "controller"
                 order = {t: i for i, t in enumerate(admitted_ids)}
@@ -446,6 +457,7 @@ class Dispatcher:
                 "outcome": outcome.value,
                 "source": source,
                 "decision_id": decision_id,
+                "controller_decision_id": controller_decision_id,
                 "selected": len(admitted_ids) + len(refused),
                 "admitted": len(admitted_ids),
                 "gate_refused": {k: v.value for k, v in refused.items()},
@@ -460,6 +472,7 @@ class Dispatcher:
                     else (Decision.ACCEPTED if sent else Decision.DEFERRED),
                     "DISPATCHER",
                     route_id=rid,
+                    experiment_id=self.ctx.settings.experiment_id,
                     reason=f"{outcome.value} -> {source}",
                     metadata=per_route[rid],
                 )

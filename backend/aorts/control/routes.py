@@ -185,6 +185,24 @@ def strategy_summary(request: Request):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+@router.get("/aorts/v11/summary")
+def aorts_v11_summary(
+    request: Request,
+    experiment_id: str | None = Query(None, max_length=80, pattern=r"^[A-Za-z0-9._:-]+$"),
+):
+    """AORTS v1.1 security view: decisions vs fallback, telemetry trust, evidence, replay
+    rejections, checks, backlog, per-bank switch traffic and financial-safety checks."""
+    from backend.aorts.dashboard.v11_metrics import live_summary
+
+    switch = st(request).metrics._switch("/api/v1/metrics")
+    counters = switch.get("counters", {}) if isinstance(switch, dict) else {}
+    ledger_ok = st(request).ledger.verify_ledger()["ok"]
+    with ctx_of(request).db.session() as session:
+        return live_summary(
+            session, experiment_id=experiment_id, switch_counters=counters, ledger_ok=ledger_ok
+        )
+
+
 # ---------------------------------------------------------------- controller adapter (Track A)
 @router.get("/controller/health")
 def controller_health(request: Request):

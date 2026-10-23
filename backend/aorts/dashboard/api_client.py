@@ -85,6 +85,10 @@ class ControlClient:
         r = self.http.get(path, headers=self.admin)
         return r.status_code, r.json()
 
+    def aorts_v11(self, experiment_id: str | None = None):
+        params = {"experiment_id": experiment_id} if experiment_id else {}
+        return self._get("/api/v1/aorts/v11/summary", **params)
+
     def twins(self, max_txns: int = 100):
         return self._get("/api/v1/twins", max_txns=max_txns)
 

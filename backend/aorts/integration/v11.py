@@ -28,6 +28,7 @@ so redelivery after a crash is harmless. No exactly-once network delivery is cla
 
 from __future__ import annotations
 
+import hashlib
 import math
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
@@ -46,7 +47,7 @@ from backend.aorts.banking.ledger.models import (
 from backend.aorts.contracts.enums import TelemetryVerdict
 from backend.aorts.contracts.requests import RouteTelemetry as TrackBTelemetry
 from backend.aorts.security.telemetry_validator import TelemetryValidator
-from contracts.v1_1 import ErrorCode, TimingPolicy
+from contracts.v1_1 import ErrorCode, SourceSequenceMark, TimingPolicy
 from contracts.v1_1.adapters import (
     TRACKB_REJECTION_CODES,
     Adapted,
@@ -309,6 +310,8 @@ def measure_window(
                 EvidenceRecord.created_at >= start,
                 EvidenceRecord.created_at < end,
                 EvidenceRecord.latency_ms.is_not(None),
+                # payment-path latency: what the switch's route measurement also observes
+                EvidenceRecord.evidence_kind == "ORIGINAL_PAYMENT_RESPONSE",
             )
         ).all()
     )
@@ -394,8 +397,9 @@ class WindowProducer:
     def close(self, route_id: str, end: datetime | None = None, *, report_override=None):
         """Measure, validate and persist the next window of ``route_id``; returns the row.
 
-        ``report_override`` lets a test (or an attack harness) replace the reported values to
-        model a compromised source; the stored measurement keeps the honest counts.
+        ``report_override`` (a dict, or a function of the honest report returning one) lets a
+        test or an attack harness replace the reported values to model a compromised source;
+        the stored measurement keeps the honest counts.
         """
 
         source = telemetry_source(route_id)
@@ -425,10 +429,10 @@ class WindowProducer:
                 live=live,
             )
             d = m.duration_s
-            determined = (
-                m.payment_responses + m.payment_timeouts + m.check_answers + (m.check_timeouts)
-            )
-            completed = m.payment_responses + m.check_answers
+            # The report the validator cross-checks is the payment path only: the switch's
+            # independent measurement counts payments, so the remitter's own status checks must
+            # not inflate it (they are added back, as a stated split, in the v1.1 export).
+            determined = m.payment_responses + m.payment_timeouts
             reported = {
                 "event_id": f"tw-{self.experiment_id}-{source}-{sequence}"[:80],
                 "source_id": source,
@@ -437,13 +441,13 @@ class WindowProducer:
                 "timestamp": end,
                 "latency_p50_ms": _pct(m.latencies_ms, 0.5),
                 "latency_p95_ms": _pct(m.latencies_ms, 0.95),
-                "throughput_tps": completed / d,
-                "timeout_rate": (m.payment_timeouts + m.check_timeouts) / determined
-                if determined
-                else None,
+                "throughput_tps": m.payment_responses / d,
+                "timeout_rate": m.payment_timeouts / determined if determined else None,
                 "backlog": m.outstanding,
             }
-            if report_override:
+            if callable(report_override):  # a lie computed from the honest report
+                reported.update(report_override(dict(reported)))
+            elif report_override:
                 reported.update(report_override)
             obs = TrackBTelemetry(
                 **{k: v for k, v in reported.items() if k in TrackBTelemetry.model_fields}
@@ -495,7 +499,10 @@ def export_window(row: TelemetryWindow):
         "timestamp": row.observed_at,
         "latency_p50_ms": rep.get("latency_p50_ms"),
         "latency_p95_ms": rep.get("latency_p95_ms"),
-        "throughput_tps": rep.get("throughput_tps"),
+        # total completions on the route: reported payment completions + own check answers
+        "throughput_tps": None
+        if rep.get("throughput_tps") is None
+        else rep["throughput_tps"] + m["check_answers"] / d,
         "timeout_rate": rep.get("timeout_rate"),
         "backlog": rep.get("backlog"),
     }
@@ -505,11 +512,9 @@ def export_window(row: TelemetryWindow):
         "verdict": row.verdict,
         "reasons": row.reasons,
     }
-    determined = (
-        m["payment_responses"] + m["payment_timeouts"] + m["check_answers"] + m["check_timeouts"]
-    )
-    timeouts = m["payment_timeouts"] + m["check_timeouts"]
-    honest = rep.get("throughput_tps") == (m["payment_responses"] + m["check_answers"]) / d
+    determined = m["payment_responses"] + m["payment_timeouts"]  # payment path, as reported
+    timeouts = m["payment_timeouts"]
+    honest = rep.get("throughput_tps") == m["payment_responses"] / d
     boundary = {
         "experiment_id": row.experiment_id,
         "observation_scope": "REMITTER_OWN_TRAFFIC",
@@ -571,6 +576,28 @@ class Delivery:
         self.batch = batch
         self.max_backoff_s = max_backoff_s
 
+    @property
+    def cursor_stream(self) -> str:
+        """The delivery cursor of this experiment's outbox stream (one cursor per experiment:
+        a shared cursor let one experiment's delivery skip past another's rows)."""
+
+        key = f"events:{self.experiment_id}"
+        if len(key) <= 40:
+            return key
+        return "events:" + hashlib.sha256(self.experiment_id.encode()).hexdigest()[:33]
+
+    def replay_events(self) -> None:
+        """Operator procedure after a controller restart: re-send the outbox from the start.
+
+        Intake is idempotent (duplicates are acknowledged with 200), so the restarted
+        controller rebuilds its transaction twins without any second financial effect.
+        """
+
+        with self.db.session() as s:
+            state = s.get(V11DeliveryState, self.cursor_stream)
+            if state is not None:
+                state.last_id, state.attempts, state.next_attempt_at = 0, 0, None
+
     def _post(self, path: str, message) -> httpx.Response:
         return self.client.post(
             f"{PATH_PREFIX}/{path}",
@@ -625,7 +652,7 @@ class Delivery:
     def deliver_events(self, now: datetime | None = None) -> DeliveryReport:
         report = DeliveryReport()
         with self.db.session() as s:
-            st = self._state(s, "events")
+            st = self._state(s, self.cursor_stream)
             if st.next_attempt_at and (now or datetime.now(UTC)) < st.next_attempt_at:
                 report.retry_pending = True
                 return report
@@ -750,9 +777,32 @@ class Delivery:
                         body.get("message", ""),
                         adapted.value.model_dump(mode="json"),
                     )
+                    row.last_error = f"refused: {body.get('error_code', 'REFUSED')}"
                     report.dead_lettered += 1
                 else:
                     report.delivered += outcome == "delivered"
                     report.duplicates += outcome == "duplicate"
+                    row.last_error = None  # acknowledged by the controller
                 row.delivered_at = datetime.now(UTC)
         return report
+
+
+def delivered_watermark(db, experiment_id: str, route_id: str) -> tuple[SourceSequenceMark, ...]:
+    """Highest telemetry sequence the controller acknowledged for ``route_id`` (204 or 200).
+
+    Sent as ``min_telemetry_watermark`` so a controller that has fallen behind what Track B
+    knows it delivered (a restart, a lost update) fails closed instead of deciding on older
+    state. Refused or not-yet-delivered windows never raise the watermark.
+    """
+
+    source = telemetry_source(route_id)
+    with db.session() as s:
+        seq = s.execute(
+            select(func.max(TelemetryWindow.sequence)).where(
+                TelemetryWindow.experiment_id == experiment_id,
+                TelemetryWindow.source_id == source,
+                TelemetryWindow.delivered_at.is_not(None),
+                TelemetryWindow.last_error.is_(None),
+            )
+        ).scalar()
+    return () if seq is None else (SourceSequenceMark(source_id=source, sequence=seq),)

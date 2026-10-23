@@ -9,6 +9,7 @@ transaction AMBIGUOUS.
 from __future__ import annotations
 
 import logging
+import re
 import time
 from datetime import UTC, datetime
 
@@ -40,6 +41,25 @@ logger = logging.getLogger("aorts.remitter")
 SIMULATIONS = {"hold", "lost-response", "timeout"}
 # Fields covered by the switch's response signature (request_auth._response_message).
 SIGNED_RESPONSE_FIELDS = ["http_status", "path", "timestamp", "body_sha256"]
+
+_DIGITS = re.compile(r"^[0-9]+$")
+_HEX = re.compile(r"^[0-9a-f]+$")
+_TOKEN = re.compile(r"^[A-Za-z0-9._:-]+$")
+
+
+def _fit(value, limit: int, pattern: re.Pattern | None = None) -> str | None:
+    """``value`` as stored evidence text, or None when it is absent or not well-formed."""
+
+    if value is None or isinstance(value, (dict, list)):
+        return None
+    text_value = str(value)
+    if not text_value or len(text_value) > limit:
+        return None
+    if pattern is not None and not pattern.match(text_value):
+        return None
+    return text_value
+
+
 # Switch answers that are not a financial outcome; the switch's own words are kept.
 INCONCLUSIVE = {SwitchStatus.PENDING: "PENDING", SwitchStatus.NOT_FOUND: "UNKNOWN"}
 
@@ -75,6 +95,8 @@ class RemitterService:
             body = resp.json()
         except ValueError:
             return None
+        if not isinstance(body, dict):  # not an answer object: no evidence at all
+            return None
         if not authentic:
             self.ctx.metrics.inc("unauthenticated_switch_responses")
             log_event(
@@ -101,7 +123,9 @@ class RemitterService:
         """Persist the received response and its verification result (v1.1 provenance).
 
         The signature material is stored exactly as received; ``verified`` is the result of
-        ``verify_response`` above. Nothing is signed or asserted here.
+        ``verify_response`` above. Nothing is signed or asserted here. A header or field that is
+        not well-formed (duplicated, oversized, wrong alphabet) is stored as NULL instead of
+        failing the check: such a response can never verify (``verify_response`` rejects it).
         """
         from backend.aorts.banking.ledger.models import EvidenceRecord
         from backend.aorts.contracts.events import new_id
@@ -117,12 +141,12 @@ class RemitterService:
                     issuer_id="SWITCH",
                     path=path,
                     http_status=resp.status_code,
-                    reported_status=str(body.get("status")) if body.get("status") else None,
-                    reported_transaction_id=str(body.get("transaction_id") or "") or None,
+                    reported_status=_fit(body.get("status"), 16),
+                    reported_transaction_id=_fit(body.get("transaction_id"), 80),
                     body_sha256=body_digest(resp.content),
-                    response_timestamp=headers.get(H_RESPONSE_TIMESTAMP),
-                    key_id=headers.get(H_RESPONSE_KEY_ID),
-                    signature_hex=headers.get(H_RESPONSE_SIGNATURE),
+                    response_timestamp=_fit(headers.get(H_RESPONSE_TIMESTAMP), 20, _DIGITS),
+                    key_id=_fit(headers.get(H_RESPONSE_KEY_ID), 64, _TOKEN),
+                    signature_hex=_fit(headers.get(H_RESPONSE_SIGNATURE), 128, _HEX),
                     signature_alg=f"{ALGORITHM}-RESPONSE",
                     signed_fields=SIGNED_RESPONSE_FIELDS,
                     verified=bool(authentic),
@@ -335,7 +359,9 @@ class RemitterService:
         )
         return {
             "admitted": True,
-            "status": evidence.status.value if evidence else None,
+            # only a verified answer is reported as a status (also to controller.observe)
+            "status": usable.status.value if usable else None,
+            "unverified_status": evidence.status.value if evidence and not usable else None,
             "latency_ms": latency,
             "check_id": check_id,
             "evidence_id": evidence.evidence_id if evidence else None,

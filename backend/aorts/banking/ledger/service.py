@@ -776,6 +776,20 @@ class LedgerService:
             metadata={"evidence_id": (evidence or {}).get("evidence_id")},
         )
 
+    @staticmethod
+    def _failure_evidence_id(s: Session, txn_id: str) -> str | None:
+        """The evidence id recorded on the transition into CONFIRMED_FAILED, if any."""
+        row = s.execute(
+            select(TransactionEvent)
+            .where(
+                TransactionEvent.transaction_id == txn_id,
+                TransactionEvent.new_state == TxnState.CONFIRMED_FAILED,
+            )
+            .order_by(TransactionEvent.new_version.desc())
+            .limit(1)
+        ).scalar()
+        return (row.metadata_json or {}).get("evidence_id") if row else None
+
     def _reverse_locked(
         self, s: Session, ctx: _Ctx, txn: Transaction, op_id: str, reason: str, evidence: dict
     ) -> None:
@@ -926,7 +940,11 @@ class LedgerService:
                     )
                 inv.assert_version(txn.version, expected_version)
                 self._lock_accounts(s, txn)
-                self._reverse_locked(s, ctx, txn, operation_id, reason, {"requested_by": actor})
+                evidence = {"requested_by": actor}
+                if failure_evidence := self._failure_evidence_id(s, txn.transaction_id):
+                    # v1.1 provenance: the verified failure evidence that authorises this reversal
+                    evidence["evidence_id"] = failure_evidence
+                self._reverse_locked(s, ctx, txn, operation_id, reason, evidence)
                 self._commit(s, ctx)
                 return self._result(
                     txn, Decision.ACCEPTED, "reversed", prev=prev, op_id=operation_id

@@ -409,7 +409,7 @@ def test_08_duplicate_delivery_is_harmless(world):
     txn_id = pay(w.st, simulate="lost-response").json()["transaction"]["transaction_id"]
     assert w.delivery.deliver_events().delivered == 2
     with w.st.db.session() as s:  # simulate a crash before the cursor advanced
-        s.get(V11DeliveryState, "events").last_id = 0
+        s.get(V11DeliveryState, w.delivery.cursor_stream).last_id = 0
     again = w.delivery.deliver_events()
     assert again.duplicates == 2 and again.delivered == 0 and again.dead_lettered == 0
     assert w.core._txn_twin.snapshot(EXP, txn_id).version == 2
