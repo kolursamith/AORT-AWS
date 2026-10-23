@@ -1,0 +1,72 @@
+{
+  "recorded_at": "2026-10-22T10:46:39.270373+00:00",
+  "capacity": {
+    "switch_core_workers": 8,
+    "switch_base_processing_ms": 40,
+    "switch_check_workers": 0
+  },
+  "timeline": {
+    "lead_s": 4.0,
+    "attack_s": 8.0,
+    "tail_s": 6.0
+  },
+  "rule": "smallest rate the harness delivers (>= 90 % of target) at which undefended legitimate checks degrade: success < 95 % during the attack or p95 >= 3x the pre-attack p95",
+  "ramp": [
+    {
+      "target_rps": 25,
+      "achieved_rps": 25.0,
+      "legit_p95_before_ms": 107.82,
+      "legit_p95_during_ms": 64.33,
+      "legit_success_during": 1.0,
+      "switch_overloaded_checks": 0,
+      "payment_p95_ms": 290.33
+    },
+    {
+      "target_rps": 50,
+      "achieved_rps": 50.0,
+      "legit_p95_before_ms": 68.47,
+      "legit_p95_during_ms": 55.51,
+      "legit_success_during": 1.0,
+      "switch_overloaded_checks": 0,
+      "payment_p95_ms": 280.72
+    },
+    {
+      "target_rps": 100,
+      "achieved_rps": 100.0,
+      "legit_p95_before_ms": 87.65,
+      "legit_p95_during_ms": 59.88,
+      "legit_success_during": 1.0,
+      "switch_overloaded_checks": 0,
+      "payment_p95_ms": 294.49
+    },
+    {
+      "target_rps": 150,
+      "achieved_rps": 150.0,
+      "legit_p95_before_ms": 84.89,
+      "legit_p95_during_ms": 573.96,
+      "legit_success_during": 0.8333,
+      "switch_overloaded_checks": 0,
+      "payment_p95_ms": 484.73
+    },
+    {
+      "target_rps": 200,
+      "achieved_rps": 200.0,
+      "legit_p95_before_ms": 68.82,
+      "legit_p95_during_ms": 556.52,
+      "legit_success_during": 0.9211,
+      "switch_overloaded_checks": 0,
+      "payment_p95_ms": 449.56
+    },
+    {
+      "target_rps": 300,
+      "achieved_rps": 300.0,
+      "legit_p95_before_ms": 62.43,
+      "legit_p95_during_ms": 490.11,
+      "legit_success_during": 0.6923,
+      "switch_overloaded_checks": 0,
+      "payment_p95_ms": 445.81
+    }
+  ],
+  "chosen_attack_rps": 150,
+  "harm_observed_at_chosen_rate": true
+}

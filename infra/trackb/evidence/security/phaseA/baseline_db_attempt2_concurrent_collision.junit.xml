@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="184" time="131.740" timestamp="2026-10-22T15:49:06.796173+05:30" hostname="LAPTOP-6AAU1R3S"><testcase classname="tests.trackb.acceptance.test_protected_security" name="test_P1_uncorroborated_false_high_capacity_telemetry_cannot_raise_budget" time="1.409" /><testcase classname="tests.trackb.acceptance.test_protected_security" name="test_P2_replayed_or_duplicated_requests_cause_no_duplicate_financial_operation" time="1.317" /><testcase classname="tests.trackb.acceptance.test_protected_security" name="test_P3_status_check_flooding_is_rate_limited" time="2.234" /><testcase classname="tests.trackb.acceptance.test_protected_security" name="test_P4_recovery_traffic_cannot_consume_capacity_reserved_for_primary_payments" time="3.918" /><testcase classname="tests.trackb.acceptance.test_protected_security" name="test_P5_low_confidence_telemetry_activates_conservative_behaviour" time="0.405" /><testcase classname="tests.trackb.contract.test_contracts" name="test_domain_event_fixtures[ambiguous_transaction]" time="0.003" /><testcase classname="tests.trackb.contract.test_contracts" name="test_domain_event_fixtures[successful_transaction]" time="0.002" /><testcase classname="tests.trackb.contract.test_contracts" name="test_domain_event_fixtures[failed_transaction]" time="0.002" /><testcase classname="tests.trackb.contract.test_contracts" name="test_duplicate_response_fixture_is_a_valid_state_event" time="0.001" /><testcase classname="tests.trackb.contract.test_contracts" name="test_telemetry_fixture" time="0.002" /><testcase classname="tests.trackb.contract.test_contracts" name="test_float_amounts_and_unknown_fields_rejected" time="0.003" /><testcase classname="tests.trackb.contract.test_contracts" name="test_state_machine_is_complete" time="0.001" /><testcase classname="tests.trackb.integration.test_aorts_integration" name="test_gate_refuses_reversal_without_authenticated_failure" time="0.406" /><testcase classname="tests.trackb.integration.test_aorts_integration" name="test_gate_refuses_settlement_on_unauthenticated_reconciliation_evidence" time="0.439" /><testcase classname="tests.trackb.integration.test_aorts_integration" name="test_gate_refuses_duplicate_operation" time="0.569" /><testcase classname="tests.trackb.integration.test_aorts_integration" name="test_every_committed_operation_carries_gate_facts" time="0.694" /><testcase classname="tests.trackb.integration.test_aorts_integration" name="test_aorts_controller_resolves_backlog_with_explained_decisions" time="2.369" /><testcase classname="tests.trackb.integration.test_aorts_integration" name="test_twin_reconstruction_from_recorded_events_matches_incremental" time="1.548" /><testcase classname="tests.trackb.integration.test_bulkhead" name="test_shared_pool_lets_undefended_flood_hurt_payments" time="3.827" /><testcase classname="tests.trackb.integration.test_bulkhead" name="test_bulkhead_keeps_payments_flowing_during_undefended_flood" time="4.090" /><testcase classname="tests.trackb.integration.test_bulkhead" name="test_primary_reserve_protects_payments_even_on_a_shared_pool" time="3.724" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_health_endpoints" time="0.502" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_dashboard_summary_has_meaningful_metrics" time="0.930" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_admin_and_lab_endpoints_are_protected" time="0.291" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_lab_disabled_returns_404" time="0.280" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_fault_injection_via_admin_api" time="0.914" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_replay_attack_via_lab" time="0.918"><failure message="sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedTable) relation &quot;experiment_runs&quot; does not exist&#10;LINE 2: FROM experiment_runs &#10;             ^&#10;[SQL: SELECT experiment_runs.experiment_id AS experiment_runs_experiment_id, experiment_runs.scenario AS experiment_runs_scenario, experiment_runs.policy AS experiment_runs_policy, experiment_runs.seed AS experiment_runs_seed, experiment_runs.config AS experiment_runs_config, experiment_runs.environment AS experiment_runs_environment, experiment_runs.status AS experiment_runs_status, experiment_runs.results AS experiment_runs_results, experiment_runs.started_at AS experiment_runs_started_at, experiment_runs.ended_at AS experiment_runs_ended_at &#10;FROM experiment_runs &#10;WHERE experiment_runs.experiment_id = %(pk_1)s::VARCHAR]&#10;[parameters: {'pk_1': 'exp-replay-20261022T101937-86ba'}]&#10;(Background on this error at: https://sqlalche.me/e/20/f405)">self = &lt;sqlalchemy.engine.base.Connection object at 0x000001723BFD56D0&gt;
+dialect = &lt;sqlalchemy.dialects.postgresql.psycopg.PGDialect_psycopg object at 0x000001723A2C9810&gt;
+context = &lt;sqlalchemy.dialects.postgresql.psycopg.PGExecutionContext_psycopg object at 0x00000172325C9AE0&gt;
+statement = &lt;sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x000001723ACA20D0&gt;
+parameters = [{'pk_1': 'exp-replay-20261022T101937-86ba'}]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -&gt; CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+&gt;                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py:951: in do_execute
+    cursor.execute(statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;psycopg.Cursor [closed] [IDLE] (host=127.0.0.1 port=55432 user=aorts database=aorts_test) at 0x1723bf37110&gt;
+query = 'SELECT experiment_runs.experiment_id AS experiment_runs_experiment_id, experiment_runs.scenario AS experiment_runs_sc....ended_at AS experiment_runs_ended_at \nFROM experiment_runs \nWHERE experiment_runs.experiment_id = %(pk_1)s::VARCHAR'
+params = {'pk_1': 'exp-replay-20261022T101937-86ba'}, prepare = None
+binary = None
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool | None = None,
+    ) -&gt; Self:
+        """
+        Execute a query or command to the database.
+        """
+        try:
+            with self._conn.lock:
+                self._conn.wait(
+                    self._execute_gen(query, params, prepare=prepare, binary=binary)
+                )
+        except e._NO_TRACEBACK as ex:
+&gt;           raise ex.with_traceback(None)
+E           psycopg.errors.UndefinedTable: relation "experiment_runs" does not exist
+E           LINE 2: FROM experiment_runs 
+E                        ^
+
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\cursor.py:97: UndefinedTable
+
+The above exception was the direct cause of the following exception:
+
+stack_factory = &lt;function stack_factory.&lt;locals&gt;._make at 0x00000172325C5900&gt;
+
+    def test_replay_attack_via_lab(stack_factory):
+        st = stack_factory(with_control=True)
+        exp = st.control.post("/api/v1/security/attacks/replay/run", json={}, headers=ADMIN).json()[
+            "experiment_id"
+        ]
+&gt;       result = wait_experiment(st.control, exp)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\trackb\integration\test_control_plane.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\trackb\integration\test_control_plane.py:17: in wait_experiment
+    body = control.get(f"/api/v1/admin/experiments/{exp_id}", headers=ADMIN).json()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py:457: in request
+    return super().request(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py:354: in handle_request
+    raise exc
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Python314\Lib\concurrent\futures\_base.py:454: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Python314\Lib\concurrent\futures\_base.py:396: in __get_result
+    raise self._exception
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\applications.py:1216: in __call__
+    await super().__call__(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:2788: in app
+    await route.handle(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:1819: in handle
+    await self.original_router.handle(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:2871: in handle
+    await included_router._handle_selected(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:1845: in _handle_selected
+    await original_route.handle(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:1308: in handle
+    await effective_context.app(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:165: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:151: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:727: in app
+    raw_response = await run_endpoint_function(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:362: in run_endpoint_function
+    return await run_in_threadpool(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py:1100: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
+    return function(**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^
+backend\aorts\control\routes.py:406: in get_experiment
+    exp = st(request).registry.get(experiment_id)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\aorts\control\experiments.py:115: in get
+    row = s.get(ExperimentRun, exp_id)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py:3680: in get
+    return self._get_impl(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py:3859: in _get_impl
+    return db_load_fn(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\loading.py:695: in load_on_pk_identity
+    session.execute(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py:2351: in execute
+    return self._execute_internal(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py:2249: in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\context.py:306: in orm_execute_statement
+    result = conn.execute(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1419: in execute
+    return meth(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\sql\elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1641: in _execute_clauseelement
+    ret = self._execute_context(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1846: in _execute_context
+    return self._exec_single_context(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py:951: in do_execute
+    cursor.execute(statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;psycopg.Cursor [closed] [IDLE] (host=127.0.0.1 port=55432 user=aorts database=aorts_test) at 0x1723bf37110&gt;
+query = 'SELECT experiment_runs.experiment_id AS experiment_runs_experiment_id, experiment_runs.scenario AS experiment_runs_sc....ended_at AS experiment_runs_ended_at \nFROM experiment_runs \nWHERE experiment_runs.experiment_id = %(pk_1)s::VARCHAR'
+params = {'pk_1': 'exp-replay-20261022T101937-86ba'}, prepare = None
+binary = None
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool | None = None,
+    ) -&gt; Self:
+        """
+        Execute a query or command to the database.
+        """
+        try:
+            with self._conn.lock:
+                self._conn.wait(
+                    self._execute_gen(query, params, prepare=prepare, binary=binary)
+                )
+        except e._NO_TRACEBACK as ex:
+&gt;           raise ex.with_traceback(None)
+E           sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedTable) relation "experiment_runs" does not exist
+E           LINE 2: FROM experiment_runs 
+E                        ^
+E           [SQL: SELECT experiment_runs.experiment_id AS experiment_runs_experiment_id, experiment_runs.scenario AS experiment_runs_scenario, experiment_runs.policy AS experiment_runs_policy, experiment_runs.seed AS experiment_runs_seed, experiment_runs.config AS experiment_runs_config, experiment_runs.environment AS experiment_runs_environment, experiment_runs.status AS experiment_runs_status, experiment_runs.results AS experiment_runs_results, experiment_runs.started_at AS experiment_runs_started_at, experiment_runs.ended_at AS experiment_runs_ended_at 
+E           FROM experiment_runs 
+E           WHERE experiment_runs.experiment_id = %(pk_1)s::VARCHAR]
+E           [parameters: {'pk_1': 'exp-replay-20261022T101937-86ba'}]
+E           (Background on this error at: https://sqlalche.me/e/20/f405)
+
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\cursor.py:97: ProgrammingError</failure></testcase><testcase classname="tests.trackb.integration.test_control_plane" name="test_poisoning_attack_via_lab_rejects_live_samples" time="2.342" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_flooding_attack_via_lab" time="3.162"><failure message="KeyError: 'status'">stack_factory = &lt;function stack_factory.&lt;locals&gt;._make at 0x000001723AFB2DA0&gt;
+
+    def test_flooding_attack_via_lab(stack_factory):
+        st = stack_factory(with_control=True, bank_check_rate_per_sec=5, bank_check_burst=5)
+        exp = st.control.post(
+            "/api/v1/security/attacks/flooding/run",
+            json={"duration_seconds": 1.5, "rate_per_second": 40, "defenses_enabled": True},
+            headers=ADMIN,
+        ).json()["experiment_id"]
+&gt;       result = wait_experiment(st.control, exp)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\trackb\integration\test_control_plane.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+control = &lt;starlette.testclient.TestClient object at 0x000001723AFE1D00&gt;
+exp_id = 'exp-flooding-20261022T101942-97ae', timeout = 120
+
+    def wait_experiment(control, exp_id, timeout=120):
+        deadline = time.time() + timeout
+        while time.time() &lt; deadline:
+            body = control.get(f"/api/v1/admin/experiments/{exp_id}", headers=ADMIN).json()
+&gt;           if body["status"] != "RUNNING":
+               ^^^^^^^^^^^^^^
+E           KeyError: 'status'
+
+tests\trackb\integration\test_control_plane.py:18: KeyError</failure></testcase><testcase classname="tests.trackb.integration.test_control_plane" name="test_telemetry_endpoint_requires_registered_probe" time="0.435" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_outbox_relay_and_idempotent_consumer" time="0.609" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_reconcile_escalated_via_control" time="2.073" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_controller_decision_dry_run" time="0.266" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_twins_endpoint_and_rebuild_after_reset" time="0.739" /><testcase classname="tests.trackb.integration.test_control_plane" name="test_controller_switch_endpoint_validates_mode" time="0.376" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_successful_payment_debits_once_and_credits_beneficiary" time="0.549" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_payment_to_unknown_beneficiary_account_fails_and_is_reversed" time="0.547" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_invalid_payment_rejected_with_structured_error" time="0.446" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_insufficient_funds_rejected_without_ledger_effect" time="0.319" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_invalid_route_rejected" time="0.456" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_duplicate_idempotency_key_does_not_debit_twice" time="0.641" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_idempotency_key_with_different_body_is_conflict" time="0.574" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_concurrent_identical_payment_requests_debit_once" time="0.494" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_lost_response_makes_payment_ambiguous_not_failed" time="0.452" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_switch_unavailable_leaves_transaction_ambiguous" time="0.440" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_unsigned_payment_request_rejected" time="0.294" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_simulation_header_requires_admin" time="0.296" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_history_is_paginated" time="0.581" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_audit_chain_verifies" time="0.603" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_concurrent_different_payments_from_same_sender_do_not_deadlock" time="2.363" /><testcase classname="tests.trackb.integration.test_payment_flow" name="test_mixed_concurrent_debits_settlements_reversals_same_senders" time="4.224" /><testcase classname="tests.trackb.integration.test_reconciliation" name="test_escalated_never_credited_payment_is_reconciled_as_reversed_once" time="1.875" /><testcase classname="tests.trackb.integration.test_reconciliation" name="test_escalated_but_actually_credited_payment_is_reconciled_as_success" time="1.961" /><testcase classname="tests.trackb.integration.test_reconciliation" name="test_reconcile_requires_escalated_state_and_role" time="0.486" /><testcase classname="tests.trackb.integration.test_reconciliation" name="test_reconciliation_channel_is_rate_limited" time="0.272" /><testcase classname="tests.trackb.integration.test_reconciliation" name="test_quarantine_release_is_admin_only[False-AMBIGUOUS]" time="0.591" /><testcase classname="tests.trackb.integration.test_reconciliation" name="test_quarantine_release_is_admin_only[True-HANDOFF_UDIR]" time="0.514" /><testcase classname="tests.trackb.integration.test_recovery" name="test_e8_lost_response_resolved_as_success_by_status_check" time="0.589" /><testcase classname="tests.trackb.integration.test_recovery" name="test_never_received_payment_is_fenced_then_reversed_once" time="0.550" /><testcase classname="tests.trackb.integration.test_recovery" name="test_beneficiary_response_lost_after_credit_resolves_as_success" time="0.859" /><testcase classname="tests.trackb.integration.test_recovery" name="test_route_isolation_bank_b_degraded_bank_c_healthy" time="0.732" /><testcase classname="tests.trackb.integration.test_recovery" name="test_deadline_escalates_instead_of_inventing_outcome" time="1.645" /><testcase classname="tests.trackb.integration.test_recovery" name="test_rate_limited_check_does_not_consume_allowance" time="0.724" /><testcase classname="tests.trackb.integration.test_recovery" name="test_controller_unavailable_uses_conservative_fallback" time="1.635" /><testcase classname="tests.trackb.integration.test_recovery" name="test_duplicate_dispatch_job_is_harmless" time="1.021" /><testcase classname="tests.trackb.integration.test_team_contract" name="test_v1_payment_returns_contract_transaction_event_and_is_idempotent" time="0.553" /><testcase classname="tests.trackb.integration.test_team_contract" name="test_v1_payment_validation_and_auth" time="0.296" /><testcase classname="tests.trackb.integration.test_team_contract" name="test_v1_lost_response_stays_unknown_then_status_check_is_authoritative" time="0.488" /><testcase classname="tests.trackb.integration.test_team_contract" name="test_v1_status_check_binds_bank_identity_and_is_rate_limited" time="0.556" /><testcase classname="tests.trackb.integration.test_team_contract" name="test_v1_unknown_outcome_is_never_authoritative" time="0.317" /><testcase classname="tests.trackb.integration.test_team_contract" name="test_v1_beneficiary_evidence_is_authoritative_after_credit" time="0.562" /><testcase classname="tests.trackb.integration.test_team_contract" name="test_v1_events_and_telemetry_on_control" time="0.800" /><testcase classname="tests.trackb.integration.test_team_contract" name="test_shared_contract_controller_drives_recovery" time="0.990" /><testcase classname="tests.trackb.integration.test_team_contract" name="test_expired_or_foreign_decisions_fall_back" time="0.756" /><testcase classname="tests.trackb.security.test_request_auth" name="test_valid_signature_and_identity" time="0.002" /><testcase classname="tests.trackb.security.test_request_auth" name="test_rejections[&lt;lambda&gt;-AUTH_INVALID_SIGNATURE0]" time="0.002" /><testcase classname="tests.trackb.security.test_request_auth" name="test_rejections[&lt;lambda&gt;-AUTH_UNKNOWN_KEY]" time="0.002" /><testcase classname="tests.trackb.security.test_request_auth" name="test_rejections[&lt;lambda&gt;-AUTH_MISSING]" time="0.002" /><testcase classname="tests.trackb.security.test_request_auth" name="test_rejections[&lt;lambda&gt;-AUTH_INVALID_SIGNATURE1]" time="0.002" /><testcase classname="tests.trackb.security.test_request_auth" name="test_path_and_method_are_signed" time="0.001" /><testcase classname="tests.trackb.security.test_request_auth" name="test_expired_timestamp_and_repeated_nonce" time="0.001" /><testcase classname="tests.trackb.security.test_request_auth" name="test_bad_signature_does_not_burn_nonce" time="0.002" /><testcase classname="tests.trackb.security.test_request_auth" name="test_key_rotation_both_versions_valid_and_signing_pin" time="0.001" /><testcase classname="tests.trackb.security.test_request_auth" name="test_short_secret_rejected" time="0.001" /><testcase classname="tests.trackb.security.test_request_auth" name="test_response_signature_binds_identity_status_and_body" time="0.001" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_transition_map_rejects_illegal_moves" time="0.001" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_every_state_has_a_projection_and_quarantine_is_not_an_outcome" time="0.001" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_timeout_is_not_evidence" time="0.001" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_unknown_outcome_does_not_permit_reversal" time="0.352" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_unauthenticated_failure_evidence_rejected" time="0.346" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_pending_evidence_preserves_uncertainty" time="0.401" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_reversal_exactly_once_and_balanced" time="0.473" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_operation_id_cannot_be_reused_for_another_transaction" time="0.551" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_stale_version_rejected" time="0.337" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_verify_ledger_detects_tampering" time="0.566" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_customer_balance_cannot_go_negative_at_db_level" time="0.251" /><testcase classname="tests.trackb.test_ledger_invariants" name="test_quarantine_blocks_automated_evidence" time="0.353" /><testcase classname="tests.trackb.test_rate_limits" name="test_per_bank_quota_enforced_and_other_bank_unaffected" time="0.001" /><testcase classname="tests.trackb.test_rate_limits" name="test_claimed_bank_id_cannot_evade_quota" time="0.001" /><testcase classname="tests.trackb.test_rate_limits" name="test_credit_exhaustion_and_rejections_consume_nothing" time="0.001" /><testcase classname="tests.trackb.test_rate_limits" name="test_route_limit_isolates_routes" time="0.001" /><testcase classname="tests.trackb.test_rate_limits" name="test_global_ceiling" time="0.001" /><testcase classname="tests.trackb.test_rate_limits" name="test_tier2_allocation_proportional_with_floor" time="0.001" /><testcase classname="tests.trackb.test_rate_limits" name="test_flood_rejected_at_switch_before_downstream_work" time="3.541" /><testcase classname="tests.trackb.test_rate_limits" name="test_flood_with_defenses_disabled_admits_attacker" time="3.180" /><testcase classname="tests.trackb.test_rate_limits" name="test_spoofed_bank_id_rejected" time="1.240" /><testcase classname="tests.trackb.test_replay_protection" name="test_ledger_integrity_after_all_replays[auto_reverse]" time="2.541" /><testcase classname="tests.trackb.test_replay_protection" name="test_ledger_integrity_after_all_replays[explicit_reverse]" time="2.773" /><testcase classname="tests.trackb.test_replay_protection" name="test_sequential_duplicate[auto_reverse]" time="2.467" /><testcase classname="tests.trackb.test_replay_protection" name="test_sequential_duplicate[explicit_reverse]" time="2.482" /><testcase classname="tests.trackb.test_replay_protection" name="test_stale_version_and_stale_timestamp[auto_reverse]" time="2.381" /><testcase classname="tests.trackb.test_replay_protection" name="test_stale_version_and_stale_timestamp[explicit_reverse]" time="2.354" /><testcase classname="tests.trackb.test_replay_protection" name="test_repeated_reversal_posts_once[auto_reverse]" time="2.268" /><testcase classname="tests.trackb.test_replay_protection" name="test_repeated_reversal_posts_once[explicit_reverse]" time="2.540" /><testcase classname="tests.trackb.test_replay_protection" name="test_concurrent_duplicate_events_apply_once[auto_reverse]" time="3.287" /><testcase classname="tests.trackb.test_replay_protection" name="test_concurrent_duplicate_events_apply_once[explicit_reverse]" time="1.976" /><testcase classname="tests.trackb.test_replay_protection" name="test_concurrent_reversals_post_once[auto_reverse]" time="2.043" /><testcase classname="tests.trackb.test_replay_protection" name="test_concurrent_reversals_post_once[explicit_reverse]" time="1.817" /><testcase classname="tests.trackb.test_replay_protection" name="test_duplicate_after_close[auto_reverse]" time="1.521" /><testcase classname="tests.trackb.test_replay_protection" name="test_duplicate_after_close[explicit_reverse]" time="1.477" /><testcase classname="tests.trackb.test_replay_protection" name="test_wrong_transaction_and_wrong_signer[auto_reverse]" time="1.932" /><testcase classname="tests.trackb.test_replay_protection" name="test_wrong_transaction_and_wrong_signer[explicit_reverse]" time="1.783" /><testcase classname="tests.trackb.test_replay_protection" name="test_invalid_idempotency_keys[auto_reverse]" time="2.067" /><testcase classname="tests.trackb.test_replay_protection" name="test_invalid_idempotency_keys[explicit_reverse]" time="1.903" /><testcase classname="tests.trackb.test_replay_protection" name="test_forged_and_replayed_requests[auto_reverse]" time="2.034" /><testcase classname="tests.trackb.test_replay_protection" name="test_forged_and_replayed_requests[explicit_reverse]" time="1.814" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_clean_observation_trusted" time="0.002" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_unauthenticated_or_spoofed_source_rejected" time="0.001" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_invalid_schema_rejected" time="0.001" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_stale_future_duplicate_and_out_of_order_rejected" time="0.002" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_impossible_ranges_rejected[latency_p50_ms--1.0]" time="0.002" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_impossible_ranges_rejected[timeout_rate-1.5]" time="0.002" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_impossible_ranges_rejected[health_score-7.0]" time="0.002" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_impossible_ranges_rejected[throughput_tps-1000000000.0]" time="0.001" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_impossible_ranges_rejected[backlog--3]" time="0.002" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_p95_below_p50_rejected" time="0.001" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_missing_values_lower_confidence" time="0.001" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_false_throughput_flagged_by_independent_measurement" time="0.001" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_false_throughput_cannot_raise_budget" time="0.001" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_low_confidence_or_missing_telemetry_triggers_conservative_fallback" time="0.001" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_switch_measured_headroom_caps_even_trusted_budget" time="0.001" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_ewma_flags_sudden_uncorroborated_jump_after_warmup" time="0.002" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_uncorroborated_optimistic_claim_is_not_trusted" time="0.001" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_poisoning_experiment_protected_arm_bounds_harm[latency_low]" time="0.033" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_poisoning_experiment_protected_arm_bounds_harm[throughput_high]" time="0.033" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_poisoning_experiment_protected_arm_bounds_harm[conflicting_timeout_backlog]" time="0.032" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_poisoning_experiment_protected_arm_bounds_harm[replay_old]" time="0.028" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_poisoning_experiment_protected_arm_bounds_harm[invalid_values]" time="0.032" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_clean_arm_has_no_false_positives_through_real_degradation" time="0.018" /><testcase classname="tests.trackb.test_telemetry_integrity" name="test_subtle_poisoning_is_a_documented_limitation_but_still_bounded" time="0.032" /><testcase classname="tests.trackb.unit.test_baseline_policies" name="test_naive_polling_checks_everything" time="0.002" /><testcase classname="tests.trackb.unit.test_baseline_policies" name="test_static_schedule_respects_check_times" time="0.002" /><testcase classname="tests.trackb.unit.test_baseline_policies" name="test_backoff_spaces_out_rechecks" time="0.003" /><testcase classname="tests.trackb.unit.test_baseline_policies" name="test_fixed_budget_is_constant_and_oldest_first" time="0.001" /><testcase classname="tests.trackb.unit.test_baseline_policies" name="test_aimd_increases_when_healthy_and_halves_on_trouble" time="0.002" /><testcase classname="tests.trackb.unit.test_baseline_policies" name="test_controller_mode_baseline_is_selectable" time="0.003" /><testcase classname="tests.trackb.unit.test_gates_and_faults" name="test_gate_allows_when_all_checks_pass" time="0.001" /><testcase classname="tests.trackb.unit.test_gates_and_faults" name="test_gate_branches" time="0.001" /><testcase classname="tests.trackb.unit.test_gates_and_faults" name="test_keyed_fault_decisions_are_deterministic_and_order_independent" time="0.051" /><testcase classname="tests.trackb.unit.test_metrics_definitions" name="test_recovery_time_requires_backlog_to_stay_at_zero" time="0.001" /><testcase classname="tests.trackb.unit.test_metrics_definitions" name="test_stats_ci_uses_t_distribution_for_small_n" time="0.002" /><testcase classname="tests.trackb.unit.test_metrics_definitions" name="test_flood_recovery_metric_uses_baseline_and_stability" time="0.001" /><testcase classname="tests.trackb.unit.test_paired_stats" name="test_clear_improvement_detected_and_null_not_overclaimed" time="0.247" /><testcase classname="tests.trackb.unit.test_paired_stats" name="test_bootstrap_ci_contains_mean" time="0.038" /><testcase classname="tests.trackb.unit.test_paired_stats" name="test_strongest_baseline_is_best_per_metric" time="0.225" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_capacity_from_independent_measurement_with_confidence" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_false_high_reported_capacity_does_not_raise_estimate" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_low_reliability_shrinks_lower_bound" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_no_measurement_means_no_capacity" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_optimizer_evaluates_ladder_and_reserves_primary" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_optimizer_prefers_smallest_budget_meeting_target" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_no_spare_capacity_means_zero_unless_deadline_imminent" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_unreliable_telemetry_forces_conservative_fallback" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_no_backlog_no_budget" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_scheduler_prioritises_urgency_and_explains" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_scheduler_penalises_retries_and_inconclusive_evidence" time="0.001" /><testcase classname="tests.trackb.unit.test_recovery_intelligence" name="test_starvation_guard_forces_long_waiting_transactions" time="0.001" /><testcase classname="tests.trackb.unit.test_traffic_generator" name="test_same_seed_runs_use_distinct_idempotency_keys_but_same_workload" time="0.002" /><testcase classname="tests.trackb.unit.test_twins" name="test_in_order_lifecycle" time="0.001" /><testcase classname="tests.trackb.unit.test_twins" name="test_duplicates_are_ignored" time="0.001" /><testcase classname="tests.trackb.unit.test_twins" name="test_stale_and_delayed_events_do_not_regress_state" time="0.001" /><testcase classname="tests.trackb.unit.test_twins" name="test_out_of_order_converges_to_same_state" time="0.005" /><testcase classname="tests.trackb.unit.test_twins" name="test_conflicting_same_version_event_ignored" time="0.001" /><testcase classname="tests.trackb.unit.test_twins" name="test_route_twin_telemetry_reliability_and_backlog" time="0.004" /></testsuite></testsuites>

@@ -18,6 +18,7 @@ dependencies = [
   "starlette==1.8.0",
   "psycopg[binary]==3.2.10",
   "uvicorn[standard]==0.38.0",
+  "alembic==1.20.0",  # Track B ledger migrations (backend/aorts/banking/ledger/migrations)
 ]
 
 [project.optional-dependencies]
@@ -43,6 +44,7 @@ packages = ["backend", "contracts", "intelligence"]
 [tool.pytest.ini_options]
 addopts = "-q --strict-markers"
 testpaths = ["tests"]
+markers = ["slow: longer-running Track B concurrency / load tests"]
 
 [tool.ruff]
 line-length = 100
@@ -51,3 +53,17 @@ target-version = "py311"
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "S"]
 ignore = ["S101"]
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI dependency markers are evaluated per request, not shared mutable defaults (standard idiom).
+extend-immutable-calls = [
+  "fastapi.Depends", "fastapi.Query", "fastapi.Header", "fastapi.Body",
+  # Track B dependency factories: return a per-request dependency callable, hold no mutable state.
+  "backend.aorts.app.dependencies.require_roles", "backend.aorts.app.dependencies.require_flag",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Track B: long SQL / log / message strings that the formatter cannot split (code is ruff-formatted).
+"backend/aorts/**" = ["E501", "S311"]  # S311: random is only for SEEDED simulation & jitter; secrets use `secrets`
+"tests/trackb/**" = ["E501", "S311"]
+"infra/trackb/**" = ["E501", "S311", "S104", "S108"]  # S104/S108: bind/tmp inside private ECS task containers

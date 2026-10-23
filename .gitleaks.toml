@@ -1,0 +1,22 @@
+# gitleaks configuration: the default rules, plus one narrowly scoped allowlist for a reviewed
+# false positive. Exact single findings are listed in .gitleaksignore instead.
+
+[extend]
+useDefault = true
+
+# Track B evidence run manifest: "file_key" is the short name of a run's raw files (s<seed>-<8 hex>,
+# e.g. "s101-55e53c6d"). The default generic-api-key rule matches any *_key field with a
+# random-looking value. This allowlist is attached to that one rule and needs BOTH conditions:
+# the finding is in this one file AND the secret has exactly this shape. Real credentials anywhere,
+# including in this file, are still reported, and so is this shape in any other file.
+# (gitleaks 8.24 ignores "condition" on the global [allowlist], so the allowlist is rule-level.)
+# Reviewed 2026-10-22 (Track B security validation, Phase G).
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+description = "Track B evidence manifest file_key (raw file names, not credentials)"
+condition = "AND"
+paths = ['''(^|/)infra/trackb/evidence/security/manifest\.jsonl$''']
+regexTarget = "secret"
+regexes = ['''^s[0-9]{1,6}-[0-9a-f]{8}$''']

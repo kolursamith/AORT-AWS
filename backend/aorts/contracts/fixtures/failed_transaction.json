@@ -1,0 +1,13 @@
+{
+  "event_id": "evt-1003",
+  "schema_version": "1.0",
+  "timestamp": "2026-10-14T10:00:17Z",
+  "transaction_id": "TXN1003",
+  "route_id": "A1-B",
+  "bank_id": "A1",
+  "amount_paise": 50000,
+  "event_type": "PAYMENT_FAILED",
+  "transaction_version": 4,
+  "correlation_id": "exp-001",
+  "payload": {"last_known_state": "REVERSED", "financial_outcome": "REVERSED", "reason": "ACCOUNT_NOT_FOUND"}
+}

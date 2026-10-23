@@ -1,0 +1,10 @@
+cmd: python -m backend.aorts.experiments.security_package calibrate   (commit 1f09c2462150e8396974e6f85582998fed8348fc)
+calibration ramp (defenses OFF, attacker A3 -> route B, seed 7)
+{'target_rps': 25, 'achieved_rps': 25.0, 'legit_p95_before_ms': 107.82, 'legit_p95_during_ms': 64.33, 'legit_success_during': 1.0, 'switch_overloaded_checks': 0, 'payment_p95_ms': 290.33}
+{'target_rps': 50, 'achieved_rps': 50.0, 'legit_p95_before_ms': 68.47, 'legit_p95_during_ms': 55.51, 'legit_success_during': 1.0, 'switch_overloaded_checks': 0, 'payment_p95_ms': 280.72}
+{'target_rps': 100, 'achieved_rps': 100.0, 'legit_p95_before_ms': 87.65, 'legit_p95_during_ms': 59.88, 'legit_success_during': 1.0, 'switch_overloaded_checks': 0, 'payment_p95_ms': 294.49}
+{'target_rps': 150, 'achieved_rps': 150.0, 'legit_p95_before_ms': 84.89, 'legit_p95_during_ms': 573.96, 'legit_success_during': 0.8333, 'switch_overloaded_checks': 0, 'payment_p95_ms': 484.73}
+{'target_rps': 200, 'achieved_rps': 200.0, 'legit_p95_before_ms': 68.82, 'legit_p95_during_ms': 556.52, 'legit_success_during': 0.9211, 'switch_overloaded_checks': 0, 'payment_p95_ms': 449.56}
+{'target_rps': 300, 'achieved_rps': 300.0, 'legit_p95_before_ms': 62.43, 'legit_p95_during_ms': 490.11, 'legit_success_during': 0.6923, 'switch_overloaded_checks': 0, 'payment_p95_ms': 445.81}
+chosen attack rate: 150
+exit=0

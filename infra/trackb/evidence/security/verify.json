@@ -1,0 +1,14 @@
+{
+  "runs_started": 436,
+  "runs_ended": 435,
+  "runs_interrupted_without_end_record": [
+    "secpkg-flooding-20261022T104708Z-normal-s104-f8ed78"
+  ],
+  "by_status": {
+    "completed": 430,
+    "failed": 5
+  },
+  "outputs_verified": 490,
+  "hash_mismatches": [],
+  "missing_files": []
+}

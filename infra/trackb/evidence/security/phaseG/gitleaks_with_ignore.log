@@ -1,0 +1,5 @@
+cmd: gitleaks v8.24.3 detect --source /repo --redact --log-opts=--all -v  (repo mounted read-only; HEAD 1f09c24)
+[90m10:44AM[0m [32mINF[0m [1m8 commits scanned.[0m
+[90m10:44AM[0m [32mINF[0m [1mscanned ~4879727 bytes (4.88 MB) in 1.99s[0m
+[90m10:44AM[0m [32mINF[0m [1mno leaks found[0m
+exit=0

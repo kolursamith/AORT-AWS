@@ -1,0 +1,1586 @@
+commit: 8b863da1bb77335f299c472a65c46226bb43ed5d (clean worktree, before any change in this package)
+cmd: AORTS_TEST_DATABASE_URL=<compose db>/aorts_test AORTS_REQUIRE_DB=1 python -m pytest tests/trackb -v -rs --durations=15
+postgres (PostgreSQL) 16.15
+Python 3.14.6
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.7.0
+rootdir: C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da
+configfile: pyproject.toml
+plugins: anyio-4.15.1, platformdirs-4.13.3, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 184 items
+
+tests\trackb\acceptance\test_protected_security.py .....                 [  2%]
+tests\trackb\contract\test_contracts.py .......                          [  6%]
+tests\trackb\integration\test_aorts_integration.py ......                [  9%]
+tests\trackb\integration\test_bulkhead.py ...                            [ 11%]
+tests\trackb\integration\test_control_plane.py .....F.F......            [ 19%]
+tests\trackb\integration\test_payment_flow.py ................           [ 27%]
+tests\trackb\integration\test_reconciliation.py ......                   [ 30%]
+tests\trackb\integration\test_recovery.py ........                       [ 35%]
+tests\trackb\integration\test_team_contract.py .........                 [ 40%]
+tests\trackb\security\test_request_auth.py ...........                   [ 46%]
+tests\trackb\test_ledger_invariants.py ............                      [ 52%]
+tests\trackb\test_rate_limits.py .........                               [ 57%]
+tests\trackb\test_replay_protection.py ....................              [ 68%]
+tests\trackb\test_telemetry_integrity.py ........................        [ 81%]
+tests\trackb\unit\test_baseline_policies.py ......                       [ 84%]
+tests\trackb\unit\test_gates_and_faults.py ...                           [ 86%]
+tests\trackb\unit\test_metrics_definitions.py ...                        [ 88%]
+tests\trackb\unit\test_paired_stats.py ...                               [ 89%]
+tests\trackb\unit\test_recovery_intelligence.py ............             [ 96%]
+tests\trackb\unit\test_traffic_generator.py .                            [ 96%]
+tests\trackb\unit\test_twins.py ......                                   [100%]
+
+================================== FAILURES ===================================
+_________________________ test_replay_attack_via_lab __________________________
+
+self = <sqlalchemy.engine.base.Connection object at 0x000001723BFD56D0>
+dialect = <sqlalchemy.dialects.postgresql.psycopg.PGDialect_psycopg object at 0x000001723A2C9810>
+context = <sqlalchemy.dialects.postgresql.psycopg.PGExecutionContext_psycopg object at 0x00000172325C9AE0>
+statement = <sqlalchemy.dialects.postgresql.psycopg.PGCompiler_psycopg object at 0x000001723ACA20D0>
+parameters = [{'pk_1': 'exp-replay-20261022T101937-86ba'}]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py:951: in do_execute
+    cursor.execute(statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Cursor [closed] [IDLE] (host=127.0.0.1 port=55432 user=aorts database=aorts_test) at 0x1723bf37110>
+query = 'SELECT experiment_runs.experiment_id AS experiment_runs_experiment_id, experiment_runs.scenario AS experiment_runs_sc....ended_at AS experiment_runs_ended_at \nFROM experiment_runs \nWHERE experiment_runs.experiment_id = %(pk_1)s::VARCHAR'
+params = {'pk_1': 'exp-replay-20261022T101937-86ba'}, prepare = None
+binary = None
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool | None = None,
+    ) -> Self:
+        """
+        Execute a query or command to the database.
+        """
+        try:
+            with self._conn.lock:
+                self._conn.wait(
+                    self._execute_gen(query, params, prepare=prepare, binary=binary)
+                )
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.UndefinedTable: relation "experiment_runs" does not exist
+E           LINE 2: FROM experiment_runs 
+E                        ^
+
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\cursor.py:97: UndefinedTable
+
+The above exception was the direct cause of the following exception:
+
+stack_factory = <function stack_factory.<locals>._make at 0x00000172325C5900>
+
+    def test_replay_attack_via_lab(stack_factory):
+        st = stack_factory(with_control=True)
+        exp = st.control.post("/api/v1/security/attacks/replay/run", json={}, headers=ADMIN).json()[
+            "experiment_id"
+        ]
+>       result = wait_experiment(st.control, exp)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\trackb\integration\test_control_plane.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\trackb\integration\test_control_plane.py:17: in wait_experiment
+    body = control.get(f"/api/v1/admin/experiments/{exp_id}", headers=ADMIN).json()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py:457: in request
+    return super().request(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py:354: in handle_request
+    raise exc
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    portal.call(self.app, scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\from_thread.py:340: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Python314\Lib\concurrent\futures\_base.py:454: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Python314\Lib\concurrent\futures\_base.py:396: in __get_result
+    raise self._exception
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\from_thread.py:265: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\applications.py:1216: in __call__
+    await super().__call__(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\applications.py:96: in __call__
+    await self.middleware_stack(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_asgi.py:151: in __call__
+    await self.app(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\routing.py:676: in __call__
+    await self.middleware_stack(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:2788: in app
+    await route.handle(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:1819: in handle
+    await self.original_router.handle(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:2871: in handle
+    await included_router._handle_selected(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:1845: in _handle_selected
+    await original_route.handle(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:1308: in handle
+    await effective_context.app(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:165: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:151: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:727: in app
+    raw_response = await run_endpoint_function(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py:362: in run_endpoint_function
+    return await run_in_threadpool(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py:2706: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py:1100: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_api.py:244: in _run_sync_endpoint
+    return function(**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^
+backend\aorts\control\routes.py:406: in get_experiment
+    exp = st(request).registry.get(experiment_id)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\aorts\control\experiments.py:115: in get
+    row = s.get(ExperimentRun, exp_id)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py:3680: in get
+    return self._get_impl(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py:3859: in _get_impl
+    return db_load_fn(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\loading.py:695: in load_on_pk_identity
+    session.execute(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py:2351: in execute
+    return self._execute_internal(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py:2249: in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\context.py:306: in orm_execute_statement
+    result = conn.execute(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1419: in execute
+    return meth(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\sql\elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1641: in _execute_clauseelement
+    ret = self._execute_context(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1846: in _execute_context
+    return self._exec_single_context(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py:951: in do_execute
+    cursor.execute(statement, parameters)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <psycopg.Cursor [closed] [IDLE] (host=127.0.0.1 port=55432 user=aorts database=aorts_test) at 0x1723bf37110>
+query = 'SELECT experiment_runs.experiment_id AS experiment_runs_experiment_id, experiment_runs.scenario AS experiment_runs_sc....ended_at AS experiment_runs_ended_at \nFROM experiment_runs \nWHERE experiment_runs.experiment_id = %(pk_1)s::VARCHAR'
+params = {'pk_1': 'exp-replay-20261022T101937-86ba'}, prepare = None
+binary = None
+
+    def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool | None = None,
+    ) -> Self:
+        """
+        Execute a query or command to the database.
+        """
+        try:
+            with self._conn.lock:
+                self._conn.wait(
+                    self._execute_gen(query, params, prepare=prepare, binary=binary)
+                )
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedTable) relation "experiment_runs" does not exist
+E           LINE 2: FROM experiment_runs 
+E                        ^
+E           [SQL: SELECT experiment_runs.experiment_id AS experiment_runs_experiment_id, experiment_runs.scenario AS experiment_runs_scenario, experiment_runs.policy AS experiment_runs_policy, experiment_runs.seed AS experiment_runs_seed, experiment_runs.config AS experiment_runs_config, experiment_runs.environment AS experiment_runs_environment, experiment_runs.status AS experiment_runs_status, experiment_runs.results AS experiment_runs_results, experiment_runs.started_at AS experiment_runs_started_at, experiment_runs.ended_at AS experiment_runs_ended_at 
+E           FROM experiment_runs 
+E           WHERE experiment_runs.experiment_id = %(pk_1)s::VARCHAR]
+E           [parameters: {'pk_1': 'exp-replay-20261022T101937-86ba'}]
+E           (Background on this error at: https://sqlalche.me/e/20/f405)
+
+C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\cursor.py:97: ProgrammingError
+------------------------------ Captured log call ------------------------------
+ERROR    aorts.http:logging_config.py:67 unhandled error
+ERROR    aorts.http:dependencies.py:200 unhandled
+Traceback (most recent call last):
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.AdminShutdown: terminating connection due to administrator command
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 2788, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1819, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 2871, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1845, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 362, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\remitter\routes.py", line 55, in create_payment
+    txn, replayed = svc(request).create_payment(req, simulate)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\remitter\service.py", line 78, in create_payment
+    txn, replayed = self.ledger.create_payment(req, actor="REMITTER")
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\ledger\service.py", line 492, in create_payment
+    self._commit(s, ctx)
+    ~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\ledger\service.py", line 372, in _commit
+    append_records(s, ctx.audit)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\security\audit.py", line 100, in append_records
+    prev = session.execute(
+           ~~~~~~~~~~~~~~~^
+        select(AuditEvent.hash).order_by(AuditEvent.seq.desc()).limit(1)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).scalar()
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 2228, in _execute_internal
+    ) = compile_state_cls.orm_pre_session_exec(
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        False,
+        ^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\context.py", line 577, in orm_pre_session_exec
+    session._autoflush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 3051, in _autoflush
+    raise e.with_traceback(sys.exc_info()[2])
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 3040, in _autoflush
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (raised as a result of Query-invoked autoflush; consider using a session.no_autoflush block if this flush is occurring prematurely)
+(psycopg.errors.AdminShutdown) terminating connection due to administrator command
+[SQL: INSERT INTO outbox_events (event_id, aggregate_id, event_type, payload, published_at, attempts, last_error, dead_lettered) VALUES (%(event_id)s::VARCHAR, %(aggregate_id)s::VARCHAR, %(event_type)s::VARCHAR, %(payload)s::JSON, %(published_at)s::TIMESTAMP WITH TIME ZONE, %(attempts)s::INTEGER, %(last_error)s::VARCHAR, %(dead_lettered)s) RETURNING outbox_events.id, outbox_events.created_at, outbox_events.available_at]
+[parameters: {'event_id': 'evt-bdb8bb3624764d379726', 'aggregate_id': 'TXN802ADD332AE048FE', 'event_type': 'PAYMENT_DEBITED', 'payload': Json({'event_id': 'evt-bdb8bb3624764d379 ... (484 chars)), 'published_at': None, 'attempts': 0, 'last_error': None, 'dead_lettered': False}]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+ERROR    backend.aorts.experiments:experiments.py:86 experiment exp-replay-20261022T101937-86ba failed
+Traceback (most recent call last):
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.AdminShutdown: terminating connection due to administrator command
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\control\experiments.py", line 84, in _run
+    results = fn(exp_id)
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\control\lab.py", line 191, in _run
+    records = sim.run_all()
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\security\replay_simulator.py", line 148, in run_all
+    self.case_sequential_duplicate()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\security\replay_simulator.py", line 160, in case_sequential_duplicate
+    txn = self.ambiguous_payment()
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\security\replay_simulator.py", line 76, in ambiguous_payment
+    r = self.client.post(
+        "remitter",
+    ...<3 lines>...
+        headers={"X-AORTS-Simulate": "timeout", "X-AORTS-Admin-Token": self.admin_token},
+    )
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\app\http_client.py", line 80, in post
+    return self.request(
+           ~~~~~~~~~~~~^
+        target,
+        ^^^^^^^
+    ...<5 lines>...
+        headers=headers,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\app\http_client.py", line 66, in request
+    return self._client(target).request(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        method, path, content=body, headers=all_headers, timeout=timeout or self.default_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py", line 457, in request
+    return super().request(
+           ~~~~~~~~~~~~~~~^
+        method,
+        ^^^^^^^
+    ...<11 lines>...
+        extensions=extensions,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py", line 914, in send
+    response = self._send_handling_auth(
+        request,
+    ...<2 lines>...
+        history=[],
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+        request,
+        follow_redirects=follow_redirects,
+        history=history,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py", line 354, in handle_request
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py", line 351, in handle_request
+    portal.call(self.app, scope, receive, send)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\from_thread.py", line 340, in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\concurrent\futures\_base.py", line 454, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\concurrent\futures\_base.py", line 396, in __get_result
+    raise self._exception
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\from_thread.py", line 265, in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\applications.py", line 1216, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 2788, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1819, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 2871, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1845, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 362, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\remitter\routes.py", line 55, in create_payment
+    txn, replayed = svc(request).create_payment(req, simulate)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\remitter\service.py", line 78, in create_payment
+    txn, replayed = self.ledger.create_payment(req, actor="REMITTER")
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\ledger\service.py", line 492, in create_payment
+    self._commit(s, ctx)
+    ~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\ledger\service.py", line 372, in _commit
+    append_records(s, ctx.audit)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\security\audit.py", line 100, in append_records
+    prev = session.execute(
+           ~~~~~~~~~~~~~~~^
+        select(AuditEvent.hash).order_by(AuditEvent.seq.desc()).limit(1)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).scalar()
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 2228, in _execute_internal
+    ) = compile_state_cls.orm_pre_session_exec(
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        False,
+        ^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\context.py", line 577, in orm_pre_session_exec
+    session._autoflush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 3051, in _autoflush
+    raise e.with_traceback(sys.exc_info()[2])
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 3040, in _autoflush
+    self.flush()
+    ~~~~~~~~~~^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (raised as a result of Query-invoked autoflush; consider using a session.no_autoflush block if this flush is occurring prematurely)
+(psycopg.errors.AdminShutdown) terminating connection due to administrator command
+[SQL: INSERT INTO outbox_events (event_id, aggregate_id, event_type, payload, published_at, attempts, last_error, dead_lettered) VALUES (%(event_id)s::VARCHAR, %(aggregate_id)s::VARCHAR, %(event_type)s::VARCHAR, %(payload)s::JSON, %(published_at)s::TIMESTAMP WITH TIME ZONE, %(attempts)s::INTEGER, %(last_error)s::VARCHAR, %(dead_lettered)s) RETURNING outbox_events.id, outbox_events.created_at, outbox_events.available_at]
+[parameters: {'event_id': 'evt-bdb8bb3624764d379726', 'aggregate_id': 'TXN802ADD332AE048FE', 'event_type': 'PAYMENT_DEBITED', 'payload': Json({'event_id': 'evt-bdb8bb3624764d379 ... (484 chars)), 'published_at': None, 'attempts': 0, 'last_error': None, 'dead_lettered': False}]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+ERROR    aorts.http:logging_config.py:67 unhandled error
+ERROR    aorts.http:dependencies.py:200 unhandled
+Traceback (most recent call last):
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "experiment_runs" does not exist
+LINE 2: FROM experiment_runs 
+             ^
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 2788, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1819, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 2871, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1845, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 362, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\control\routes.py", line 406, in get_experiment
+    exp = st(request).registry.get(experiment_id)
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\control\experiments.py", line 115, in get
+    row = s.get(ExperimentRun, exp_id)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 3680, in get
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        entity,
+        ^^^^^^^
+    ...<7 lines>...
+        bind_arguments=bind_arguments,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 3859, in _get_impl
+    return db_load_fn(
+        self,
+    ...<5 lines>...
+        bind_arguments=bind_arguments,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\loading.py", line 695, in load_on_pk_identity
+    session.execute(
+    ~~~~~~~~~~~~~~~^
+        q,
+        ^^
+    ...<2 lines>...
+        bind_arguments=bind_arguments,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 2249, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        conn,
+        ^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+        statement, params or {}, execution_options=execution_options
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\cursor.py", line 97, in execute
+    raise ex.with_traceback(None)
+sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedTable) relation "experiment_runs" does not exist
+LINE 2: FROM experiment_runs 
+             ^
+[SQL: SELECT experiment_runs.experiment_id AS experiment_runs_experiment_id, experiment_runs.scenario AS experiment_runs_scenario, experiment_runs.policy AS experiment_runs_policy, experiment_runs.seed AS experiment_runs_seed, experiment_runs.config AS experiment_runs_config, experiment_runs.environment AS experiment_runs_environment, experiment_runs.status AS experiment_runs_status, experiment_runs.results AS experiment_runs_results, experiment_runs.started_at AS experiment_runs_started_at, experiment_runs.ended_at AS experiment_runs_ended_at 
+FROM experiment_runs 
+WHERE experiment_runs.experiment_id = %(pk_1)s::VARCHAR]
+[parameters: {'pk_1': 'exp-replay-20261022T101937-86ba'}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+________________________ test_flooding_attack_via_lab _________________________
+
+stack_factory = <function stack_factory.<locals>._make at 0x000001723AFB2DA0>
+
+    def test_flooding_attack_via_lab(stack_factory):
+        st = stack_factory(with_control=True, bank_check_rate_per_sec=5, bank_check_burst=5)
+        exp = st.control.post(
+            "/api/v1/security/attacks/flooding/run",
+            json={"duration_seconds": 1.5, "rate_per_second": 40, "defenses_enabled": True},
+            headers=ADMIN,
+        ).json()["experiment_id"]
+>       result = wait_experiment(st.control, exp)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\trackb\integration\test_control_plane.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+control = <starlette.testclient.TestClient object at 0x000001723AFE1D00>
+exp_id = 'exp-flooding-20261022T101942-97ae', timeout = 120
+
+    def wait_experiment(control, exp_id, timeout=120):
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            body = control.get(f"/api/v1/admin/experiments/{exp_id}", headers=ADMIN).json()
+>           if body["status"] != "RUNNING":
+               ^^^^^^^^^^^^^^
+E           KeyError: 'status'
+
+tests\trackb\integration\test_control_plane.py:18: KeyError
+------------------------------ Captured log call ------------------------------
+ERROR    aorts.http:logging_config.py:67 unhandled error
+ERROR    aorts.http:dependencies.py:200 unhandled
+Traceback (most recent call last):
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 2788, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1819, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 2871, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1845, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 362, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\remitter\routes.py", line 55, in create_payment
+    txn, replayed = svc(request).create_payment(req, simulate)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\remitter\service.py", line 87, in create_payment
+    self.forward(txn.transaction_id, drop_response=(simulate == "lost-response"))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\remitter\service.py", line 93, in forward
+    transaction_id=txn.transaction_id,
+                   ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'transaction_id'
+ERROR    backend.aorts.experiments:experiments.py:86 experiment exp-flooding-20261022T101942-97ae failed
+Traceback (most recent call last):
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\control\experiments.py", line 84, in _run
+    results = fn(exp_id)
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\control\lab.py", line 82, in _run
+    pool = self.prepare_pool(destination=dest)
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\control\lab.py", line 60, in prepare_pool
+    r = self.ctx.client.post(
+        "remitter",
+    ...<6 lines>...
+        },
+    )
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\app\http_client.py", line 80, in post
+    return self.request(
+           ~~~~~~~~~~~~^
+        target,
+        ^^^^^^^
+    ...<5 lines>...
+        headers=headers,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\app\http_client.py", line 66, in request
+    return self._client(target).request(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        method, path, content=body, headers=all_headers, timeout=timeout or self.default_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py", line 457, in request
+    return super().request(
+           ~~~~~~~~~~~~~~~^
+        method,
+        ^^^^^^^
+    ...<11 lines>...
+        extensions=extensions,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py", line 914, in send
+    response = self._send_handling_auth(
+        request,
+    ...<2 lines>...
+        history=[],
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+        request,
+        follow_redirects=follow_redirects,
+        history=history,
+    )
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py", line 354, in handle_request
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\testclient.py", line 351, in handle_request
+    portal.call(self.app, scope, receive, send)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\from_thread.py", line 340, in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\concurrent\futures\_base.py", line 454, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\concurrent\futures\_base.py", line 396, in __get_result
+    raise self._exception
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\from_thread.py", line 265, in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\applications.py", line 1216, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 2788, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1819, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 2871, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1845, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\routing.py", line 362, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+        _run_sync_endpoint, function=dependant.call, arguments=values
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\starlette\concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+  File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\telemetry\_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\remitter\routes.py", line 55, in create_payment
+    txn, replayed = svc(request).create_payment(req, simulate)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\remitter\service.py", line 87, in create_payment
+    self.forward(txn.transaction_id, drop_response=(simulate == "lost-response"))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\banking\remitter\service.py", line 93, in forward
+    transaction_id=txn.transaction_id,
+                   ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'transaction_id'
+============================== warnings summary ===============================
+..\..\..\..\..\..\..\..\..\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/trackb/acceptance/test_protected_security.py::test_P1_uncorroborated_false_high_capacity_telemetry_cannot_raise_budget
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\alembic\config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+    util.warn_deprecated(
+
+tests/trackb/acceptance/test_protected_security.py: 11 warnings
+tests/trackb/integration/test_aorts_integration.py: 17 warnings
+tests/trackb/integration/test_bulkhead.py: 15 warnings
+tests/trackb/integration/test_control_plane.py: 30 warnings
+tests/trackb/integration/test_payment_flow.py: 45 warnings
+tests/trackb/integration/test_reconciliation.py: 20 warnings
+tests/trackb/integration/test_recovery.py: 30 warnings
+tests/trackb/integration/test_team_contract.py: 37 warnings
+tests/trackb/test_ledger_invariants.py: 11 warnings
+tests/trackb/test_rate_limits.py: 12 warnings
+tests/trackb/test_replay_protection.py: 40 warnings
+  C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\app\http_client.py:66: StarletteDeprecationWarning: You should not use the 'timeout' argument with the TestClient. See https://github.com/Kludex/starlette/issues/1108 for more information.
+    return self._client(target).request(
+
+tests/trackb/integration/test_control_plane.py::test_replay_attack_via_lab
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\_pytest\threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread exp-exp-replay-20261022T101937-86ba
+  
+  Traceback (most recent call last):
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 143, in __init__
+      self._dbapi_connection = engine.raw_connection()
+                               ~~~~~~~~~~~~~~~~~~~~~^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 3301, in raw_connection
+      return self.pool.connect()
+             ~~~~~~~~~~~~~~~~~^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 447, in connect
+      return _ConnectionFairy._checkout(self)
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 1264, in _checkout
+      fairy = _ConnectionRecord.checkout(pool)
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 716, in checkout
+      with util.safe_reraise():
+           ~~~~~~~~~~~~~~~~~^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+      raise exc_value.with_traceback(exc_tb)
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 714, in checkout
+      dbapi_connection = rec.get_connection()
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 865, in get_connection
+      self.__connect()
+      ~~~~~~~~~~~~~~^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 899, in __connect
+      with util.safe_reraise():
+           ~~~~~~~~~~~~~~~~~^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+      raise exc_value.with_traceback(exc_tb)
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 895, in __connect
+      self.dbapi_connection = connection = pool._invoke_creator(self)
+                                           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\create.py", line 661, in connect
+      return dialect.connect(*cargs, **cparams)
+             ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py", line 629, in connect
+      return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+             ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\connection.py", line 120, in connect
+      raise last_ex.with_traceback(None)
+  psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 55432 failed: FATAL:  database "aorts_test" does not exist
+  DETAIL:  It seems to have just been dropped or renamed.
+  
+  The above exception was the direct cause of the following exception:
+  
+  Traceback (most recent call last):
+    File "C:\Python314\Lib\threading.py", line 1082, in _bootstrap_inner
+      self._context.run(self.run)
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+    File "C:\Python314\Lib\threading.py", line 1024, in run
+      self._target(*self._args, **self._kwargs)
+      ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\control\experiments.py", line 100, in _run
+      row = s.get(ExperimentRun, exp_id)
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 3680, in get
+      return self._get_impl(
+             ~~~~~~~~~~~~~~^
+          entity,
+          ^^^^^^^
+      ...<7 lines>...
+          bind_arguments=bind_arguments,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      )
+      ^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 3859, in _get_impl
+      return db_load_fn(
+          self,
+      ...<5 lines>...
+          bind_arguments=bind_arguments,
+      )
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\loading.py", line 695, in load_on_pk_identity
+      session.execute(
+      ~~~~~~~~~~~~~~~^
+          q,
+          ^^
+      ...<2 lines>...
+          bind_arguments=bind_arguments,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      )
+      ^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+      return self._execute_internal(
+             ~~~~~~~~~~~~~~~~~~~~~~^
+          statement,
+          ^^^^^^^^^^
+      ...<4 lines>...
+          _add_event=_add_event,
+          ^^^^^^^^^^^^^^^^^^^^^^
+      )
+      ^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 2239, in _execute_internal
+      conn = self._connection_for_bind(bind)
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 2108, in _connection_for_bind
+      return trans._connection_for_bind(engine, execution_options)
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "<string>", line 2, in _connection_for_bind
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+      ret_value = fn(self, *arg, **kw)
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\orm\session.py", line 1187, in _connection_for_bind
+      conn = bind.connect()
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 3277, in connect
+      return self._connection_cls(self)
+             ~~~~~~~~~~~~~~~~~~~~^^^^^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 145, in __init__
+      Connection._handle_dbapi_exception_noconnection(
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+          err, dialect, engine
+          ^^^^^^^^^^^^^^^^^^^^
+      )
+      ^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 2440, in _handle_dbapi_exception_noconnection
+      raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 143, in __init__
+      self._dbapi_connection = engine.raw_connection()
+                               ~~~~~~~~~~~~~~~~~~~~~^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\base.py", line 3301, in raw_connection
+      return self.pool.connect()
+             ~~~~~~~~~~~~~~~~~^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 447, in connect
+      return _ConnectionFairy._checkout(self)
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 1264, in _checkout
+      fairy = _ConnectionRecord.checkout(pool)
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 716, in checkout
+      with util.safe_reraise():
+           ~~~~~~~~~~~~~~~~~^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+      raise exc_value.with_traceback(exc_tb)
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 714, in checkout
+      dbapi_connection = rec.get_connection()
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 865, in get_connection
+      self.__connect()
+      ~~~~~~~~~~~~~~^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 899, in __connect
+      with util.safe_reraise():
+           ~~~~~~~~~~~~~~~~~^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+      raise exc_value.with_traceback(exc_tb)
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\pool\base.py", line 895, in __connect
+      self.dbapi_connection = connection = pool._invoke_creator(self)
+                                           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\create.py", line 661, in connect
+      return dialect.connect(*cargs, **cparams)
+             ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\sqlalchemy\engine\default.py", line 629, in connect
+      return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+             ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\psycopg\connection.py", line 120, in connect
+      raise last_ex.with_traceback(None)
+  sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 55432 failed: FATAL:  database "aorts_test" does not exist
+  DETAIL:  It seems to have just been dropped or renamed.
+  (Background on this error at: https://sqlalche.me/e/20/e3q8)
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/trackb/integration/test_control_plane.py::test_flooding_attack_via_lab
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\_pytest\threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread exp-exp-flooding-20261022T101942-97ae
+  
+  Traceback (most recent call last):
+    File "C:\Python314\Lib\threading.py", line 1082, in _bootstrap_inner
+      self._context.run(self.run)
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+    File "C:\Python314\Lib\threading.py", line 1024, in run
+      self._target(*self._args, **self._kwargs)
+      ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\girinandan\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\baseline-8b863da\backend\aorts\control\experiments.py", line 101, in _run
+      row.status = status
+      ^^^^^^^^^^
+  AttributeError: 'NoneType' object has no attribute 'status' and no __dict__ for setting new attributes
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+tests/trackb/integration/test_team_contract.py::test_shared_contract_controller_drives_recovery
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:1053: StarletteDeprecationWarning: You should not use the 'timeout' argument with the TestClient. See https://github.com/Kludex/starlette/issues/1108 for more information.
+    return self.request(
+
+tests/trackb/integration/test_team_contract.py::test_shared_contract_controller_drives_recovery
+tests/trackb/integration/test_team_contract.py::test_expired_or_foreign_decisions_fall_back
+tests/trackb/integration/test_team_contract.py::test_expired_or_foreign_decisions_fall_back
+  C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\civenv\Lib\site-packages\httpx\_client.py:1144: StarletteDeprecationWarning: You should not use the 'timeout' argument with the TestClient. See https://github.com/Kludex/starlette/issues/1108 for more information.
+    return self.request(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: C:\Users\GIRINA~1\AppData\Local\Temp\claude\c--Users-girinandan-OneDrive-Documents-CAD-PROJECT-2\90a6c98a-8abc-4d3c-bc4b-f015bdb74136\scratchpad\AORT-AWS\infra\trackb\evidence\security\phaseA\baseline_db.junit.xml -
+============================ slowest 15 durations =============================
+3.97s call     tests/trackb/integration/test_payment_flow.py::test_mixed_concurrent_debits_settlements_reversals_same_senders
+3.80s call     tests/trackb/integration/test_bulkhead.py::test_bulkhead_keeps_payments_flowing_during_undefended_flood
+3.64s call     tests/trackb/acceptance/test_protected_security.py::test_P4_recovery_traffic_cannot_consume_capacity_reserved_for_primary_payments
+3.59s call     tests/trackb/integration/test_bulkhead.py::test_shared_pool_lets_undefended_flood_hurt_payments
+3.46s call     tests/trackb/integration/test_bulkhead.py::test_primary_reserve_protects_payments_even_on_a_shared_pool
+3.32s call     tests/trackb/test_rate_limits.py::test_flood_rejected_at_switch_before_downstream_work
+3.22s setup    tests/trackb/test_replay_protection.py::test_concurrent_duplicate_events_apply_once[auto_reverse]
+2.95s call     tests/trackb/test_rate_limits.py::test_flood_with_defenses_disabled_admits_attacker
+2.90s call     tests/trackb/integration/test_control_plane.py::test_flooding_attack_via_lab
+2.71s setup    tests/trackb/test_replay_protection.py::test_ledger_integrity_after_all_replays[explicit_reverse]
+2.52s setup    tests/trackb/test_replay_protection.py::test_ledger_integrity_after_all_replays[auto_reverse]
+2.52s setup    tests/trackb/test_replay_protection.py::test_repeated_reversal_posts_once[explicit_reverse]
+2.46s setup    tests/trackb/test_replay_protection.py::test_sequential_duplicate[explicit_reverse]
+2.45s setup    tests/trackb/test_replay_protection.py::test_sequential_duplicate[auto_reverse]
+2.36s setup    tests/trackb/test_replay_protection.py::test_stale_version_and_stale_timestamp[auto_reverse]
+=========== 2 failed, 182 passed, 276 warnings in 131.75s (0:02:11) ===========
+exit=1

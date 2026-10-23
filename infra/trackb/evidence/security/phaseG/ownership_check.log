@@ -1,0 +1,3 @@
+cmd: python .github/scripts/check_ownership.py --author girinandanv9845-ship-it --files <git diff origin/developer...HEAD> (HEAD dba5057)
+ownership admission passed
+exit=0

@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 464" width="1500" height="464" role="img" aria-label="Telemetry poisoning: share of attack samples flagged (model-in-the-loop)" font-family="system-ui, sans-serif">
+<style>svg{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--bg:#fcfcfb;--tx:#0b0b0b;--mu:#52514e;--gr:#e4e3df;}@media (prefers-color-scheme: dark){svg{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--bg:#1a1a19;--tx:#f0efec;--mu:#c3c2b7;--gr:#3a3936;}}.t{fill:var(--tx)}.m{fill:var(--mu)}</style>
+<rect width="1500" height="464" fill="var(--bg)"/>
+<text x="56" y="26" class="t" font-size="16" font-weight="600">Telemetry poisoning: share of attack samples flagged (model-in-the-loop)</text>
+<text x="56" y="46" class="m" font-size="12">protected = current validator; protected_nobias = validator without the bias check (before this package); unprotected = validation off</text>
+<rect x="56" y="57" width="10" height="10" rx="2" fill="var(--s1)"/>
+<text x="70" y="66" class="t" font-size="12">protected</text>
+<rect x="141" y="57" width="10" height="10" rx="2" fill="var(--s2)"/>
+<text x="155" y="66" class="t" font-size="12">protected_nobias</text>
+<rect x="275" y="57" width="10" height="10" rx="2" fill="var(--s3)"/>
+<text x="289" y="66" class="t" font-size="12">unprotected</text>
+<line x1="56" x2="1484" y1="299.8" y2="299.8" stroke="var(--gr)" stroke-width="1"/>
+<text x="50" y="303.8" class="m" font-size="11" text-anchor="end">0%</text>
+<line x1="56" x2="1484" y1="248.9" y2="248.9" stroke="var(--gr)" stroke-width="1"/>
+<text x="50" y="252.9" class="m" font-size="11" text-anchor="end">25%</text>
+<line x1="56" x2="1484" y1="198.0" y2="198.0" stroke="var(--gr)" stroke-width="1"/>
+<text x="50" y="202.0" class="m" font-size="11" text-anchor="end">50%</text>
+<line x1="56" x2="1484" y1="147.2" y2="147.2" stroke="var(--gr)" stroke-width="1"/>
+<text x="50" y="151.2" class="m" font-size="11" text-anchor="end">75%</text>
+<line x1="56" x2="1484" y1="96.3" y2="96.3" stroke="var(--gr)" stroke-width="1"/>
+<text x="50" y="100.3" class="m" font-size="11" text-anchor="end">100%</text>
+<path d="M69.3,299.8 V100.3 Q69.3,96.3 73.3,96.3 H89.1 Q93.1,96.3 93.1,100.3 V299.8 Z" fill="var(--s1)"><title>protected | latency_low: 100%</title></path>
+<text x="81.2" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M95.1,299.8 V100.3 Q95.1,96.3 99.1,96.3 H114.9 Q118.9,96.3 118.9,100.3 V299.8 Z" fill="var(--s2)"><title>protected_nobias | latency_low: 100%</title></path>
+<text x="107.0" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M120.9,299.8 V299.8 Q120.9,299.8 120.9,299.8 H144.7 Q144.7,299.8 144.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | latency_low: 0%</title></path>
+<text x="132.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="107.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 107.0 313.8)">latency_low</text>
+<path d="M171.3,299.8 V100.3 Q171.3,96.3 175.3,96.3 H191.1 Q195.1,96.3 195.1,100.3 V299.8 Z" fill="var(--s1)"><title>protected | throughput_high: 100%</title></path>
+<text x="183.2" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M197.1,299.8 V100.3 Q197.1,96.3 201.1,96.3 H216.9 Q220.9,96.3 220.9,100.3 V299.8 Z" fill="var(--s2)"><title>protected_nobias | throughput_high: 100%</title></path>
+<text x="209.0" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M222.9,299.8 V299.8 Q222.9,299.8 222.9,299.8 H246.7 Q246.7,299.8 246.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | throughput_high: 0%</title></path>
+<text x="234.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="209.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 209.0 313.8)">throughput_high</text>
+<path d="M273.3,299.8 V100.3 Q273.3,96.3 277.3,96.3 H293.1 Q297.1,96.3 297.1,100.3 V299.8 Z" fill="var(--s1)"><title>protected | conflicting_timeout_backlog: 100%</title></path>
+<text x="285.2" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M299.1,299.8 V100.3 Q299.1,96.3 303.1,96.3 H318.9 Q322.9,96.3 322.9,100.3 V299.8 Z" fill="var(--s2)"><title>protected_nobias | conflicting_timeout_backlog: 100%</title></path>
+<text x="311.0" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M324.9,299.8 V299.8 Q324.9,299.8 324.9,299.8 H348.7 Q348.7,299.8 348.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | conflicting_timeout_backlog: 0%</title></path>
+<text x="336.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="311.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 311.0 313.8)">conflicting_timeout_backlog</text>
+<path d="M375.3,299.8 V100.3 Q375.3,96.3 379.3,96.3 H395.1 Q399.1,96.3 399.1,100.3 V299.8 Z" fill="var(--s1)"><title>protected | replay_old: 100%</title></path>
+<text x="387.2" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M401.1,299.8 V100.3 Q401.1,96.3 405.1,96.3 H420.9 Q424.9,96.3 424.9,100.3 V299.8 Z" fill="var(--s2)"><title>protected_nobias | replay_old: 100%</title></path>
+<text x="413.0" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M426.9,299.8 V299.8 Q426.9,299.8 426.9,299.8 H450.7 Q450.7,299.8 450.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | replay_old: 0%</title></path>
+<text x="438.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="413.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 413.0 313.8)">replay_old</text>
+<path d="M477.3,299.8 V100.3 Q477.3,96.3 481.3,96.3 H497.1 Q501.1,96.3 501.1,100.3 V299.8 Z" fill="var(--s1)"><title>protected | invalid_values: 100%</title></path>
+<text x="489.2" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M503.1,299.8 V100.3 Q503.1,96.3 507.1,96.3 H522.9 Q526.9,96.3 526.9,100.3 V299.8 Z" fill="var(--s2)"><title>protected_nobias | invalid_values: 100%</title></path>
+<text x="515.0" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M528.9,299.8 V299.8 Q528.9,299.8 528.9,299.8 H552.7 Q552.7,299.8 552.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | invalid_values: 0%</title></path>
+<text x="540.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="515.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 515.0 313.8)">invalid_values</text>
+<path d="M579.3,299.8 V110.1 Q579.3,106.1 583.3,106.1 H599.1 Q603.1,106.1 603.1,110.1 V299.8 Z" fill="var(--s1)"><title>protected | subtle_throughput_high: 95%</title></path>
+<text x="591.2" y="102.1" class="t" font-size="10" text-anchor="middle">95%</text>
+<path d="M605.1,299.8 V299.8 Q605.1,299.8 605.1,299.8 H628.9 Q628.9,299.8 628.9,299.8 V299.8 Z" fill="var(--s2)"><title>protected_nobias | subtle_throughput_high: 0%</title></path>
+<text x="617.0" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<path d="M630.9,299.8 V299.8 Q630.9,299.8 630.9,299.8 H654.7 Q654.7,299.8 654.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | subtle_throughput_high: 0%</title></path>
+<text x="642.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="617.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 617.0 313.8)">subtle_throughput_high</text>
+<path d="M681.3,299.8 V102.7 Q681.3,98.7 685.3,98.7 H701.1 Q705.1,98.7 705.1,102.7 V299.8 Z" fill="var(--s1)"><title>protected | timeout_low: 99%</title></path>
+<text x="693.2" y="94.7" class="t" font-size="10" text-anchor="middle">99%</text>
+<path d="M707.1,299.8 V155.6 Q707.1,151.6 711.1,151.6 H726.9 Q730.9,151.6 730.9,155.6 V299.8 Z" fill="var(--s2)"><title>protected_nobias | timeout_low: 73%</title></path>
+<text x="719.0" y="147.6" class="t" font-size="10" text-anchor="middle">73%</text>
+<path d="M732.9,299.8 V299.8 Q732.9,299.8 732.9,299.8 H756.7 Q756.7,299.8 756.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | timeout_low: 0%</title></path>
+<text x="744.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="719.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 719.0 313.8)">timeout_low</text>
+<path d="M783.3,299.8 V299.8 Q783.3,299.8 783.3,299.8 H807.1 Q807.1,299.8 807.1,299.8 V299.8 Z" fill="var(--s1)"><title>protected | timeout_high: 0%</title></path>
+<text x="795.2" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<path d="M809.1,299.8 V299.8 Q809.1,299.8 809.1,299.8 H832.9 Q832.9,299.8 832.9,299.8 V299.8 Z" fill="var(--s2)"><title>protected_nobias | timeout_high: 0%</title></path>
+<text x="821.0" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<path d="M834.9,299.8 V299.8 Q834.9,299.8 834.9,299.8 H858.7 Q858.7,299.8 858.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | timeout_high: 0%</title></path>
+<text x="846.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="821.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 821.0 313.8)">timeout_high</text>
+<path d="M885.3,299.8 V299.8 Q885.3,299.8 885.3,299.8 H909.1 Q909.1,299.8 909.1,299.8 V299.8 Z" fill="var(--s1)"><title>protected | backlog_inconsistent: 0%</title></path>
+<text x="897.2" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<path d="M911.1,299.8 V299.8 Q911.1,299.8 911.1,299.8 H934.9 Q934.9,299.8 934.9,299.8 V299.8 Z" fill="var(--s2)"><title>protected_nobias | backlog_inconsistent: 0%</title></path>
+<text x="923.0" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<path d="M936.9,299.8 V299.8 Q936.9,299.8 936.9,299.8 H960.7 Q960.7,299.8 960.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | backlog_inconsistent: 0%</title></path>
+<text x="948.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="923.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 923.0 313.8)">backlog_inconsistent</text>
+<path d="M987.3,299.8 V100.3 Q987.3,96.3 991.3,96.3 H1007.1 Q1011.1,96.3 1011.1,100.3 V299.8 Z" fill="var(--s1)"><title>protected | stale_timestamp: 100%</title></path>
+<text x="999.2" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M1013.1,299.8 V100.3 Q1013.1,96.3 1017.1,96.3 H1032.9 Q1036.9,96.3 1036.9,100.3 V299.8 Z" fill="var(--s2)"><title>protected_nobias | stale_timestamp: 100%</title></path>
+<text x="1025.0" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M1038.9,299.8 V299.8 Q1038.9,299.8 1038.9,299.8 H1062.7 Q1062.7,299.8 1062.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | stale_timestamp: 0%</title></path>
+<text x="1050.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="1025.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 1025.0 313.8)">stale_timestamp</text>
+<text x="1101.2" y="295.8" class="m" font-size="10" text-anchor="middle">n/a</text>
+<text x="1127.0" y="295.8" class="m" font-size="10" text-anchor="middle">n/a</text>
+<text x="1152.8" y="295.8" class="m" font-size="10" text-anchor="middle">n/a</text>
+<text x="1127.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 1127.0 313.8)">missing</text>
+<path d="M1191.3,299.8 V100.3 Q1191.3,96.3 1195.3,96.3 H1211.1 Q1215.1,96.3 1215.1,100.3 V299.8 Z" fill="var(--s1)"><title>protected | wrong_source: 100%</title></path>
+<text x="1203.2" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M1217.1,299.8 V100.3 Q1217.1,96.3 1221.1,96.3 H1236.9 Q1240.9,96.3 1240.9,100.3 V299.8 Z" fill="var(--s2)"><title>protected_nobias | wrong_source: 100%</title></path>
+<text x="1229.0" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M1242.9,299.8 V299.8 Q1242.9,299.8 1242.9,299.8 H1266.7 Q1266.7,299.8 1266.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | wrong_source: 0%</title></path>
+<text x="1254.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="1229.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 1229.0 313.8)">wrong_source</text>
+<path d="M1293.3,299.8 V100.3 Q1293.3,96.3 1297.3,96.3 H1313.1 Q1317.1,96.3 1317.1,100.3 V299.8 Z" fill="var(--s1)"><title>protected | unregistered_source: 100%</title></path>
+<text x="1305.2" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M1319.1,299.8 V100.3 Q1319.1,96.3 1323.1,96.3 H1338.9 Q1342.9,96.3 1342.9,100.3 V299.8 Z" fill="var(--s2)"><title>protected_nobias | unregistered_source: 100%</title></path>
+<text x="1331.0" y="92.3" class="t" font-size="10" text-anchor="middle">100%</text>
+<path d="M1344.9,299.8 V299.8 Q1344.9,299.8 1344.9,299.8 H1368.7 Q1368.7,299.8 1368.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | unregistered_source: 0%</title></path>
+<text x="1356.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="1331.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 1331.0 313.8)">unregistered_source</text>
+<path d="M1395.3,299.8 V299.8 Q1395.3,299.8 1395.3,299.8 H1419.1 Q1419.1,299.8 1419.1,299.8 V299.8 Z" fill="var(--s1)"><title>protected | subtle_throughput_8pct: 0%</title></path>
+<text x="1407.2" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<path d="M1421.1,299.8 V299.8 Q1421.1,299.8 1421.1,299.8 H1444.9 Q1444.9,299.8 1444.9,299.8 V299.8 Z" fill="var(--s2)"><title>protected_nobias | subtle_throughput_8pct: 0%</title></path>
+<text x="1433.0" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<path d="M1446.9,299.8 V299.8 Q1446.9,299.8 1446.9,299.8 H1470.7 Q1470.7,299.8 1470.7,299.8 V299.8 Z" fill="var(--s3)"><title>unprotected | subtle_throughput_8pct: 0%</title></path>
+<text x="1458.8" y="295.8" class="t" font-size="10" text-anchor="middle">0%</text>
+<text x="1433.0" y="313.8" class="m" font-size="11" text-anchor="end" transform="rotate(-35 1433.0 313.8)">subtle_throughput_8pct</text>
+<line x1="56" x2="1484" y1="299.8" y2="299.8" stroke="var(--mu)" stroke-width="1"/>
+</svg>

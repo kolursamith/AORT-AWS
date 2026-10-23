@@ -1,0 +1,151 @@
+{
+  "experiment_id": "secpkg-replay-20261022T111426Z",
+  "seeds": [
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "note": "The replay cases are deterministic; repetitions check that the outcome is stable.",
+  "totals": {
+    "cases": 230,
+    "http_as_expected": 230,
+    "unexpected_financial_changes": 0,
+    "duplicate_reversal_postings": 0
+  },
+  "all_ledgers_ok": true,
+  "all_audit_chains_ok": true,
+  "runs": [
+    {
+      "condition": "auto_reverse=True",
+      "seed": 101,
+      "cases": 23,
+      "http_as_expected": 23,
+      "unexpected_financial_changes": 0,
+      "duplicate_reversal_postings": 0,
+      "ledger_ok": true,
+      "audit_chain_ok": true,
+      "audit_rows_checked": 94,
+      "audit_rejections": 25,
+      "experiment_id": "secpkg-replay-20261022T111426Z"
+    },
+    {
+      "condition": "auto_reverse=False",
+      "seed": 101,
+      "cases": 23,
+      "http_as_expected": 23,
+      "unexpected_financial_changes": 0,
+      "duplicate_reversal_postings": 0,
+      "ledger_ok": true,
+      "audit_chain_ok": true,
+      "audit_rows_checked": 80,
+      "audit_rejections": 25,
+      "experiment_id": "secpkg-replay-20261022T111426Z"
+    },
+    {
+      "condition": "auto_reverse=True",
+      "seed": 102,
+      "cases": 23,
+      "http_as_expected": 23,
+      "unexpected_financial_changes": 0,
+      "duplicate_reversal_postings": 0,
+      "ledger_ok": true,
+      "audit_chain_ok": true,
+      "audit_rows_checked": 94,
+      "audit_rejections": 25,
+      "experiment_id": "secpkg-replay-20261022T111426Z"
+    },
+    {
+      "condition": "auto_reverse=False",
+      "seed": 102,
+      "cases": 23,
+      "http_as_expected": 23,
+      "unexpected_financial_changes": 0,
+      "duplicate_reversal_postings": 0,
+      "ledger_ok": true,
+      "audit_chain_ok": true,
+      "audit_rows_checked": 80,
+      "audit_rejections": 25,
+      "experiment_id": "secpkg-replay-20261022T111426Z"
+    },
+    {
+      "condition": "auto_reverse=True",
+      "seed": 103,
+      "cases": 23,
+      "http_as_expected": 23,
+      "unexpected_financial_changes": 0,
+      "duplicate_reversal_postings": 0,
+      "ledger_ok": true,
+      "audit_chain_ok": true,
+      "audit_rows_checked": 94,
+      "audit_rejections": 25,
+      "experiment_id": "secpkg-replay-20261022T111426Z"
+    },
+    {
+      "condition": "auto_reverse=False",
+      "seed": 103,
+      "cases": 23,
+      "http_as_expected": 23,
+      "unexpected_financial_changes": 0,
+      "duplicate_reversal_postings": 0,
+      "ledger_ok": true,
+      "audit_chain_ok": true,
+      "audit_rows_checked": 80,
+      "audit_rejections": 25,
+      "experiment_id": "secpkg-replay-20261022T111426Z"
+    },
+    {
+      "condition": "auto_reverse=True",
+      "seed": 104,
+      "cases": 23,
+      "http_as_expected": 23,
+      "unexpected_financial_changes": 0,
+      "duplicate_reversal_postings": 0,
+      "ledger_ok": true,
+      "audit_chain_ok": true,
+      "audit_rows_checked": 94,
+      "audit_rejections": 25,
+      "experiment_id": "secpkg-replay-20261022T111426Z"
+    },
+    {
+      "condition": "auto_reverse=False",
+      "seed": 104,
+      "cases": 23,
+      "http_as_expected": 23,
+      "unexpected_financial_changes": 0,
+      "duplicate_reversal_postings": 0,
+      "ledger_ok": true,
+      "audit_chain_ok": true,
+      "audit_rows_checked": 80,
+      "audit_rejections": 25,
+      "experiment_id": "secpkg-replay-20261022T111426Z"
+    },
+    {
+      "condition": "auto_reverse=True",
+      "seed": 105,
+      "cases": 23,
+      "http_as_expected": 23,
+      "unexpected_financial_changes": 0,
+      "duplicate_reversal_postings": 0,
+      "ledger_ok": true,
+      "audit_chain_ok": true,
+      "audit_rows_checked": 94,
+      "audit_rejections": 25,
+      "experiment_id": "secpkg-replay-20261022T111426Z"
+    },
+    {
+      "condition": "auto_reverse=False",
+      "seed": 105,
+      "cases": 23,
+      "http_as_expected": 23,
+      "unexpected_financial_changes": 0,
+      "duplicate_reversal_postings": 0,
+      "ledger_ok": true,
+      "audit_chain_ok": true,
+      "audit_rows_checked": 80,
+      "audit_rejections": 25,
+      "experiment_id": "secpkg-replay-20261022T111426Z"
+    }
+  ]
+}

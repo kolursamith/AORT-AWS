@@ -1,0 +1,11 @@
+condition,seed,cases,http_as_expected,unexpected_financial_changes,duplicate_reversal_postings,ledger_ok,audit_chain_ok,audit_rows_checked,audit_rejections,experiment_id
+auto_reverse=True,101,23,23,0,0,True,True,94,25,secpkg-replay-20261022T111426Z
+auto_reverse=False,101,23,23,0,0,True,True,80,25,secpkg-replay-20261022T111426Z
+auto_reverse=True,102,23,23,0,0,True,True,94,25,secpkg-replay-20261022T111426Z
+auto_reverse=False,102,23,23,0,0,True,True,80,25,secpkg-replay-20261022T111426Z
+auto_reverse=True,103,23,23,0,0,True,True,94,25,secpkg-replay-20261022T111426Z
+auto_reverse=False,103,23,23,0,0,True,True,80,25,secpkg-replay-20261022T111426Z
+auto_reverse=True,104,23,23,0,0,True,True,94,25,secpkg-replay-20261022T111426Z
+auto_reverse=False,104,23,23,0,0,True,True,80,25,secpkg-replay-20261022T111426Z
+auto_reverse=True,105,23,23,0,0,True,True,94,25,secpkg-replay-20261022T111426Z
+auto_reverse=False,105,23,23,0,0,True,True,80,25,secpkg-replay-20261022T111426Z

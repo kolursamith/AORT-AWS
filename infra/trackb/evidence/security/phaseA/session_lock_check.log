@@ -1,0 +1,4 @@
+second concurrent session started while the full suite runs:
+                "another Track B test session is using this PostgreSQL server; run one session at a time"
+E           Failed: another Track B test session is using this PostgreSQL server; run one session at a time
+                "another Track B test session is using this PostgreSQL server; run one session at a time"

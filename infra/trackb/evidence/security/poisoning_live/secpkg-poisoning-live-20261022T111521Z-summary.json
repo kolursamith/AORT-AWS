@@ -1,0 +1,978 @@
+{
+  "experiment_id": "secpkg-poisoning-live-20261022T111521Z",
+  "seeds": [
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "by_case_and_arm": {
+    "honest.unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "honest.protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "throughput_high_4x.unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "throughput_high_4x.protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 12.0,
+        "std": 0.0,
+        "ci95": [
+          12.0,
+          12.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "latency_low_80pct.unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "latency_low_80pct.protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 12.0,
+        "std": 0.0,
+        "ci95": [
+          12.0,
+          12.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "timeout_rate_false_zero.unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "timeout_rate_false_zero.protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 12.0,
+        "std": 0.0,
+        "ci95": [
+          12.0,
+          12.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "backlog_inconsistent.unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "backlog_inconsistent.protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "subtle_throughput_30pct.unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "subtle_throughput_30pct.protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.5833,
+        "std": 0.0,
+        "ci95": [
+          0.5833,
+          0.5833
+        ]
+      },
+      "first_flag_index": {
+        "n": 5,
+        "mean": 5.0,
+        "std": 0.0,
+        "ci95": [
+          5.0,
+          5.0
+        ]
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 7.0,
+        "std": 0.0,
+        "ci95": [
+          7.0,
+          7.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "stale_timestamp.unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "stale_timestamp.protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 12.0,
+        "std": 0.0,
+        "ci95": [
+          12.0,
+          12.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "wrong_source_identity.unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "wrong_source_identity.protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "first_flag_index": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 12.0,
+        "std": 0.0,
+        "ci95": [
+          12.0,
+          12.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "missing.unprotected": {
+      "detection_rate": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "missing.protected": {
+      "detection_rate": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "first_flag_index": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "honest_phase_false_positives": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_during_attack": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "max_budget_applied_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_applied_honest": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      }
+    }
+  }
+}

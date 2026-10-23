@@ -1,0 +1,2 @@
+# Evidence files are hashed (manifest.jsonl, sha256): store them byte-for-byte, never convert line endings.
+* -text

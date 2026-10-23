@@ -1,0 +1,222 @@
+{
+  "condition": "parallel_route_defended",
+  "seed": 101,
+  "timeline": {
+    "lead_s": 4.0,
+    "attack_s": 8.0,
+    "tail_s": 6.0
+  },
+  "capacity": {
+    "switch_core_workers": 8,
+    "switch_base_processing_ms": 40,
+    "switch_check_workers": 0
+  },
+  "summary": {
+    "per_bank": {
+      "A1": {
+        "sent": 54,
+        "admitted_ok": 54,
+        "admitted_ratio": 1.0,
+        "outcomes": {
+          "200": 54
+        },
+        "latency_p50_ms": 50.578,
+        "latency_p95_ms": 60.046
+      },
+      "A2": {
+        "sent": 54,
+        "admitted_ok": 54,
+        "admitted_ratio": 1.0,
+        "outcomes": {
+          "200": 54
+        },
+        "latency_p50_ms": 51.28,
+        "latency_p95_ms": 58.735
+      },
+      "A3": {
+        "sent": 1200,
+        "admitted_ok": 99,
+        "admitted_ratio": 0.0825,
+        "outcomes": {
+          "200": 99,
+          "RATE_LIMITED": 1101
+        },
+        "latency_p50_ms": 49.184,
+        "latency_p95_ms": 101.087
+      }
+    },
+    "attack_detection_s": 0.142,
+    "attack_containment_s": 1.0,
+    "legit_success_ratio": 1.0,
+    "legit_share_of_admitted": 0.5217,
+    "baseline_legit_ms": 52.77,
+    "recovery_after_attack_s": 0.0,
+    "recovery_observed_window_s": 6
+  },
+  "traffic": {
+    "config": {
+      "rps": 4.0,
+      "duration_s": 18.0,
+      "banks": [
+        "A1",
+        "A2"
+      ],
+      "destinations": [
+        "B",
+        "C"
+      ],
+      "customers_per_bank": 10,
+      "min_amount_paise": 1000,
+      "max_amount_paise": 500000,
+      "retry_probability": 0.0,
+      "burst_every_s": 0.0,
+      "burst_multiplier": 3.0,
+      "seed": 101,
+      "concurrency": 32
+    },
+    "sent": 72,
+    "outcomes": {
+      "CLOSED": 72
+    },
+    "retries": 0,
+    "idempotent_replays": 0,
+    "by_destination": {
+      "C": 36,
+      "B": 36
+    },
+    "latency_p50_ms": 189.98,
+    "latency_p95_ms": 251.28,
+    "elapsed_s": 18.02
+  },
+  "switch_counters": {
+    "pay_received{route=A3-B}": 5.0,
+    "downstream_calls{destination=B,kind=credit}": 41.0,
+    "pay_completed{route=A3-B,status=SUCCESS}": 5.0,
+    "dest_completed{destination=B}": 41.0,
+    "pay_received{route=A1-C}": 26.0,
+    "downstream_calls{destination=C,kind=credit}": 46.0,
+    "pay_completed{route=A1-C,status=SUCCESS}": 26.0,
+    "dest_completed{destination=C}": 46.0,
+    "pay_received{route=A2-C}": 20.0,
+    "pay_completed{route=A2-C,status=SUCCESS}": 20.0,
+    "check_received{bank=A1}": 54.0,
+    "check_admitted{bank=A1}": 54.0,
+    "check_received{bank=A2}": 54.0,
+    "check_admitted{bank=A2}": 54.0,
+    "check_completed{bank=A2}": 54.0,
+    "check_completed{bank=A1}": 54.0,
+    "pay_received{route=A2-B}": 18.0,
+    "pay_completed{route=A2-B,status=SUCCESS}": 18.0,
+    "pay_received{route=A1-B}": 18.0,
+    "pay_completed{route=A1-B,status=SUCCESS}": 18.0,
+    "check_received{bank=A3}": 1200.0,
+    "check_admitted{bank=A3}": 99.0,
+    "check_completed{bank=A3}": 99.0,
+    "check_rejected{bank=A3,reason=RATE_LIMITED}": 1101.0,
+    "check_rejected_total": 1101.0
+  },
+  "quotas": {
+    "A1": {
+      "bank_id": "A1",
+      "bank_tokens": 20.0,
+      "bank_rate_per_sec": 10.0,
+      "credits": 60.0,
+      "credit_cap": 60.0,
+      "credit_refill_per_sec": 5.0
+    },
+    "A2": {
+      "bank_id": "A2",
+      "bank_tokens": 20.0,
+      "bank_rate_per_sec": 10.0,
+      "credits": 60.0,
+      "credit_cap": 60.0,
+      "credit_refill_per_sec": 5.0
+    },
+    "A3": {
+      "bank_id": "A3",
+      "bank_tokens": 20.0,
+      "bank_rate_per_sec": 10.0,
+      "credits": 31.035,
+      "credit_cap": 60.0,
+      "credit_refill_per_sec": 5.0
+    }
+  },
+  "transaction_states_excl_attack_pool": {
+    "CLOSED": 72
+  },
+  "ledger_verification": {
+    "ok": true,
+    "unbalanced_operations": [],
+    "duplicate_operations": [],
+    "balance_mismatches": [],
+    "conservation_violations": []
+  },
+  "row": {
+    "condition": "parallel_route_defended",
+    "seed": 101,
+    "attack_rps": 150,
+    "defenses": "on",
+    "legit_destination": "C",
+    "legit_sent_before": 24,
+    "legit_success_before": 1.0,
+    "legit_p50_ms_before": 52.77,
+    "legit_p95_ms_before": 90.08,
+    "legit_sent_during": 48,
+    "legit_success_during": 1.0,
+    "legit_p50_ms_during": 50.08,
+    "legit_p95_ms_during": 59.99,
+    "legit_sent_after": 36,
+    "legit_success_after": 1.0,
+    "legit_p50_ms_after": 51.14,
+    "legit_p95_ms_after": 56.19,
+    "A1_sent": 54,
+    "A1_admitted": 54,
+    "A1_admitted_ratio": 1.0,
+    "A1_server_received": 54.0,
+    "A1_server_admitted": 54.0,
+    "A1_server_rejected": 0,
+    "A1_overloaded_at_pool": 0,
+    "A1_reached_worker_pool": 54.0,
+    "A1_credits_left": 60.0,
+    "A2_sent": 54,
+    "A2_admitted": 54,
+    "A2_admitted_ratio": 1.0,
+    "A2_server_received": 54.0,
+    "A2_server_admitted": 54.0,
+    "A2_server_rejected": 0,
+    "A2_overloaded_at_pool": 0,
+    "A2_reached_worker_pool": 54.0,
+    "A2_credits_left": 60.0,
+    "A3_sent": 1200,
+    "A3_admitted": 99,
+    "A3_admitted_ratio": 0.0825,
+    "A3_server_received": 1200.0,
+    "A3_server_admitted": 99.0,
+    "A3_server_rejected": 1101.0,
+    "A3_overloaded_at_pool": 0,
+    "A3_reached_worker_pool": 99.0,
+    "A3_credits_left": 31.035,
+    "A3_rejected_RATE_LIMITED": 1101.0,
+    "A3_rejected_GLOBAL_CAPACITY_EXCEEDED": 0,
+    "A3_rejected_ROUTE_RATE_LIMITED": 0,
+    "A3_rejected_CREDIT_EXHAUSTED": 0,
+    "A3_rejected_p50_ms": 2.53,
+    "A3_admitted_p50_ms": 49.18,
+    "rejected_that_reached_worker_pool": 0,
+    "switch_overloaded_checks": 0,
+    "legit_overloaded_at_pool": 0,
+    "detection_s": 0.142,
+    "containment_s": 1.0,
+    "recovery_after_attack_s": 0.0,
+    "baseline_legit_p50_ms": 52.77,
+    "fairness_jain_legit_banks": 1.0,
+    "attacker_share_of_admitted_during": 0.6735,
+    "payments_sent": 72,
+    "payments_closed": 72,
+    "payment_p50_ms": 189.98,
+    "payment_p95_ms": 251.28,
+    "payment_throughput_per_s": 4.0,
+    "payments_unresolved_at_end": 0,
+    "ledger_ok": true
+  }
+}

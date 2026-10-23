@@ -1,0 +1,784 @@
+{
+  "rows": [
+    {
+      "scenario": "mixed",
+      "attack_rps": "10",
+      "defenses": "off",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 50.0,
+      "a3_admitted_std": 0.0,
+      "a3_admitted_ci95": [
+        50.0,
+        50.0
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 1.0,
+      "a1_admitted_ratio_std": 0.0,
+      "a1_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 1.0,
+      "a2_admitted_ratio_std": 0.0,
+      "a2_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 1.0,
+      "legit_success_ratio_std": 0.0,
+      "legit_success_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 74.934,
+      "legit_check_p95_during_ms_std": 4.5602,
+      "legit_check_p95_during_ms_ci95": [
+        69.2727,
+        80.5953
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 74.5,
+      "legit_check_p95_after_ms_std": 4.6211,
+      "legit_check_p95_after_ms_ci95": [
+        68.7631,
+        80.2369
+      ],
+      "detection_s_n": 0,
+      "detection_s_mean": null,
+      "detection_s_std": null,
+      "detection_s_ci95": null,
+      "containment_s_n": 5,
+      "containment_s_mean": 0.0,
+      "containment_s_std": 0.0,
+      "containment_s_ci95": [
+        0.0,
+        0.0
+      ],
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 413.704,
+      "payment_p95_ms_std": 186.7394,
+      "payment_p95_ms_ci95": [
+        181.8736,
+        645.5344
+      ]
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": "10",
+      "defenses": "on",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 50.0,
+      "a3_admitted_std": 0.0,
+      "a3_admitted_ci95": [
+        50.0,
+        50.0
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 1.0,
+      "a1_admitted_ratio_std": 0.0,
+      "a1_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 1.0,
+      "a2_admitted_ratio_std": 0.0,
+      "a2_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 1.0,
+      "legit_success_ratio_std": 0.0,
+      "legit_success_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 71.898,
+      "legit_check_p95_during_ms_std": 4.2246,
+      "legit_check_p95_during_ms_ci95": [
+        66.6533,
+        77.1427
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 74.184,
+      "legit_check_p95_after_ms_std": 6.6823,
+      "legit_check_p95_after_ms_ci95": [
+        65.8881,
+        82.4799
+      ],
+      "detection_s_n": 0,
+      "detection_s_mean": null,
+      "detection_s_std": null,
+      "detection_s_ci95": null,
+      "containment_s_n": 5,
+      "containment_s_mean": 0.0,
+      "containment_s_std": 0.0,
+      "containment_s_ci95": [
+        0.0,
+        0.0
+      ],
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 296.892,
+      "payment_p95_ms_std": 62.7566,
+      "payment_p95_ms_ci95": [
+        218.9819,
+        374.8021
+      ]
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": "100",
+      "defenses": "off",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 450.2,
+      "a3_admitted_std": 5.1672,
+      "a3_admitted_ci95": [
+        443.7851,
+        456.6149
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 0.8952,
+      "a1_admitted_ratio_std": 0.0706,
+      "a1_admitted_ratio_ci95": [
+        0.8075,
+        0.9829
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 0.8857,
+      "a2_admitted_ratio_std": 0.0261,
+      "a2_admitted_ratio_ci95": [
+        0.8533,
+        0.9182
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 0.8905,
+      "legit_success_ratio_std": 0.0361,
+      "legit_success_ratio_ci95": [
+        0.8456,
+        0.9354
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 927.188,
+      "legit_check_p95_during_ms_std": 12.9776,
+      "legit_check_p95_during_ms_ci95": [
+        911.0768,
+        943.2992
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 914.182,
+      "legit_check_p95_after_ms_std": 13.1171,
+      "legit_check_p95_after_ms_ci95": [
+        897.8976,
+        930.4664
+      ],
+      "detection_s_n": 0,
+      "detection_s_mean": null,
+      "detection_s_std": null,
+      "detection_s_ci95": null,
+      "containment_s_n": 0,
+      "containment_s_mean": null,
+      "containment_s_std": null,
+      "containment_s_ci95": null,
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 1176.396,
+      "payment_p95_ms_std": 36.3268,
+      "payment_p95_ms_ci95": [
+        1131.2976,
+        1221.4944
+      ]
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": "100",
+      "defenses": "on",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 69.0,
+      "a3_admitted_std": 0.0,
+      "a3_admitted_ci95": [
+        69.0,
+        69.0
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 1.0,
+      "a1_admitted_ratio_std": 0.0,
+      "a1_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 1.0,
+      "a2_admitted_ratio_std": 0.0,
+      "a2_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 1.0,
+      "legit_success_ratio_std": 0.0,
+      "legit_success_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 89.368,
+      "legit_check_p95_during_ms_std": 10.3678,
+      "legit_check_p95_during_ms_ci95": [
+        76.4967,
+        102.2393
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 70.074,
+      "legit_check_p95_after_ms_std": 6.533,
+      "legit_check_p95_after_ms_ci95": [
+        61.9635,
+        78.1845
+      ],
+      "detection_s_n": 5,
+      "detection_s_mean": 0.2206,
+      "detection_s_std": 0.0005,
+      "detection_s_ci95": [
+        0.2199,
+        0.2213
+      ],
+      "containment_s_n": 5,
+      "containment_s_mean": 1.0,
+      "containment_s_std": 0.0,
+      "containment_s_ci95": [
+        1.0,
+        1.0
+      ],
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 341.034,
+      "payment_p95_ms_std": 59.0115,
+      "payment_p95_ms_ci95": [
+        267.7732,
+        414.2948
+      ]
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": "50",
+      "defenses": "off",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 250.0,
+      "a3_admitted_std": 0.0,
+      "a3_admitted_ci95": [
+        250.0,
+        250.0
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 1.0,
+      "a1_admitted_ratio_std": 0.0,
+      "a1_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 1.0,
+      "a2_admitted_ratio_std": 0.0,
+      "a2_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 1.0,
+      "legit_success_ratio_std": 0.0,
+      "legit_success_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 81.64,
+      "legit_check_p95_during_ms_std": 3.2557,
+      "legit_check_p95_during_ms_ci95": [
+        77.5982,
+        85.6818
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 72.434,
+      "legit_check_p95_after_ms_std": 4.6679,
+      "legit_check_p95_after_ms_ci95": [
+        66.6389,
+        78.2291
+      ],
+      "detection_s_n": 0,
+      "detection_s_mean": null,
+      "detection_s_std": null,
+      "detection_s_ci95": null,
+      "containment_s_n": 0,
+      "containment_s_mean": null,
+      "containment_s_std": null,
+      "containment_s_ci95": null,
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 297.43,
+      "payment_p95_ms_std": 28.8695,
+      "payment_p95_ms_ci95": [
+        261.5896,
+        333.2704
+      ]
+    },
+    {
+      "scenario": "mixed",
+      "attack_rps": "50",
+      "defenses": "on",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 69.0,
+      "a3_admitted_std": 0.0,
+      "a3_admitted_ci95": [
+        69.0,
+        69.0
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 1.0,
+      "a1_admitted_ratio_std": 0.0,
+      "a1_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 1.0,
+      "a2_admitted_ratio_std": 0.0,
+      "a2_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 1.0,
+      "legit_success_ratio_std": 0.0,
+      "legit_success_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 88.8,
+      "legit_check_p95_during_ms_std": 32.0815,
+      "legit_check_p95_during_ms_ci95": [
+        48.972,
+        128.628
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 76.702,
+      "legit_check_p95_after_ms_std": 8.859,
+      "legit_check_p95_after_ms_ci95": [
+        65.7039,
+        87.7001
+      ],
+      "detection_s_n": 5,
+      "detection_s_mean": 0.48,
+      "detection_s_std": 0.0,
+      "detection_s_ci95": [
+        0.48,
+        0.48
+      ],
+      "containment_s_n": 5,
+      "containment_s_mean": 1.0,
+      "containment_s_std": 0.0,
+      "containment_s_ci95": [
+        1.0,
+        1.0
+      ],
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 447.932,
+      "payment_p95_ms_std": 290.4536,
+      "payment_p95_ms_ci95": [
+        87.3441,
+        808.5199
+      ]
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": "10",
+      "defenses": "off",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 50.0,
+      "a3_admitted_std": 0.0,
+      "a3_admitted_ci95": [
+        50.0,
+        50.0
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 1.0,
+      "a1_admitted_ratio_std": 0.0,
+      "a1_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 1.0,
+      "a2_admitted_ratio_std": 0.0,
+      "a2_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 1.0,
+      "legit_success_ratio_std": 0.0,
+      "legit_success_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 86.786,
+      "legit_check_p95_during_ms_std": 22.8565,
+      "legit_check_p95_during_ms_ci95": [
+        58.4105,
+        115.1615
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 72.48,
+      "legit_check_p95_after_ms_std": 5.0127,
+      "legit_check_p95_after_ms_ci95": [
+        66.2569,
+        78.7031
+      ],
+      "detection_s_n": 0,
+      "detection_s_mean": null,
+      "detection_s_std": null,
+      "detection_s_ci95": null,
+      "containment_s_n": 5,
+      "containment_s_mean": 0.0,
+      "containment_s_std": 0.0,
+      "containment_s_ci95": [
+        0.0,
+        0.0
+      ],
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 323.258,
+      "payment_p95_ms_std": 43.8409,
+      "payment_p95_ms_ci95": [
+        268.8311,
+        377.6849
+      ]
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": "10",
+      "defenses": "on",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 50.0,
+      "a3_admitted_std": 0.0,
+      "a3_admitted_ci95": [
+        50.0,
+        50.0
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 1.0,
+      "a1_admitted_ratio_std": 0.0,
+      "a1_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 1.0,
+      "a2_admitted_ratio_std": 0.0,
+      "a2_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 1.0,
+      "legit_success_ratio_std": 0.0,
+      "legit_success_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 73.482,
+      "legit_check_p95_during_ms_std": 5.662,
+      "legit_check_p95_during_ms_ci95": [
+        66.4529,
+        80.5111
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 86.936,
+      "legit_check_p95_after_ms_std": 40.9161,
+      "legit_check_p95_after_ms_ci95": [
+        36.1401,
+        137.7319
+      ],
+      "detection_s_n": 0,
+      "detection_s_mean": null,
+      "detection_s_std": null,
+      "detection_s_ci95": null,
+      "containment_s_n": 5,
+      "containment_s_mean": 0.0,
+      "containment_s_std": 0.0,
+      "containment_s_ci95": [
+        0.0,
+        0.0
+      ],
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 374.106,
+      "payment_p95_ms_std": 92.4978,
+      "payment_p95_ms_ci95": [
+        259.2732,
+        488.9388
+      ]
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": "100",
+      "defenses": "off",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 448.8,
+      "a3_admitted_std": 10.7098,
+      "a3_admitted_ci95": [
+        435.5041,
+        462.0959
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 0.9143,
+      "a1_admitted_ratio_std": 0.0852,
+      "a1_admitted_ratio_ci95": [
+        0.8085,
+        1.02
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 0.9143,
+      "a2_admitted_ratio_std": 0.0706,
+      "a2_admitted_ratio_ci95": [
+        0.8266,
+        1.002
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 0.9143,
+      "legit_success_ratio_std": 0.0361,
+      "legit_success_ratio_ci95": [
+        0.8694,
+        0.9592
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 926.966,
+      "legit_check_p95_during_ms_std": 12.0262,
+      "legit_check_p95_during_ms_ci95": [
+        912.0359,
+        941.8961
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 924.206,
+      "legit_check_p95_after_ms_std": 21.5389,
+      "legit_check_p95_after_ms_ci95": [
+        897.4662,
+        950.9458
+      ],
+      "detection_s_n": 0,
+      "detection_s_mean": null,
+      "detection_s_std": null,
+      "detection_s_ci95": null,
+      "containment_s_n": 0,
+      "containment_s_mean": null,
+      "containment_s_std": null,
+      "containment_s_ci95": null,
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 1354.668,
+      "payment_p95_ms_std": 99.7919,
+      "payment_p95_ms_ci95": [
+        1230.7798,
+        1478.5562
+      ]
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": "100",
+      "defenses": "on",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 69.0,
+      "a3_admitted_std": 0.0,
+      "a3_admitted_ci95": [
+        69.0,
+        69.0
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 1.0,
+      "a1_admitted_ratio_std": 0.0,
+      "a1_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 1.0,
+      "a2_admitted_ratio_std": 0.0,
+      "a2_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 1.0,
+      "legit_success_ratio_std": 0.0,
+      "legit_success_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 89.418,
+      "legit_check_p95_during_ms_std": 7.6465,
+      "legit_check_p95_during_ms_ci95": [
+        79.9251,
+        98.9109
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 74.056,
+      "legit_check_p95_after_ms_std": 3.1197,
+      "legit_check_p95_after_ms_ci95": [
+        70.183,
+        77.929
+      ],
+      "detection_s_n": 5,
+      "detection_s_mean": 0.221,
+      "detection_s_std": 0.0007,
+      "detection_s_ci95": [
+        0.2201,
+        0.2219
+      ],
+      "containment_s_n": 5,
+      "containment_s_mean": 1.0,
+      "containment_s_std": 0.0,
+      "containment_s_ci95": [
+        1.0,
+        1.0
+      ],
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 476.644,
+      "payment_p95_ms_std": 104.5342,
+      "payment_p95_ms_ci95": [
+        346.8685,
+        606.4195
+      ]
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": "50",
+      "defenses": "off",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 250.0,
+      "a3_admitted_std": 0.0,
+      "a3_admitted_ci95": [
+        250.0,
+        250.0
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 1.0,
+      "a1_admitted_ratio_std": 0.0,
+      "a1_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 1.0,
+      "a2_admitted_ratio_std": 0.0,
+      "a2_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 1.0,
+      "legit_success_ratio_std": 0.0,
+      "legit_success_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 85.936,
+      "legit_check_p95_during_ms_std": 4.439,
+      "legit_check_p95_during_ms_ci95": [
+        80.4252,
+        91.4468
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 70.844,
+      "legit_check_p95_after_ms_std": 5.2128,
+      "legit_check_p95_after_ms_ci95": [
+        64.3725,
+        77.3155
+      ],
+      "detection_s_n": 0,
+      "detection_s_mean": null,
+      "detection_s_std": null,
+      "detection_s_ci95": null,
+      "containment_s_n": 0,
+      "containment_s_mean": null,
+      "containment_s_std": null,
+      "containment_s_ci95": null,
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 309.986,
+      "payment_p95_ms_std": 64.1542,
+      "payment_p95_ms_ci95": [
+        230.3408,
+        389.6312
+      ]
+    },
+    {
+      "scenario": "same_route",
+      "attack_rps": "50",
+      "defenses": "on",
+      "a3_admitted_n": 5,
+      "a3_admitted_mean": 69.0,
+      "a3_admitted_std": 0.0,
+      "a3_admitted_ci95": [
+        69.0,
+        69.0
+      ],
+      "a1_admitted_ratio_n": 5,
+      "a1_admitted_ratio_mean": 1.0,
+      "a1_admitted_ratio_std": 0.0,
+      "a1_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "a2_admitted_ratio_n": 5,
+      "a2_admitted_ratio_mean": 1.0,
+      "a2_admitted_ratio_std": 0.0,
+      "a2_admitted_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_success_ratio_n": 5,
+      "legit_success_ratio_mean": 1.0,
+      "legit_success_ratio_std": 0.0,
+      "legit_success_ratio_ci95": [
+        1.0,
+        1.0
+      ],
+      "legit_check_p95_during_ms_n": 5,
+      "legit_check_p95_during_ms_mean": 79.91,
+      "legit_check_p95_during_ms_std": 6.8303,
+      "legit_check_p95_during_ms_ci95": [
+        71.4304,
+        88.3896
+      ],
+      "legit_check_p95_after_ms_n": 5,
+      "legit_check_p95_after_ms_mean": 70.49,
+      "legit_check_p95_after_ms_std": 3.3178,
+      "legit_check_p95_after_ms_ci95": [
+        66.3711,
+        74.6089
+      ],
+      "detection_s_n": 5,
+      "detection_s_mean": 0.48,
+      "detection_s_std": 0.0,
+      "detection_s_ci95": [
+        0.48,
+        0.48
+      ],
+      "containment_s_n": 5,
+      "containment_s_mean": 1.0,
+      "containment_s_std": 0.0,
+      "containment_s_ci95": [
+        1.0,
+        1.0
+      ],
+      "payment_p95_ms_n": 5,
+      "payment_p95_ms_mean": 399.674,
+      "payment_p95_ms_std": 129.784,
+      "payment_p95_ms_ci95": [
+        238.5517,
+        560.7963
+      ]
+    }
+  ]
+}

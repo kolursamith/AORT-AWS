@@ -1,0 +1,5560 @@
+{
+  "experiment_id": "secpkg-poisoning-model-20261022T111347Z",
+  "seeds": [
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "note": "Model-in-the-loop: fluid-queue route model is the ground truth; the validator, twin update rule, mock controller and BudgetGuard are the real Track B components.",
+  "false_positives_clean_arm": 0,
+  "clean_arm_ticks": 4200,
+  "by_case_and_arm": {
+    "latency_low/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "latency_low/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 9.832,
+        "std": 0.0593,
+        "ci95": [
+          9.7583,
+          9.9057
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 11.8,
+        "std": 0.4472,
+        "ci95": [
+          11.2448,
+          12.3552
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 1653.6,
+        "std": 68.5186,
+        "ci95": [
+          1568.5365,
+          1738.6635
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 32.8,
+        "std": 0.4472,
+        "ci95": [
+          32.2448,
+          33.3552
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "latency_low/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "latency_low/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "throughput_high/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "throughput_high/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 30.0,
+        "std": 0.0,
+        "ci95": [
+          30.0,
+          30.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 30.0,
+        "std": 0.0,
+        "ci95": [
+          30.0,
+          30.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 19255.0,
+        "std": 0.0,
+        "ci95": [
+          19255.0,
+          19255.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 40.0,
+        "std": 0.0,
+        "ci95": [
+          40.0,
+          40.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "throughput_high/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "throughput_high/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "conflicting_timeout_backlog/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "conflicting_timeout_backlog/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 20.0,
+        "std": 0.0,
+        "ci95": [
+          20.0,
+          20.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 20.0,
+        "std": 0.0,
+        "ci95": [
+          20.0,
+          20.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 10200.0,
+        "std": 0.0,
+        "ci95": [
+          10200.0,
+          10200.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 39.0,
+        "std": 0.0,
+        "ci95": [
+          39.0,
+          39.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "conflicting_timeout_backlog/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "conflicting_timeout_backlog/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "replay_old/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "replay_old/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 11.0,
+        "std": 0.7071,
+        "ci95": [
+          10.1222,
+          11.8778
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 11.0,
+        "std": 0.7071,
+        "ci95": [
+          10.1222,
+          11.8778
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 2820.0,
+        "std": 579.8276,
+        "ci95": [
+          2100.1644,
+          3539.8356
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 35.8,
+        "std": 1.0954,
+        "ci95": [
+          34.44,
+          37.16
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "replay_old/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "replay_old/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "invalid_values/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "invalid_values/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 9.956,
+        "std": 0.0623,
+        "ci95": [
+          9.8787,
+          10.0333
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 11.8,
+        "std": 0.4472,
+        "ci95": [
+          11.2448,
+          12.3552
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 1763.2,
+        "std": 64.9323,
+        "ci95": [
+          1682.5889,
+          1843.8111
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 33.6,
+        "std": 0.8944,
+        "ci95": [
+          32.4896,
+          34.7104
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "invalid_values/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 37.0,
+        "std": 0.0,
+        "ci95": [
+          37.0,
+          37.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 13.0,
+        "std": 0.0,
+        "ci95": [
+          13.0,
+          13.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "invalid_values/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 37.0,
+        "std": 0.0,
+        "ci95": [
+          37.0,
+          37.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 13.0,
+        "std": 0.0,
+        "ci95": [
+          13.0,
+          13.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "subtle_throughput_high/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "subtle_throughput_high/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 14.016,
+        "std": 0.1081,
+        "ci95": [
+          13.8818,
+          14.1502
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 21.6,
+        "std": 1.1402,
+        "ci95": [
+          20.1845,
+          23.0155
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 4393.6,
+        "std": 79.9675,
+        "ci95": [
+          4294.3232,
+          4492.8768
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 39.8,
+        "std": 0.4472,
+        "ci95": [
+          39.2448,
+          40.3552
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "subtle_throughput_high/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.952,
+        "std": 0.011,
+        "ci95": [
+          0.9384,
+          0.9656
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 2.4,
+        "std": 0.5477,
+        "ci95": [
+          1.72,
+          3.08
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 47.6,
+        "std": 0.5477,
+        "ci95": [
+          46.92,
+          48.28
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.384,
+        "std": 0.0876,
+        "ci95": [
+          2.2752,
+          2.4928
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 47.6,
+        "std": 0.5477,
+        "ci95": [
+          46.92,
+          48.28
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 47.6,
+        "std": 0.5477,
+        "ci95": [
+          46.92,
+          48.28
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 2.4,
+        "std": 0.5477,
+        "ci95": [
+          1.72,
+          3.08
+        ]
+      }
+    },
+    "subtle_throughput_high/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "timeout_low/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "timeout_low/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 9.832,
+        "std": 0.0593,
+        "ci95": [
+          9.7583,
+          9.9057
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 11.8,
+        "std": 0.4472,
+        "ci95": [
+          11.2448,
+          12.3552
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 1653.6,
+        "std": 68.5186,
+        "ci95": [
+          1568.5365,
+          1738.6635
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 32.8,
+        "std": 0.4472,
+        "ci95": [
+          32.2448,
+          33.3552
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "timeout_low/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.988,
+        "std": 0.011,
+        "ci95": [
+          0.9744,
+          1.0016
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 49.4,
+        "std": 0.5477,
+        "ci95": [
+          48.72,
+          50.08
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.096,
+        "std": 0.0876,
+        "ci95": [
+          1.9872,
+          2.2048
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 6.8,
+        "std": 4.3818,
+        "ci95": [
+          1.3602,
+          12.2398
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 49.4,
+        "std": 0.5477,
+        "ci95": [
+          48.72,
+          50.08
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 49.4,
+        "std": 0.5477,
+        "ci95": [
+          48.72,
+          50.08
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      }
+    },
+    "timeout_low/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.728,
+        "std": 0.0642,
+        "ci95": [
+          0.6483,
+          0.8077
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.8367,
+        "ci95": [
+          -0.2387,
+          1.8387
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 36.4,
+        "std": 3.2094,
+        "ci95": [
+          32.4157,
+          40.3843
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.468,
+        "std": 0.1154,
+        "ci95": [
+          2.3247,
+          2.6113
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 9.8,
+        "std": 0.4472,
+        "ci95": [
+          9.2448,
+          10.3552
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 36.4,
+        "std": 3.2094,
+        "ci95": [
+          32.4157,
+          40.3843
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 36.4,
+        "std": 3.2094,
+        "ci95": [
+          32.4157,
+          40.3843
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 13.6,
+        "std": 3.2094,
+        "ci95": [
+          9.6157,
+          17.5843
+        ]
+      }
+    },
+    "timeout_high/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "timeout_high/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 9.832,
+        "std": 0.0593,
+        "ci95": [
+          9.7583,
+          9.9057
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 11.8,
+        "std": 0.4472,
+        "ci95": [
+          11.2448,
+          12.3552
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 1653.6,
+        "std": 68.5186,
+        "ci95": [
+          1568.5365,
+          1738.6635
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 32.8,
+        "std": 0.4472,
+        "ci95": [
+          32.2448,
+          33.3552
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "timeout_high/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "timeout_high/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "backlog_inconsistent/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "backlog_inconsistent/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 9.832,
+        "std": 0.0593,
+        "ci95": [
+          9.7583,
+          9.9057
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 11.8,
+        "std": 0.4472,
+        "ci95": [
+          11.2448,
+          12.3552
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 1653.6,
+        "std": 68.5186,
+        "ci95": [
+          1568.5365,
+          1738.6635
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 32.8,
+        "std": 0.4472,
+        "ci95": [
+          32.2448,
+          33.3552
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "backlog_inconsistent/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "backlog_inconsistent/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "stale_timestamp/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "stale_timestamp/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 9.832,
+        "std": 0.0593,
+        "ci95": [
+          9.7583,
+          9.9057
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 11.8,
+        "std": 0.4472,
+        "ci95": [
+          11.2448,
+          12.3552
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 1653.6,
+        "std": 68.5186,
+        "ci95": [
+          1568.5365,
+          1738.6635
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 32.8,
+        "std": 0.4472,
+        "ci95": [
+          32.2448,
+          33.3552
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "stale_timestamp/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "stale_timestamp/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "missing/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "missing/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 11.2,
+        "std": 0.8367,
+        "ci95": [
+          10.1613,
+          12.2387
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 11.2,
+        "std": 0.8367,
+        "ci95": [
+          10.1613,
+          12.2387
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 2984.0,
+        "std": 686.0612,
+        "ci95": [
+          2132.279,
+          3835.721
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 36.0,
+        "std": 1.2247,
+        "ci95": [
+          34.4795,
+          37.5205
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "missing/poisoned_protected": {
+      "detection_rate": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 20.0,
+        "std": 0.0,
+        "ci95": [
+          20.0,
+          20.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "missing/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 20.0,
+        "std": 0.0,
+        "ci95": [
+          20.0,
+          20.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "wrong_source/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "wrong_source/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 9.832,
+        "std": 0.0593,
+        "ci95": [
+          9.7583,
+          9.9057
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 11.8,
+        "std": 0.4472,
+        "ci95": [
+          11.2448,
+          12.3552
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 1653.6,
+        "std": 68.5186,
+        "ci95": [
+          1568.5365,
+          1738.6635
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 32.8,
+        "std": 0.4472,
+        "ci95": [
+          32.2448,
+          33.3552
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "wrong_source/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "wrong_source/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "unregistered_source/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "unregistered_source/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 9.832,
+        "std": 0.0593,
+        "ci95": [
+          9.7583,
+          9.9057
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 11.8,
+        "std": 0.4472,
+        "ci95": [
+          11.2448,
+          12.3552
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 1653.6,
+        "std": 68.5186,
+        "ci95": [
+          1568.5365,
+          1738.6635
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 32.8,
+        "std": 0.4472,
+        "ci95": [
+          32.2448,
+          33.3552
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "unregistered_source/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "unregistered_source/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 360.0,
+        "std": 0.0,
+        "ci95": [
+          360.0,
+          360.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "subtle_throughput_8pct/clean": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "subtle_throughput_8pct/poisoned_unprotected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 10.904,
+        "std": 0.0555,
+        "ci95": [
+          10.8351,
+          10.9729
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 13.6,
+        "std": 0.5477,
+        "ci95": [
+          12.92,
+          14.28
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 2403.4,
+        "std": 82.3304,
+        "ci95": [
+          2301.1897,
+          2505.6103
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 36.2,
+        "std": 0.8367,
+        "ci95": [
+          35.1613,
+          37.2387
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "subtle_throughput_8pct/poisoned_protected": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    },
+    "subtle_throughput_8pct/poisoned_protected_nobias": {
+      "detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "guard_conservative_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "mean_budget_during_attack": {
+        "n": 5,
+        "mean": 3.76,
+        "std": 0.0,
+        "ci95": [
+          3.76,
+          3.76
+        ]
+      },
+      "max_budget_during_attack": {
+        "n": 5,
+        "mean": 10.0,
+        "std": 0.0,
+        "ci95": [
+          10.0,
+          10.0
+        ]
+      },
+      "mean_actual_delay_ms": {
+        "n": 5,
+        "mean": 362.0,
+        "std": 0.0,
+        "ci95": [
+          362.0,
+          362.0
+        ]
+      },
+      "ticks_over_1000ms": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "flagged_all_ticks": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "suspicious": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trusted_during_attack": {
+        "n": 5,
+        "mean": 50.0,
+        "std": 0.0,
+        "ci95": [
+          50.0,
+          50.0
+        ]
+      }
+    }
+  }
+}

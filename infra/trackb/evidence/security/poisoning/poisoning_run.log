@@ -1,0 +1,7 @@
+cmd: python -m backend.aorts.experiments.security_package poisoning --seeds 101 102 103 104 105   (commit b8b3a9fa08aba614ee813d53e6c56186d3255bd2)
+poisoning model seed=101: 56 runs so far
+poisoning model seed=102: 112 runs so far
+poisoning model seed=103: 168 runs so far
+poisoning model seed=104: 224 runs so far
+poisoning model seed=105: 280 runs so far
+exit=0

@@ -1,0 +1,13 @@
+{
+  "event_id": "evt-1001",
+  "schema_version": "1.0",
+  "timestamp": "2026-10-14T10:00:15Z",
+  "transaction_id": "TXN1001",
+  "route_id": "A1-B",
+  "bank_id": "A1",
+  "amount_paise": 100000,
+  "event_type": "PAYMENT_AMBIGUOUS",
+  "transaction_version": 2,
+  "correlation_id": "exp-001",
+  "payload": {"last_known_state": "AMBIGUOUS", "checks_used": 0}
+}

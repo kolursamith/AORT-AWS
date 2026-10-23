@@ -1,0 +1,9 @@
+cmd: pip-audit (pinned CI environment: pip install -e .[dev])
+Found 1 known vulnerability in 1 package
+Name    Version   ID              Fix Versions
+------- --------- --------------- ------------
+certifi 2026.7.22 PYSEC-2026-4320 2026.10.19
+Name     Skip Reason
+-------- -----------------------------------------------------------------------
+aort-aws Dependency not found on PyPI and could not be audited: aort-aws (0.1.0)
+exit=1

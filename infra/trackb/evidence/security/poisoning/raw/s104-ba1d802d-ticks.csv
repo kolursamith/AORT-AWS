@@ -1,0 +1,61 @@
+tick,attacking,case,clean_throughput_tps,reported_throughput_tps,clean_latency_p95_ms,reported_latency_p95_ms,clean_timeout_rate,reported_timeout_rate,clean_backlog,reported_backlog,verdict,confidence,reasons,guard_integrity,capacity_estimate_tps,budget_recommended,budget_applied,predicted_delay_ms,actual_delay_ms,actual_delay_after_ms,fallback_reason
+0,False,none,12.278,12.278,331.9,331.9,0.0,0.0,0,0,TRUSTED,1.0,,TRUSTED,12.278,6,6,331.9,200.0,200.0,
+1,False,none,18.552,18.552,326.84,326.842,0.0,0.0,0,0,TRUSTED,1.0,,TRUSTED,18.552,9,9,326.842,200.0,200.0,
+2,False,none,20.198,20.198,332.65,332.653,0.0,0.0,0,0,TRUSTED,1.0,,TRUSTED,20.198,10,10,332.653,200.0,200.0,
+3,False,none,22.797,22.797,324.66,324.656,0.0,0.0,0,0,TRUSTED,1.0,,TRUSTED,22.797,11,10,324.656,200.0,200.0,switch-measured headroom 10/tick
+4,False,none,22.267,22.267,314.31,314.314,0.0,0.0,0,0,TRUSTED,1.0,,TRUSTED,22.267,11,10,314.314,200.0,200.0,switch-measured headroom 10/tick
+5,False,none,22.08,22.08,318.92,318.923,0.0,0.0,0,0,TRUSTED,1.0,,TRUSTED,22.08,11,10,318.923,200.0,200.0,switch-measured headroom 10/tick
+6,False,none,21.121,21.121,322.19,322.195,0.0,0.0,0,0,TRUSTED,1.0,,TRUSTED,21.121,10,10,322.195,200.0,200.0,
+7,False,none,21.455,21.455,330.5,330.498,0.0,0.0,0,0,TRUSTED,1.0,,TRUSTED,21.455,10,10,330.498,200.0,200.0,
+8,False,none,23.081,23.081,315.2,315.197,0.0,0.0,0,0,TRUSTED,1.0,,TRUSTED,23.081,11,10,315.197,200.0,200.0,switch-measured headroom 10/tick
+9,False,none,22.369,22.369,305.31,305.311,0.0,0.0,0,0,TRUSTED,1.0,,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+10,True,missing,22.91,,324.25,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+11,True,missing,20.988,,320.73,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+12,True,missing,22.275,,309.13,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+13,True,missing,22.69,,304.31,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+14,True,missing,22.479,,323.87,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+15,True,missing,22.483,,321.11,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+16,True,missing,22.788,,326.2,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+17,True,missing,22.049,,320.61,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+18,True,missing,22.917,,304.89,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+19,True,missing,21.105,,318.48,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,200.0,200.0,switch-measured headroom 10/tick
+20,True,missing,22.247,,330.02,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,10,305.311,400.0,500.0,switch-measured headroom 10/tick
+21,True,missing,20.273,,836.73,,0.0,,2,,MISSING,,probe silent,TRUSTED,22.369,11,1,305.311,500.0,400.0,switch-measured headroom 1/tick
+22,True,missing,14.567,,652.13,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,3,305.311,400.0,400.0,switch-measured headroom 3/tick
+23,True,missing,14.379,,619.38,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+24,True,missing,14.418,,623.96,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+25,True,missing,14.009,,611.5,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+26,True,missing,13.575,,623.22,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+27,True,missing,14.088,,664.61,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+28,True,missing,13.992,,668.63,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+29,True,missing,14.383,,632.35,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+30,True,missing,13.487,,665.51,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+31,True,missing,13.943,,666.57,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+32,True,missing,13.341,,635.33,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+33,True,missing,13.549,,610.4,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+34,True,missing,14.258,,627.68,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+35,True,missing,13.467,,636.03,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+36,True,missing,14.437,,631.58,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+37,True,missing,13.752,,614.07,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+38,True,missing,14.661,,635.36,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+39,True,missing,13.627,,647.57,,0.0,,0,,MISSING,,probe silent,TRUSTED,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick
+40,True,missing,13.5,,645.39,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 31s old (> 30s)
+41,True,missing,13.608,,665.24,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 32s old (> 30s)
+42,True,missing,14.459,,660.71,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 33s old (> 30s)
+43,True,missing,13.634,,617.33,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 34s old (> 30s)
+44,True,missing,14.302,,616.19,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 35s old (> 30s)
+45,True,missing,13.556,,646.61,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 36s old (> 30s)
+46,True,missing,13.309,,626.37,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 37s old (> 30s)
+47,True,missing,13.349,,642.89,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 38s old (> 30s)
+48,True,missing,13.884,,623.66,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 39s old (> 30s)
+49,True,missing,14.63,,661.2,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 40s old (> 30s)
+50,True,missing,14.025,,615.52,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 41s old (> 30s)
+51,True,missing,13.911,,638.1,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 42s old (> 30s)
+52,True,missing,13.932,,611.7,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 43s old (> 30s)
+53,True,missing,13.366,,660.24,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 44s old (> 30s)
+54,True,missing,14.397,,659.79,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 45s old (> 30s)
+55,True,missing,14.446,,662.29,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 46s old (> 30s)
+56,True,missing,13.35,,616.44,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 47s old (> 30s)
+57,True,missing,14.623,,640.63,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 48s old (> 30s)
+58,True,missing,14.622,,656.29,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 49s old (> 30s)
+59,True,missing,13.762,,667.18,,0.0,,0,,MISSING,,probe silent,STALE,22.369,11,2,305.311,400.0,400.0,switch-measured headroom 2/tick; latest trusted telemetry is 50s old (> 30s)

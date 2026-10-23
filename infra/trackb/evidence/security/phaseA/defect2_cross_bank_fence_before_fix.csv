@@ -1,0 +1,5 @@
+# defect 2 (found by the replay experiment smoke run, code = commit 6807590 + uncommitted runner, before the namespace fix)
+# row 11b: A2 signs a status check for A1's never-received transaction under its own identity -> HTTP 200 (expected 403); the switch then held a FAILED tombstone owned by A2
+case,event_id,transaction_id,expected_version,operation_id,http_status,decision,rejection_reason,expectation,actual_version,state,final_outcome,ledger_postings,reversal_postings,sender_balance,expected_http,http_as_expected,financial_change_vs_reference,duplicate_reversal_posting,status_codes,accepted_count
+11_status_check_claiming_other_bank,,TXNBCEF8F69D37F41E6,2,,403,IDENTITY_MISMATCH,authenticated as A2 but claimed A1/A1-B,"IDENTITY_MISMATCH (signed as A2, claims A1)",2,AMBIGUOUS,UNKNOWN,1,0,999889000,[403],True,,False,,
+11b_status_check_for_other_banks_transaction,,TXNBCEF8F69D37F41E6,2,,200,,,IDENTITY_MISMATCH (transaction belongs to A1),2,AMBIGUOUS,UNKNOWN,1,0,999889000,[403],False,False,False,,

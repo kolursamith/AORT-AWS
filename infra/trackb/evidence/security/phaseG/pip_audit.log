@@ -1,0 +1,8 @@
+cmd: pip install --upgrade certifi; pip-audit (pinned CI environment)
+  WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out. (read timeout=15)")': /packages/c4/51/29046e48f693c54e5b7412216d447a1d8362c9653148d98c02cdf65fa733/certifi-2026.10.19-py3-none-any.whl.metadata
+Version: 2026.10.19
+No known vulnerabilities found
+Name     Skip Reason
+-------- -----------------------------------------------------------------------
+aort-aws Dependency not found on PyPI and could not be audited: aort-aws (0.1.0)
+exit=0

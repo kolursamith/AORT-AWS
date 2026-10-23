@@ -1,0 +1,29 @@
+# Experiment profile for the strategy comparison (backend/aorts/experiments/run_strategy_comparison.py --mode docker).
+# Usage:  docker compose --env-file .env -f infra/trackb/docker-compose.yml -f infra/trackb/docker-compose.experiments.yml up -d
+# Restore the normal profile afterwards with:  docker compose up -d
+x-exp-env: &exp-env
+  AORTS_DEADLINE_SECONDS: "30"                 # simulated T+1, in real seconds
+  AORTS_CHECK_BACKOFF_BASE_SECONDS: "0"        # the STRATEGY alone decides when to re-check
+  AORTS_CHECK_BACKOFF_MAX_SECONDS: "0"
+  AORTS_MAX_CHECKS_PER_TRANSACTION: "60"
+  AORTS_DISPATCH_TICK_SECONDS: "0.5"
+  AORTS_SWITCH_CORE_WORKERS: "8"
+  AORTS_SWITCH_CHECK_WORKERS: "3"              # scarce status-check capacity (bulkhead)
+  AORTS_SWITCH_WORKERS_PER_DESTINATION: "6"
+  AORTS_SWITCH_BASE_PROCESSING_MS: "10"
+  AORTS_SWITCH_BENEFICIARY_TIMEOUT_S: "1.0"
+  AORTS_SWITCH_PRIMARY_RESERVE_FRACTION: "0.25"
+  AORTS_MAX_BUDGET_PER_ROUTE: "20"
+  AORTS_MAX_INFLIGHT_CHECKS_PER_ROUTE: "10"
+  AORTS_RECONCILIATION_INTERVAL_SECONDS: "5"
+  AORTS_FALLBACK_BUDGET_PER_ROUTE: "2"
+  AORTS_DISPATCH_DUPLICATE_JOB_PROB: "0.1"     # at-least-once delivery of dispatch jobs
+  AORTS_CONTROLLER_MODE: "mock"                # switched per run via POST /api/v1/admin/controller
+
+services:
+  switch: {environment: *exp-env}
+  remitter: {environment: *exp-env}
+  dispatcher: {environment: *exp-env}
+  control: {environment: *exp-env}
+  beneficiary-b: {environment: *exp-env}
+  beneficiary-c: {environment: *exp-env}

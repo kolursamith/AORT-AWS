@@ -1,0 +1,13 @@
+{
+  "event_id": "evt-1002",
+  "schema_version": "1.0",
+  "timestamp": "2026-10-14T10:00:16Z",
+  "transaction_id": "TXN1002",
+  "route_id": "A2-C",
+  "bank_id": "A2",
+  "amount_paise": 250000,
+  "event_type": "PAYMENT_SUCCEEDED",
+  "transaction_version": 3,
+  "correlation_id": "exp-001",
+  "payload": {"last_known_state": "CLOSED", "financial_outcome": "SUCCESS", "switch_reference": "SW-TXN1002"}
+}

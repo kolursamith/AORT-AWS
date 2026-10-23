@@ -1,0 +1,1054 @@
+{
+  "rows": [
+    {
+      "case": "10a_captured_request_first_use",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "10a_captured_request_first_use",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "10b_repeated_nonce",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 401.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        401.0,
+        401.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "10b_repeated_nonce",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 401.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        401.0,
+        401.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "10c_expired_timestamp",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 401.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        401.0,
+        401.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "10c_expired_timestamp",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 401.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        401.0,
+        401.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "10d_tampered_body",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 401.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        401.0,
+        401.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "10d_tampered_body",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 401.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        401.0,
+        401.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "10e_unsigned",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 401.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        401.0,
+        401.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "10e_unsigned",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 401.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        401.0,
+        401.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "1_valid_response_once",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "1_valid_response_once",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "2_same_response_twice",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "2_same_response_twice",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "3_stale_version",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "3_stale_version",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "3b_stale_timestamp",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "3b_stale_timestamp",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "4_same_reversal_delivery_1",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "4_same_reversal_delivery_1",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "4_same_reversal_delivery_2",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "4_same_reversal_delivery_2",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "4_same_reversal_delivery_3",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "4_same_reversal_delivery_3",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "4b_reversal_new_operation_id",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "4b_reversal_new_operation_id",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "5_concurrent_duplicate_events",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "5_concurrent_duplicate_events",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "6_concurrent_reversals",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "6_concurrent_reversals",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "7_duplicate_after_close_agreeing",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "7_duplicate_after_close_agreeing",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 200.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        200.0,
+        200.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "7b_conflicting_after_close",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "7b_conflicting_after_close",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 1.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        1.0,
+        1.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 2.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        2.0,
+        2.0
+      ]
+    },
+    {
+      "case": "8_response_for_wrong_transaction",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "8_response_for_wrong_transaction",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 409.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        409.0,
+        409.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "8b_event_signed_by_non_switch",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 403.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        403.0,
+        403.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "8b_event_signed_by_non_switch",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 403.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        403.0,
+        403.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "9_missing_idempotency_key",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 422.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        422.0,
+        422.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "9_missing_idempotency_key",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 422.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        422.0,
+        422.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "9b_invalid_idempotency_key",
+      "auto_reverse": "False",
+      "http_status_n": 5,
+      "http_status_mean": 422.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        422.0,
+        422.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "case": "9b_invalid_idempotency_key",
+      "auto_reverse": "True",
+      "http_status_n": 5,
+      "http_status_mean": 422.0,
+      "http_status_std": 0.0,
+      "http_status_ci95": [
+        422.0,
+        422.0
+      ],
+      "reversal_postings_n": 5,
+      "reversal_postings_mean": 0.0,
+      "reversal_postings_std": 0.0,
+      "reversal_postings_ci95": [
+        0.0,
+        0.0
+      ],
+      "ledger_postings_n": 5,
+      "ledger_postings_mean": 1.0,
+      "ledger_postings_std": 0.0,
+      "ledger_postings_ci95": [
+        1.0,
+        1.0
+      ]
+    }
+  ]
+}
