@@ -47,6 +47,7 @@ from backend.aorts.experiments.security_package import (
     aggregate,
     environment,
     paired_diff,
+    sha256_file,
     write_csv,
     write_json,
 )
@@ -90,6 +91,55 @@ def source_digest() -> str:
             h.update(p.relative_to(ROOT).as_posix().encode())
             h.update(p.read_bytes())
     return h.hexdigest()
+
+
+class Campaign(Manifest):
+    """Track B's :class:`Manifest`, plus a per-run row file and resumption of an interrupted
+    campaign (``--resume <experiment_id>``).
+
+    A run is reused only when its manifest ``end`` line belongs to the same experiment id, is
+    ``completed``, was produced from the same source digest and configuration, and its row file
+    still has the recorded hash. Everything else runs again; the manifest is append-only.
+    """
+
+    def __init__(self, out: Path, experiment: str, env: dict, raw: Path, resume: str | None):
+        super().__init__(out, experiment, env)
+        self.raw = raw
+        self.done: dict[tuple, dict] = {}
+        if not resume:
+            return
+        self.experiment_id = resume
+        for line in self.path.read_text(encoding="utf-8").splitlines():
+            rec = json.loads(line)
+            row_file = (rec.get("outputs") or {}).get("row")
+            if (
+                rec["experiment_id"] != resume
+                or rec["event"] != "end"
+                or rec["status"] != "completed"
+                or rec["source_sha256"] != env["source_sha256"]
+                or not row_file
+            ):
+                continue
+            path = ROOT / row_file["path"]
+            if path.exists() and sha256_file(path) == row_file["sha256"]:
+                key = (rec["condition"], rec["seed"], _canon(rec["config"]))
+                self.done[key] = json.loads(path.read_text(encoding="utf-8"))
+
+    def run(self, scenario: str, condition: str, seed: int, config: dict, fn):
+        key = (condition, seed, _canon(config))
+        if key in self.done:
+            print(f"  resumed {condition} seed={seed} from its recorded row", flush=True)
+            return "completed", self.done[key]
+
+        def with_row(file_key: str):
+            outputs, row = fn(file_key)
+            return {**outputs, "row": write_json(self.raw / f"{file_key}-row.json", row)}, row
+
+        return super().run(scenario, condition, seed, config, with_row)
+
+
+def _canon(config: dict) -> str:
+    return json.dumps(config, sort_keys=True, default=str)
 
 
 @contextmanager
@@ -355,7 +405,7 @@ def flood_once(condition: str, seed: int, rate: float, key: str, raw: Path):
 def cmd_flooding(args, env) -> None:
     out = Path(args.out) / "flooding"
     raw = RAW / "flooding"
-    m = Manifest(out, "stage10-flooding", env)
+    m = Campaign(out, "stage10-flooding", env, raw, args.resume)
     rows = []
     plan = [(c, FLOOD_RATES[-1]) for c in FLOOD_CONDITIONS]
     plan += [(c, r) for r in FLOOD_RATES[:-1] for c in ("flood_undefended", "flood_defended")]
@@ -602,7 +652,7 @@ def protocol_once(seed: int, key: str, raw: Path):
 def cmd_poisoning(args, env) -> None:
     out = Path(args.out) / "poisoning"
     raw = RAW / "poisoning"
-    m = Manifest(out, "stage10-poisoning", env)
+    m = Campaign(out, "stage10-poisoning", env, raw, args.resume)
     rows = []
     cases = args.cases or list(LIES)
     for seed in args.seeds:
@@ -785,7 +835,7 @@ def resilience_once(seed: int, key: str, raw: Path):
 def cmd_resilience(args, env) -> None:
     out = Path(args.out) / "resilience"
     raw = RAW / "resilience"
-    m = Manifest(out, "stage10-resilience", env)
+    m = Campaign(out, "stage10-resilience", env, raw, args.resume)
     rows = []
     for seed in args.seeds:
         config = {
@@ -847,7 +897,7 @@ def replay_once(seed: int, auto_reverse: bool, key: str, raw: Path):
 def cmd_replay(args, env) -> None:
     out = Path(args.out) / "replay"
     raw = RAW / "replay"
-    m = Manifest(out, "stage10-replay", env)
+    m = Campaign(out, "stage10-replay", env, raw, args.resume)
     rows = []
     for seed in args.seeds:
         for auto in (True, False):
@@ -899,6 +949,7 @@ def main() -> None:
     p.add_argument("--seeds", type=int, nargs="+", default=SEEDS)
     p.add_argument("--cases", nargs="+", default=None)
     p.add_argument("--out", default=str(OUT))
+    p.add_argument("--resume", default=None, help="experiment id of an interrupted campaign")
     args = p.parse_args()
     env = {
         **environment(),
