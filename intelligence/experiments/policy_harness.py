@@ -349,6 +349,7 @@ def _run_des(workload, policy, strict, safety):
     routes = [r.route_id for r in scenario.routes]
     tracker, log, audit = Tracker(workload), GateLog(), _ReleaseAudit()
     state = {"k": 0, "engine_refused": 0}
+    observe = getattr(policy, "observe", None)
 
     def controller(now: float, obs: DesObservation, fb: ReleaseFeedback | None):
         if fb is not None:
@@ -367,6 +368,8 @@ def _run_des(workload, policy, strict, safety):
             tracker.answered(check_id, result, at)
         for check_id in obs.check_timeouts:
             tracker.timed_out(check_id, obs.end_s)
+        if observe is not None:  # policies that consume remitter-own traffic (Stage 12 AORTS)
+            observe(obs)
         action = policy.decide(policy_input(tracker, routes, now, state["k"], strict))
         state["k"] += 1
         allowed = gate(tracker, action, now, strict, safety, log)
@@ -533,13 +536,17 @@ def run_policy(
     engine: Model | None = None,
     dt_s: float | None = None,
     engine_decision: str | None = None,
+    policy: Policy | None = None,
 ) -> RunRecord:
     """One closed-loop run. Without ``engine`` the arm's own selection decides (single runs);
-    comparisons pass the group engine from ``run_comparison``."""
+    comparisons pass the group engine from ``run_comparison``. ``policy`` supplies an already
+    built policy (Stage 12 AORTS arms need the scenario); ``policy_id`` must match it."""
 
     safety = safety or SafetyConfig()
     workload = generate_workload(scenario)
-    policy = make_policy(policy_id)
+    policy = policy or make_policy(policy_id)
+    if policy.info.policy_id != policy_id:
+        raise ValueError(f"policy {policy.info.policy_id} does not match {policy_id}")
     if policy.info.category in (PolicyCategory.NOT_COMPARABLE, PolicyCategory.TIER2_EXPERIMENTAL):
         raise ValueError(f"{policy_id} cannot be run as a Stage 05 baseline")
     strict = policy.info.category is not PolicyCategory.STRESS_UNCONSTRAINED
@@ -552,6 +559,8 @@ def run_policy(
     else:
         chosen, dt = engine, (dt_s if dt_s is not None else 1.0)
         engine_decision = engine_decision or f"forced: {engine.value}"
+    if chosen is Model.FLUID and hasattr(policy, "observe"):
+        raise ValueError(f"{policy_id} needs the DES's causal remitter observations")
     if chosen is Model.FLUID:
         out = _run_fluid(workload, policy, strict, safety, dt)
     else:

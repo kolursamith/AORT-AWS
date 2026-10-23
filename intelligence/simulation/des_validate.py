@@ -219,6 +219,11 @@ class DesObservation:
     check_results: tuple[tuple[str, str, str, float], ...]  # check, txn, result, time
     check_timeouts: tuple[str, ...]
     ambiguous_outstanding: tuple[tuple[str, tuple[str, ...]], ...]
+    # The remitter's own payment traffic (Stage 12): sends and received responses in the bin,
+    # as (txn, route, kind, sent_s) and (txn, route, kind, sent_s, response_s). A response is
+    # observable at its receipt time whether it is timely or late; no outcome is included.
+    payments_sent: tuple[tuple[str, str, str, float], ...] = ()
+    payment_responses: tuple[tuple[str, str, str, float, float], ...] = ()
 
 
 @dataclass(frozen=True)
@@ -415,6 +420,8 @@ class DiscreteEventSimulation:
         self._log_resolutions: list = []
         self._log_answers: list = []
         self._log_timeouts: deque = deque()
+        self._log_sends: deque = deque()
+        self._log_responses: list = []
         self._outstanding: dict[str, set[str]] = {r: set() for r in self._routes}
         self._seq = 0
 
@@ -485,6 +492,8 @@ class DiscreteEventSimulation:
         self._payments[payment.txn] = payment
         request = _Request(payment.kind, payment.txn, payment.route, self._env.now, payment=payment)
         payment.request = request
+        if self._controller is not None:
+            self._log_sends.append((self._env.now, payment))
         self._enqueue(request)
         self._at(payment.deadline_s, lambda: self._on_deadline(payment))
 
@@ -595,6 +604,13 @@ class DiscreteEventSimulation:
             answers.append((check.check_id, check.payment.txn, check.result.value, when))
         while self._log_timeouts and self._log_timeouts[0][0] < end:
             timeouts.append(self._log_timeouts.popleft()[1].check_id)
+        sends, responses = [], []
+        while self._log_sends and self._log_sends[0][0] < end:
+            when, payment = self._log_sends.popleft()
+            sends.append((payment.txn, payment.route, payment.kind.value, when))
+        while self._log_responses and self._log_responses[0][0] < end:
+            when, _, payment = heapq.heappop(self._log_responses)
+            responses.append((payment.txn, payment.route, payment.kind.value, payment.sent_s, when))
         return DesObservation(
             k,
             start,
@@ -604,6 +620,8 @@ class DiscreteEventSimulation:
             tuple(sorted(answers, key=lambda x: (x[3], x[0]))),
             tuple(sorted(timeouts)),
             tuple((r, tuple(sorted(self._outstanding[r]))) for r in self._routes),
+            tuple(sorted(sends, key=lambda x: (x[3], x[0]))),
+            tuple(sorted(responses, key=lambda x: (x[4], x[0]))),
         )
 
     def _eligible(self, payment: _Payment, now: float) -> bool:
@@ -689,6 +707,8 @@ class DiscreteEventSimulation:
             if not payment.lost:
                 payment.response_s = now + payment.latency_s + payment.confirm_s
                 self._at(payment.response_s, lambda: self._on_response(payment))
+                if self._controller is not None:
+                    self._log(self._log_responses, payment.response_s, payment)
         elif request.cls is DesClass.RESUBMISSION:
             if payment.processed_s is None:  # idempotent same-key processing
                 payment.forwarded_s = now
