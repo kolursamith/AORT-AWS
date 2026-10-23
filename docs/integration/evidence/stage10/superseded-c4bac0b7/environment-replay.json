@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-10-23T09:44:04.875428+00:00",
+  "git_commit": "00c51ecce0c9dc1ea4c545628fc296f16c02e31d",
+  "git_branch": "integration/stage09-trackb",
+  "tracked_changes_uncommitted": true,
+  "source_sha256": "c4bac0b74bde5c71037ac8ee52beb4c4112d0f9e3f88a8b25e5d38d0c9dc07e1",
+  "python": "3.11.15",
+  "platform": "macOS-14.8.1-arm64-arm-64bit",
+  "dependencies": {
+    "fastapi": "0.143.1",
+    "starlette": "1.8.0",
+    "pydantic": "2.12.3",
+    "sqlalchemy": "2.0.44",
+    "psycopg": "3.2.10",
+    "alembic": "1.20.0",
+    "httpx": "0.28.1",
+    "uvicorn": "0.38.0"
+  },
+  "postgres_server": "PostgreSQL 16.15 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
+  "postgres_container_image": null,
+  "postgres_image_digest": null,
+  "label": "synthetic local environment; in-process Track B services; Compose PostgreSQL",
+  "source_digest_scope": "backend/aorts, intelligence, contracts (*.py)"
+}

@@ -1,0 +1,11 @@
+condition,seed,trackb_cases,trackb_duplicate_reversal_postings,v11_cases,v11_unexpected,v11_unexpected_cases,ledger_ok,duplicate_check_starts,multiple_reversals,multiple_debits,unverified_evidence_applied,status,group
+auto_reverse=True,101,23,0,13,0,,True,0,0,0,0,completed,auto_reverse=True
+auto_reverse=False,101,23,0,13,0,,True,0,0,0,0,completed,auto_reverse=False
+auto_reverse=True,102,23,0,13,0,,True,0,0,0,0,completed,auto_reverse=True
+auto_reverse=False,102,23,0,13,0,,True,0,0,0,0,completed,auto_reverse=False
+auto_reverse=True,103,23,0,13,0,,True,0,0,0,0,completed,auto_reverse=True
+auto_reverse=False,103,23,0,13,0,,True,0,0,0,0,completed,auto_reverse=False
+auto_reverse=True,104,23,0,13,0,,True,0,0,0,0,completed,auto_reverse=True
+auto_reverse=False,104,23,0,13,0,,True,0,0,0,0,completed,auto_reverse=False
+auto_reverse=True,105,23,0,13,0,,True,0,0,0,0,completed,auto_reverse=True
+auto_reverse=False,105,23,0,13,0,,True,0,0,0,0,completed,auto_reverse=False

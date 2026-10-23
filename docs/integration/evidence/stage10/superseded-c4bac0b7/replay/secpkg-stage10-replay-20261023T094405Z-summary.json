@@ -1,0 +1,48 @@
+{
+  "experiment_id": "secpkg-stage10-replay-20261023T094405Z",
+  "runs": 10,
+  "completed": 10,
+  "failed": 0,
+  "by_group": {
+    "auto_reverse=True": {
+      "v11_unexpected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trackb_duplicate_reversal_postings": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "auto_reverse=False": {
+      "v11_unexpected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "trackb_duplicate_reversal_postings": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  }
+}

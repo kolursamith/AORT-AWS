@@ -17,6 +17,10 @@ id = "generic-api-key"
 [[rules.allowlists]]
 description = "Track B evidence manifest file_key (raw file names, not credentials)"
 condition = "AND"
-paths = ['''(^|/)infra/trackb/evidence/security/manifest\.jsonl$''']
+paths = [
+  '''(^|/)infra/trackb/evidence/security/manifest\.jsonl$''',
+  # the same Track B Manifest format, written by the integrated Stage 10 campaigns (2026-10-23)
+  '''(^|/)docs/integration/evidence/stage10/(superseded-[0-9a-f]+/)?(flooding|poisoning|resilience|replay)/manifest\.jsonl$''',
+]
 regexTarget = "secret"
 regexes = ['''^s[0-9]{1,6}-[0-9a-f]{8}$''']

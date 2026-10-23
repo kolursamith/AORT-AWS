@@ -1,0 +1,1204 @@
+{
+  "experiment_id": "secpkg-stage10-poisoning-20261023T155212Z",
+  "runs": 95,
+  "completed": 95,
+  "failed": 0,
+  "by_group": {
+    "protocol": {
+      "B_detection_rate": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_max_budget_during": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_dispatched_during": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_payment_p95_ms_during": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "C_dispatched_during": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      }
+    },
+    "inflate_30:clean": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8809,
+        "std": 0.0674,
+        "ci95": [
+          0.7973,
+          0.9645
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.2,
+        "std": 1.0954,
+        "ci95": [
+          -0.16,
+          2.56
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1114.618,
+        "std": 21.3027,
+        "ci95": [
+          1088.1715,
+          1141.0645
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 5.6,
+        "std": 2.6077,
+        "ci95": [
+          2.3627,
+          8.8373
+        ]
+      }
+    },
+    "inflate_30:poisoned_unprotected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 1.8708,
+        "ci95": [
+          0.6774,
+          5.3226
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.2,
+        "std": 0.4472,
+        "ci95": [
+          -0.3552,
+          0.7552
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1128.828,
+        "std": 36.123,
+        "ci95": [
+          1083.9826,
+          1173.6734
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 1.6,
+        "std": 2.6077,
+        "ci95": [
+          -1.6373,
+          4.8373
+        ]
+      }
+    },
+    "inflate_30:poisoned_protected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8762,
+        "std": 0.0702,
+        "ci95": [
+          0.789,
+          0.9634
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.8,
+        "std": 0.4472,
+        "ci95": [
+          1.2448,
+          2.3552
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1113.004,
+        "std": 21.1356,
+        "ci95": [
+          1086.7649,
+          1139.2431
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 6.4,
+        "std": 0.5477,
+        "ci95": [
+          5.72,
+          7.08
+        ]
+      }
+    },
+    "inflate_100:clean": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8381,
+        "std": 0.0106,
+        "ci95": [
+          0.8248,
+          0.8513
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.6,
+        "std": 0.8944,
+        "ci95": [
+          0.4896,
+          2.7104
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1124.408,
+        "std": 21.1988,
+        "ci95": [
+          1098.0905,
+          1150.7255
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 5.4,
+        "std": 1.9494,
+        "ci95": [
+          2.9799,
+          7.8201
+        ]
+      }
+    },
+    "inflate_100:poisoned_unprotected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 5.2,
+        "std": 1.3038,
+        "ci95": [
+          3.5813,
+          6.8187
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1128.172,
+        "std": 22.1009,
+        "ci95": [
+          1100.7345,
+          1155.6095
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 4.4,
+        "std": 3.1305,
+        "ci95": [
+          0.5136,
+          8.2864
+        ]
+      }
+    },
+    "inflate_100:poisoned_protected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8266,
+        "std": 0.0149,
+        "ci95": [
+          0.8082,
+          0.8451
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 1.0954,
+        "ci95": [
+          -0.56,
+          2.16
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 0.4,
+        "std": 0.5477,
+        "ci95": [
+          -0.28,
+          1.08
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.4,
+        "std": 0.5477,
+        "ci95": [
+          -0.28,
+          1.08
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1147.87,
+        "std": 26.8713,
+        "ci95": [
+          1114.5102,
+          1181.2298
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 2.5495,
+        "ci95": [
+          -1.1651,
+          5.1651
+        ]
+      }
+    },
+    "latency_low:clean": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8333,
+        "std": 0.0,
+        "ci95": [
+          0.8333,
+          0.8333
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.2,
+        "std": 1.0954,
+        "ci95": [
+          -0.16,
+          2.56
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1122.98,
+        "std": 10.2943,
+        "ci95": [
+          1110.2,
+          1135.76
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.8,
+        "std": 2.6833,
+        "ci95": [
+          0.4688,
+          7.1312
+        ]
+      }
+    },
+    "latency_low:poisoned_unprotected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.4,
+        "std": 0.8944,
+        "ci95": [
+          0.2896,
+          2.5104
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1138.09,
+        "std": 13.8764,
+        "ci95": [
+          1120.8629,
+          1155.3171
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.8,
+        "std": 2.0494,
+        "ci95": [
+          1.2558,
+          6.3442
+        ]
+      }
+    },
+    "latency_low:poisoned_protected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8428,
+        "std": 0.013,
+        "ci95": [
+          0.8266,
+          0.859
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.6,
+        "std": 0.8944,
+        "ci95": [
+          0.4896,
+          2.7104
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1117.96,
+        "std": 14.3988,
+        "ci95": [
+          1100.0844,
+          1135.8356
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 5.4,
+        "std": 2.51,
+        "ci95": [
+          2.2839,
+          8.5161
+        ]
+      }
+    },
+    "timeout_low:clean": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8381,
+        "std": 0.0106,
+        "ci95": [
+          0.8248,
+          0.8513
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.4,
+        "std": 0.8944,
+        "ci95": [
+          0.2896,
+          2.5104
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1134.05,
+        "std": 15.2585,
+        "ci95": [
+          1115.1071,
+          1152.9929
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 4.0,
+        "std": 2.5495,
+        "ci95": [
+          0.8349,
+          7.1651
+        ]
+      }
+    },
+    "timeout_low:poisoned_unprotected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.7071,
+        "ci95": [
+          1.1222,
+          2.8778
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1122.864,
+        "std": 12.3527,
+        "ci95": [
+          1107.5286,
+          1138.1994
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 6.0,
+        "std": 0.0,
+        "ci95": [
+          6.0,
+          6.0
+        ]
+      }
+    },
+    "timeout_low:poisoned_protected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8428,
+        "std": 0.013,
+        "ci95": [
+          0.8266,
+          0.859
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1141.352,
+        "std": 24.9737,
+        "ci95": [
+          1110.348,
+          1172.356
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 6.2,
+        "std": 0.8367,
+        "ci95": [
+          5.1613,
+          7.2387
+        ]
+      }
+    },
+    "backlog_inconsistent:clean": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8428,
+        "std": 0.013,
+        "ci95": [
+          0.8266,
+          0.859
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1120.622,
+        "std": 16.4585,
+        "ci95": [
+          1100.1894,
+          1141.0546
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 6.2,
+        "std": 0.8367,
+        "ci95": [
+          5.1613,
+          7.2387
+        ]
+      }
+    },
+    "backlog_inconsistent:poisoned_unprotected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.4,
+        "std": 0.5477,
+        "ci95": [
+          0.72,
+          2.08
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1127.324,
+        "std": 16.6998,
+        "ci95": [
+          1106.5918,
+          1148.0562
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 6.8,
+        "std": 0.4472,
+        "ci95": [
+          6.2448,
+          7.3552
+        ]
+      }
+    },
+    "backlog_inconsistent:poisoned_protected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8362,
+        "std": 0.0235,
+        "ci95": [
+          0.807,
+          0.8653
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.8,
+        "std": 0.4472,
+        "ci95": [
+          1.2448,
+          2.3552
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1132.532,
+        "std": 17.5007,
+        "ci95": [
+          1110.8055,
+          1154.2585
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 5.6,
+        "std": 2.0736,
+        "ci95": [
+          3.0256,
+          8.1744
+        ]
+      }
+    },
+    "conflicting:clean": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8266,
+        "std": 0.0149,
+        "ci95": [
+          0.8082,
+          0.8451
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.2,
+        "std": 0.8367,
+        "ci95": [
+          0.1613,
+          2.2387
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.4472,
+        "ci95": [
+          0.2448,
+          1.3552
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1133.72,
+        "std": 14.7886,
+        "ci95": [
+          1115.3604,
+          1152.0796
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.4,
+        "std": 2.6077,
+        "ci95": [
+          0.1627,
+          6.6373
+        ]
+      }
+    },
+    "conflicting:poisoned_unprotected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1134.656,
+        "std": 8.8638,
+        "ci95": [
+          1123.6519,
+          1145.6601
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 6.2,
+        "std": 1.7889,
+        "ci95": [
+          3.9792,
+          8.4208
+        ]
+      }
+    },
+    "conflicting:poisoned_protected": {
+      "B_detection_rate": {
+        "n": 5,
+        "mean": 0.8381,
+        "std": 0.0106,
+        "ci95": [
+          0.8248,
+          0.8513
+        ]
+      },
+      "B_detection_tick_offset": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "B_positive_budget_ticks_during": {
+        "n": 5,
+        "mean": 1.2,
+        "std": 1.0954,
+        "ci95": [
+          -0.16,
+          2.56
+        ]
+      },
+      "B_max_budget_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_payment_p95_ms_during": {
+        "n": 5,
+        "mean": 1119.038,
+        "std": 7.5732,
+        "ci95": [
+          1109.6361,
+          1128.4399
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 5.0,
+        "std": 2.0,
+        "ci95": [
+          2.5171,
+          7.4829
+        ]
+      }
+    }
+  }
+}

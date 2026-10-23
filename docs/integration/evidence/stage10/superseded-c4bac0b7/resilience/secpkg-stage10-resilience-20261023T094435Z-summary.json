@@ -1,0 +1,28 @@
+{
+  "experiment_id": "secpkg-stage10-resilience-20261023T094435Z",
+  "runs": 5,
+  "completed": 5,
+  "failed": 0,
+  "by_group": {
+    "resilience": {
+      "fail_closed_dispatched_total": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "max_fallback_per_tick": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 0.0,
+        "ci95": [
+          2.0,
+          2.0
+        ]
+      }
+    }
+  }
+}

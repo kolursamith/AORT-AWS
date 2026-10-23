@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-10-23T17:26:57.473076+00:00",
+  "git_commit": "f068383ede511686d70eea4cfe888f233e4650e5",
+  "git_branch": "feature/aorts-integration",
+  "tracked_changes_uncommitted": true,
+  "source_sha256": "d75babd216dd5f554cf89d88fb273ca46effbd14c537643f8e1960aa5653b24a",
+  "python": "3.11.15",
+  "platform": "macOS-14.8.1-arm64-arm-64bit",
+  "dependencies": {
+    "fastapi": "0.143.1",
+    "starlette": "1.8.0",
+    "pydantic": "2.12.3",
+    "sqlalchemy": "2.0.44",
+    "psycopg": "3.2.10",
+    "alembic": "1.20.0",
+    "httpx": "0.28.1",
+    "uvicorn": "0.38.0"
+  },
+  "postgres_server": "PostgreSQL 16.15 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
+  "postgres_container_image": null,
+  "postgres_image_digest": null,
+  "label": "synthetic local environment; in-process Track B services; Compose PostgreSQL",
+  "source_digest_scope": "backend/aorts, intelligence, contracts (*.py)"
+}

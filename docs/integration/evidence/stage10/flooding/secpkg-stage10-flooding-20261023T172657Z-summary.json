@@ -1,0 +1,1724 @@
+{
+  "experiment_id": "secpkg-stage10-flooding-20261023T172657Z",
+  "runs": 55,
+  "completed": 55,
+  "failed": 0,
+  "by_group": {
+    "normal|0.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 61.796,
+        "std": 5.1684,
+        "ci95": [
+          55.3797,
+          68.2123
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "containment_s": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 195.128,
+        "std": 8.1057,
+        "ci95": [
+          185.065,
+          205.191
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 231.35,
+        "std": 70.7634,
+        "ci95": [
+          143.4997,
+          319.2003
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.7071,
+        "ci95": [
+          0.1222,
+          1.8778
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 1.6,
+        "std": 1.3416,
+        "ci95": [
+          -0.0656,
+          3.2656
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.3,
+        "std": 0.2739,
+        "ci95": [
+          -0.04,
+          0.64
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.2734,
+        "std": 0.243,
+        "ci95": [
+          -0.0282,
+          0.575
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.4666,
+        "std": 0.4023,
+        "ci95": [
+          -0.0328,
+          0.966
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 4,
+        "mean": 4.015,
+        "std": 3.6532,
+        "ci95": [
+          -1.7972,
+          9.8272
+        ]
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 65.2,
+        "std": 2.5884,
+        "ci95": [
+          61.9865,
+          68.4135
+        ]
+      }
+    },
+    "flood_undefended|150.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 0.8891,
+        "std": 0.0596,
+        "ci95": [
+          0.8151,
+          0.9631
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 619.632,
+        "std": 29.2159,
+        "ci95": [
+          583.3615,
+          655.9025
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 1048.8,
+        "std": 9.576,
+        "ci95": [
+          1036.9117,
+          1060.6883
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "containment_s": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 340.934,
+        "std": 21.0564,
+        "ci95": [
+          314.7932,
+          367.0748
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 398.108,
+        "std": 57.3322,
+        "ci95": [
+          326.9321,
+          469.2839
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.8944,
+        "ci95": [
+          -0.5104,
+          1.7104
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.8944,
+        "ci95": [
+          -0.5104,
+          1.7104
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.5,
+        "std": 0.5,
+        "ci95": [
+          -0.1207,
+          1.1207
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.1834,
+        "std": 0.2912,
+        "ci95": [
+          -0.1781,
+          0.5449
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.1834,
+        "std": 0.2912,
+        "ci95": [
+          -0.1781,
+          0.5449
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 4,
+        "mean": 9.5075,
+        "std": 1.072,
+        "ci95": [
+          7.8019,
+          11.2131
+        ]
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 68.0,
+        "std": 2.2361,
+        "ci95": [
+          65.224,
+          70.776
+        ]
+      }
+    },
+    "flood_defended|150.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 60.028,
+        "std": 4.7545,
+        "ci95": [
+          54.1255,
+          65.9305
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 99.0,
+        "std": 0.0,
+        "ci95": [
+          99.0,
+          99.0
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 1101.0,
+        "std": 0.0,
+        "ci95": [
+          1101.0,
+          1101.0
+        ]
+      },
+      "containment_s": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 2.2361,
+        "ci95": [
+          -1.776,
+          3.776
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 2.975,
+        "std": 0.0559,
+        "ci95": [
+          2.9056,
+          3.0444
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 176.018,
+        "std": 7.0584,
+        "ci95": [
+          167.2552,
+          184.7808
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 190.598,
+        "std": 24.7049,
+        "ci95": [
+          159.9278,
+          221.2682
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 2.3452,
+        "ci95": [
+          -0.9115,
+          4.9115
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.6,
+        "std": 1.1402,
+        "ci95": [
+          2.1845,
+          5.0155
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.5,
+        "std": 0.5,
+        "ci95": [
+          -0.1207,
+          1.1207
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.45,
+        "std": 0.5123,
+        "ci95": [
+          -0.1861,
+          1.0861
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.85,
+        "std": 0.2236,
+        "ci95": [
+          0.5724,
+          1.1276
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 3,
+        "mean": 5.27,
+        "std": 4.1025,
+        "ci95": [
+          -4.922,
+          15.462
+        ]
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 60.2,
+        "std": 6.2209,
+        "ci95": [
+          52.4769,
+          67.9231
+        ]
+      }
+    },
+    "parallel_route_undefended|150.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 0.8489,
+        "std": 0.0657,
+        "ci95": [
+          0.7673,
+          0.9305
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 630.124,
+        "std": 44.0469,
+        "ci95": [
+          575.4414,
+          684.8066
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 1053.2,
+        "std": 4.3243,
+        "ci95": [
+          1047.8315,
+          1058.5685
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "containment_s": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 2.2,
+        "std": 2.1679,
+        "ci95": [
+          -0.4914,
+          4.8914
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 341.784,
+        "std": 36.4422,
+        "ci95": [
+          296.5423,
+          387.0257
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 410.014,
+        "std": 37.0436,
+        "ci95": [
+          364.0256,
+          456.0024
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.3,
+        "std": 0.2739,
+        "ci95": [
+          -0.04,
+          0.64
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.1998,
+        "std": 0.1824,
+        "ci95": [
+          -0.0266,
+          0.4262
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.1666,
+        "std": 0.1558,
+        "ci95": [
+          -0.0268,
+          0.36
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 69.2,
+        "std": 1.0954,
+        "ci95": [
+          67.84,
+          70.56
+        ]
+      }
+    },
+    "parallel_route_defended|150.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 58.246,
+        "std": 5.3711,
+        "ci95": [
+          51.578,
+          64.914
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 99.0,
+        "std": 0.0,
+        "ci95": [
+          99.0,
+          99.0
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 1101.0,
+        "std": 0.0,
+        "ci95": [
+          1101.0,
+          1101.0
+        ]
+      },
+      "containment_s": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 0.4,
+        "std": 0.8944,
+        "ci95": [
+          -0.7104,
+          1.5104
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 174.984,
+        "std": 6.0799,
+        "ci95": [
+          167.436,
+          182.532
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 191.438,
+        "std": 24.0318,
+        "ci95": [
+          161.6034,
+          221.2726
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 1.0,
+        "ci95": [
+          1.7585,
+          4.2415
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.2,
+        "std": 0.8367,
+        "ci95": [
+          2.1613,
+          4.2387
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.7,
+        "std": 0.4472,
+        "ci95": [
+          0.1448,
+          1.2552
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.8,
+        "std": 0.2739,
+        "ci95": [
+          0.46,
+          1.14
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.85,
+        "std": 0.2236,
+        "ci95": [
+          0.5724,
+          1.1276
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 5,
+        "mean": 0.404,
+        "std": 0.7758,
+        "ci95": [
+          -0.5592,
+          1.3672
+        ]
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 53.8,
+        "std": 7.1204,
+        "ci95": [
+          44.9603,
+          62.6397
+        ]
+      }
+    },
+    "flood_undefended|10.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 60.614,
+        "std": 3.8785,
+        "ci95": [
+          55.799,
+          65.429
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 80.0,
+        "std": 0.0,
+        "ci95": [
+          80.0,
+          80.0
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "containment_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 185.792,
+        "std": 12.722,
+        "ci95": [
+          169.9981,
+          201.5859
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 200.922,
+        "std": 31.0229,
+        "ci95": [
+          162.4082,
+          239.4358
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 2.8,
+        "std": 1.0954,
+        "ci95": [
+          1.44,
+          4.16
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.4,
+        "std": 0.5477,
+        "ci95": [
+          2.72,
+          4.08
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.4183,
+        "ci95": [
+          0.0807,
+          1.1193
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.67,
+        "std": 0.2752,
+        "ci95": [
+          0.3283,
+          1.0117
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.82,
+        "std": 0.1754,
+        "ci95": [
+          0.6023,
+          1.0377
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 4,
+        "mean": 3.0275,
+        "std": 2.0352,
+        "ci95": [
+          -0.2105,
+          6.2655
+        ]
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 55.0,
+        "std": 4.7434,
+        "ci95": [
+          49.1112,
+          60.8888
+        ]
+      }
+    },
+    "flood_defended|10.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 58.092,
+        "std": 2.6108,
+        "ci95": [
+          54.8508,
+          61.3332
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 80.0,
+        "std": 0.0,
+        "ci95": [
+          80.0,
+          80.0
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "containment_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 185.798,
+        "std": 10.6525,
+        "ci95": [
+          172.5733,
+          199.0227
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 194.776,
+        "std": 13.1599,
+        "ci95": [
+          178.4384,
+          211.1136
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 1.5811,
+        "ci95": [
+          0.0371,
+          3.9629
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.2,
+        "std": 0.8367,
+        "ci95": [
+          2.1613,
+          4.2387
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.3,
+        "std": 0.4472,
+        "ci95": [
+          -0.2552,
+          0.8552
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.48,
+        "std": 0.3978,
+        "ci95": [
+          -0.0139,
+          0.9739
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.78,
+        "std": 0.2465,
+        "ci95": [
+          0.474,
+          1.086
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 5,
+        "mean": 5.566,
+        "std": 4.3925,
+        "ci95": [
+          0.1128,
+          11.0192
+        ]
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 57.6,
+        "std": 7.6354,
+        "ci95": [
+          48.1209,
+          67.0791
+        ]
+      }
+    },
+    "flood_undefended|50.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 59.088,
+        "std": 5.211,
+        "ci95": [
+          52.6187,
+          65.5573
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 400.0,
+        "std": 0.0,
+        "ci95": [
+          400.0,
+          400.0
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "containment_s": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 150.718,
+        "std": 6.4985,
+        "ci95": [
+          142.6503,
+          158.7857
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 168.314,
+        "std": 29.4948,
+        "ci95": [
+          131.6972,
+          204.9308
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 3.4,
+        "std": 0.5477,
+        "ci95": [
+          2.72,
+          4.08
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.8,
+        "std": 0.4472,
+        "ci95": [
+          3.2448,
+          4.3552
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.7,
+        "std": 0.4472,
+        "ci95": [
+          0.1448,
+          1.2552
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.85,
+        "std": 0.1369,
+        "ci95": [
+          0.68,
+          1.02
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.95,
+        "std": 0.1118,
+        "ci95": [
+          0.8112,
+          1.0888
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 4,
+        "mean": 5.9175,
+        "std": 4.8412,
+        "ci95": [
+          -1.7849,
+          13.6199
+        ]
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 56.6,
+        "std": 5.3198,
+        "ci95": [
+          49.9957,
+          63.2043
+        ]
+      }
+    },
+    "flood_defended|50.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 57.828,
+        "std": 4.0415,
+        "ci95": [
+          52.8106,
+          62.8454
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 99.0,
+        "std": 0.0,
+        "ci95": [
+          99.0,
+          99.0
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 301.0,
+        "std": 0.0,
+        "ci95": [
+          301.0,
+          301.0
+        ]
+      },
+      "containment_s": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 183.92,
+        "std": 11.1487,
+        "ci95": [
+          170.0793,
+          197.7607
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 194.774,
+        "std": 20.7495,
+        "ci95": [
+          169.0142,
+          220.5338
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 2.0,
+        "std": 1.5811,
+        "ci95": [
+          0.0371,
+          3.9629
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.4,
+        "std": 0.8944,
+        "ci95": [
+          2.2896,
+          4.5104
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.5,
+        "std": 0.5,
+        "ci95": [
+          -0.1207,
+          1.1207
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.5,
+        "std": 0.3953,
+        "ci95": [
+          0.0093,
+          0.9907
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.85,
+        "std": 0.2236,
+        "ci95": [
+          0.5724,
+          1.1276
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 3,
+        "mean": 4.6367,
+        "std": 4.8625,
+        "ci95": [
+          -7.4435,
+          16.7168
+        ]
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 58.2,
+        "std": 5.7619,
+        "ci95": [
+          51.0467,
+          65.3533
+        ]
+      }
+    },
+    "flood_undefended|100.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 104.914,
+        "std": 59.8023,
+        "ci95": [
+          30.6716,
+          179.1564
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 799.8,
+        "std": 0.4472,
+        "ci95": [
+          799.2448,
+          800.3552
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "containment_s": {
+        "n": 0,
+        "mean": null,
+        "std": null,
+        "ci95": null
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 1.2,
+        "std": 2.6833,
+        "ci95": [
+          -2.1312,
+          4.5312
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 163.41,
+        "std": 16.6509,
+        "ci95": [
+          142.7385,
+          184.0815
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 207.686,
+        "std": 60.2541,
+        "ci95": [
+          132.8826,
+          282.4894
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 1.4142,
+        "ci95": [
+          1.2443,
+          4.7557
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.2,
+        "std": 1.3038,
+        "ci95": [
+          1.5813,
+          4.8187
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.7734,
+        "std": 0.3515,
+        "ci95": [
+          0.3371,
+          1.2097
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.84,
+        "std": 0.3578,
+        "ci95": [
+          0.3958,
+          1.2842
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 4,
+        "mean": 1.0275,
+        "std": 1.0368,
+        "ci95": [
+          -0.6221,
+          2.6771
+        ]
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 58.2,
+        "std": 5.8052,
+        "ci95": [
+          50.9931,
+          65.4069
+        ]
+      }
+    },
+    "flood_defended|100.0": {
+      "legit_check_success_during": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "legit_check_p95_ms_during": {
+        "n": 5,
+        "mean": 56.676,
+        "std": 5.5579,
+        "ci95": [
+          49.7761,
+          63.5759
+        ]
+      },
+      "A3_accepted": {
+        "n": 5,
+        "mean": 99.0,
+        "std": 0.0,
+        "ci95": [
+          99.0,
+          99.0
+        ]
+      },
+      "A3_rejected": {
+        "n": 5,
+        "mean": 701.0,
+        "std": 0.0,
+        "ci95": [
+          701.0,
+          701.0
+        ]
+      },
+      "containment_s": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "recovery_after_attack_s": {
+        "n": 5,
+        "mean": 0.0,
+        "std": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "payments_closed_per_s_B_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payments_closed_per_s_C_during": {
+        "n": 5,
+        "mean": 3.0,
+        "std": 0.0,
+        "ci95": [
+          3.0,
+          3.0
+        ]
+      },
+      "payment_p95_ms_B_during": {
+        "n": 5,
+        "mean": 173.976,
+        "std": 8.1638,
+        "ci95": [
+          163.8409,
+          184.1111
+        ]
+      },
+      "payment_p99_ms_B_during": {
+        "n": 5,
+        "mean": 176.594,
+        "std": 9.7956,
+        "ci95": [
+          164.4331,
+          188.7549
+        ]
+      },
+      "B_dispatched_during": {
+        "n": 5,
+        "mean": 2.2,
+        "std": 1.7889,
+        "ci95": [
+          -0.0208,
+          4.4208
+        ]
+      },
+      "C_dispatched_during": {
+        "n": 5,
+        "mean": 3.2,
+        "std": 1.3038,
+        "ci95": [
+          1.5813,
+          4.8187
+        ]
+      },
+      "B_budget_mean_before": {
+        "n": 5,
+        "mean": 0.6,
+        "std": 0.5477,
+        "ci95": [
+          -0.08,
+          1.28
+        ]
+      },
+      "B_budget_mean_during": {
+        "n": 5,
+        "mean": 0.53,
+        "std": 0.4522,
+        "ci95": [
+          -0.0314,
+          1.0914
+        ]
+      },
+      "C_budget_mean_during": {
+        "n": 5,
+        "mean": 0.84,
+        "std": 0.3578,
+        "ci95": [
+          0.3958,
+          1.2842
+        ]
+      },
+      "controller_B_recovery_s": {
+        "n": 4,
+        "mean": 4.0775,
+        "std": 3.6005,
+        "ci95": [
+          -1.6509,
+          9.8059
+        ]
+      },
+      "unresolved_end": {
+        "n": 5,
+        "mean": 57.8,
+        "std": 8.3487,
+        "ci95": [
+          47.4354,
+          68.1646
+        ]
+      }
+    }
+  },
+  "paired_defended_minus_undefended": {
+    "legit_check_success_during": {
+      "pairs": 5,
+      "mean_diff": 0.1109,
+      "ci95_bootstrap": [
+        0.0641,
+        0.1555
+      ],
+      "ci_excludes_zero": true
+    },
+    "legit_check_p95_ms_during": {
+      "pairs": 5,
+      "mean_diff": -559.604,
+      "ci95_bootstrap": [
+        -580.306,
+        -538.902
+      ],
+      "ci_excludes_zero": true
+    },
+    "A3_accepted": {
+      "pairs": 5,
+      "mean_diff": -949.8,
+      "ci95_bootstrap": [
+        -956.2,
+        -941.2
+      ],
+      "ci_excludes_zero": true
+    }
+  }
+}
