@@ -422,6 +422,7 @@ def main(argv=None) -> None:
     r.add_argument("--scenarios", nargs="+", choices=list(SCENARIOS))
     a = sub.add_parser("analyse")
     a.add_argument("--out", default=str(OUT))
+    a.add_argument("--source", default=None, help="source digest of the runs to analyse")
     args = p.parse_args(argv)
     {"run": cmd_run, "analyse": cmd_analyse}[args.command](args)
 

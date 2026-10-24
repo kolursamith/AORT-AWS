@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="340" viewBox="0 0 980 340" font-family="system-ui, sans-serif">
+<style>.bg{fill:#fcfcfb}.t{fill:#0b0b0b}.m{fill:#52514e}.g{stroke:#e4e3df}.w{fill:#eb6834}.s0{stroke:#2a78d6}.f0{fill:#2a78d6}.s1{stroke:#eb6834}.f1{fill:#eb6834}.s2{stroke:#1baf7a}.f2{fill:#1baf7a}.s3{stroke:#8a5cd1}.f3{fill:#8a5cd1}@media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t{fill:#f0efec}.m{fill:#c3c2b7}.g{stroke:#3a3936}.s0{stroke:#3987e5}.f0{fill:#3987e5}.s1{stroke:#d95926}.f1{fill:#d95926}.s2{stroke:#199e70}.f2{fill:#199e70}.s3{stroke:#9b72de}.f3{fill:#9b72de}}</style>
+<rect class="bg" width="980" height="340"/>
+<text class="t" x="16" y="24" font-size="15" font-weight="600">Bank A3 status-check flooding (flood undefended), seed 101</text>
+<text class="m" x="16" y="44" font-size="12">150 checks/s from A3 on route B; controller ticks of the integrated loop</text>
+<rect class="w" x="174.2" y="60" width="236.4" height="240" opacity="0.12"/>
+<text class="m" x="178.2" y="72" font-size="10">attack</text>
+<line class="g" x1="56" y1="300.0" x2="710" y2="300.0"/>
+<text class="m" x="50" y="304.0" font-size="10" text-anchor="end">0.0</text>
+<line class="g" x1="56" y1="240.0" x2="710" y2="240.0"/>
+<text class="m" x="50" y="244.0" font-size="10" text-anchor="end">2.0</text>
+<line class="g" x1="56" y1="180.0" x2="710" y2="180.0"/>
+<text class="m" x="50" y="184.0" font-size="10" text-anchor="end">4.1</text>
+<line class="g" x1="56" y1="120.0" x2="710" y2="120.0"/>
+<text class="m" x="50" y="124.0" font-size="10" text-anchor="end">6.1</text>
+<line class="g" x1="56" y1="60.0" x2="710" y2="60.0"/>
+<text class="m" x="50" y="64.0" font-size="10" text-anchor="end">8.1</text>
+<polyline class="s0" fill="none" stroke-width="2" stroke-dasharray="none" points="56.0,300.0 114.8,300.0 179.7,300.0 254.2,300.0 299.0,300.0 360.5,300.0 410.6,300.0 474.1,300.0 528.6,300.0 587.8,300.0 650.2,300.0 710.0,300.0"/>
+<rect class="f0" x="722" y="66" width="12" height="3"/>
+<text class="t" x="740" y="71" font-size="11">A1-B budget (checks/s)</text>
+<polyline class="s1" fill="none" stroke-width="2" stroke-dasharray="6 4" points="56.0,300.0 114.8,300.0 179.7,300.0 254.2,300.0 299.0,300.0 360.5,300.0 410.6,300.0 474.1,300.0 528.6,300.0 587.8,300.0 650.2,300.0 710.0,300.0"/>
+<rect class="f1" x="722" y="84" width="12" height="3"/>
+<text class="t" x="740" y="89" font-size="11">A1-B dispatched</text>
+<polyline class="s2" fill="none" stroke-width="2" stroke-dasharray="none" points="56.0,300.0 114.8,300.0 179.7,300.0 254.2,270.4 299.0,300.0 360.5,300.0 410.6,300.0 474.1,300.0 528.6,300.0 587.8,300.0 650.2,270.4 710.0,270.4"/>
+<rect class="f2" x="722" y="102" width="12" height="3"/>
+<text class="t" x="740" y="107" font-size="11">A1-C budget (checks/s)</text>
+<polyline class="s3" fill="none" stroke-width="2" stroke-dasharray="6 4" points="56.0,83.7 114.8,83.7 179.7,77.8 254.2,80.7 299.0,80.7 360.5,86.7 410.6,83.7 474.1,86.7 528.6,83.7 587.8,86.7 650.2,89.6 710.0,92.6"/>
+<rect class="f3" x="722" y="120" width="12" height="3"/>
+<text class="t" x="740" y="125" font-size="11">unresolved backlog / 10</text>
+<text class="m" x="383" y="330" font-size="11" text-anchor="middle">seconds since the loop started (one point per controller tick)</text>
+</svg>

@@ -73,7 +73,7 @@ def _svg_diffs(title: str, subtitle: str, items: list[tuple[str, dict | None]], 
     """Horizontal dot plot: mean paired difference per arm with its bootstrap interval."""
 
     items = [(k, p) for k, p in items if p]
-    width, row_h, left, right, top = 820, 26, 210, 30, 70
+    width, row_h, left, right, top = 900, 26, 210, 110, 70  # right: room for value labels
     height = top + row_h * len(items) + 50
     lo = min([0.0] + [min(p["mean"], *(p.get("ci95_bootstrap") or (p["mean"],))) for _, p in items])
     hi = max([0.0] + [max(p["mean"], *(p.get("ci95_bootstrap") or (p["mean"],))) for _, p in items])
@@ -134,7 +134,9 @@ def _svg_diffs(title: str, subtitle: str, items: list[tuple[str, dict | None]], 
 def analyse(args) -> None:
     out = Path(args.out)
     (out / "figures").mkdir(parents=True, exist_ok=True)
-    src = ev.source_digest()
+    # the runs' source digest (default: this tree). A later analysis-only change to this module
+    # changes the tree digest, so the report names the recorded digest it analyses explicitly.
+    src = getattr(args, "source", None) or ev.source_digest()
     rows, meta = ev.load_rows(src)
     manifest = [
         json.loads(line)

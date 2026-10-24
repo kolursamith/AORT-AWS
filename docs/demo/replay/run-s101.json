@@ -1,0 +1,227 @@
+{
+  "row": {
+    "condition": "auto_reverse=True",
+    "seed": 101,
+    "trackb_cases": 23,
+    "trackb_duplicate_reversal_postings": 0,
+    "v11_cases": 13,
+    "v11_unexpected": 0,
+    "v11_unexpected_cases": "",
+    "ledger_ok": true,
+    "duplicate_check_starts": 0,
+    "multiple_reversals": 0,
+    "multiple_debits": 0,
+    "unverified_evidence_applied": 0
+  },
+  "v11_cases": [
+    {
+      "case": "duplicate_payment",
+      "expected": "same transaction, one DEBIT",
+      "observed": {
+        "same": true,
+        "postings": {
+          "CREDIT": 1,
+          "DEBIT": 1
+        }
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "duplicate_event_delivery",
+      "expected": "nothing newly applied (duplicates; unrepresentable rows dead-lettered again), twin unchanged",
+      "observed": {
+        "first_pass": {
+          "delivered": 26,
+          "duplicates": 0,
+          "dead_lettered": 18,
+          "retry_pending": false,
+          "status_results": 0,
+          "last_error": null
+        },
+        "redelivery": {
+          "delivered": 0,
+          "duplicates": 26,
+          "dead_lettered": 18,
+          "retry_pending": false,
+          "status_results": 0,
+          "last_error": null
+        },
+        "twin": {
+          "version": 2,
+          "outcome": "UNKNOWN",
+          "terminal": false
+        }
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "duplicate_status_result",
+      "expected": "200 DUPLICATE_EVENT, twin unchanged",
+      "observed": {
+        "status": 200,
+        "code": "DUPLICATE_EVENT"
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "concurrent_duplicate_result",
+      "expected": "no 204 (already applied), twin unchanged",
+      "observed": {
+        "codes": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "wrong_transaction_id",
+      "expected": "refused UNKNOWN_TRANSACTION",
+      "observed": {
+        "status": 404,
+        "code": "UNKNOWN_TRANSACTION"
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "wrong_route",
+      "expected": "refused ROUTE_IDENTITY_MISMATCH",
+      "observed": {
+        "status": 409,
+        "code": "ROUTE_IDENTITY_MISMATCH"
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "conflicting_authoritative_outcome",
+      "expected": "refused 409, twin keeps SUCCESS",
+      "observed": {
+        "status": 409,
+        "twin": {
+          "version": 5,
+          "outcome": "SUCCESS",
+          "terminal": false
+        }
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "old_transaction_version",
+      "expected": "identical old version: duplicate; altered old version: refused; twin unchanged",
+      "observed": {
+        "identical": 200,
+        "altered": 422,
+        "twin": {
+          "version": 5,
+          "outcome": "SUCCESS",
+          "terminal": false
+        }
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "unregistered_event_source",
+      "expected": "refused UNKNOWN_SOURCE",
+      "observed": {
+        "status": 403,
+        "code": "UNKNOWN_SOURCE"
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "invalid_source_signature",
+      "expected": "evidence stored unverified; no settlement; still unresolved",
+      "observed": {
+        "status": null,
+        "unverified_status": "SUCCESS",
+        "before": [
+          "AMBIGUOUS",
+          {
+            "CREDIT": 1,
+            "DEBIT": 1
+          }
+        ],
+        "after": [
+          "AMBIGUOUS",
+          {
+            "CREDIT": 1,
+            "DEBIT": 1
+          }
+        ],
+        "evidence": [
+          [
+            false,
+            true
+          ]
+        ]
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "expired_evidence",
+      "expected": "stale signature rejected; no settlement",
+      "observed": {
+        "status": null,
+        "unverified_status": "SUCCESS",
+        "state": "AMBIGUOUS",
+        "postings": {
+          "CREDIT": 1,
+          "DEBIT": 1
+        }
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "answer_for_other_transaction",
+      "expected": "discarded (WRONG_TRANSACTION); t4 unresolved",
+      "observed": {
+        "status": null,
+        "state": "AMBIGUOUS"
+      },
+      "as_expected": true,
+      "seed": 101
+    },
+    {
+      "case": "duplicate_reversal_completion",
+      "expected": "duplicate (200); one REVERSAL posting",
+      "observed": {
+        "check": "FAILED",
+        "codes": [
+          200
+        ],
+        "postings": {
+          "DEBIT": 1,
+          "REVERSAL": 1
+        },
+        "twin": {
+          "version": 6,
+          "outcome": "FAILURE",
+          "terminal": true
+        }
+      },
+      "as_expected": true,
+      "seed": 101
+    }
+  ],
+  "outputs": {
+    "trackb_cases": "/Users/sogo/Desktop/college/AWS-AORT/CAD_project/AORT-aws-stage12/results/processed/stage13/replay/demo-replay-s101-trackb-cases.csv",
+    "v11_cases": "/Users/sogo/Desktop/college/AWS-AORT/CAD_project/AORT-aws-stage12/results/processed/stage13/replay/demo-replay-s101-v11-cases.json"
+  }
+}
