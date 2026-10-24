@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [developer, main]
   push:
-    branches: [developer, main]
+    branches: [developer, main, feature/aorts-integration]
 
 permissions:
   contents: read
@@ -17,7 +17,7 @@ jobs:
   quality-and-tests:
     name: quality-and-tests
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 45
     services:
       # Track B ledger/integration tests need PostgreSQL (they fail rather than skip when
       # AORTS_REQUIRE_DB=1). Throwaway CI-only credentials, not a secret.
@@ -41,11 +41,46 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: python -m pip install --upgrade pip setuptools
-      - run: python -m pip install -e '.[dev]'
+      # research (SimPy) and dashboard extras are mandatory: their tests must run, not skip
+      - run: python -m pip install -e '.[dev,research,dashboard]'
       - run: ruff format --check .
       - run: ruff check .
+      - run: python -m compileall -q backend contracts intelligence
       - name: Verify generated contracts are current
         run: |
           python -m contracts.v1.generate_schemas
           git diff --exit-code -- contracts/v1/*.schema.json
-      - run: pytest
+      - name: Migrations upgrade, downgrade and re-upgrade on a scratch database
+        env:
+          PGPASSWORD: aorts-ci-only
+        run: |
+          psql -h 127.0.0.1 -U aorts -d aorts -c "CREATE DATABASE aorts_migrations"
+          URL=postgresql+psycopg://aorts:aorts-ci-only@127.0.0.1:5432/aorts_migrations
+          alembic -c backend/aorts/alembic.ini -x url=$URL upgrade head
+          alembic -c backend/aorts/alembic.ini -x url=$URL downgrade base
+          alembic -c backend/aorts/alembic.ini -x url=$URL upgrade head
+      - run: pytest -o addopts="-q --strict-markers" -rs --junitxml=junit.xml
+      - name: No mandatory test may be skipped
+        run: python .github/scripts/assert_no_skips.py junit.xml
+
+  containers:
+    name: containers
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compose files are valid
+        run: |
+          printf 'POSTGRES_PASSWORD=ci\nAORTS_ADMIN_TOKEN=ci\nAORTS_SERVICE_KEYS=\nAORTS_BACKEND_TOKEN=ci\n' > infra/aorts/.env
+          docker compose -p aorts-s11 -f infra/aorts/docker-compose.yml config --quiet
+          rm infra/aorts/.env
+      - name: Build the integrated AORTS image (not pushed)
+        run: docker build -f infra/aorts/Dockerfile -t aorts-integrated:ci .
+      - name: Build the Track B image (not pushed)
+        run: docker build -f infra/trackb/Dockerfile -t aorts-trackb:ci .
+      - name: Image imports every service entry point
+        run: >-
+          docker run --rm aorts-integrated:ci python -c "import backend.aorts.integration.worker,
+          backend.aorts.integration.demo, backend.aorts.control.main,
+          backend.aorts.banking.switch.main, backend.aorts.banking.remitter.main,
+          backend.aorts.banking.beneficiary.main, intelligence.controller.service, streamlit"

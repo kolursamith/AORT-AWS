@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [developer, main]
   push:
-    branches: [developer, main]
+    branches: [developer, main, feature/aorts-integration]
   schedule:
     - cron: "17 3 * * 1"
 
