@@ -1278,8 +1278,19 @@ class LedgerService:
 
     # ------------------------------------------------------------------ verification
     def verify_ledger(self) -> dict:
-        """D/E/A checks over the whole ledger. Used by tests, experiments and the dashboard."""
+        """D/E/A checks over the whole ledger. Used by tests, experiments and the dashboard.
+
+        All checks read one REPEATABLE READ snapshot (read-only). Under READ COMMITTED each
+        statement saw a newer state, so a payment committed between summing the entries and
+        reading the balances was reported as a balance mismatch under concurrent load.
+        """
         with self.db.session() as s:
+            s.connection(
+                execution_options={
+                    "isolation_level": "REPEATABLE READ",
+                    "postgresql_readonly": True,
+                }
+            )
             unbalanced = (
                 s.execute(
                     select(LedgerEntry.operation_id)
