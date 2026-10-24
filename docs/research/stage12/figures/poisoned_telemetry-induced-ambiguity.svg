@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="250" viewBox="0 0 820 250" font-family="system-ui, sans-serif">
+<style>.bg{fill:#fcfcfb}.t{fill:#0b0b0b}.m{fill:#52514e}.g{stroke:#e4e3df}.z{stroke:#52514e}.d{fill:#2a78d6}.w{stroke:#2a78d6}@media (prefers-color-scheme: dark){.bg{fill:#1a1a19}.t{fill:#f0efec}.m{fill:#c3c2b7}.g{stroke:#3a3936}.z{stroke:#c3c2b7}.d{fill:#3987e5}.w{stroke:#3987e5}}</style>
+<rect class="bg" width="820" height="250"/>
+<text class="t" x="16" y="24" font-size="15" font-weight="600">poisoned_telemetry: newly ambiguous payments, arm minus no-check</text>
+<text class="m" x="16" y="44" font-size="12">mean paired difference per arm, 95 % bootstrap CI where n &gt;= 10 (DES)</text>
+<line class="z" x1="236.4" y1="62" x2="236.4" y2="200" stroke-dasharray="3 3"/>
+<line class="g" x1="210" y1="83.0" x2="790" y2="83.0"/>
+<text class="t" x="202" y="87.0" font-size="12" text-anchor="end">static-polling (n=10)</text>
+<line class="w" x1="577.2" y1="83.0" x2="681.0" y2="83.0" stroke-width="2"/>
+<circle class="d" cx="629.7" cy="83.0" r="5"/>
+<text class="m" x="637.7" y="77.0" font-size="10">+5903.2</text>
+<line class="g" x1="210" y1="109.0" x2="790" y2="109.0"/>
+<text class="t" x="202" y="113.0" font-size="12" text-anchor="end">exp-backoff-jitter (n=10)</text>
+<line class="w" x1="682.7" y1="109.0" x2="763.6" y2="109.0" stroke-width="2"/>
+<circle class="d" cx="725.1" cy="109.0" r="5"/>
+<text class="m" x="733.1" y="103.0" font-size="10">+7334.1</text>
+<line class="g" x1="210" y1="135.0" x2="790" y2="135.0"/>
+<text class="t" x="202" y="139.0" font-size="12" text-anchor="end">fixed-budget (n=10)</text>
+<line class="w" x1="290.9" y1="135.0" x2="306.9" y2="135.0" stroke-width="2"/>
+<circle class="d" cx="298.3" cy="135.0" r="5"/>
+<text class="m" x="306.3" y="129.0" font-size="10">+929.3</text>
+<line class="g" x1="210" y1="161.0" x2="790" y2="161.0"/>
+<text class="t" x="202" y="165.0" font-size="12" text-anchor="end">aimd (n=10)</text>
+<line class="w" x1="249.0" y1="161.0" x2="253.0" y2="161.0" stroke-width="2"/>
+<circle class="d" cx="251.0" cy="161.0" r="5"/>
+<text class="m" x="259.0" y="155.0" font-size="10">+219.6</text>
+<line class="g" x1="210" y1="187.0" x2="790" y2="187.0"/>
+<text class="t" x="202" y="191.0" font-size="12" text-anchor="end">aorts (n=10)</text>
+<circle class="d" cx="236.4" cy="187.0" r="5"/>
+<text class="m" x="244.4" y="181.0" font-size="10">+0.0</text>
+<text class="m" x="210.0" y="218" font-size="10" text-anchor="middle">-396</text>
+<text class="m" x="500.0" y="218" font-size="10" text-anchor="middle">3956</text>
+<text class="m" x="790.0" y="218" font-size="10" text-anchor="middle">8308</text>
+<text class="m" x="500.0" y="236" font-size="11" text-anchor="middle">payments (negative = fewer new ambiguous than doing no checks)</text>
+</svg>

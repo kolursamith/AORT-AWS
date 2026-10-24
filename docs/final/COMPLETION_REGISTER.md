@@ -38,3 +38,15 @@ The baseline is the work verified before this handoff:
 | evidence | `docs/integration/evidence/stage11/` with `SHA256SUMS` |
 | defects fixed | controller config step crashed on import; dashboard extra missing plotly/pandas |
 | limitations | FAST estimator profile; positive path needs the Stage 10 workload shape; switch counters are in-process (reset on restart); no load or soak test |
+
+## Stage 12: research evaluation and ablations
+
+| item | value |
+|---|---|
+| commits | `9106899` (frozen design and runner; experiment source), Stage 12 results commit (see `git log`) |
+| files | `intelligence/experiments/{aorts_policy,stage12_evaluation,stage12_report}.py`, additive hooks in `intelligence/simulation/des_validate.py` and `intelligence/experiments/policy_harness.py`, `tests/intelligence/test_stage12_evaluation.py`, `docs/research/stage12/` |
+| tests | 14 Stage 12 tests; full suite 1662 passed / 0 skipped on PostgreSQL on this source (Stage 11 entry) |
+| runs | 2,100 of 2,100 completed, 0 failed: 13 scenarios; 30 paired seeds × 13 arms (4 key scenarios); 10 seeds × 6 arms (9 scenarios); independent DES for every arm |
+| evidence | `docs/research/stage12/` (RESULTS, FINDINGS, METHODOLOGY, summary.json, runs_flat.csv, manifest.jsonl, 26 SVG figures); raw `results/processed/stage12/runs.jsonl` (144 MB, SHA-256 `d8c1378d…`, not in Git); backup `AORTS_research_evidence_backup/stage12_2026-10-24/` (34 files, checksummed) |
+| main result | AORTS induced no additional ambiguity in any scenario, but recovered almost nothing where checks help (RV-1: 2.3 vs AIMD 2,278). The conservative uncertainty bound binds (the no-uncertainty ablation resolved 476 with no harm). The feedback and look-ahead ablations showed no measurable effect. Track B's fallback during an outage resolved 542. |
+| not measurable | deadline completion (all deadlines censored by the horizon); Jain fairness (one remitter bank per design) |
