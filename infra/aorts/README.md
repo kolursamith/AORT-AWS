@@ -8,14 +8,14 @@ used, and nothing here is production-ready. Run every command from the repositor
 | service | role | host port (127.0.0.1) |
 |---|---|---|
 | `db` | PostgreSQL 16: authoritative ledger, outbox, evidence, telemetry windows, audit chain | 55442 |
-| `migrate` | one-shot: `alembic upgrade head` + synthetic seed accounts | - |
+| `migrate` | one-shot: `alembic upgrade head`, synthetic seed accounts, the dashboard's read-only role | - |
 | `switch` | mock payment switch: admission (quotas, rate limits, credits), signed responses | 18110 |
 | `beneficiary-b`, `beneficiary-c` | mock beneficiary banks B and C | 18121, 18122 |
 | `remitter` | remitter bank service (A1/A2/A3 identities), evidence recording, ambiguity | 18100 |
 | `control` | Track B control API: metrics, admin/fault controls, `/api/v1/aorts/v11/summary` | 18130 |
 | `controller` | Track A v1.1 controller: route + transaction twins, estimator, look-ahead, optimizer | 18140 |
 | `aorts-loop` | telemetry producer + validator, outbox/evidence delivery, v1.1 dispatcher + execution gate | - |
-| `dashboard` | Streamlit security dashboard ("AORTS v1.1 security" tab) | 18501 |
+| `dashboard` | AORTS Command Center (Streamlit, 10 pages), read-only DB role + controller introspection | 18501 |
 
 One image (`infra/aorts/Dockerfile`, the exact `pyproject.toml` pins) serves every entry point.
 The Compose project is `aorts-s11`, with its own network and volume (`aorts-s11_pgdata`). It
@@ -29,7 +29,8 @@ dispatcher is not started, so `aorts-loop` is the only recovery dispatcher.
 python -m venv .venv && . .venv/bin/activate && pip install -e '.[dev,research,dashboard]'
 
 # 1. secrets for the stack (random, written to infra/aorts/.env, never printed or committed)
-python infra/aorts/scripts/generate_env.py
+python infra/aorts/scripts/generate_env.py                # new .env
+python infra/aorts/scripts/generate_env.py --add-missing  # existing .env: add new keys only
 
 # 2. build, migrate, seed, start, and wait for every health check
 docker compose -p aorts-s11 -f infra/aorts/docker-compose.yml up -d --build --wait
@@ -53,7 +54,7 @@ docker compose -p aorts-s11 -f infra/aorts/docker-compose.yml exec aorts-loop \
   python -m backend.aorts.integration.demo trace <TXN_ID>
 docker compose -p aorts-s11 -f infra/aorts/docker-compose.yml logs --tail 20 aorts-loop
 
-# 7. dashboard: open http://127.0.0.1:18501 and choose the "AORTS v1.1 security" tab
+# 7. dashboard: open http://127.0.0.1:18501 (AORTS Command Center)
 
 # 8. evidence export (JSON + SHA-256 manifest into infra/aorts/exports/)
 docker compose -p aorts-s11 -f infra/aorts/docker-compose.yml exec aorts-loop \

@@ -73,7 +73,8 @@ services:
       dockerfile: infra/aorts/Dockerfile
     env_file: .env
     environment: *env
-    command: ["sh", "-c", "alembic -c backend/aorts/alembic.ini upgrade head && python -m backend.aorts.app.seed"]
+    # migrations, synthetic seed, then the dashboard's read-only role (SELECT only)
+    command: ["sh", "-c", "alembic -c backend/aorts/alembic.ini upgrade head && python -m backend.aorts.app.seed && python -m backend.aorts.integration.readonly_role"]
     depends_on:
       db:
         condition: service_healthy
@@ -156,15 +157,27 @@ services:
     image: aorts-integrated:s11
     env_file: .env
     environment:
-      AORTS_CONTROL_URL: http://control:8130
-      AORTS_EXPERIMENT_ID: aorts-s11-demo
-    command: ["streamlit", "run", "backend/aorts/dashboard/app.py", "--server.port", "8501", "--server.address", "0.0.0.0", "--browser.gatherUsageStats", "false", "--server.headless", "true"]
+      <<: *env
+      AORTS_SERVICE_NAME: dashboard
+      AORTS_IN_DOCKER: "1"
+      AORTS_DOCS_DIR: /app/docs
+      AORTS_V11_CONTROLLER_URL: http://controller:8140
+      # SELECT-only role created by migrate (backend/aorts/integration/readonly_role.py)
+      AORTS_DASHBOARD_DATABASE_URL: postgresql+psycopg://aorts_dashboard:${AORTS_DASHBOARD_DB_PASSWORD:?run infra/aorts/scripts/generate_env.py --add-missing}@db:5432/aorts
+    command: ["streamlit", "run", "backend/aorts/dashboard/command_center/app.py", "--server.port", "8501", "--server.address", "0.0.0.0", "--browser.gatherUsageStats", "false", "--server.headless", "true", "--theme.base", "dark"]
     ports: ["127.0.0.1:18501:8501"]
     volumes:
-      # the Stage 10 evidence package shown in the "AORTS v1.1 security" tab (read-only)
-      - ../../docs/integration/evidence:/app/docs/integration/evidence:ro
+      # recorded evidence (Stage 10-13 results, research figures) shown by the dashboard, read-only
+      - ../../docs:/app/docs:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8501/_stcore/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
     depends_on:
       control:
+        condition: service_healthy
+      controller:
         condition: service_healthy
     restart: unless-stopped
 

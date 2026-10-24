@@ -168,6 +168,15 @@ def create_app(core: ControllerCore | None, backend_token: str | None) -> FastAP
             return denied
         return _json(200, encode(core.status()), corr)
 
+    @app.get(f"{PATH_PREFIX}/introspection")
+    async def introspection(request: Request) -> Response:
+        """Read-only operator diagnostics (bearer-authenticated; not a contract message)."""
+
+        corr = correlation(request)
+        if (denied := guard(request, corr)) is not None:
+            return denied
+        return JSONResponse(status_code=200, content=core.introspection())
+
     @app.get(f"{PATH_PREFIX}/ready")
     async def ready(request: Request) -> Response:
         corr = correlation(request)

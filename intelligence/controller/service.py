@@ -174,6 +174,8 @@ class _RouteSensing:
     state_times: list = field(default_factory=list)  # (epoch seconds, congested)
     outcomes: deque = field(default_factory=deque)  # CheckResultKind | None
     resolutions: deque = field(default_factory=deque)  # epoch seconds of late resolutions
+    last_result: Any = None  # the latest OptimizationResult (read-only diagnostics)
+    last_decision: Any = None  # the latest published RecoveryDecision (any source)
 
 
 def _secs(t: datetime) -> float:
@@ -423,6 +425,7 @@ class ControllerCore:
                 )
                 source, cause, timings = "internal_error", f"{type(exc).__name__}: {exc}", ()
             decision = self._with_unique_id(decision, seq)
+            self._routes[decision.route_id].last_decision = decision
             body = encode(decision)
             total_ms = (time.perf_counter() - began) * 1000.0
             record = DecisionRecord(
@@ -506,6 +509,7 @@ class ControllerCore:
             credit_allowance=None,
         )
         result = decide(ctx, self.config.optimizer)
+        sensing.last_result = result
         t3 = time.perf_counter()
         timings = (
             ("twin_and_estimator", (t1 - t0) * 1000.0),
@@ -549,6 +553,68 @@ class ControllerCore:
         data = decision.model_dump()
         data["decision_id"] = f"dec-{seq:08d}-{digest}"
         return RecoveryDecision.model_validate(data)
+
+    # ------------------------------------------------------------------ diagnostics
+
+    def introspection(self, max_projections: int = 200) -> dict:
+        """Read-only diagnostics for operators and the dashboard (not a v1.1 contract message).
+
+        Per route: the Route Twin snapshot, the latest Stage 06 estimate and the latest Stage 08
+        optimisation (candidate budgets with their objective terms and the Stage 07 forecast
+        bands, labelled as model predictions). Plus the newest Transaction Twin projections and
+        decision records. Nothing here changes state, and no secret is included.
+        """
+
+        import json
+        from dataclasses import asdict
+
+        def plain(value):
+            return json.loads(json.dumps(value, default=str))
+
+        with self._lock:
+            exp = self.config.experiment_id
+            routes = {}
+            for route, sensing in sorted(self._routes.items()):
+                snap = self._route_twin.snapshot(exp, route)
+                est = sensing.latest_estimate
+                res = sensing.last_result
+                optimisation = None
+                if res is not None:
+                    optimisation = {
+                        "kind": "MODEL_PREDICTION",
+                        "ablation": res.ablation.value,
+                        "profile": res.profile,
+                        "cap_rps": res.cap_rps,
+                        "selected_budget_rps": res.selected_budget_rps,
+                        "reasons": list(res.reasons),
+                        "capacity_confidence_heuristic": res.capacity_confidence,
+                        # the optimizer's own result; the published id is in "last_decision"
+                        "optimizer_decision": plain(res.decision.model_dump(mode="json")),
+                        "evaluations": plain([asdict(e) for e in res.evaluations]),
+                        "forecast": None if res.forecast is None else plain(asdict(res.forecast)),
+                    }
+                routes[route] = {
+                    "snapshot": plain(snap.model_dump(mode="json")),
+                    "estimate": None if est is None else plain(est.model_dump(mode="json")),
+                    "optimisation": optimisation,
+                    "last_decision": None
+                    if sensing.last_decision is None
+                    else plain(sensing.last_decision.model_dump(mode="json")),
+                }
+            snaps = [self._txn_twin.snapshot(exp, t) for t in self._txn_twin.transaction_ids(exp)]
+            # payments that became ambiguous first (the recovery story), then the newest others
+            ambiguous = [p for p in snaps if p.ambiguity_created_at is not None][-max_projections:]
+            others = [p for p in snaps if p.ambiguity_created_at is None][-50:]
+            projections = [plain(p.model_dump(mode="json")) for p in ambiguous + others]
+            records = [plain(asdict(r)) for r in list(self.records)[-100:]]
+            return {
+                "experiment_id": exp,
+                "generated_at": self._clock.now().isoformat(),
+                "routes": routes,
+                "transaction_projections": projections,
+                "decision_records": records,
+                "counters": dict(self.counters),
+            }
 
     # ------------------------------------------------------------------ status
 
