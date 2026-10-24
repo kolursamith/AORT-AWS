@@ -50,10 +50,15 @@ to `results/processed/stage13/`.
 4. **Replay (3 min).** Open `replay/README.md`. Walk through the v1.1 case table: one debit,
    duplicates acknowledged without effect, forged or expired evidence stored but never
    applied, one reversal posting.
-5. **Live system (2 min, optional).** With the Stage 11 stack up (`infra/aorts/README.md`),
-   open the dashboard tab "AORTS v1.1 security" at http://127.0.0.1:18501. It shows live
-   decision sources, telemetry trust, per-bank checks, replay rejections and the Stage 10
-   evidence runs.
+5. **Live system (5 min).** Start the stack (`infra/aorts/README.md`) and open the **AORTS
+   Command Center** at http://127.0.0.1:18501:
+   * *Demo control*: create lost-confirmation payments, start honest traffic.
+   * *Intelligence engine*: the live decision and its reason.
+   * *Security operations*: the recorded 5-condition comparisons and the live counters.
+   * *Ledger & audit*: the financial checks.
+
+   Screenshots from the verified run are in `docs/demo/dashboard/`. The full procedure is
+   `docs/final/DEMO.md`.
 
 ## Expected versus verified
 
