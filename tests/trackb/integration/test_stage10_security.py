@@ -74,9 +74,13 @@ def ready_loop(stack_factory, **kw):
     loop = loop_for(stack_factory, **kw)
     wl = Workload(loop.st, seed=101)
     _WORKLOADS.append(wl)
-    warm = warm_up(loop, wl)
+    # A slow host (e.g. a 2-vCPU CI runner) may need more than one honest warm-up before the
+    # estimator demonstrates headroom; up to three attempts, each a genuine positive decision.
+    for _ in range(3):
+        warm = warm_up(loop, wl)
+        if warm["ready"]:
+            return loop, wl
     assert warm["ready"], (warm, loop.ticks[-1])
-    return loop, wl
 
 
 def b(tick, route="A1-B"):

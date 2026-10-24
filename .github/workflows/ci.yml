@@ -71,7 +71,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Compose files are valid
         run: |
-          printf 'POSTGRES_PASSWORD=ci\nAORTS_ADMIN_TOKEN=ci\nAORTS_SERVICE_KEYS=\nAORTS_BACKEND_TOKEN=ci\n' > infra/aorts/.env
+          printf 'POSTGRES_PASSWORD=ci\nAORTS_ADMIN_TOKEN=ci\nAORTS_SERVICE_KEYS=\nAORTS_BACKEND_TOKEN=ci\nAORTS_DASHBOARD_DB_PASSWORD=ci-only-not-a-secret\n' > infra/aorts/.env
           docker compose -p aorts-s11 -f infra/aorts/docker-compose.yml config --quiet
           rm infra/aorts/.env
       - name: Build the integrated AORTS image (not pushed)
